@@ -19,7 +19,7 @@
 .b2b-hero .b2b-eyebrow{ color:#153F98; }
 .b2b-hero h1{ color:#475569; font-weight:600; font-size:clamp(26px,4vw,44px); line-height:1.25; margin-bottom:16px; }
 .b2b-hero p{ color:#475569; font-size:16px; line-height:1.4; margin-bottom:22px; }
-.b2b-pills{ display:flex; gap:12px; flex-wrap:wrap; }
+.b2b-pills{ display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
 .b2b-pill{ background:#fff; color:#153F98; font-size:12px; font-weight:500; padding:10px 16px; border-radius:8px; }
 
 .b2b-divider{ height:1px; background:#E8EBF0; }
@@ -28,8 +28,9 @@
 .b2b-h2{ font-weight:600; font-size:clamp(22px,3vw,32px); line-height:1.25; color:#475569; margin-bottom:16px; }
 .b2b-h2.blue{ color:#2563EB; }
 .b2b-body{ font-size:16px; line-height:1.6; color:#475569; }
+.b2b-body + .b2b-body{ margin-top:14px; }
 
-.b2b-cards-row{ display:flex; gap:20px; flex-wrap:wrap; margin-top:24px; }
+.b2b-cards-row{ display:flex; gap:20px; flex-wrap:wrap; justify-content:center; margin-top:24px; }
 .b2b-source-card{ flex:1 1 160px; background:#F8FAFC; border-radius:10px; padding:20px; }
 .b2b-source-card h4{ font-size:16px; font-weight:600; color:#475569; margin-bottom:12px; }
 .b2b-source-card p{ font-size:14px; color:#64748B; line-height:1.4; }
@@ -39,7 +40,7 @@
 .b2b-problem-row .num{ font-size:24px; font-weight:700; color:#475569; flex:none; }
 .b2b-problem-row .txt{ font-size:16px; color:#1E293B; flex:1; }
 
-.b2b-quote{ background:#CFCFCF; border-radius:10px; padding:20px 24px; margin-top:16px; }
+.b2b-quote{ background:#CFCFCF; border-radius:10px; padding:20px 24px; margin-top:28px; }
 .b2b-quote p{ font-style:italic; font-weight:600; font-size:16px; color:#153F98; }
 .b2b-quote.blue p{ color:#2563EB; }
 .b2b-quote.big p{ font-size:clamp(17px,2.2vw,22px); font-weight:800; }
@@ -71,9 +72,8 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
 .b2b-h2-sol{ font-weight:600; font-size:clamp(18px,2.2vw,22px); line-height:1.25; color:#2563EB; margin:0; }
 .b2b-sol-quote{ background:#F8FAFC; border-radius:8px; padding:14px 20px; margin-bottom:18px; }
 .b2b-sol-quote p{ font-style:italic; font-size:14px; color:#475569; }
-.b2b-body.sol2{ font-weight:600; color:#D4183D; }
 
-.b2b-compare{ display:flex; gap:25px; flex-wrap:wrap; justify-content:center; margin:24px 0; }
+.b2b-compare{ display:flex; gap:25px; row-gap:36px; flex-wrap:wrap; justify-content:center; margin:24px 0 32px; }
 .b2b-compare-col{ flex:1 1 220px; max-width:340px; }
 .b2b-compare-col .cap{ text-align:center; font-weight:600; font-size:13px; color:#475569; margin-bottom:8px; }
 .b2b-compare-col.muted .cap{ color:#94A3B8; font-weight:500; }
@@ -99,7 +99,7 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
 
 .b2b-footnote{ font-size:12px; color:#020202; margin-top:12px; }
 
-.b2b-stats-row{ display:flex; gap:20px; flex-wrap:wrap; margin:24px 0; }
+.b2b-stats-row{ display:flex; gap:20px; flex-wrap:wrap; justify-content:center; margin:24px 0; }
 .b2b-stat-card{ flex:1 1 160px; background:#F8FAFC; border-radius:10px; padding:20px; }
 .b2b-stat-card h4{ font-size:16px; font-weight:600; color:#475569; margin-bottom:10px; }
 .b2b-stat-card p{ font-size:14px; color:#64748B; line-height:1.4; }
@@ -258,8 +258,8 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
         <div class="b2b-sol-quote"><p>הלקוח לא פנה כי לא הבין. הוא פנה כי לא ראה</p></div>
         <p class="b2b-body">לקוחות לא ידעו מה קורה עם הבקשה שהגישו לצוות הקריאטיב, וחוסר השקיפות הזה יצר חרדה ופניות חוזרות לצוות CS. נוספה תצוגת סטטוס ברורה בממשק עצמו.</p>
         <div class="b2b-compare">
-          <div class="b2b-compare-col muted"><img class="b2b-img-slot" src="assets/b2b-sol1-before.png" alt="מסך לפני - ייעול מעקב בקשות תוכן"></div>
-          <div class="b2b-compare-col"><img class="b2b-img-slot" src="assets/b2b-sol1-after.png" alt="מסך אחרי - ייעול מעקב בקשות תוכן"></div>
+          <div class="b2b-compare-col muted"><img class="b2b-img-slot" style="aspect-ratio:758/1463;" src="assets/b2b-sol1-before.png" alt="מסך לפני - ייעול מעקב בקשות תוכן"></div>
+          <div class="b2b-compare-col"><img class="b2b-img-slot" style="aspect-ratio:758/1463;" src="assets/b2b-sol1-after.png" alt="מסך אחרי - ייעול מעקב בקשות תוכן"></div>
         </div>
         <div class="b2b-quote blue big"><p>דפוס הפניות החוזר בנושא סטטוס הבקשה ירד בכ-20% לאחר ההטמעה.</p></div>
       </div>
@@ -275,7 +275,9 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
           <h2 class="b2b-h2-sol">שיפור אופן הגשת בקשות תוכן</h2>
         </div>
         <div class="b2b-sol-quote"><p>כשהדרך לפעולה ארוכה מדי, המשתמש מתייאש</p></div>
-        <p class="b2b-body sol2">הבעיה: לא היתה קיימת אפשרות להגיש בקשה חדשה דרך הממשק, רק בקשת עריכה עבור תוכן קיים שנבחר מתוך הגלריה. מנויים שרצו תוכן חדש לגמרי פנו בוואטסאפ, מה שיצר עומס על צוות ה-CS, הוסיף תחנה מיותרת לפני שהפנייה הגיעה לצוות הקריאטיב, והיווה בשלב מסויים כ-40% מהפניות הנכנסות. הפתרון: נוסף כפתור ראשי ובולט בדשבורד לבקשת תוכן באופן דיגיטלי ועצמאי. כל מנוי יכול לבצע את הפעולה בקלות, מה שהפך אותם לעצמאיים ובטוחים יותר בממשק והוריד את העומס מהצוות. בנוסף, נוספה אפשרות מהירה להגיש בקשת עריכה ישירות מתוך התוכן עצמו, במקום דרך כפתור ה"עזרה" הלא אינטואיטיבי, מה שצמצם גם את הפניות בנושא זה שהיו עוברות בוואטסאפ. בהמשך: בעקבות פידבק ממנויים שהתהליך ארוך ומסורבל, הוא יועל לזרימה פשוטה וקצרה יותר.</p>
+        <p class="b2b-body"><strong style="color:#D4183D;">הבעיה:</strong> לא היתה קיימת אפשרות להגיש בקשה חדשה דרך הממשק, רק בקשת עריכה עבור תוכן קיים שנבחר מתוך הגלריה. מנויים שרצו תוכן חדש לגמרי פנו בוואטסאפ, מה שיצר עומס על צוות ה-CS, הוסיף תחנה מיותרת לפני שהפנייה הגיעה לצוות הקריאטיב, והיווה בשלב מסויים כ-40% מהפניות הנכנסות.</p>
+        <p class="b2b-body"><strong style="color:#4F9E78;">הפתרון:</strong> נוסף כפתור ראשי ובולט בדשבורד לבקשת תוכן באופן דיגיטלי ועצמאי. כל מנוי יכול לבצע את הפעולה בקלות, מה שהפך אותם לעצמאיים ובטוחים יותר בממשק והוריד את העומס מהצוות. בנוסף, נוספה אפשרות מהירה להגיש בקשת עריכה ישירות מתוך התוכן עצמו, במקום דרך כפתור ה"עזרה" הלא אינטואיטיבי, מה שצמצם גם את הפניות בנושא זה שהיו עוברות בוואטסאפ.</p>
+        <p class="b2b-body"><strong style="color:#B5730D;">בהמשך:</strong> בעקבות פידבק ממנויים שהתהליך ארוך ומסורבל, הוא יועל לזרימה פשוטה וקצרה יותר.</p>
 
         <div class="b2b-flow-card">
           <div class="b2b-flow-group">
@@ -312,8 +314,8 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
         </div>
 
         <div class="b2b-compare" style="margin-top:24px;">
-          <div class="b2b-compare-col"><div class="cap">אחרי - בקשת תוכן חדש</div><img class="b2b-img-slot" style="aspect-ratio:407.5/761.25;" src="assets/b2b-sol2-after-newcontent.png" alt="מסך אחרי - בקשת תוכן חדש"></div>
-          <div class="b2b-compare-col"><img class="b2b-img-slot" style="aspect-ratio:407.5/761.25;" src="assets/b2b-sol2-after-quickedit.png" alt="מסך אחרי - בקשת עריכה מהירה"></div>
+          <div class="b2b-compare-col"><div class="cap">אחרי - בקשת תוכן חדש</div><img class="b2b-img-slot" style="aspect-ratio:815/1523;" src="assets/b2b-sol2-after-newcontent.png" alt="מסך אחרי - בקשת תוכן חדש"></div>
+          <div class="b2b-compare-col"><img class="b2b-img-slot" style="aspect-ratio:815/1609;" src="assets/b2b-sol2-after-quickedit.png" alt="מסך אחרי - בקשת עריכה מהירה"></div>
         </div>
         <div class="b2b-quote blue big"><p>בחודש שבו הוטמע כפתור ישיר להגשת בקשה, כ-13% מהמנויים הגיבו לפעולה.</p></div>
       </div>
@@ -331,8 +333,8 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
         <div class="b2b-sol-quote"><p>שאלות על זהות עסקית דורשות מחשבה, לא תגובה מהירה</p></div>
         <p class="b2b-body">תהליך האפיון הראשוני כלל שאלות מורכבות על קול המותג ובידול, ודרש שיחה של 15-30 דקות, שהיתה תלויה בזמינות ופניות הלקוח ולכן קיבלנו תשובות שטחיות. מה שפגע ביצירת תוכן מדויק, יצר שיחות נשנות עם המנויים והעריך את תהליך העבודה וגם תסכל. לאחר מחקר משתמשים עם מנויים, המרתי את התהליך לטופס דיגיטלי שהלקוח ממלא אחרי שהוא מצטרף למנוי, וכל האינפו נשמר בפרופיל שלו.</p>
         <div class="b2b-compare">
-          <div class="b2b-compare-col muted"><div class="cap">לפני</div><img class="b2b-img-slot" src="assets/b2b-sol3-before.png" alt="מסך לפני - ייעול תהליך אפיון לקוח"></div>
-          <div class="b2b-compare-col"><div class="cap">אחרי</div><img class="b2b-img-slot" src="assets/b2b-sol3-after.png" alt="מסך אחרי - ייעול תהליך אפיון לקוח"></div>
+          <div class="b2b-compare-col muted"><div class="cap">לפני</div><img class="b2b-img-slot" style="aspect-ratio:758/1383;" src="assets/b2b-sol3-before.png" alt="מסך לפני - ייעול תהליך אפיון לקוח"></div>
+          <div class="b2b-compare-col"><div class="cap">אחרי</div><img class="b2b-img-slot" style="aspect-ratio:758/1383;" src="assets/b2b-sol3-after.png" alt="מסך אחרי - ייעול תהליך אפיון לקוח"></div>
         </div>
         <div class="b2b-quote blue big"><p>המעבר לטופס יצר סלקציה טבעית: רוב הלקוחות השלימו את התהליך באופן עצמאי, ופינו לצוות זמן להתמקד במי שנדרשה לו שיחת אפיון מעמיקה יותר.</p></div>
       </div>
@@ -350,9 +352,9 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
         <div class="b2b-sol-quote"><p>הלקוחות השתמשו במה שמוכר ובטוח. הם לא מצאו את הצ'אט של הממשק</p></div>
         <p class="b2b-body">הצ'אט הפנימי היה קיים, אבל אף אחד לא ראה אותו, כיון שהיה בתפריט נסתר, לקוחות פנו בוואטסאפ כי זה מה שהכירו. כדי שהלקוחות יתנהלו בממשק הצעתי להעביר את הגישה לצ'אט למיקום בולט ומוכר. הבחירה במיקום צף נבעה מכך שזו התנהגות משתמש מוכרת מממשקים אחרים. לא היה צורך ללמד את המשתמש דפוס חדש, אלא להסתמך על תהליך אינטואיטיבי שהוא כבר מכיר, נהוג ומוכר.</p>
         <div class="b2b-compare">
-          <div class="b2b-compare-col muted"><div class="cap">לפני - תפריט צד</div><img class="b2b-img-slot" src="assets/b2b-sol4-before-sidemenu.png" alt="הצ'אט בתפריט הצד הנסתר"></div>
-          <div class="b2b-compare-col muted"><div class="cap">לפני - כפתור פלוס</div><img class="b2b-img-slot" src="assets/b2b-sol4-before-plus.png" alt="הדרך הקיימת דרך כפתור הפלוס"></div>
-          <div class="b2b-compare-col"><div class="cap">אחרי</div><img class="b2b-img-slot" src="assets/b2b-sol4-after.png" alt="מיקום צף חדש לצ'אט"></div>
+          <div class="b2b-compare-col muted"><div class="cap">לפני - תפריט צד</div><img class="b2b-img-slot" style="aspect-ratio:467/902;" src="assets/b2b-sol4-before-sidemenu.png" alt="הצ'אט בתפריט הצד הנסתר"></div>
+          <div class="b2b-compare-col muted"><div class="cap">לפני - כפתור פלוס</div><img class="b2b-img-slot" style="aspect-ratio:467/902;" src="assets/b2b-sol4-before-plus.png" alt="הדרך הקיימת דרך כפתור הפלוס"></div>
+          <div class="b2b-compare-col"><div class="cap">אחרי</div><img class="b2b-img-slot" style="aspect-ratio:467/902;" src="assets/b2b-sol4-after.png" alt="מיקום צף חדש לצ'אט"></div>
         </div>
         <div class="b2b-quote"><p style="color:#475569; font-style:normal; font-weight:400;">המטרה: לעודד לקוחות להישאר בתוך הממשק במקום לעבור לוואטסאפ, עם תיעוד מלא והמשכיות טובה יותר לצוות.</p></div>
       </div>

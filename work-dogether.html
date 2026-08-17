@@ -54,7 +54,7 @@
 .dg-brand-card{ background:#F26D0E; border-radius:12px; padding:40px; }
 .dg-brand-word{ color:#fff; font-weight:600; font-size:clamp(40px,7vw,72px); margin-bottom:14px; }
 .dg-weights{ color:#fff; font-size:16px; line-height:1.7; margin-bottom:24px; }
-.dg-swatches{ display:flex; gap:10px; flex-wrap:wrap; }
+.dg-swatches{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
 .dg-swatch{ flex:1 1 90px; }
 .dg-swatch .chip{ height:70px; border-radius:6px; margin-bottom:6px; }
 .dg-swatch .hex{ color:#fff; font-size:11px; }
@@ -65,7 +65,10 @@
 
 /* ===== IA diagram ===== */
 .dg-ia-canvas{ background:#fff; border-radius:14px; padding:32px 20px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
-.dg-ia{ min-width:860px; font-family:'Rubik',sans-serif; }
+.dg-ia{ min-width:860px; font-family:'Rubik',sans-serif; transform-origin: top right; transition: none; }
+@media (max-width: 900px){
+  .dg-ia-canvas{ overflow-x:hidden; padding:20px 10px; }
+}
 .dg-ia-box{ display:inline-flex; align-items:center; justify-content:center; color:#fff; font-size:12.5px; font-weight:600; border-radius:8px; padding:11px 14px; text-align:center; line-height:1.35; }
 .dg-ia-box.navy{ background:#004d74; }
 .dg-ia-box.teal{ background:#009688; }
@@ -399,5 +402,29 @@
 </a>
 
 <script src="js/main.js"></script>
+<script>
+(function(){
+  function fitIaDiagram(){
+    var canvas = document.querySelector('.dg-ia-canvas');
+    var diagram = document.querySelector('.dg-ia');
+    if(!canvas || !diagram) return;
+    diagram.style.transform = 'none';
+    canvas.style.height = '';
+    var canvasStyle = getComputedStyle(canvas);
+    var padL = parseFloat(canvasStyle.paddingLeft) || 0;
+    var padR = parseFloat(canvasStyle.paddingRight) || 0;
+    var available = canvas.clientWidth - padL - padR;
+    var natural = diagram.scrollWidth;
+    var scale = Math.min(1, available / natural);
+    if(scale < 1){
+      diagram.style.transform = 'scale(' + scale + ')';
+      var naturalHeight = diagram.scrollHeight;
+      canvas.style.height = (naturalHeight * scale) + 'px';
+    }
+  }
+  window.addEventListener('load', fitIaDiagram);
+  window.addEventListener('resize', fitIaDiagram);
+})();
+</script>
 </body>
 </html>
