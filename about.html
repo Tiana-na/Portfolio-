@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מי אני | טיאנה פולקנפולק</title>
+<meta name="description" content="קצת עליי — המסע מהעולם המסחרי לעולם ה-UX/UI, כישורים והשכלה.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav">
+    <ul class="nav-links">
+      <li><a href="index.html">בית</a></li>
+      <li><a href="about.html" class="active">מי אני</a></li>
+      <li><a href="contact.html">צור קשר</a></li>
+    </ul>
+    <div class="brand">טיאנה פולקנפולק</div>
+    <button class="menu-toggle" aria-label="פתיחת תפריט">&#9776;</button>
+  </nav>
+  <div class="mobile-menu">
+    <a href="index.html">בית</a>
+    <a href="about.html" class="active">מי אני</a>
+    <a href="contact.html">צור קשר</a>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero">
+    <div class="wrap">
+      <div class="eyebrow">מי אני</div>
+      <h1>מהעולם המסחרי לעולם ה-UX/UI</h1>
+      <p>
+        נעים להכיר, אני מעצבת UX/UI בעלת ניסיון עשיר בהבנת חוויית לקוח, תקשורת חזותית ועיצוב מסחרי מותגים בינלאומיים.
+        לאורך הקריירה פיתחתי הבנה עמוקה של התנהגות משתמשים, היררכיה ויזואלית וחוויות הקצאות אינטראקטיביות.
+        לאחר הסבה מקצועית לעולם ה-UX/UI אני משלבת את הניסיון העסקי והעיצובי שלי עם כלים ומתודולוגיות עדכניות לעיצוב מוצרים דיגיטליים.
+      </p>
+      <p>
+        אני מחפשת להשתלב במקום שבו אוכל להפוך צרכי משתמש לחוויות דיגיטליות פשוטות ואפקטיביות.
+      </p>
+      <a href="#" class="btn btn-primary" style="margin-top:10px;">הורדת קורות חיים (PDF)</a>
+
+      <div class="card-grid">
+        <div class="card reveal">
+          <h3>כישורי UX/UI</h3>
+          <div class="tag-list">
+            <span class="tag">Figma</span>
+            <span class="tag">Wireframing</span>
+            <span class="tag">Prototyping</span>
+            <span class="tag">Design Systems</span>
+            <span class="tag">User Flows</span>
+            <span class="tag">User Research</span>
+            <span class="tag">Responsive Design</span>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <h3>כישורי AI</h3>
+          <div class="tag-list">
+            <span class="tag">Google AI</span>
+            <span class="tag">Claude</span>
+            <span class="tag">Figma AI</span>
+            <span class="tag">Midjourney</span>
+            <span class="tag">Brainstorming &amp; Ideation</span>
+            <span class="tag">Visual Design</span>
+            <span class="tag">Prompting</span>
+            <span class="tag">Image Generation</span>
+            <span class="tag">User Flows</span>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <h3>השכלה</h3>
+          <p>
+            <strong style="color:var(--accent)">HackerU</strong><br>
+            עיצוב לדיגיטל עם התמחות ב-UX/UI<br>
+            2024 - 2023
+          </p>
+        </div>
+
+        <div class="card reveal">
+          <h3>שפות</h3>
+          <p>
+            עברית - שפת אם<br>
+            אנגלית - רמה בינונית<br>
+            רוסית - רמה בינונית
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="quiz-section" id="trivia">
+    <div class="wrap">
+      <div class="eyebrow reveal">בואו נכיר קצת יותר</div>
+      <p class="reveal">חלק מהשאלות זו עובדה עם תשובה נכונה, וחלק זה סתם אני.</p>
+      <div class="quiz-score">הניקוד שלך: <span id="quiz-score">0</span> / 5</div>
+
+      <div class="quiz-list">
+
+        <div class="quiz-card reveal" data-type="fact">
+          <div class="quiz-badge">עובדה</div>
+          <h3 class="quiz-q">מאיפה מגיע קפה הקופי-לוואק היוקרתי?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-correct="true">עובר תהליך עיכול חלקי במעי של חתול דקלים אסייתי</button>
+            <button class="quiz-option">מגודל בגובה רב במיוחד באנדים</button>
+            <button class="quiz-option">נקטף רק בלילה לאור ירח</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card reveal" data-type="fact">
+          <div class="quiz-badge">עובדה</div>
+          <h3 class="quiz-q">על שם מה נקראה שפת התכנות Java?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-correct="true">סוג קפה מאינדונזיה</button>
+            <button class="quiz-option">שם המפתח שלה</button>
+            <button class="quiz-option">עיר בברזיל</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card reveal" data-type="personal">
+          <div class="quiz-badge">אישי</div>
+          <h3 class="quiz-q">נגמר לך הקפה בבית. מה עושים?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option">שותה ג'ין/שוקו/מים מהברז</button>
+            <button class="quiz-option">הולכת ברגל 5 ק"מ אם צריך כדי לקנות (אפשר גם וולט)</button>
+          </div>
+          <div class="quiz-feedback" data-reveal="אין כאן תשובה נכונה אחת - זה פשוט תלוי כמה נואשת אני 😅"></div>
+        </div>
+
+        <div class="quiz-card reveal" data-type="fact">
+          <div class="quiz-badge">עובדה</div>
+          <h3 class="quiz-q">מי מדובב את גרוט?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-correct="true">וין דיזל</button>
+            <button class="quiz-option">בראדלי קופר</button>
+            <button class="quiz-option">כריס פראט</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card reveal" data-type="personal">
+          <div class="quiz-badge">אישי</div>
+          <h3 class="quiz-q">איך נכון לצפות בסרטי מארוול?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option">לפי סדר יציאה</button>
+            <button class="quiz-option">לפי סדר כרונולוגי</button>
+            <button class="quiz-option" data-personal-pick="true">העיקר לראות</button>
+          </div>
+          <div class="quiz-feedback" data-reveal="אין כאן תשובה רשמית נכונה, אבל אצלי זה תמיד &quot;העיקר לראות&quot; ✓"></div>
+        </div>
+
+        <div class="quiz-card reveal" data-type="personal">
+          <div class="quiz-badge">אישי</div>
+          <h3 class="quiz-q">איזה גיבור-על הייתן רוצות להיות?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option">איירון מן - הכסף פותר הכל</button>
+            <button class="quiz-option">ד"ר סטריינג' - לדעת הכל עדיף מכוח</button>
+            <button class="quiz-option">תור - יש לו פטיש</button>
+          </div>
+          <div class="quiz-feedback" data-reveal="אין כאן תשובה נכונה - כל אחת עם הסופרכוח שהיא הייתה בוחרת."></div>
+        </div>
+
+        <div class="quiz-card reveal" data-type="fact">
+          <div class="quiz-badge">עובדה</div>
+          <h3 class="quiz-q">איך נקרא המכשיר שבו סטאר-לורד שומע מוזיקה?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-correct="true">ווקמן</button>
+            <button class="quiz-option">דיסקמן</button>
+            <button class="quiz-option">אייפוד</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card reveal" data-type="fact">
+          <div class="quiz-badge">עובדה</div>
+          <h3 class="quiz-q">לאיזו מהסדרות הבאות יש ספר?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-correct="true">המומינים</button>
+            <button class="quiz-option">פרנדס</button>
+            <button class="quiz-option">איך פגשתי את אמא</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card reveal" data-type="personal">
+          <div class="quiz-badge">אישי</div>
+          <h3 class="quiz-q">איך את קוראת?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option">ספר אחד בכל פעם, עד הסוף</button>
+            <button class="quiz-option">כמה ספרים במקביל, לפי מצב רוח</button>
+            <button class="quiz-option">מתחילה הרבה, מסיימת מעט</button>
+          </div>
+          <div class="quiz-feedback" data-reveal="אין כאן תשובה נכונה - כל שיטה לגיטימית (כן, גם השלישית)."></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    Digital Creative &amp; UX/UI Designer • טיאנה פולקנפולק 2026 ©
+    <span class="footer-hint">יש כאן עוד סצנה אחת... (רמז: נסו תנועה)</span>
+  </div>
+  <div class="stinger" id="stinger">
+    <div class="stinger-inner">
+      <div class="stinger-label">POST-CREDITS SCENE</div>
+      <div class="stinger-text">אם הגעת עד לפה, כנראה שגם אתה מהסוג שקורא קרדיטים עד הסוף (ושותה יותר מדי קפה). <a href="contact.html">בואו נדבר</a>.</div>
+    </div>
+  </div>
+</footer>
+
+<div class="trivia-teaser" id="trivia-teaser">
+  <button class="trivia-teaser-close" aria-label="סגירה">&times;</button>
+  <a href="about.html#trivia" class="trivia-teaser-link">
+    <span class="trivia-teaser-emoji">☕</span>
+    <span class="trivia-teaser-text">רגע...<strong>בואו נכיר קצת יותר</strong></span>
+  </a>
+</div>
+
+<a href="https://wa.me/972525218873" target="_blank" rel="noopener" class="whatsapp-fab" aria-label="שליחת הודעה בוואטסאפ">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.298-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/></svg>
+</a>
+
+<script src="js/main.js"></script>
+</body>
+</html>

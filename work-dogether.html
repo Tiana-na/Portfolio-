@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>אפליקציה לניהול משק בית — DOgether | טיאנה פולקנפולק</title>
+<meta name="description" content="קייס-סטאדי: אפליקציה לתיאום וניהול משימות בית עבור משפחות מורכבות.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+.dg-case{ background:#032030; font-family:'Rubik',sans-serif; }
+.dg-case .dg-wrap{ max-width:976px; margin:0 auto; padding:0 24px; }
+.dg-hero{ background:#003554; padding:56px 24px; text-align:center; }
+.dg-hero .dg-label{ color:#fff; font-weight:500; font-size:15px; margin-bottom:14px; }
+.dg-hero h1{ color:#fff; font-weight:400; font-size:clamp(28px,4vw,44px); line-height:1.3; margin-bottom:22px; }
+.dg-section{ padding:40px 0; }
+.dg-title{ color:#fff; font-weight:600; font-size:22px; margin-bottom:20px; }
+.dg-card{ background:#022B42; border-radius:12px; padding:32px; margin-bottom:20px; }
+.dg-card h3{ color:#fff; font-weight:600; font-size:22px; margin-bottom:10px; }
+.dg-bar{ width:60px; height:2px; background:#F26D0E; margin-bottom:16px; }
+.dg-card p{ color:#fff; font-size:15px; line-height:1.6; margin-bottom:10px; }
+.dg-card p:last-child{ margin-bottom:0; }
+.dg-research-flex{ display:flex; gap:24px; align-items:center; flex-wrap:wrap; overflow:visible; }
+.dg-research-flex .txt{ flex:1 1 320px; }
+.dg-research-flex img{ width:180px; flex:0 0 auto; }
+
+/* robot: floats in large above the card, then shrinks + settles into place on scroll */
+.dg-research-flex img.reveal{
+  opacity:0;
+  transform: translateY(-60px) scale(1.7);
+  transition: transform 1.1s cubic-bezier(.22,1.4,.36,1), opacity .6s ease;
+}
+.dg-research-flex img.reveal.in-view{
+  opacity:1;
+  transform: translateY(0) scale(1);
+}
+@media (prefers-reduced-motion: reduce){
+  .dg-research-flex img.reveal{ opacity:1; transform:none; transition:none; }
+}
+
+.dg-grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.dg-bullets{ list-style:none; padding:0; margin:0; }
+.dg-bullets li{ display:flex; align-items:center; gap:10px; color:#fff; font-size:15px; padding:8px 0; }
+.dg-bullets .dot{ width:6px; height:6px; border-radius:3px; background:#F26D0E; flex:none; }
+
+.dg-persona-row{ display:flex; gap:20px; align-items:flex-start; background:#003554; border-radius:10px; padding:24px; margin-bottom:16px; }
+.dg-persona-row:last-child{ margin-bottom:0; }
+.dg-avatar{ width:64px; height:64px; border-radius:50%; border:2px solid #F26D0E; background:#022B42; color:#F26D0E; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:20px; flex:none; }
+.dg-persona-row h4{ color:#fff; font-weight:500; font-size:16px; margin-bottom:8px; }
+.dg-persona-row p{ color:#fff; font-size:14px; line-height:1.6; margin-bottom:8px; }
+.dg-persona-row p:last-child{ margin-bottom:0; }
+
+.dg-brand-card{ background:#F26D0E; border-radius:12px; padding:40px; }
+.dg-brand-word{ color:#fff; font-weight:600; font-size:clamp(40px,7vw,72px); margin-bottom:14px; }
+.dg-weights{ color:#fff; font-size:16px; line-height:1.7; margin-bottom:24px; }
+.dg-swatches{ display:flex; gap:10px; flex-wrap:wrap; }
+.dg-swatch{ flex:1 1 90px; }
+.dg-swatch .chip{ height:70px; border-radius:6px; margin-bottom:6px; }
+.dg-swatch .hex{ color:#fff; font-size:11px; }
+
+.dg-screens-row{ display:flex; gap:20px; justify-content:center; flex-wrap:wrap; }
+.dg-screen-slot{ width:180px; background:rgba(255,255,255,.06); border-radius:16px; overflow:hidden; }
+.dg-screen-slot img{ width:100%; display:block; }
+
+/* ===== IA diagram ===== */
+.dg-ia-canvas{ background:#fff; border-radius:14px; padding:32px 20px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.dg-ia{ min-width:860px; font-family:'Rubik',sans-serif; }
+.dg-ia-box{ display:inline-flex; align-items:center; justify-content:center; color:#fff; font-size:12.5px; font-weight:600; border-radius:8px; padding:11px 14px; text-align:center; line-height:1.35; }
+.dg-ia-box.navy{ background:#004d74; }
+.dg-ia-box.teal{ background:#009688; }
+.dg-ia-box.tealdark{ background:#006d63; }
+.dg-ia-box.green{ background:#1e8e5c; }
+.dg-ia-box.orange{ background:#f26d0e; }
+
+.dg-ia-group{ border-radius:14px; padding:18px 18px 22px; display:flex; flex-direction:column; align-items:center; }
+.dg-ia-group.peach{ background:#fdede2; }
+.dg-ia-group.mint{ background:#e4f1eb; }
+.dg-ia-group-label{ align-self:stretch; text-align:left; font-size:11.5px; font-weight:700; margin-bottom:14px; }
+.dg-ia-group-label.orange{ color:#c9600f; }
+.dg-ia-group-label.green{ color:#1e8e5c; }
+
+.dg-ia-row{ display:flex; align-items:center; justify-content:center; }
+.dg-ia-hline{ width:18px; height:2px; background:#1f5f86; flex:0 0 auto; }
+
+.dg-ia-center{ display:flex; justify-content:center; }
+
+.dg-ia-vline{ width:2px; height:20px; background:#1f5f86; margin:0 auto; }
+.dg-ia-vline.small{ height:14px; }
+
+.dg-ia-elbow{ position:relative; height:40px; }
+.dg-ia-elbow-down1{ position:absolute; top:0; right:12%; width:2px; height:20px; background:#1f5f86; }
+.dg-ia-elbow-across{ position:absolute; top:20px; right:12%; left:50%; height:2px; background:#1f5f86; }
+.dg-ia-elbow-down2{ position:absolute; top:20px; left:50%; width:2px; height:20px; background:#1f5f86; transform:translateX(-1px); }
+
+.dg-ia-branch{ position:relative; padding-top:24px; }
+.dg-ia-branch::before{ content:''; position:absolute; top:0; left:50%; width:2px; height:24px; background:#1f5f86; transform:translateX(-1px); }
+.dg-ia-branch.small{ padding-top:20px; }
+.dg-ia-branch.small::before{ height:20px; }
+.dg-ia-branch-bar{ position:absolute; top:24px; height:2px; background:#1f5f86; }
+.dg-ia-branch.small .dg-ia-branch-bar{ top:20px; }
+.dg-ia-branch-bar.n2{ left:25%; right:25%; }
+.dg-ia-branch-bar.n3{ left:16.6667%; right:16.6667%; }
+
+.dg-ia-children{ display:flex; gap:16px; }
+.dg-ia-children > .dg-ia-child{ flex:1; min-width:0; }
+.dg-ia-child{ display:flex; flex-direction:column; align-items:center; padding-top:16px; position:relative; }
+.dg-ia-branch.small .dg-ia-child{ padding-top:12px; }
+.dg-ia-child::before{ content:''; position:absolute; top:0; left:50%; width:2px; height:16px; background:#1f5f86; transform:translateX(-1px); }
+.dg-ia-branch.small .dg-ia-child::before{ height:12px; }
+.dg-ia-child .dg-ia-group{ width:100%; }
+.dg-ia-child > .dg-ia-box{ margin-bottom:0; }
+
+@media (max-width:700px){
+  .dg-grid-2{ grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav">
+    <ul class="nav-links">
+      <li><a href="index.html">בית</a></li>
+      <li><a href="about.html">מי אני</a></li>
+      <li><a href="contact.html">צור קשר</a></li>
+    </ul>
+    <div class="brand">טיאנה פולקנפולק</div>
+    <button class="menu-toggle" aria-label="פתיחת תפריט">&#9776;</button>
+  </nav>
+  <div class="mobile-menu">
+    <a href="index.html">בית</a>
+    <a href="about.html">מי אני</a>
+    <a href="contact.html">צור קשר</a>
+  </div>
+</header>
+
+<main>
+  <section class="case-page-header">
+    <div class="wrap">
+      <a href="index.html#work" class="case-back">חזרה לפרויקטים</a>
+      <div class="eyebrow">UX/UI Case Study</div>
+      <h1>אפליקציה לניהול משק בית</h1>
+      <p>אפליקציה לתיאום וניהול משימות בית עבור משפחות מורכבות (כולל הורים גרושים) - סנכרון משימות בין שני בתים, מצבי הורה יחיד/הורים נפרדים וגיימיפיקציה שמעודדת ילדים להשתתף במשימות הבית.</p>
+      <a href="https://www.figma.com/design/JE3mKJIgMTCQ2wiWEeECUQ/%D7%90%D7%A4%D7%9C%D7%99%D7%A7%D7%A6%D7%99%D7%94-%D7%9C%D7%A0%D7%99%D7%94%D7%95%D7%9C-%D7%9E%D7%A9%D7%A7-%D7%91%D7%99%D7%AA-%D7%92%D7%A8%D7%A1%D7%94-%D7%A1%D7%95%D7%A4%D7%99%D7%AA?node-id=0-1&p=f&t=8bijHkdGFVTNMRxx-0" target="_blank" rel="noopener" class="case-figma-btn">פתיחת קובץ הפרויקט בפיגמה</a>
+    </div>
+  </section>
+
+  <div class="dg-case">
+
+    <div class="dg-hero">
+      <div class="dg-label">על האפליקציה</div>
+      <h1>אפליקציה לניהול משק בית</h1>
+    </div>
+
+    <section class="dg-section">
+      <div class="dg-wrap">
+        <div class="dg-card">
+          <h3>אודות</h3>
+          <div class="dg-bar"></div>
+          <p>אפליקציה שעוזרת לנהל משק בית באופן שוטף בשגרה, לשמור על סנכרון בין כל בני המשפחה, כולל ילדים שכבר יש להם אייפון ואפילו להכניס את הסבתא שעוזרת להורים כדי שתהיה חלק משגרה במשימות שהיא אחראית עליהן.</p>
+        </div>
+
+        <div class="dg-card">
+          <h3>מחקר</h3>
+          <div class="dg-bar"></div>
+          <div class="dg-research-flex">
+            <div class="txt">
+              <p>יש קושי להסתנכרן מה שמייצר תסכול ובלבול.</p>
+              <p>תמיד מעמיד דמות אחת דומיננטית ועם אחריות רבה יותר מאחרים על משימות שונות במשק בית.</p>
+              <p>ראיון עם משפחות להם לפחות 2 ילדים, מהמחקר עלה כי הם משתמשים בכמה ממשקים שונים עבור זימון אירועים, רשימת משימות והתעדכנות בשינויים, כמו יומן, וואטסאפ, תזכורות.</p>
+            </div>
+            <img src="assets/dg-research-robot.png" alt="מסקוט המחקר — רובוט עם זכוכית מגדלת" class="reveal">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dg-section">
+      <div class="dg-wrap dg-grid-2">
+        <div class="dg-card" style="margin-bottom:0;">
+          <h3>פתרונות</h3>
+          <div class="dg-bar"></div>
+          <ul class="dg-bullets">
+            <li><span class="dot"></span>סנכרון כל המשימות במקום אחד</li>
+            <li><span class="dot"></span>ילדים שותפים באפליקציה מגיל שיש להם טלפון חכם</li>
+            <li><span class="dot"></span>הורה גרוש יכול לנהל משימות של שתי המשפחות במקום אחד</li>
+            <li><span class="dot"></span>חלוקת אחריות שוויונית בין בני הבית</li>
+          </ul>
+        </div>
+
+        <div class="dg-card" style="margin-bottom:0;">
+          <h3>בעיות</h3>
+          <div class="dg-bar"></div>
+          <ul class="dg-bullets">
+            <li><span class="dot"></span>משימות שנטולות על דמות אחת דומיננטית במשפחה</li>
+            <li><span class="dot"></span>שימוש בכמה ממשקים במקביל ללא סנכרון</li>
+            <li><span class="dot"></span>ילדים לא שותפים בניהול השוטף של משק הבית</li>
+            <li><span class="dot"></span>קושי לתאם בין שתי משפחות לאחר גירושין</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="dg-section">
+      <div class="dg-wrap">
+        <div class="dg-title">פרסונה</div>
+        <div class="dg-card">
+          <div class="dg-persona-row">
+            <div class="dg-avatar">ד</div>
+            <div>
+              <h4>דויד, 45</h4>
+              <p>דויד, בן 45 גרוש עם שני ילדים מנישואים קודמים, התחתן שנית ויש לו עוד שני ילדים. דויד הוא קרייריסט, יש לו לוז עמוס והוא מתקשה לסנכרן בין שתי המשפחות ולזכור את הכל בזמן, בדכ צריך תזכורת שצריך לקחת את הילדים לאירועים מיוחדים.</p>
+            </div>
+          </div>
+          <div class="dg-persona-row">
+            <div class="dg-avatar">דב</div>
+            <div>
+              <h4>דבי ובן</h4>
+              <p>דבי ובן הם זוג הורים בשנות ה-40 לחייהם, שניהם קרייריסטים ולהם 3 ילדים די גדולים, הם מרגישים שהם שוכחים לעשות דברים בזמן ודבי מרגישה שהיא צריכה כל הזמן להחזיק בראש את המשימות, במיוחד שהילדים במסגרות שונות לכל אחד צרכים שונים בהתאם לגיל.</p>
+              <p>גם הילדים שוכחים לעדכן מספיק זמן לפני על פעילות מיוחדת בבית ספר, פגישה עם חברות וכו'.</p>
+              <p>בן ודבי רוצים להיות יותר מסונכרנים בניהול השוטף של משק הבית כדי לחלוק את הנטל באופן יותר שווה, וגם הם רוצים להקנות לילדים הרגל להיות יותר פעילים ושותפים לשגרה.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dg-section">
+      <div class="dg-wrap">
+        <div class="dg-brand-card">
+          <h3 style="color:#fff;font-weight:600;font-size:22px;margin-bottom:24px;">מיתוג</h3>
+          <div class="dg-brand-word">Rubik</div>
+          <div class="dg-weights">Regular<br>Medium<br>SemiBold</div>
+          <div class="dg-swatches">
+            <div class="dg-swatch"><div class="chip" style="background:#032030"></div><div class="hex">#032030</div></div>
+            <div class="dg-swatch"><div class="chip" style="background:#022B42"></div><div class="hex">#022B42</div></div>
+            <div class="dg-swatch"><div class="chip" style="background:#003554"></div><div class="hex">#003554</div></div>
+            <div class="dg-swatch"><div class="chip" style="background:#F26D0E;border:1px solid #032030"></div><div class="hex">#F26D0E</div></div>
+            <div class="dg-swatch"><div class="chip" style="background:#F2FAFF"></div><div class="hex">#F2FAFF</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dg-section">
+      <div class="dg-wrap">
+        <div class="dg-title">ארכיטקטורת מידע</div>
+        <div class="dg-card">
+          <div class="dg-ia-canvas">
+            <div class="dg-ia">
+
+              <div class="dg-ia-group peach">
+                <div class="dg-ia-group-label orange">אונבורדינג</div>
+                <div class="dg-ia-row">
+                  <div class="dg-ia-box green">כאן מתחילים ✓</div>
+                  <div class="dg-ia-hline"></div>
+                  <div class="dg-ia-box navy">אימות – OTP</div>
+                  <div class="dg-ia-hline"></div>
+                  <div class="dg-ia-box navy">כניסה עם נייד</div>
+                  <div class="dg-ia-hline"></div>
+                  <div class="dg-ia-box orange">מסכי פתיחה<br>Splash × 3</div>
+                </div>
+              </div>
+
+              <div class="dg-ia-elbow">
+                <div class="dg-ia-elbow-down1"></div>
+                <div class="dg-ia-elbow-across"></div>
+                <div class="dg-ia-elbow-down2"></div>
+              </div>
+
+              <div class="dg-ia-center">
+                <div class="dg-ia-box navy">ראשי</div>
+              </div>
+
+              <div class="dg-ia-branch">
+                <div class="dg-ia-branch-bar n2"></div>
+                <div class="dg-ia-children">
+
+                  <div class="dg-ia-child">
+                    <div class="dg-ia-group peach">
+                      <div class="dg-ia-group-label orange">ממשק הורה מאומת</div>
+                      <div class="dg-ia-box navy">ממשק הורה</div>
+
+                      <div class="dg-ia-branch small">
+                        <div class="dg-ia-branch-bar n2"></div>
+                        <div class="dg-ia-children">
+                          <div class="dg-ia-child">
+                            <div class="dg-ia-box orange">FAB - כפתור צף</div>
+                            <div class="dg-ia-branch small">
+                              <div class="dg-ia-branch-bar n2"></div>
+                              <div class="dg-ia-children">
+                                <div class="dg-ia-child"><div class="dg-ia-box teal">הוספת משימה</div></div>
+                                <div class="dg-ia-child"><div class="dg-ia-box teal">הוספת אירוע</div></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="dg-ia-child">
+                            <div class="dg-ia-box navy">Top Bar</div>
+                            <div class="dg-ia-branch small">
+                              <div class="dg-ia-branch-bar n3"></div>
+                              <div class="dg-ia-children">
+                                <div class="dg-ia-child">
+                                  <div class="dg-ia-box teal">היום</div>
+                                  <div class="dg-ia-vline small"></div>
+                                  <div class="dg-ia-box tealdark">מסך היום</div>
+                                </div>
+                                <div class="dg-ia-child">
+                                  <div class="dg-ia-box teal">מחר</div>
+                                  <div class="dg-ia-vline small"></div>
+                                  <div class="dg-ia-box tealdark">מסך מחר</div>
+                                </div>
+                                <div class="dg-ia-child">
+                                  <div class="dg-ia-box teal">כל המשימות</div>
+                                  <div class="dg-ia-vline small"></div>
+                                  <div class="dg-ia-box tealdark">כל משימות</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="dg-ia-child">
+                    <div class="dg-ia-group mint">
+                      <div class="dg-ia-group-label green">ממשק ילד – גיל 7-8</div>
+                      <div class="dg-ia-box green">ממשק ילד</div>
+                      <div class="dg-ia-vline"></div>
+                      <div class="dg-ia-box navy">Top Bar – ילד</div>
+                      <div class="dg-ia-branch small">
+                        <div class="dg-ia-branch-bar n2"></div>
+                        <div class="dg-ia-children">
+                          <div class="dg-ia-child"><div class="dg-ia-box teal">מסך בית</div></div>
+                          <div class="dg-ia-child"><div class="dg-ia-box teal">מסך משימות</div></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <p style="text-align:center;color:rgba(255,255,255,.5);margin-top:18px;font-size:13px;">תרשים ארכיטקטורת המידע המלא זמין גם בקובץ הפרויקט בפיגמה.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="dg-section">
+      <div class="dg-wrap">
+        <div class="dg-card">
+          <h3>מסכים</h3>
+          <div class="dg-screens-row" style="margin-top:20px;">
+            <div class="dg-screen-slot reveal"><img src="assets/dg-screen-home.png" alt="מסך הבית - משימות היום, התקדמות ואירועים קרובים"></div>
+            <div class="dg-screen-slot reveal"><img src="assets/dg-screen-complete.png" alt="אישור השלמת משימה בהצלחה"></div>
+            <div class="dg-screen-slot reveal"><img src="assets/dg-screen-celebrate.png" alt="מסך חגיגה על השלמת כל המשימות וצבירת נקודות"></div>
+          </div>
+          <p style="text-align:center;color:rgba(255,255,255,.6);margin-top:16px;">צילומי המסך המלאים של האפליקציה זמינים בקובץ הפרויקט בפיגמה.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <section class="case-bottom-cta">
+    <div class="wrap" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <a href="index.html#work" class="btn btn-outline">חזרה לכל הפרויקטים</a>
+      <a href="https://www.figma.com/design/JE3mKJIgMTCQ2wiWEeECUQ/%D7%90%D7%A4%D7%9C%D7%99%D7%A7%D7%A6%D7%99%D7%94-%D7%9C%D7%A0%D7%99%D7%94%D7%95%D7%9C-%D7%9E%D7%A9%D7%A7-%D7%91%D7%99%D7%AA-%D7%92%D7%A8%D7%A1%D7%94-%D7%A1%D7%95%D7%A4%D7%99%D7%AA?node-id=0-1&p=f&t=8bijHkdGFVTNMRxx-0" target="_blank" rel="noopener" class="btn btn-primary">לפרויקט המלא</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    Digital Creative &amp; UX/UI Designer • טיאנה פולקנפולק 2026 ©
+    <span class="footer-hint">יש כאן עוד סצנה אחת... (רמז: נסו תנועה)</span>
+  </div>
+  <div class="stinger" id="stinger">
+    <div class="stinger-inner">
+      <div class="stinger-label">POST-CREDITS SCENE</div>
+      <div class="stinger-text">אם הגעת עד לפה, כנראה שגם אתה מהסוג שקורא קרדיטים עד הסוף (ושותה יותר מדי קפה). <a href="contact.html">בואו נדבר</a>.</div>
+    </div>
+  </div>
+</footer>
+
+<div class="trivia-teaser" id="trivia-teaser">
+  <button class="trivia-teaser-close" aria-label="סגירה">&times;</button>
+  <a href="about.html#trivia" class="trivia-teaser-link">
+    <span class="trivia-teaser-emoji">☕</span>
+    <span class="trivia-teaser-text">רגע...<strong>בואו נכיר קצת יותר</strong></span>
+  </a>
+</div>
+
+<a href="https://wa.me/972525218873" target="_blank" rel="noopener" class="whatsapp-fab" aria-label="שליחת הודעה בוואטסאפ">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.298-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/></svg>
+</a>
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mix.Match — מיתוג וספר מותג | טיאנה פולקנפולק</title>
+<meta name="description" content="קייס-סטאדי: מיתוג וספר מותג לקונספט חדש - Mix.Match.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Poppins:wght@400;700&family=Heebo:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+.mm-case{ direction:ltr; font-family:'Heebo',sans-serif; }
+.mm-case .mm-wrap{ max-width:955px; margin:0 auto; padding:0 24px; }
+.mm-hero{ background:#134E6E; padding:64px 24px; text-align:center; }
+.mm-hero .mm-tag{ font-family:'Heebo',sans-serif; font-weight:500; font-size:12px; letter-spacing:.05em; color:#C97B6F; text-transform:uppercase; margin-bottom:20px; }
+.mm-hero .mm-logo{ font-family:'Poppins',sans-serif; font-weight:700; font-size:22px; color:#fff; letter-spacing:.08em; margin-bottom:18px; }
+.mm-hero .mm-logo span{ color:#C97B6F; }
+.mm-hero p{ color:#fff; font-size:17px; max-width:320px; margin:0 auto; line-height:1.5; }
+.mm-section{ padding:70px 0; overflow:hidden; }
+.mm-section.bg-navy{ background:#134E6E; }
+.mm-section.bg-white{ background:#FFFFFF; }
+.mm-section.bg-lightblue{ background:#C7E3F5; }
+.mm-slidetag{ display:flex; align-items:center; gap:12px; margin-bottom:24px; }
+.mm-slidetag .num{ font-family:'Poppins',sans-serif; font-size:12px; color:#C97B6F; }
+.mm-slidetag .bar{ width:32px; height:3px; border-radius:1.5px; background:linear-gradient(90deg,#C97B6F 0%,#73BAE5 100%); }
+.mm-slidetag .label{ font-family:'Heebo',sans-serif; font-weight:500; font-size:12px; color:#73BAE5; }
+.bg-navy .mm-slidetag .label{ color:#8FC7EB; }
+.mm-grid-2{ display:flex; gap:40px; flex-wrap:wrap; }
+.mm-grid-2 > *{ flex:1 1 300px; min-width:0; }
+.mm-h1{ font-family:'Poppins',sans-serif; font-weight:400; font-size:clamp(28px,4vw,44px); line-height:1.4; color:#134E6E; margin-bottom:20px; }
+.bg-navy .mm-h1{ color:#fff; }
+.mm-h2{ font-family:'Poppins',sans-serif; font-weight:400; font-size:clamp(24px,3vw,32px); line-height:1.4; color:#134E6E; margin-bottom:16px; }
+.bg-navy .mm-h2{ color:#fff; }
+.mm-body{ font-size:16px; line-height:1.6; color:#134E6E; }
+.bg-navy .mm-body{ color:#fff; }
+.mm-body-sm{ font-size:14px; line-height:1.5; color:#134E6E; }
+.bg-navy .mm-body-sm{ color:#fff; }
+
+/* 01 problem */
+.mm-stat{ display:flex; align-items:center; gap:20px; flex-direction:column; }
+.mm-stat .num{ font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(70px,10vw,120px); color:#C97B6F; line-height:1; }
+.mm-stat .bar{ width:48px; height:6px; border-radius:3px; background:rgba(19,78,110,.25); }
+.mm-stat p{ color:rgba(19,78,110,.85); font-size:15px; text-align:center; max-width:260px; }
+
+/* 02 insight */
+.mm-quote{ display:flex; gap:14px; align-items:flex-start; margin-top:20px; }
+.mm-quote .bar{ width:2px; flex:0 0 2px; height:42px; background:#73BAE5; }
+
+.mm-dots{ margin-top:40px; }
+.mm-dots-row{ display:flex; align-items:flex-end; gap:14px; margin-bottom:10px; }
+.mm-dots-row .dot{ border-radius:50%; }
+.mm-dots-labels{ display:flex; justify-content:space-between; font-size:11px; letter-spacing:.05em; color:#73BAE5; }
+.mm-dots-labels .end{ color:#C97B6F; }
+
+/* cards */
+.mm-card{ border-radius:6px; padding:40px; }
+.mm-card.white{ background:#fff; }
+.mm-card.lightblue{ background:#C7E3F5; }
+.mm-card.navy{ background:#134E6E; }
+.mm-list-dot{ display:flex; align-items:center; gap:14px; margin-top:16px; }
+.mm-list-dot .dot{ width:6px; height:6px; border-radius:3px; background:#C97B6F; flex:none; }
+.mm-list-dot span{ font-family:'Poppins',sans-serif; font-size:22px; color:#134E6E; }
+
+.mm-pill-row{ display:flex; gap:8px; flex-wrap:wrap; margin-top:20px; }
+.mm-pill{ background:#C7E3F5; color:#134E6E; font-size:12px; font-weight:500; padding:8px 12px; border-radius:6px; }
+.mm-pill.on-navy{ background:rgba(255,255,255,.12); color:#fff; }
+.mm-pill.on-white{ background:#fff; color:#134E6E; }
+
+/* color swatches */
+.mm-swatches{ display:flex; gap:14px; flex-wrap:wrap; margin-top:20px; }
+.mm-swatch{ width:110px; }
+.mm-swatch .chip{ width:100%; height:72px; border-radius:6px; margin-bottom:6px; }
+.mm-swatch .name{ font-size:12px; font-weight:500; color:#134E6E; }
+.mm-swatch .hex{ font-size:12px; color:#73BAE5; }
+.mm-swatch .desc{ font-size:12px; color:#134E6E; }
+
+.mm-divider{ height:1px; background:#73BAE5; margin:24px 0; }
+.mm-rule{ font-size:15px; font-weight:500; color:#C97B6F; margin-bottom:8px; }
+.mm-caption{ font-size:12px; font-weight:500; letter-spacing:.05em; color:#73BAE5; margin-bottom:10px; }
+.mm-gradient-bar{ height:12px; border-radius:6px; background:linear-gradient(90deg,#C97B6F 0%,#73BAE5 100%); margin-bottom:20px; }
+.mm-legend{ display:flex; gap:20px; flex-wrap:wrap; }
+.mm-legend-item{ display:flex; align-items:center; gap:8px; font-size:12px; color:#134E6E; }
+.mm-legend-item .dot{ width:10px; height:10px; border-radius:5px; flex:none; }
+
+/* signal list */
+.mm-signal{ display:flex; gap:18px; margin-top:24px; align-items:flex-start; }
+.mm-signal .dot{ width:36px; height:36px; border-radius:10px; flex:none; margin-top:6px; }
+.mm-signal h4{ font-size:14px; font-weight:600; color:#fff; margin-bottom:6px; }
+.mm-signal p{ font-size:14px; color:#fff; line-height:1.5; }
+
+/* typography cards */
+.mm-type-sample{ font-family:'Poppins',sans-serif; font-size:clamp(34px,5vw,56px); color:#134E6E; margin:14px 0; }
+.mm-type-sample.heebo{ font-family:'Heebo',sans-serif; font-weight:300; }
+
+/* principles / applications grid */
+.mm-mini-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:20px; }
+.mm-mini-card{ background:#fff; border-radius:6px; padding:24px; }
+.bg-lightblue .mm-mini-card{ background:#fff; }
+.mm-mini-card .t{ font-family:'Poppins',sans-serif; font-size:22px; color:#134E6E; margin-bottom:6px; }
+.mm-mini-card .s{ font-size:13px; color:#73BAE5; }
+
+.mm-app-card{ background:#C7E3F5; border-radius:6px; padding:20px; }
+.mm-app-card .n{ font-size:12px; color:#73BAE5; margin-bottom:6px; }
+.mm-app-card .t{ font-size:13px; font-weight:600; color:#134E6E; margin-bottom:6px; }
+.mm-app-card .s{ font-size:12px; color:#134E6E; line-height:1.5; }
+
+/* tokens */
+.mm-token-row{ display:flex; align-items:flex-start; gap:14px; padding:14px 0; border-bottom:1px solid rgba(255,255,255,.12); }
+.mm-token-row .swab{ width:32px; height:10px; border-radius:5px; flex:none; margin-top:5px; }
+.mm-token-row .t{ font-size:12px; font-weight:500; color:#fff; margin-bottom:4px; }
+.mm-token-row .s{ font-size:12px; color:#fff; }
+.mm-token-row .hex{ font-size:12px; color:#C97B6F; white-space:nowrap; }
+
+.mm-tag-item{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 0; }
+.mm-tag-item .name{ font-size:14px; color:#fff; }
+.mm-tag-item .pill{ background:rgba(255,255,255,.12); color:#fff; font-size:12px; padding:5px 10px; border-radius:6px; white-space:nowrap; }
+
+@media (max-width:700px){
+  .mm-mini-grid{ grid-template-columns:1fr; }
+  .mm-grid-2{ gap:24px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav">
+    <ul class="nav-links">
+      <li><a href="index.html">בית</a></li>
+      <li><a href="about.html">מי אני</a></li>
+      <li><a href="contact.html">צור קשר</a></li>
+    </ul>
+    <div class="brand">טיאנה פולקנפולק</div>
+    <button class="menu-toggle" aria-label="פתיחת תפריט">&#9776;</button>
+  </nav>
+  <div class="mobile-menu">
+    <a href="index.html">בית</a>
+    <a href="about.html">מי אני</a>
+    <a href="contact.html">צור קשר</a>
+  </div>
+</header>
+
+<main>
+  <section class="case-page-header">
+    <div class="wrap">
+      <a href="index.html#work" class="case-back">חזרה לפרויקטים</a>
+      <div class="eyebrow">Brand Identity · Brand Book</div>
+      <h1>מיתוג וספר מותג לקונספט חדש - Mix.Match</h1>
+      <p>ספר מותג מלא לאפליקציית ארגון ארון בגדים - קונספט הלוגו שאוב מארכיטקטורת הארון (מדפים ותאים, לא הבגד עצמו). פלטת צבעים, טיפוגרפיה, עקרונות מותג ויישומים דיגיטליים ומודפסים.</p>
+      <a href="https://www.figma.com/design/1CIw1WwBrp2iyOqu9TDNGZ/Mix---Match-%E2%80%94-Brand-Book--Digital-Rebuild-?node-id=38-2&p=f&t=dHbAM503AZaUQivE-0" target="_blank" rel="noopener" class="case-figma-btn">פתיחת קובץ הפרויקט בפיגמה</a>
+    </div>
+  </section>
+
+  <div class="mm-case">
+
+    <div class="mm-hero">
+      <div class="mm-tag">CASE STUDY</div>
+      <img src="assets/mixmatch-logo.png" alt="Mix.Match logo" style="width:150px;margin:0 auto 18px;">
+      <p>Helping you rediscover the value of the clothes you already own.</p>
+    </div>
+
+    <section class="mm-section bg-white">
+      <div class="mm-wrap mm-grid-2">
+        <div>
+          <div class="mm-slidetag"><span class="num">01</span><span class="bar"></span><span class="label">The Problem</span></div>
+          <h2 class="mm-h1">A full closet.<br>Nothing to wear.</h2>
+          <p class="mm-body">Many women stand in front of a full closet and still feel they have nothing to wear, not because they lack clothes, but because it's hard to see all the possibilities they already have.</p>
+        </div>
+        <div class="mm-stat">
+          <div class="num">50%</div>
+          <div class="bar"></div>
+          <p>of what's already in her closet goes unworn.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mm-section bg-navy">
+      <div class="mm-wrap mm-grid-2">
+        <div>
+          <div class="mm-slidetag"><span class="num">02</span><span class="bar"></span><span class="label">The Insight</span></div>
+          <h2 class="mm-h1">More options.<br>Harder decisions.</h2>
+        </div>
+        <div>
+          <p class="mm-body">The more options you have, the harder it becomes to decide. This is a well-known phenomenon in UX and the psychology of decision-making: choice overload creates difficulty, even when there's abundance.</p>
+          <div class="mm-quote">
+            <div class="bar"></div>
+            <p class="mm-body">Choice overload creates difficulty, even when there's abundance.</p>
+          </div>
+        </div>
+      </div>
+      <div class="mm-wrap mm-dots">
+        <div class="mm-dots-row">
+          <div class="dot" style="width:8px;height:8px;background:#73BAE5"></div>
+          <div class="dot" style="width:13px;height:13px;background:#84ADCD"></div>
+          <div class="dot" style="width:18px;height:18px;background:#95A1B6"></div>
+          <div class="dot" style="width:24px;height:24px;background:#A7949E"></div>
+          <div class="dot" style="width:29px;height:29px;background:#B88887"></div>
+          <div class="dot" style="width:34px;height:34px;background:#C97B6F"></div>
+        </div>
+        <div class="mm-dots-labels"><span>FEW CHOICES</span><span class="end">DECISION FATIGUE</span></div>
+      </div>
+    </section>
+
+    <section class="mm-section bg-white" style="padding-top:0;padding-bottom:0;">
+      <div class="mm-wrap" style="padding:0;">
+        <div class="mm-grid-2" style="gap:0;">
+          <div class="mm-card lightblue">
+            <div class="mm-slidetag"><span class="num">03</span><span class="bar"></span><span class="label">Brand Promise</span></div>
+            <h3 class="mm-h2">Helping you rediscover the value of the clothes you already own.</h3>
+            <p class="mm-body-sm">Alternate direction: "Transforming wardrobe chaos into confident choices." This describes a change in the user's life, not a feature.</p>
+          </div>
+          <div class="mm-card white">
+            <div class="mm-slidetag"><span class="num">04</span><span class="bar"></span><span class="label">Vision</span></div>
+            <p class="mm-body">A world where every wardrobe reaches its full potential.</p>
+            <div class="mm-list-dot"><div class="dot"></div><span>Rediscover.</span></div>
+            <div class="mm-list-dot"><div class="dot"></div><span>Simplify.</span></div>
+            <div class="mm-list-dot"><div class="dot"></div><span>Wear more.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mm-section bg-white">
+      <div class="mm-wrap mm-grid-2">
+        <div>
+          <div class="mm-slidetag"><span class="num">05</span><span class="bar"></span><span class="label">Brand Concept: Logo</span></div>
+          <h2 class="mm-h1">Wardrobe architecture, not clothing.</h2>
+          <p class="mm-body">Instead of representing clothing itself, it represents the invisible structure behind every organized wardrobe. Just as a wardrobe is carefully planned into functional compartments, Mix &amp; Match helps users organize their clothing into meaningful combinations.</p>
+          <div class="mm-pill-row">
+            <span class="mm-pill">Shelves.</span>
+            <span class="mm-pill">Sections.</span>
+            <span class="mm-pill">Balance.</span>
+            <span class="mm-pill">Modularity.</span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;">
+          <img src="assets/mixmatch-logo.png" alt="Mix.Match logo" style="width:240px;">
+        </div>
+      </div>
+    </section>
+
+    <section class="mm-section bg-white">
+      <div class="mm-wrap">
+        <div class="mm-slidetag"><span class="num">06</span><span class="bar"></span><span class="label">Color, with Intention</span></div>
+        <div class="mm-grid-2">
+          <div>
+            <h2 class="mm-h2">We don't just show colors.</h2>
+            <p class="mm-body-sm">We explain the decisions behind them.</p>
+          </div>
+          <div>
+            <div class="mm-caption">Main Colors · Blue for all main backgrounds and headlines. Rose is reserved for CTAs only.</div>
+            <div class="mm-swatches">
+              <div class="mm-swatch"><div class="chip" style="background:#73BAE5"></div><div class="name">Sky Blue</div><div class="hex">#73bae5</div><div class="desc">Trust. Digital confidence. Organization.</div></div>
+              <div class="mm-swatch"><div class="chip" style="background:#8FC7EB"></div><div class="name">Sky 2</div><div class="hex">#8fc7eb</div><div class="desc">Light surface. Hover state.</div></div>
+              <div class="mm-swatch"><div class="chip" style="background:#ABD6F0"></div><div class="name">Sky 3</div><div class="hex">#abd6f0</div><div class="desc">Backgrounds.</div></div>
+              <div class="mm-swatch"><div class="chip" style="background:#C7E3F5"></div><div class="name">Sky 4</div><div class="hex">#c7e3f5</div><div class="desc">Page ground.</div></div>
+              <div class="mm-swatch"><div class="chip" style="background:#C97B6F"></div><div class="name">Rose</div><div class="hex">#c97b6f</div><div class="desc">Creativity. Fashion. Expression.</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="mm-divider"></div>
+        <div class="mm-rule">Rule: blue and rose are the two intentional colors. Keep rose to accents, not backgrounds.</div>
+        <div class="mm-caption" style="margin-top:16px;">THE CATEGORY ACCENTS, ALONG THE ROSE → BLUE GRADIENT</div>
+        <div class="mm-gradient-bar"></div>
+        <div class="mm-legend">
+          <div class="mm-legend-item"><div class="dot" style="background:#C97B6F"></div>Rose #c97b6f</div>
+          <div class="mm-legend-item"><div class="dot" style="background:#E7A29A"></div>Accessories #e7a29a</div>
+          <div class="mm-legend-item"><div class="dot" style="background:#E6AD85"></div>Shoes #e6ad85</div>
+          <div class="mm-legend-item"><div class="dot" style="background:#98D8E2"></div>Outerwear #98d8e2</div>
+          <div class="mm-legend-item"><div class="dot" style="background:#73BAE5"></div>Blue #73bae5</div>
+          <div class="mm-legend-item"><div class="dot" style="background:#7B95CC"></div>Tops #7b95cc</div>
+          <div class="mm-legend-item"><div class="dot" style="background:#CCD6ED"></div>Bottoms #ccd6ed</div>
+        </div>
+        <p class="mm-body-sm" style="margin-top:20px;">The color system follows the same idea as the wardrobe itself: everything has a place. Each accent's position here reflects its real relationship to the two anchors, blue and rose, not a guess.</p>
+      </div>
+    </section>
+
+    <section class="mm-section bg-navy">
+      <div class="mm-wrap mm-grid-2">
+        <div>
+          <div class="mm-slidetag"><span class="num">07</span><span class="bar"></span><span class="label">What Colors Signal</span></div>
+          <h2 class="mm-h2">A palette that's calm and current everywhere.</h2>
+          <p class="mm-body-sm">The palette needed to feel like a contemporary, light digital product, never heavy, while still giving the user a sense of confidence and control.</p>
+        </div>
+        <div>
+          <div class="mm-signal"><div class="dot" style="background:#73BAE5"></div><div><h4>Calm, by Design</h4><p>Sky Blue dominates almost every page. Light blue reads as trust and mental clarity, the opposite of closet-induced anxiety. It quietly tells the user: this is handled, you can relax.</p></div></div>
+          <div class="mm-signal"><div class="dot" style="background:#C97B6F"></div><div><h4>One Warm Voice</h4><p>Rose is the only warm color in the core palette (blue, navy, emerald), so it stands out wherever it's used. It carries the human, expressive side that blue alone can't say.</p></div></div>
+          <div class="mm-signal"><div class="dot" style="background:#4F9E78"></div><div><h4>A Quiet Bonus</h4><p>Emerald reinforces the promise of rediscovering value in what you already own: a hint of renewal and sustainability, without turning the brand into an eco-lecture.</p></div></div>
+          <div class="mm-signal"><div class="dot" style="background:#3A6E91;border:1px solid rgba(255,255,255,.4)"></div><div><h4>Grounding Weight</h4><p>Navy anchors every screen — headlines, primary text, and structure all live here so the lighter accents can do their job.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mm-section bg-white">
+      <div class="mm-wrap">
+        <div class="mm-slidetag"><span class="num">08</span><span class="bar"></span><span class="label">Typography Strategy</span></div>
+        <div class="mm-grid-2" style="gap:16px;">
+          <div class="mm-card white" style="border:1px solid #eee;">
+            <div class="mm-caption">Display</div>
+            <div class="mm-type-sample">Poppins</div>
+            <p class="mm-body-sm">Adds personality. Chosen to bring an editorial, fashion-forward voice to headlines and brand moments.</p>
+            <div class="mm-pill-row">
+              <span class="mm-pill">Editorial influence.</span>
+              <span class="mm-pill">Fashion-inspired.</span>
+              <span class="mm-pill">Human.</span>
+            </div>
+          </div>
+          <div class="mm-card lightblue">
+            <div class="mm-caption">Body</div>
+            <div class="mm-type-sample heebo">Heebo</div>
+            <p class="mm-body-sm">Built for clarity. Chosen because it was designed for digital interfaces: clean, legible, and calm at every size.</p>
+            <div class="mm-pill-row">
+              <span class="mm-pill on-white">Optimized for digital.</span>
+              <span class="mm-pill on-white">Clean.</span>
+              <span class="mm-pill on-white">Functional.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mm-section bg-lightblue">
+      <div class="mm-wrap">
+        <div class="mm-slidetag"><span class="num">09</span><span class="bar"></span><span class="label">Brand Principles</span></div>
+        <div class="mm-grid-2">
+          <div>
+            <h2 class="mm-h2">Not values. Principles.</h2>
+            <p class="mm-body-sm">The rules that connect this brand to the product itself.</p>
+          </div>
+          <div class="mm-mini-grid">
+            <div class="mm-mini-card"><div class="t">Organized</div><div class="s">Everything has a place.</div></div>
+            <div class="mm-mini-card"><div class="t">Personal</div><div class="s">No trends. Only you.</div></div>
+            <div class="mm-mini-card"><div class="t">Effortless</div><div class="s">Reduce decision fatigue.</div></div>
+            <div class="mm-mini-card"><div class="t">Sustainable</div><div class="s">Use more. Buy smarter.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mm-section bg-white">
+      <div class="mm-wrap">
+        <div class="mm-slidetag"><span class="num">10</span><span class="bar"></span><span class="label">Applications</span></div>
+        <div class="mm-grid-2">
+          <div>
+            <h2 class="mm-h2">One system, not a collection of designs.</h2>
+            <p class="mm-body-sm">Not mockups. This is how the brand lives, across every touchpoint.</p>
+          </div>
+          <div class="mm-mini-grid">
+            <div class="mm-app-card"><div class="n">01</div><div class="t">Tone of Voice</div><div class="s">Warm, clear, and human. Never trend-chasing.</div></div>
+            <div class="mm-app-card"><div class="n">02</div><div class="t">UI</div><div class="s">Glass, glow and soft gradient bring the palette to life.</div></div>
+            <div class="mm-app-card"><div class="n">03</div><div class="t">Social</div><div class="s">Consistent color blocking makes every post recognizable.</div></div>
+            <div class="mm-app-card"><div class="n">04</div><div class="t">Campaign</div><div class="s">Real wardrobes, real people. No idealized studio shots.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mm-section bg-navy">
+      <div class="mm-wrap">
+        <div class="mm-slidetag"><span class="num">11</span><span class="bar"></span><span class="label">Design Tokens</span></div>
+        <h2 class="mm-h2">How color is actually used across the app.</h2>
+        <p class="mm-body-sm" style="margin-bottom:30px;">Not just the palette.</p>
+        <div class="mm-grid-2">
+          <div class="mm-card navy" style="padding:24px;">
+            <div class="mm-caption">Category Tags in Practice</div>
+            <div class="mm-tag-item"><span class="name">Denim jacket</span><span class="pill">Outerwear</span></div>
+            <div class="mm-tag-item"><span class="name">White tee</span><span class="pill">Tops</span></div>
+            <div class="mm-tag-item"><span class="name">High-waist jeans</span><span class="pill">Bottoms</span></div>
+            <div class="mm-tag-item"><span class="name">White sneakers</span><span class="pill">Shoes</span></div>
+            <div class="mm-tag-item"><span class="name">Sunglasses</span><span class="pill">Accessories</span></div>
+          </div>
+          <div>
+            <div class="mm-caption">App Screen Tokens</div>
+            <div class="mm-token-row"><div class="swab" style="background:linear-gradient(90deg,#C7E3F5,#73BAE5)"></div><div style="flex:1"><div class="t">Surface Light</div><div class="s">Onboarding</div></div><div class="hex">#c7e3f5 → #73bae5</div></div>
+            <div class="mm-token-row"><div class="swab" style="background:linear-gradient(90deg,#FFFFFF,#C7E3F5)"></div><div style="flex:1"><div class="t">Surface Glass</div><div class="s">Home, Outfit suggestion, Your closet</div></div><div class="hex">#ffffff → #c7e3f5</div></div>
+            <div class="mm-token-row"><div class="swab" style="background:linear-gradient(90deg,#73BAE5,#134E6E)"></div><div style="flex:1"><div class="t">Surface Focus</div><div class="s">Scan screen only</div></div><div class="hex">#73bae5 → #134e6e</div></div>
+            <div class="mm-token-row"><div class="swab" style="background:#fff;border:1px solid #73BAE5"></div><div style="flex:1"><div class="t">Surface Elevated</div><div class="s">Cards, tab bar, list rows</div></div><div class="hex">White 90%</div></div>
+            <div class="mm-token-row"><div class="swab" style="background:#C97B6F"></div><div style="flex:1"><div class="t">Accent Strong (CTA)</div><div class="s">Buttons and CTAs ONLY. Never backgrounds or headlines.</div></div><div class="hex">#c97b6f</div></div>
+            <div class="mm-token-row"><div class="swab" style="background:linear-gradient(90deg,#134E6E,rgba(19,78,110,.7))"></div><div style="flex:1"><div class="t">Text Primary / Secondary</div><div class="s">Primary: headlines &amp; body. Secondary: supporting/meta.</div></div><div class="hex">Navy 100%/70%</div></div>
+            <div class="mm-token-row"><div class="swab" style="background:#134E6E;border:1px solid rgba(255,255,255,.6)"></div><div style="flex:1"><div class="t">Bezel / Scrim</div><div class="s">Phone frame strokes, bottom overlays.</div></div><div class="hex">#134e6e</div></div>
+            <div class="mm-token-row" style="border-bottom:none;"><div class="swab" style="background:#4F9E77"></div><div style="flex:1"><div class="t">Rediscovered Badge (Emerald)</div><div class="s">One color, one meaning: resurfaced closet items only.</div></div><div class="hex">#4f9e77</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <section class="case-bottom-cta">
+    <div class="wrap" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <a href="index.html#work" class="btn btn-outline">חזרה לכל הפרויקטים</a>
+      <a href="https://www.figma.com/design/1CIw1WwBrp2iyOqu9TDNGZ/Mix---Match-%E2%80%94-Brand-Book--Digital-Rebuild-?node-id=38-2&p=f&t=dHbAM503AZaUQivE-0" target="_blank" rel="noopener" class="btn btn-primary">לפרויקט המלא</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    Digital Creative &amp; UX/UI Designer • טיאנה פולקנפולק 2026 ©
+    <span class="footer-hint">יש כאן עוד סצנה אחת... (רמז: נסו תנועה)</span>
+  </div>
+  <div class="stinger" id="stinger">
+    <div class="stinger-inner">
+      <div class="stinger-label">POST-CREDITS SCENE</div>
+      <div class="stinger-text">אם הגעת עד לפה, כנראה שגם אתה מהסוג שקורא קרדיטים עד הסוף (ושותה יותר מדי קפה). <a href="contact.html">בואו נדבר</a>.</div>
+    </div>
+  </div>
+</footer>
+
+<div class="trivia-teaser" id="trivia-teaser">
+  <button class="trivia-teaser-close" aria-label="סגירה">&times;</button>
+  <a href="about.html#trivia" class="trivia-teaser-link">
+    <span class="trivia-teaser-emoji">☕</span>
+    <span class="trivia-teaser-text">רגע...<strong>בואו נכיר קצת יותר</strong></span>
+  </a>
+</div>
+
+<a href="https://wa.me/972525218873" target="_blank" rel="noopener" class="whatsapp-fab" aria-label="שליחת הודעה בוואטסאפ">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.298-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/></svg>
+</a>
+
+<script src="js/main.js"></script>
+</body>
+</html>
