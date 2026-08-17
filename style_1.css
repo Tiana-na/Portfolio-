@@ -410,7 +410,7 @@ section{ padding: 90px 0; }
   .work-row{ flex-direction:column; }
   .work-row .work-image{ flex: 0 0 220px; }
   .work-content{ padding: 24px; }
-  .work-tags{ justify-content:center; }
+  .work-tags{ justify-content:flex-start; }
 }
 
 /* ===== Case study page ===== */
@@ -470,6 +470,13 @@ section{ padding: 90px 0; }
 .case-bottom-cta{
   text-align:center;
   padding-bottom: 40px;
+}
+
+.case-bottom-buttons{
+  display:flex;
+  gap: 16px;
+  justify-content:center;
+  flex-wrap:wrap;
 }
 
 /* ===== Contact ===== */
