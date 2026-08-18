@@ -356,7 +356,7 @@ section{ padding: 90px 0; }
   display:flex;
   gap: 8px;
   flex-wrap:wrap;
-  justify-content:flex-end;
+  justify-content:flex-start;
   margin-bottom: 18px;
 }
 
@@ -370,6 +370,11 @@ section{ padding: 90px 0; }
   border-radius: 6px;
   white-space:nowrap;
 }
+
+/* per-project tag colors, matching each case study's brand color */
+.work-tags--b2b .work-tag{ color:#2563EB; border-color:rgba(37,99,235,.4); }
+.work-tags--dogether .work-tag{ color:#F26D0E; border-color:rgba(242,109,14,.4); }
+.work-tags--mixmatch .work-tag{ color:#73BAE5; border-color:rgba(115,186,229,.4); }
 
 .work-content h3{
   font-size: 1.25rem;
@@ -414,7 +419,6 @@ section{ padding: 90px 0; }
   .work-row .work-image{ flex: 0 0 auto; aspect-ratio: 4/3; }
   .work-row .work-image img{ object-fit: contain; padding: 20px; }
   .work-content{ padding: 24px; }
-  .work-tags{ justify-content:center; }
 }
 
 /* ===== Case study page ===== */
