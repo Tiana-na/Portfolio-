@@ -6,7 +6,7 @@
 <title>Mix.Match — מיתוג וספר מותג | טיאנה פולקנפולק</title>
 <meta name="description" content="קייס-סטאדי: מיתוג וספר מותג לקונספט חדש - Mix.Match.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Poppins:wght@400;700&family=Heebo:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Poppins:wght@400;700&family=Heebo:wght@300;400;500;600&family=Inter:wght@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <style>
 .mm-case{ direction:ltr; font-family:'Heebo',sans-serif; }
@@ -41,16 +41,13 @@
 .mm-stat .num{ font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(70px,10vw,120px); color:#C97B6F; line-height:1; }
 .mm-stat .bar{ width:48px; height:6px; border-radius:3px; background:rgba(19,78,110,.25); }
 .mm-stat p{ color:rgba(19,78,110,.85); font-size:15px; text-align:center; max-width:260px; }
+.mm-source{ font-family:'Inter',sans-serif; font-weight:400; font-size:11px; color:rgba(19,78,110,.55); }
+.mm-stat .mm-source{ max-width:300px; text-align:center; margin-top:4px; }
 
 /* 02 insight */
 .mm-quote{ display:flex; gap:14px; align-items:flex-start; margin-top:20px; }
 .mm-quote .bar{ width:2px; flex:0 0 2px; height:42px; background:#73BAE5; }
-
-.mm-dots{ margin-top:40px; }
-.mm-dots-row{ display:flex; align-items:flex-end; gap:14px; margin-bottom:10px; }
-.mm-dots-row .dot{ border-radius:50%; }
-.mm-dots-labels{ display:flex; justify-content:space-between; font-size:11px; letter-spacing:.05em; color:#73BAE5; }
-.mm-dots-labels .end{ color:#C97B6F; }
+.mm-quote-source{ font-family:'Inter',sans-serif; font-weight:400; font-size:11px; color:rgba(19,78,110,.5); max-width:340px; margin-top:10px; }
 
 /* cards */
 .mm-card{ border-radius:6px; padding:40px; }
@@ -61,13 +58,13 @@
 .mm-list-dot .dot{ width:6px; height:6px; border-radius:3px; background:#C97B6F; flex:none; }
 .mm-list-dot span{ font-family:'Poppins',sans-serif; font-size:22px; color:#134E6E; }
 
-.mm-pill-row{ display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:20px; }
+.mm-pill-row{ display:flex; gap:8px; flex-wrap:wrap; margin-top:20px; }
 .mm-pill{ background:#C7E3F5; color:#134E6E; font-size:12px; font-weight:500; padding:8px 12px; border-radius:6px; }
 .mm-pill.on-navy{ background:rgba(255,255,255,.12); color:#fff; }
 .mm-pill.on-white{ background:#fff; color:#134E6E; }
 
 /* color swatches */
-.mm-swatches{ display:flex; gap:14px; flex-wrap:wrap; justify-content:center; margin-top:20px; }
+.mm-swatches{ display:flex; gap:14px; flex-wrap:wrap; margin-top:20px; }
 .mm-swatch{ width:110px; }
 .mm-swatch .chip{ width:100%; height:72px; border-radius:6px; margin-bottom:6px; }
 .mm-swatch .name{ font-size:12px; font-weight:500; color:#134E6E; }
@@ -78,7 +75,7 @@
 .mm-rule{ font-size:15px; font-weight:500; color:#C97B6F; margin-bottom:8px; }
 .mm-caption{ font-size:12px; font-weight:500; letter-spacing:.05em; color:#73BAE5; margin-bottom:10px; }
 .mm-gradient-bar{ height:12px; border-radius:6px; background:linear-gradient(90deg,#C97B6F 0%,#73BAE5 100%); margin-bottom:20px; }
-.mm-legend{ display:flex; gap:20px; flex-wrap:wrap; justify-content:center; }
+.mm-legend{ display:flex; gap:20px; flex-wrap:wrap; }
 .mm-legend-item{ display:flex; align-items:center; gap:8px; font-size:12px; color:#134E6E; }
 .mm-legend-item .dot{ width:10px; height:10px; border-radius:5px; flex:none; }
 
@@ -167,9 +164,10 @@
           <p class="mm-body">Many women stand in front of a full closet and still feel they have nothing to wear, not because they lack clothes, but because it's hard to see all the possibilities they already have.</p>
         </div>
         <div class="mm-stat">
-          <div class="num">50%</div>
+          <div class="num">26%</div>
           <div class="bar"></div>
           <p>of what's already in her closet goes unworn.</p>
+          <p class="mm-source">Source: WRAP (2022)</p>
         </div>
       </div>
     </section>
@@ -186,18 +184,25 @@
             <div class="bar"></div>
             <p class="mm-body">Choice overload creates difficulty, even when there's abundance.</p>
           </div>
+          <p class="mm-quote-source">Sources: Iyengar &amp; Lepper (2000) · Danziger et al. (2011)</p>
         </div>
       </div>
-      <div class="mm-wrap mm-dots">
-        <div class="mm-dots-row">
-          <div class="dot" style="width:8px;height:8px;background:#73BAE5"></div>
-          <div class="dot" style="width:13px;height:13px;background:#84ADCD"></div>
-          <div class="dot" style="width:18px;height:18px;background:#95A1B6"></div>
-          <div class="dot" style="width:24px;height:24px;background:#A7949E"></div>
-          <div class="dot" style="width:29px;height:29px;background:#B88887"></div>
-          <div class="dot" style="width:34px;height:34px;background:#C97B6F"></div>
+    </section>
+
+    <section class="mm-section bg-white">
+      <div class="mm-wrap mm-grid-2">
+        <div>
+          <div class="mm-slidetag"><span class="num">03</span><span class="bar"></span><span class="label">The Cycle</span></div>
+          <h2 class="mm-h1">New clothes.<br>Same disconnect.</h2>
         </div>
-        <div class="mm-dots-labels"><span>FEW CHOICES</span><span class="end">DECISION FATIGUE</span></div>
+        <div>
+          <p class="mm-body">Social pressure keeps the pace of buying constant. Repeating an outfit rarely feels acceptable, so new pieces get bought without a clear view of what's already there, and the same gap repeats.</p>
+          <p class="mm-source" style="max-width:337px;margin-top:8px;">Source: Harris, Roby &amp; Dibb (2016)</p>
+          <div class="mm-quote">
+            <div class="bar"></div>
+            <p class="mm-body">Mix &amp; Match isn't about buying less. It's about making sure every piece, new or old, actually works with what you already own.</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -205,11 +210,11 @@
       <div class="mm-wrap" style="padding:0;">
         <div class="mm-grid-2" style="gap:0;">
           <div class="mm-card lightblue">
-            <div class="mm-slidetag"><span class="num">03</span><span class="bar"></span><span class="label">Brand Promise</span></div>
+            <div class="mm-slidetag"><span class="num">04</span><span class="bar"></span><span class="label">Brand Promise</span></div>
             <h3 class="mm-h2">Helping you rediscover the value of the clothes you already own.</h3>
           </div>
           <div class="mm-card white">
-            <div class="mm-slidetag"><span class="num">04</span><span class="bar"></span><span class="label">Vision</span></div>
+            <div class="mm-slidetag"><span class="num">05</span><span class="bar"></span><span class="label">Vision</span></div>
             <p class="mm-body">A world where every wardrobe reaches its full potential.</p>
             <div class="mm-list-dot"><div class="dot"></div><span>Rediscover.</span></div>
             <div class="mm-list-dot"><div class="dot"></div><span>Simplify.</span></div>
@@ -222,7 +227,7 @@
     <section class="mm-section bg-white">
       <div class="mm-wrap mm-grid-2">
         <div>
-          <div class="mm-slidetag"><span class="num">05</span><span class="bar"></span><span class="label">Brand Concept: Logo</span></div>
+          <div class="mm-slidetag"><span class="num">06</span><span class="bar"></span><span class="label">Brand Concept: Logo</span></div>
           <h2 class="mm-h1">Wardrobe architecture, not clothing.</h2>
           <p class="mm-body">Instead of representing clothing itself, it represents the invisible structure behind every organized wardrobe. Just as a wardrobe is carefully planned into functional compartments, Mix &amp; Match helps users organize their clothing into meaningful combinations.</p>
           <div class="mm-pill-row">
@@ -240,7 +245,7 @@
 
     <section class="mm-section bg-white">
       <div class="mm-wrap">
-        <div class="mm-slidetag"><span class="num">06</span><span class="bar"></span><span class="label">Color, with Intention</span></div>
+        <div class="mm-slidetag"><span class="num">07</span><span class="bar"></span><span class="label">Color, with Intention</span></div>
         <div class="mm-grid-2">
           <div>
             <h2 class="mm-h2">We don't just show colors.</h2>
@@ -277,7 +282,7 @@
     <section class="mm-section bg-navy">
       <div class="mm-wrap mm-grid-2">
         <div>
-          <div class="mm-slidetag"><span class="num">07</span><span class="bar"></span><span class="label">What Colors Signal</span></div>
+          <div class="mm-slidetag"><span class="num">08</span><span class="bar"></span><span class="label">What Colors Signal</span></div>
           <h2 class="mm-h2">A palette that's calm and current everywhere.</h2>
           <p class="mm-body-sm">The palette needed to feel like a contemporary, light digital product, never heavy, while still giving the user a sense of confidence and control.</p>
         </div>
@@ -292,7 +297,7 @@
 
     <section class="mm-section bg-white">
       <div class="mm-wrap">
-        <div class="mm-slidetag"><span class="num">08</span><span class="bar"></span><span class="label">Typography Strategy</span></div>
+        <div class="mm-slidetag"><span class="num">09</span><span class="bar"></span><span class="label">Typography Strategy</span></div>
         <div class="mm-grid-2" style="gap:16px;">
           <div class="mm-card white" style="border:1px solid #eee;">
             <div class="mm-caption">Display</div>
@@ -320,7 +325,7 @@
 
     <section class="mm-section bg-lightblue">
       <div class="mm-wrap">
-        <div class="mm-slidetag"><span class="num">09</span><span class="bar"></span><span class="label">Brand Principles</span></div>
+        <div class="mm-slidetag"><span class="num">10</span><span class="bar"></span><span class="label">Brand Principles</span></div>
         <div class="mm-grid-2">
           <div>
             <h2 class="mm-h2">Not values. Principles.</h2>
@@ -338,7 +343,7 @@
 
     <section class="mm-section bg-white">
       <div class="mm-wrap">
-        <div class="mm-slidetag"><span class="num">10</span><span class="bar"></span><span class="label">Applications</span></div>
+        <div class="mm-slidetag"><span class="num">11</span><span class="bar"></span><span class="label">Applications</span></div>
         <div class="mm-grid-2">
           <div>
             <h2 class="mm-h2">One system, not a collection of designs.</h2>
@@ -356,7 +361,7 @@
 
     <section class="mm-section bg-navy">
       <div class="mm-wrap">
-        <div class="mm-slidetag"><span class="num">11</span><span class="bar"></span><span class="label">Design Tokens</span></div>
+        <div class="mm-slidetag"><span class="num">12</span><span class="bar"></span><span class="label">Design Tokens</span></div>
         <h2 class="mm-h2">How color is actually used across the app.</h2>
         <p class="mm-body-sm" style="margin-bottom:30px;">Not just the palette.</p>
         <div class="mm-grid-2">
