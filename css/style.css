@@ -284,6 +284,11 @@ section{ padding: 90px 0; }
   margin-bottom: 18px;
 }
 
+/* ===== Quiz block (inline, about page) ===== */
+.quiz-block{
+  margin: 44px 0 8px;
+}
+
 /* ===== Cards grid (about page) ===== */
 .card-grid{
   display:grid;
