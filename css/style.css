@@ -96,6 +96,25 @@ header.site-header{
   width:100%;
 }
 
+.nav-cv-btn{
+  display:inline-flex;
+  align-items:center;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  color: var(--accent) !important;
+  font-size: .85rem;
+  font-weight:600;
+  transition: background .15s ease, color .15s ease;
+}
+
+.nav-cv-btn::after{ display:none; }
+
+.nav-cv-btn:hover{
+  background: var(--accent);
+  color: #0d0d0d !important;
+}
+
 .menu-toggle{
   display:none;
   background:none;
@@ -121,6 +140,18 @@ header.site-header{
 }
 
 .mobile-menu a.active{ color: var(--accent); }
+
+.mobile-menu .nav-cv-btn{
+  display:block;
+  width:auto;
+  padding: 12px 0;
+  border-radius:0;
+  border:none;
+  background:none;
+  color: var(--accent) !important;
+}
+
+.mobile-menu .nav-cv-btn:hover{ background:none; color: var(--accent) !important; }
 
 .mobile-menu.open{ display:flex; }
 
@@ -289,7 +320,7 @@ section{ padding: 90px 0; }
 .tag-list{
   display:flex;
   flex-wrap:wrap;
-  justify-content:center;
+  justify-content:flex-start;
   gap: 8px;
 }
 
