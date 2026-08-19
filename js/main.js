@@ -290,6 +290,14 @@ document.addEventListener('DOMContentLoaded', function () {
     touchStart = { x: t.clientX, y: t.clientY };
   }, { passive: true });
 
+  /* once the combo is underway (first swipe already matched), stop the page
+     from scrolling mid-gesture so the rest of the swipes stay stable */
+  document.addEventListener('touchmove', function (e) {
+    if (swipePos > 0) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+
   document.addEventListener('touchend', function (e) {
     if (!touchStart) return;
     var t = e.changedTouches[0];

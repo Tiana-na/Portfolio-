@@ -927,9 +927,9 @@ footer{
 /* ===== Konami code progress indicator ===== */
 .konami-progress{
   position: fixed;
-  bottom: 22px;
+  top: 90px;
   left: 50%;
-  z-index: 70;
+  z-index: 80;
   display:flex;
   gap: 7px;
   padding: 10px 14px;
@@ -938,7 +938,7 @@ footer{
   border-radius: 999px;
   box-shadow: 0 6px 20px rgba(0,0,0,.35);
   opacity: 0;
-  transform: translateX(-50%) translateY(10px);
+  transform: translateX(-50%) translateY(-10px);
   pointer-events: none;
   transition: opacity .2s ease, transform .2s ease, border-color .15s ease;
 }
@@ -946,6 +946,10 @@ footer{
 .konami-progress.show{
   opacity: 1;
   transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 600px){
+  .konami-progress{ top: 78px; }
 }
 
 .konami-progress.fail{
@@ -967,8 +971,4 @@ footer{
 
 .konami-progress.fail .konami-dot.on{
   background: #e28a8a;
-}
-
-@media (max-width: 600px){
-  .konami-progress{ bottom: 16px; }
 }
