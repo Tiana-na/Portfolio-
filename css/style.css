@@ -800,7 +800,7 @@ section{ padding: 90px 0; }
 .trivia-teaser{
   position: fixed;
   left: 22px;
-  bottom: 22px;
+  top: 90px;
   z-index: 60;
   max-width: 300px;
   background: var(--card);
@@ -809,7 +809,7 @@ section{ padding: 90px 0; }
   padding: 16px 18px;
   box-shadow: 0 10px 30px rgba(0,0,0,.4);
   opacity: 0;
-  transform: translateY(16px) scale(.96);
+  transform: translateY(-16px) scale(.96);
   pointer-events: none;
   transition: opacity .5s ease, transform .5s ease;
 }
@@ -860,7 +860,10 @@ section{ padding: 90px 0; }
 }
 
 @media (max-width: 600px){
-  .trivia-teaser{ right: 16px; left: 16px; max-width: none; bottom: 16px; }
+  .trivia-teaser{ right: 16px; left: 16px; max-width: none; top: 78px; padding: 10px 14px; }
+  .trivia-teaser-emoji{ font-size: 1.2rem; }
+  .trivia-teaser-text{ font-size: .78rem; }
+  .trivia-teaser-text strong{ display:inline; margin-top:0; margin-inline-start:4px; }
 }
 
 /* ===== Footer + easter egg ===== */
