@@ -95,108 +95,39 @@
 
   <section class="quiz-section" id="trivia">
     <div class="wrap">
-      <div class="eyebrow reveal">בואו נכיר קצת יותר</div>
-      <p class="reveal">חלק מהשאלות זו עובדה עם תשובה נכונה, וחלק זה סתם אני.</p>
-      <div class="quiz-score">הניקוד שלך: <span id="quiz-score">0</span> / 5</div>
+      <div class="eyebrow reveal">קצת מעבר לקורות החיים: חידון ה-UI, UX וצעצועי הסלון שלי</div>
+      <p class="reveal">6 שאלות מהירות (בדיוק 45 שניות) של פאן פאקטס והרגלי עבודה כדי שנכיר קצת יותר.</p>
+      <button class="btn btn-primary quiz-start-btn reveal" id="quiz-start-btn" type="button">יאללה, בואו נשחק!</button>
 
-      <div class="quiz-list">
+      <div class="quiz-card reveal" id="quiz-card" hidden>
 
-        <div class="quiz-card reveal" data-type="fact">
-          <div class="quiz-badge">עובדה</div>
-          <h3 class="quiz-q">מאיפה מגיע קפה הקופי-לוואק היוקרתי?</h3>
-          <div class="quiz-options">
-            <button class="quiz-option" data-correct="true">עובר תהליך עיכול חלקי במעי של חתול דקלים אסייתי</button>
-            <button class="quiz-option">מגודל בגובה רב במיוחד באנדים</button>
-            <button class="quiz-option">נקטף רק בלילה לאור ירח</button>
-          </div>
-          <div class="quiz-feedback"></div>
+        <div class="quiz-nav">
+          <span class="quiz-progress-text" id="quiz-progress-text">שאלה 1 מתוך 6</span>
+          <button class="quiz-skip-btn" id="quiz-skip-btn" type="button">דילוג לתוצאות ✕</button>
+        </div>
+        <div class="quiz-progress-track">
+          <div class="quiz-progress-bar" id="quiz-progress-bar"></div>
         </div>
 
-        <div class="quiz-card reveal" data-type="fact">
-          <div class="quiz-badge">עובדה</div>
-          <h3 class="quiz-q">על שם מה נקראה שפת התכנות Java?</h3>
-          <div class="quiz-options">
-            <button class="quiz-option" data-correct="true">סוג קפה מאינדונזיה</button>
-            <button class="quiz-option">שם המפתח שלה</button>
-            <button class="quiz-option">עיר בברזיל</button>
-          </div>
-          <div class="quiz-feedback"></div>
+        <div class="quiz-question-block" id="quiz-question-block">
+          <h3 class="quiz-q" id="quiz-q-text"></h3>
+          <div class="quiz-options" id="quiz-q-options"></div>
+          <div class="quiz-feedback" id="quiz-q-feedback"></div>
+          <button class="btn btn-primary quiz-next-btn" id="quiz-next-btn" type="button" hidden>המשך בשאלה הבאה 🚀</button>
         </div>
 
-        <div class="quiz-card reveal" data-type="personal">
-          <div class="quiz-badge">אישי</div>
-          <h3 class="quiz-q">נגמר לך הקפה בבית. מה עושים?</h3>
-          <div class="quiz-options">
-            <button class="quiz-option">שותה ג'ין/שוקו/מים מהברז</button>
-            <button class="quiz-option">הולכת ברגל 5 ק"מ אם צריך כדי לקנות (אפשר גם וולט)</button>
+        <div class="quiz-results" id="quiz-results" hidden>
+          <h3 class="quiz-results-title">הגעת ליעד! 🏁</h3>
+          <p class="quiz-results-text">
+            תודה שפינית כמה דקות כדי לשחק ולגלות קצת מהעולם שלי (ומדע הטילים של הוט ווילס). בין אם מדובר בטיפוס של קפה שחור או הפוך, ובין אם כוח-העל שלך הוא קריאת מחשבות או פשוט לשרוד את פקקי הבוקר - היה לי ממש כיף לארח אותך כאן.
+            <br><br>
+            חוויית המשתמש הבאה שלנו כבר יכולה להיות פגישה אמיתית (או זום קצר) על כוס קפה.
+          </p>
+          <div class="quiz-cta-row">
+            <a href="https://wa.me/972525218873" target="_blank" rel="noopener" class="btn btn-primary">וואטסאפ</a>
+            <a href="https://www.linkedin.com/in/tianafolkenfolk" target="_blank" rel="noopener" class="btn btn-outline">בואו נדבר בלינקדאין</a>
+            <a href="mailto:Folknf.design@gmail.com" class="btn btn-outline">☕ שליחת מייל מהיר "קפה עלינו?"</a>
           </div>
-          <div class="quiz-feedback" data-reveal="אין כאן תשובה נכונה אחת - זה פשוט תלוי כמה נואשת אני 😅"></div>
-        </div>
-
-        <div class="quiz-card reveal" data-type="fact">
-          <div class="quiz-badge">עובדה</div>
-          <h3 class="quiz-q">מי מדובב את גרוט?</h3>
-          <div class="quiz-options">
-            <button class="quiz-option" data-correct="true">וין דיזל</button>
-            <button class="quiz-option">בראדלי קופר</button>
-            <button class="quiz-option">כריס פראט</button>
-          </div>
-          <div class="quiz-feedback"></div>
-        </div>
-
-        <div class="quiz-card reveal" data-type="personal">
-          <div class="quiz-badge">אישי</div>
-          <h3 class="quiz-q">איך נכון לצפות בסרטי מארוול?</h3>
-          <div class="quiz-options">
-            <button class="quiz-option">לפי סדר יציאה</button>
-            <button class="quiz-option">לפי סדר כרונולוגי</button>
-            <button class="quiz-option" data-personal-pick="true">העיקר לראות</button>
-          </div>
-          <div class="quiz-feedback" data-reveal="אין כאן תשובה רשמית נכונה, אבל אצלי זה תמיד &quot;העיקר לראות&quot; ✓"></div>
-        </div>
-
-        <div class="quiz-card reveal" data-type="personal">
-          <div class="quiz-badge">אישי</div>
-          <h3 class="quiz-q">איזה גיבור-על הייתן רוצות להיות?</h3>
-          <div class="quiz-options">
-            <button class="quiz-option">איירון מן - הכסף פותר הכל</button>
-            <button class="quiz-option">ד"ר סטריינג' - לדעת הכל עדיף מכוח</button>
-            <button class="quiz-option">תור - יש לו פטיש</button>
-          </div>
-          <div class="quiz-feedback" data-reveal="אין כאן תשובה נכונה - כל אחת עם הסופרכוח שהיא הייתה בוחרת."></div>
-        </div>
-
-        <div class="quiz-card reveal" data-type="fact">
-          <div class="quiz-badge">עובדה</div>
-          <h3 class="quiz-q">איך נקרא המכשיר שבו סטאר-לורד שומע מוזיקה?</h3>
-          <div class="quiz-options">
-            <button class="quiz-option" data-correct="true">ווקמן</button>
-            <button class="quiz-option">דיסקמן</button>
-            <button class="quiz-option">אייפוד</button>
-          </div>
-          <div class="quiz-feedback"></div>
-        </div>
-
-        <div class="quiz-card reveal" data-type="fact">
-          <div class="quiz-badge">עובדה</div>
-          <h3 class="quiz-q">לאיזו מהסדרות הבאות יש ספר?</h3>
-          <div class="quiz-options">
-            <button class="quiz-option" data-correct="true">המומינים</button>
-            <button class="quiz-option">פרנדס</button>
-            <button class="quiz-option">איך פגשתי את אמא</button>
-          </div>
-          <div class="quiz-feedback"></div>
-        </div>
-
-        <div class="quiz-card reveal" data-type="personal">
-          <div class="quiz-badge">אישי</div>
-          <h3 class="quiz-q">איך את קוראת?</h3>
-          <div class="quiz-options">
-            <button class="quiz-option">ספר אחד בכל פעם, עד הסוף</button>
-            <button class="quiz-option">כמה ספרים במקביל, לפי מצב רוח</button>
-            <button class="quiz-option">מתחילה הרבה, מסיימת מעט</button>
-          </div>
-          <div class="quiz-feedback" data-reveal="אין כאן תשובה נכונה - כל שיטה לגיטימית (כן, גם השלישית)."></div>
         </div>
 
       </div>
