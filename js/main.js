@@ -227,6 +227,40 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 6000);
   }
 
+  /* ---------- konami progress indicator ---------- */
+  var konamiProgress = document.createElement('div');
+  konamiProgress.className = 'konami-progress';
+  konamiProgress.setAttribute('aria-hidden', 'true');
+  for (var ki = 0; ki < seq.length; ki++) {
+    var dot = document.createElement('span');
+    dot.className = 'konami-dot';
+    konamiProgress.appendChild(dot);
+  }
+  document.body.appendChild(konamiProgress);
+  var konamiDots = konamiProgress.querySelectorAll('.konami-dot');
+  var progressHideTimer = null;
+
+  function showProgress(count) {
+    clearTimeout(progressHideTimer);
+    konamiProgress.classList.remove('fail');
+    konamiProgress.classList.add('show');
+    for (var di = 0; di < konamiDots.length; di++) {
+      konamiDots[di].classList.toggle('on', di < count);
+    }
+  }
+
+  function failProgress() {
+    konamiProgress.classList.add('fail');
+    progressHideTimer = setTimeout(function () {
+      konamiProgress.classList.remove('show');
+    }, 450);
+  }
+
+  function successProgress() {
+    clearTimeout(progressHideTimer);
+    konamiProgress.classList.remove('show');
+  }
+
   function resetSeq() { pos = 0; }
 
   document.addEventListener('keydown', function (e) {
@@ -234,9 +268,13 @@ document.addEventListener('DOMContentLoaded', function () {
       pos++;
       if (pos === seq.length) {
         openStinger();
+        successProgress();
         resetSeq();
+      } else {
+        showProgress(pos);
       }
     } else if (e.key.indexOf('Arrow') === 0) {
+      if (pos > 0) failProgress();
       resetSeq();
     }
   });
@@ -272,10 +310,19 @@ document.addEventListener('DOMContentLoaded', function () {
       swipePos++;
       if (swipePos === swipeDirs.length) {
         openStinger();
+        successProgress();
         swipePos = 0;
+      } else {
+        showProgress(swipePos);
       }
     } else {
+      var hadProgress = swipePos > 0;
       swipePos = (dir === swipeDirs[0]) ? 1 : 0;
+      if (swipePos === 1) {
+        showProgress(1);
+      } else if (hadProgress) {
+        failProgress();
+      }
     }
   }, { passive: true });
 });

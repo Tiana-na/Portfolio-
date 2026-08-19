@@ -923,3 +923,52 @@ footer{
   color: var(--accent);
   text-decoration: underline;
 }
+
+/* ===== Konami code progress indicator ===== */
+.konami-progress{
+  position: fixed;
+  bottom: 22px;
+  left: 50%;
+  z-index: 70;
+  display:flex;
+  gap: 7px;
+  padding: 10px 14px;
+  background: var(--card);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.35);
+  opacity: 0;
+  transform: translateX(-50%) translateY(10px);
+  pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease, border-color .15s ease;
+}
+
+.konami-progress.show{
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.konami-progress.fail{
+  border-color: #b34a4a;
+}
+
+.konami-dot{
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background .15s ease, transform .15s ease;
+}
+
+.konami-dot.on{
+  background: var(--accent);
+  transform: scale(1.2);
+}
+
+.konami-progress.fail .konami-dot.on{
+  background: #e28a8a;
+}
+
+@media (max-width: 600px){
+  .konami-progress{ bottom: 16px; }
+}
