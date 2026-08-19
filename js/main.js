@@ -64,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function () {
     var quizNav = quizCard.querySelector('.quiz-nav');
     var quizProgressTrack = quizCard.querySelector('.quiz-progress-track');
     var quizSkipBtn = document.getElementById('quiz-skip-btn');
-    var quizNextBtn = document.getElementById('quiz-next-btn');
     var quizProgressText = document.getElementById('quiz-progress-text');
     var quizProgressBar = document.getElementById('quiz-progress-bar');
     var quizQuestionBlock = document.getElementById('quiz-question-block');
@@ -72,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var quizQOptions = document.getElementById('quiz-q-options');
     var quizQFeedback = document.getElementById('quiz-q-feedback');
     var quizResults = document.getElementById('quiz-results');
+    var AUTO_ADVANCE_DELAY = 1800;
 
     var triviaData = [
       {
@@ -87,9 +87,9 @@ document.addEventListener('DOMContentLoaded', function () {
       },
       {
         type: 'personal',
-        question: 'איזה גיבור-על היית/ה רוצה להיות?',
+        question: 'איזה גיבור-על הכי מתאים לך?',
         options: [
-          { text: 'איירון מן - הכסף פותר הכל', feedback: 'פקטור התקציב! פרויקט עם תקציב בלתי מוגבל וטכנולוגיה מטורפת זה החלום של כל מעצב/ת מוצר. לעצב בלי מגבלות... תענוג.' },
+          { text: 'איירון מן - הכסף פותר הכל', feedback: 'פקטור התקציב! פרויקט עם תקציב בלתי מוגבל וטכנולוגיה מטורפת זה החלום של כל מעצבי המוצר. לעצב בלי מגבלות... תענוג.' },
           { text: 'ד"ר סטריינג\' - לדעת הכל עדיף מכוח', feedback: 'מאסטר במחקר משתמשים (User Research)! לדעת הכל, לקרוא דאטה, ולראות 14 מיליון תרחישים עתידיים לכל מסע משתמש.' },
           { text: 'תור - יש לו פטיש', feedback: 'הכי פרקטי. לפעמים לא צריך להתחכם עם קסמים או טכנולוגיה מורכבת - פשוט צריך כלי אחד חזק וטוב כדי להנחית פטיש על באג מעצבן.' }
         ]
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
       },
       {
         type: 'personal',
-        question: 'מה המשותף בין יום עבודה עמוס אצלכם לבין מסלול הוט ווילס בסלון של אמא לבן 5?',
+        question: 'מה המשותף בין יום עבודה עמוס אצלך לבין מסלול הוט ווילס בסלון של אמא לבן 5?',
         options: [
           { text: 'בשניהם יש לופים משוגעים, סיבובים חדים ובסוף מישהו עלול לדרוך על משהו ולצעוק', feedback: 'לגמרי! ההבדל היחיד הוא שבפיגמה לפחות אי אפשר לדרוך על מכונית קטנה ולשבור אצבע ברגליים באמצע הלילה.' },
           { text: 'שניהם מתחילים עם המון אנרגיה ומסתיימים בבלאגן שצריך לסדר', feedback: 'חחח כל כך נכון! הלוואי שבעבודה האמיתית היה אפשר פשוט לפרק את כל המסלול המורכב בסוף היום ולבנות מחדש מחר בבוקר.' },
@@ -116,11 +116,11 @@ document.addEventListener('DOMContentLoaded', function () {
       },
       {
         type: 'personal',
-        question: 'איך את/ה קורא/ת ספרים?',
+        question: 'מה סגנון הקריאה שלך?',
         options: [
-          { text: 'ספר אחד בכל פעם, עד הסוף', feedback: 'פוקוס של לייזר! את/ה כנראה טיפוס של משימה אחת בכל פעם (Single-tasking) - מעמיק/ה, יסודי/ת, ולא עוזב/ת פרויקט עד שהוא פיקס בייצור.' },
-          { text: 'כמה ספרים במקביל, לפי מצב רוח', feedback: 'מולטיטאסקינג בדם! חשיבה רוחבית מעולה. מתמרנ/ת בין משימות ומתאימ/ה את עצמך לשינויים בקצב מהיר ויודע/ת לתמרן בין פרויקטים בסטודיו.' },
-          { text: 'מתחיל/ה הרבה, מסיים/ת מעט', feedback: 'חוקר/ת אמיתי/ת! שלב ה-Discovery והמחקר הוא האהוב עלייך. המון סקרנות ורעיונות חדשים בראש (רק לזכור לסגור טאבים בפיגמה בסוף).' }
+          { text: 'ספר אחד בכל פעם, עד הסוף', feedback: 'פוקוס של לייזר! נשמע בדיוק כמו סגנון Single-tasking, עם הרבה עומק ויסודיות ומחויבות לפרויקט עד שהוא פיקס בייצור.' },
+          { text: 'כמה ספרים במקביל, לפי מצב רוח', feedback: 'מולטיטאסקינג בדם! חשיבה רוחבית מעולה, עם יכולת לתמרן בין משימות ולהתאים קצב לפי הצורך, בדיוק כמו בסטודיו.' },
+          { text: 'מתחילים הרבה, מסיימים מעט', feedback: 'רוח של חוקרים אמיתיים! שלב ה-Discovery והמחקר הוא הכי כיפי, עם המון סקרנות ורעיונות חדשים בראש (רק לזכור לסגור טאבים בפיגמה בסוף).' }
         ]
       },
       {
@@ -131,11 +131,12 @@ document.addEventListener('DOMContentLoaded', function () {
           { text: 'מבחני קאפצ\'ה ("אני לא רובוט") שלא נגמרים' },
           { text: 'דרישות סיסמה שכוללות אות גדולה ודם דרקונים' }
         ],
-        feedbackGeneral: 'חחח לגמרי! כולנו סובלים מאותם דברים בדיוק. הבטחה שלי: בפורטפוליו שלי אין אף מבחן רובוטים מעצבן, והכל בגודל לחיץ, נגיש ומאוזן לפי חוקי ה-UX.'
+        feedbackGeneral: 'חחח לגמרי! כולנו סובלים מאותם דברים בדיוק.'
       }
     ];
 
     var currentIndex = 0;
+    var advanceTimer = null;
 
     function renderQuizQuestion() {
       var data = triviaData[currentIndex];
@@ -146,7 +147,6 @@ document.addEventListener('DOMContentLoaded', function () {
       quizQOptions.classList.remove('answered');
       quizQFeedback.textContent = '';
       quizQFeedback.classList.remove('show');
-      quizNextBtn.hidden = true;
 
       data.options.forEach(function (opt) {
         var button = document.createElement('button');
@@ -176,10 +176,22 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       quizQFeedback.classList.add('show');
-      quizNextBtn.hidden = false;
+
+      clearTimeout(advanceTimer);
+      advanceTimer = setTimeout(advanceQuiz, AUTO_ADVANCE_DELAY);
+    }
+
+    function advanceQuiz() {
+      currentIndex++;
+      if (currentIndex < triviaData.length) {
+        renderQuizQuestion();
+      } else {
+        showQuizResults();
+      }
     }
 
     function showQuizResults() {
+      clearTimeout(advanceTimer);
       quizQuestionBlock.hidden = true;
       quizNav.hidden = true;
       quizProgressTrack.hidden = true;
@@ -190,15 +202,6 @@ document.addEventListener('DOMContentLoaded', function () {
       quizStartBtn.hidden = true;
       quizCard.hidden = false;
       renderQuizQuestion();
-    });
-
-    quizNextBtn.addEventListener('click', function () {
-      currentIndex++;
-      if (currentIndex < triviaData.length) {
-        renderQuizQuestion();
-      } else {
-        showQuizResults();
-      }
     });
 
     if (quizSkipBtn) {

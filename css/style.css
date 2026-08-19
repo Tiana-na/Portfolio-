@@ -165,6 +165,23 @@ section{ padding: 90px 0; }
   font-size: 1.05rem;
 }
 
+.footnote-ref{
+  font-size: .65em;
+  vertical-align: super;
+  color: var(--accent);
+  margin-inline-start: 2px;
+}
+
+.page-footnote{
+  border-top: 1px solid var(--border);
+}
+
+.page-footnote .wrap{
+  padding: 18px 32px;
+  font-size: .8rem;
+  color: var(--text-muted);
+}
+
 .hero .subline{
   font-size: 1.3rem;
   font-weight: 600;
@@ -704,13 +721,6 @@ section{ padding: 90px 0; }
 
 .quiz-feedback.show{ opacity:1; }
 
-.quiz-next-btn{
-  display:block;
-  width:100%;
-  text-align:center;
-  margin-top: 20px;
-}
-
 .quiz-results-title{
   font-size: 1.4rem;
   font-weight:700;
@@ -724,15 +734,35 @@ section{ padding: 90px 0; }
   margin-bottom: 26px;
 }
 
-.quiz-cta-row{
+.quiz-icon-row{
   display:flex;
-  flex-direction:column;
-  gap: 12px;
+  gap: 16px;
+  justify-content:center;
 }
 
-.quiz-cta-row .btn{
-  width:100%;
-  text-align:center;
+.quiz-icon-btn{
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: var(--accent);
+  color:#0d0d0d;
+  transition: transform .15s ease, opacity .15s ease;
+}
+
+.quiz-icon-btn svg{
+  width:22px;
+  height:22px;
+  fill:currentColor;
+}
+
+.quiz-icon-btn:hover{ transform: translateY(-2px); }
+.quiz-icon-btn:active{ transform: translateY(0) scale(.95); }
+
+@media (hover: none){
+  .quiz-icon-btn:active{ opacity:.8; transform: scale(.95); }
 }
 
 /* ===== Trivia teaser (floating surprise) ===== */
