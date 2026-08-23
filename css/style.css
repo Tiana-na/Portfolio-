@@ -1,15 +1,16 @@
 /* ===== טיאנה פולקנפולק — Portfolio Stylesheet ===== */
 
 :root{
-  --bg: #141414;
-  --bg-soft: #1e1e1e;
-  --card: #232323;
-  --card-alt: #202020;
-  --border: #333333;
-  --text: #f5f5f5;
-  --text-muted: #a3a3a3;
-  --accent: #34d8a4;
-  --accent-soft: rgba(52, 216, 164, .16);
+  --bg: #FAF6E9;
+  --bg-soft: #FAF6E9;
+  --card: #FEFDFB;
+  --card-alt: #F2ECDF;
+  --border: #E0D6C7;
+  --text: #251F1C;
+  --text-muted: #665C52;
+  --text-dim: #948A80;
+  --accent: #6B1F33;
+  --accent-soft: rgba(107, 31, 51, .12);
   --radius: 10px;
   --max-width: 1180px;
 }
@@ -141,7 +142,7 @@ section{ padding: 90px 0; }
   display:inline-block;
   background: var(--accent-soft);
   color: var(--accent);
-  border: 1px solid rgba(52,216,164,.35);
+  border: 1px solid rgba(107,31,51,.35);
   border-radius: 999px;
   padding: 8px 20px;
   font-size: .9rem;
@@ -193,7 +194,7 @@ section{ padding: 90px 0; }
 
 .btn-primary{
   background: var(--accent);
-  color: #0d0d0d;
+  color: #FEFDFB;
 }
 
 .btn-outline{
@@ -283,7 +284,7 @@ section{ padding: 90px 0; }
   transition: background .15s ease;
 }
 
-.tag:hover{ background: rgba(52,216,164,.3); }
+.tag:hover{ background: rgba(107,31,51,.22); }
 
 @media (max-width: 980px){
   .card-grid{ grid-template-columns: repeat(2, 1fr); }
@@ -322,7 +323,7 @@ section{ padding: 90px 0; }
 }
 
 .work-row:hover{
-  border-color: #4a4a4a;
+  border-color: #cbbfa9;
   transform: translateY(-3px);
 }
 
@@ -359,8 +360,8 @@ section{ padding: 90px 0; }
 
 .work-tag{
   background: var(--card-alt);
-  border: 1px solid var(--border);
-  color: var(--text-muted);
+  border: 1px solid var(--proj, var(--border));
+  color: var(--proj, var(--text-muted));
   font-size: .74rem;
   font-weight:500;
   padding: 5px 12px;
@@ -382,7 +383,7 @@ section{ padding: 90px 0; }
 }
 
 .work-meta{
-  color: #6b6b6b;
+  color: var(--text-dim);
   font-size: .82rem;
   margin-bottom: 6px;
 }
@@ -392,16 +393,15 @@ section{ padding: 90px 0; }
   margin-top: 10px;
   padding: 10px 20px;
   border-radius: 7px;
-  border: 1px solid var(--text);
-  color: var(--text);
+  border: 1px solid var(--proj, var(--text));
+  color: var(--proj, var(--text));
   font-size: .85rem;
   font-weight:600;
-  transition: border-color .15s ease, color .15s ease, transform .15s ease;
+  transition: border-color .15s ease, color .15s ease, transform .15s ease, filter .15s ease;
 }
 
 .work-row:hover .work-btn{
-  border-color: #fff;
-  color: #fff;
+  filter: brightness(1.2);
 }
 
 .work-btn:active{ transform: scale(.96); }
@@ -446,7 +446,7 @@ section{ padding: 90px 0; }
   align-items:center;
   gap: 8px;
   background: var(--accent);
-  color: #0d0d0d;
+  color: #FEFDFB;
   padding: 13px 26px;
   border-radius: 8px;
   font-weight:600;
@@ -503,7 +503,7 @@ section{ padding: 90px 0; }
   border-radius: 50%;
   background: #25D366;
   transition: transform .15s ease, box-shadow .15s ease;
-  box-shadow: 0 6px 16px rgba(0,0,0,.35);
+  box-shadow: 0 6px 16px rgba(37,31,28,.22);
 }
 
 .whatsapp-fab svg{
@@ -514,7 +514,7 @@ section{ padding: 90px 0; }
 
 .whatsapp-fab:hover{
   transform: translateY(-3px);
-  box-shadow: 0 10px 22px rgba(0,0,0,.4);
+  box-shadow: 0 10px 22px rgba(37,31,28,.28);
 }
 
 @media (hover: none){
@@ -573,7 +573,7 @@ section{ padding: 90px 0; }
   display:inline-block;
   background: var(--accent-soft);
   color: var(--accent);
-  border: 1px solid rgba(52,216,164,.35);
+  border: 1px solid rgba(107,31,51,.35);
   border-radius: 999px;
   padding: 8px 20px;
   font-size: .9rem;
@@ -645,9 +645,9 @@ section{ padding: 90px 0; }
 }
 
 .quiz-option.wrong{
-  border-color: #b34a4a;
-  background: rgba(179,74,74,.14);
-  color: #e28a8a;
+  border-color: #a5453f;
+  background: rgba(165,69,63,.1);
+  color: #8a3730;
 }
 
 @media (hover: none){
@@ -676,7 +676,7 @@ section{ padding: 90px 0; }
   border: 1px solid var(--accent);
   border-radius: 12px;
   padding: 16px 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.4);
+  box-shadow: 0 10px 30px rgba(37,31,28,.18);
   opacity: 0;
   transform: translateY(16px) scale(.96);
   pointer-events: none;
@@ -746,7 +746,7 @@ footer{
   display:block;
   margin-top: 6px;
   font-size: .75rem;
-  color: #555;
+  color: var(--text-dim);
 }
 
 .stinger{
