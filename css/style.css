@@ -63,7 +63,7 @@ header.site-header{
 }
 
 .brand{
-  font-weight:700;
+  font-weight:400;
   font-size: 1.15rem;
   letter-spacing: -.01em;
 }
@@ -177,7 +177,7 @@ main:has(> .contact-hero) .contact-hero{ width:100%; }
 section{ padding: 90px 0; }
 
 .hero{
-  text-align:center;
+  text-align:right;
   padding: 110px 0 90px;
 }
 
@@ -203,7 +203,7 @@ section{ padding: 90px 0; }
 
 .hero p{
   max-width: 680px;
-  margin: 0 auto 40px;
+  margin: 0 0 40px auto;
   color: var(--text);
   font-size: 1.05rem;
 }
