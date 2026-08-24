@@ -179,7 +179,7 @@ section{ padding: 90px 0; }
 
 .hero{
   text-align:right;
-  padding: 110px 0 90px;
+  padding: 110px 0 20px;
 }
 
 .tag-pill{
@@ -417,6 +417,8 @@ section{ padding: 90px 0; }
 }
 
 /* ===== Works (inside home page) ===== */
+.works-section{ padding-top: 30px; }
+
 .works-section h2{
   font-size: 1.7rem;
   margin-bottom: 14px;
