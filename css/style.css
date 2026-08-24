@@ -120,6 +120,11 @@ header.site-header{
   color: var(--on-accent) !important;
 }
 
+.nav-cv-btn:focus,
+.nav-cv-btn:focus-visible{
+  outline: none;
+}
+
 .menu-toggle{
   display:none;
   background:none;
@@ -191,6 +196,16 @@ section{ padding: 90px 0; }
   font-size: .9rem;
   font-weight:600;
   margin-bottom: 28px;
+  text-align:center;
+  white-space: nowrap;
+}
+
+@media (max-width: 600px){
+  .tag-pill{
+    font-size: .72rem;
+    padding: 7px 14px;
+    letter-spacing: -.01em;
+  }
 }
 
 .hero h1{
@@ -260,8 +275,11 @@ section{ padding: 90px 0; }
   margin-bottom: 22px;
 }
 
+.subline-break{ display:none; }
+
 @media (max-width: 600px){
   .hero .subline{ font-size: 1.15rem; }
+  .subline-break{ display: initial; }
 }
 
 .btn-row{
