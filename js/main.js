@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /* ---------- scroll reveal ---------- */
-  var revealEls = document.querySelectorAll('.reveal');
+  var revealEls = document.querySelectorAll('.reveal, .reveal-stack');
   var STAGGER_MS = 90; /* פער בין שורה לשורה */
 
   if ('IntersectionObserver' in window && revealEls.length) {
@@ -185,13 +185,23 @@ document.addEventListener('DOMContentLoaded', function () {
       advanceTimer = setTimeout(advanceQuiz, AUTO_ADVANCE_DELAY);
     }
 
+    var QUIZ_EXIT_MS = 460;
+
     function advanceQuiz() {
-      currentIndex++;
-      if (currentIndex < triviaData.length) {
-        renderQuizQuestion();
-      } else {
-        showQuizResults();
-      }
+      quizQuestionBlock.classList.add('leaving');
+      setTimeout(function () {
+        currentIndex++;
+        quizQuestionBlock.classList.remove('leaving');
+        if (currentIndex < triviaData.length) {
+          renderQuizQuestion();
+          quizQuestionBlock.classList.add('settling');
+          setTimeout(function () {
+            quizQuestionBlock.classList.remove('settling');
+          }, 420);
+        } else {
+          showQuizResults();
+        }
+      }, QUIZ_EXIT_MS);
     }
 
     function showQuizResults() {
@@ -206,6 +216,10 @@ document.addEventListener('DOMContentLoaded', function () {
       quizStartBtn.hidden = true;
       quizCard.hidden = false;
       renderQuizQuestion();
+      quizQuestionBlock.classList.add('settling');
+      setTimeout(function () {
+        quizQuestionBlock.classList.remove('settling');
+      }, 420);
     });
 
     if (quizSkipBtn) {
