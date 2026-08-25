@@ -11,10 +11,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ---------- scroll reveal ---------- */
   var revealEls = document.querySelectorAll('.reveal');
+  var STAGGER_MS = 90; /* פער בין שורה לשורה */
+
   if ('IntersectionObserver' in window && revealEls.length) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
+          var index = Array.prototype.indexOf.call(revealEls, entry.target);
+          entry.target.style.setProperty('--reveal-delay', (index * STAGGER_MS) + 'ms');
           entry.target.classList.add('in-view');
           io.unobserve(entry.target);
         }
@@ -209,6 +213,44 @@ document.addEventListener('DOMContentLoaded', function () {
         showQuizResults();
       });
     }
+  }
+
+  /* ---------- cursor trail (decoration zones only, never over text) ---------- */
+  var prefersNoMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasHover = window.matchMedia && window.matchMedia('(hover: hover)').matches;
+
+  if (!prefersNoMotion && hasHover) {
+    var trailColors = ['#F0D98C', '#EBBE9C', '#D9D2EA'];
+    var pastelZones = document.querySelectorAll('.pastel-zone');
+
+    pastelZones.forEach(function (zone) {
+      var lastSpawn = 0;
+      var minGap = 45; /* ms between dots, keeps DOM light */
+
+      zone.addEventListener('mousemove', function (e) {
+        var now = Date.now();
+        if (now - lastSpawn < minGap) return;
+        lastSpawn = now;
+
+        var rect = zone.getBoundingClientRect();
+        var dot = document.createElement('span');
+        dot.className = 'trail-dot';
+        dot.style.left = (e.clientX - rect.left) + 'px';
+        dot.style.top = (e.clientY - rect.top) + 'px';
+        dot.style.background = trailColors[Math.floor(Math.random() * trailColors.length)];
+        zone.appendChild(dot);
+
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            dot.classList.add('fade');
+          });
+        });
+
+        setTimeout(function () {
+          if (dot.parentNode) dot.parentNode.removeChild(dot);
+        }, 650);
+      });
+    });
   }
 
 });
