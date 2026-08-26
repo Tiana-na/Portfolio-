@@ -333,9 +333,17 @@ html[dir="ltr"] .hero-detail-mark{
   color: var(--text-muted);
 }
 
+[data-page="index"] .page-footnote .wrap{
+  color: #6D5F8E;
+}
+
 .footnote-asterisk{
   color: var(--accent);
   font-weight:600;
+}
+
+[data-page="index"] .footnote-asterisk{
+  color: #6D5F8E;
 }
 
 .hero .subline{
@@ -838,9 +846,9 @@ html[dir="ltr"] .hero-detail-mark{
   margin-top: 24px;
 }
 
-.lang-en .about-hero-wrap{ max-width: 1244px; }
-.lang-en .about-editorial{ max-width: 1180px; }
-.lang-en .ed-statement{ max-width: 1180px; }
+.lang-en .about-hero-wrap{ max-width: 1244px; padding-inline: 16px; }
+.lang-en .about-editorial{ max-width: 1270px; margin-inline: -29px; }
+.lang-en .ed-statement{ max-width: 1270px; }
 
 .ed-statement strong{
   font-style: normal;
@@ -899,14 +907,13 @@ html[dir="ltr"] .hero-detail-mark{
 
 .pastel-accent{
   position: relative;
-  padding-inline-start: 20px;
   margin-bottom: 10px;
 }
 
 .pastel-accent-bar{
   position: absolute;
   top: 4px;
-  inset-inline-start: 0;
+  inset-inline-start: -14px;
   width: 5px;
   height: calc(100% - 8px);
   border-radius: 3px;
@@ -1241,6 +1248,10 @@ html[dir="ltr"] .hero-detail-mark{
   padding-bottom: 40px;
 }
 
+[data-page="index"] .case-bottom-cta .btn-primary{
+  background: #6D5F8E;
+}
+
 .case-bottom-buttons{
   display:flex;
   gap: 16px;
@@ -1264,7 +1275,7 @@ html[dir="ltr"] .hero-detail-mark{
   position: relative;
   width: 320px;
   max-width: 70vw;
-  margin: 0 auto;
+  margin: 0 auto 20px;
 }
 
 .contact-callme-img{
