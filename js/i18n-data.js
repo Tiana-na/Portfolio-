@@ -21,8 +21,8 @@ window.I18N = {
 
   index: {
     'hero-h1': 'Hi,<br>I’m Tiana',
-    'hero-subline': 'Coffee lover, book lover, and Marvel fan. <br class="subline-break">Curious. <br class="subline-break">Handywoman.<a href="#footnote-handywoman" class="footnote-ref">*</a>',
-    'hero-lede': '<span class="lede-prefix">Also,</span> I’m a UX/UI designer who translates an understanding of users, behavior, and visual hierarchy into simple, effective digital experiences.',
+    'hero-subline': 'Coffee and book lover, Marvel fan. <br class="subline-break">Curious. <br class="subline-break">Handywoman.<a href="#footnote-handywoman" class="footnote-ref">*</a>',
+    'hero-lede': '<span class="lede-prefix">Also,</span> I’m a UX/UI designer who turns a deep understanding of users, behavior, and visual hierarchy into simple, effective digital experiences.',
     'hero-detail': 'I come from a background in customer experience design, commercial design, and visual communication in physical spaces. I love aesthetics in all its forms, but I believe it shouldn’t come at the expense of comfort. Bye, heels.',
     'work-eyebrow': 'Projects',
     'work-intro': 'From UX/UI case studies to graphic design and branding, a selection of the work that’s been part of my journey.',
