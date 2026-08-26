@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
+<script>(function(){try{if(localStorage.getItem('site-lang')==='en'){document.documentElement.lang='en';document.documentElement.dir='ltr';document.documentElement.classList.add('lang-en');}}catch(e){}})();</script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1SDQXED43L"></script>
 <script>
@@ -119,37 +120,39 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
 }
 </style>
 </head>
-<body>
+<body data-page="workB2b">
 
 <header class="site-header">
   <nav class="nav">
     <ul class="nav-links">
-      <li><a href="index.html">בית</a></li>
-      <li><a href="about.html">מי אני</a></li>
-      <li><a href="contact.html">צור קשר</a></li>
-      <li><a href="assets/tiana-folkenfolk-cv.pdf" target="_blank" rel="noopener" class="nav-cv-btn">קורות חיים</a></li>
+      <li><a href="index.html" data-i18n="nav-home">בית</a></li>
+      <li><a href="about.html" data-i18n="nav-about">מי אני</a></li>
+      <li><a href="contact.html" data-i18n="nav-contact">צור קשר</a></li>
+      <li><a href="assets/tiana-folkenfolk-cv.pdf" target="_blank" rel="noopener" class="nav-cv-btn" data-i18n="nav-cv">קורות חיים</a></li>
+      <li><button class="lang-toggle" type="button">EN</button></li>
     </ul>
     <div class="brand logo-lockup" role="img" aria-label="טיאנה פולקנפולק">
       <img class="logo-mark" src="assets/logo-tf.png" alt="" aria-hidden="true">
     </div>
-    <button class="menu-toggle" aria-label="פתיחת תפריט">&#9776;</button>
+    <button class="menu-toggle" data-i18n-aria="menu-toggle-aria" aria-label="פתיחת תפריט">&#9776;</button>
   </nav>
   <div class="mobile-menu">
-    <a href="index.html">בית</a>
-    <a href="about.html">מי אני</a>
-    <a href="contact.html">צור קשר</a>
-    <a href="assets/tiana-folkenfolk-cv.pdf" target="_blank" rel="noopener" class="nav-cv-btn">קורות חיים</a>
+    <a href="index.html" data-i18n="nav-home">בית</a>
+    <a href="about.html" data-i18n="nav-about">מי אני</a>
+    <a href="contact.html" data-i18n="nav-contact">צור קשר</a>
+    <a href="assets/tiana-folkenfolk-cv.pdf" target="_blank" rel="noopener" class="nav-cv-btn" data-i18n="nav-cv">קורות חיים</a>
+    <button class="lang-toggle lang-toggle--mobile" type="button">EN</button>
   </div>
 </header>
 
 <main>
   <section class="case-page-header">
     <div class="wrap">
-      <a href="index.html#work" class="case-back">חזרה לפרויקטים</a>
+      <a href="index.html#work" class="case-back" data-i18n="case-back">חזרה לפרויקטים</a>
       <div class="eyebrow">B2B SaaS · UX Case Study</div>
-      <h1>פלטפורמת שיווק דיגיטלי B2B - זיהוי נקודות חיכוך ושיפור חוויית משתמש</h1>
-      <p>לקוחות עקפו את מערכת ה-SaaS ופנו ישירות לצוות הקריאייטיב - כי לא ידעו לעקוב אחר סטטוס בקשות, לא מצאו איך להגיש בקשת תוכן חדשה ולא ידעו איך לתקשר עם הצוות במערכת. זיהיתי את נקודות החיכוך והובלתי ארבעה פתרונות מוצריים.</p>
-      <a href="https://www.figma.com/design/Nw5uc38gAZYAv5YkaHJZHD/BC-%D7%9E%D7%A1%D7%9B%D7%99%D7%9D-%D7%95%D7%93%D7%99%D7%96%D7%99%D7%99%D7%9F?node-id=4-3&t=KmPATba28AYD9hav-0" target="_blank" rel="noopener" class="case-figma-btn">פתיחת קובץ הפרויקט בפיגמה</a>
+      <h1 data-i18n="case-header-h1">פלטפורמת שיווק דיגיטלי B2B - זיהוי נקודות חיכוך ושיפור חוויית משתמש</h1>
+      <p data-i18n="case-header-p">לקוחות עקפו את מערכת ה-SaaS ופנו ישירות לצוות הקריאייטיב - כי לא ידעו לעקוב אחר סטטוס בקשות, לא מצאו איך להגיש בקשת תוכן חדשה ולא ידעו איך לתקשר עם הצוות במערכת. זיהיתי את נקודות החיכוך והובלתי ארבעה פתרונות מוצריים.</p>
+      <a href="https://www.figma.com/design/Nw5uc38gAZYAv5YkaHJZHD/BC-%D7%9E%D7%A1%D7%9B%D7%99%D7%9D-%D7%95%D7%93%D7%99%D7%96%D7%99%D7%99%D7%9F?node-id=4-3&t=KmPATba28AYD9hav-0" target="_blank" rel="noopener" class="case-figma-btn" data-i18n="case-figma-btn">פתיחת קובץ הפרויקט בפיגמה</a>
     </div>
   </section>
 
@@ -158,8 +161,8 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
     <div class="b2b-hero">
       <div class="b2b-wrap">
         <div class="b2b-eyebrow">UX CASE STUDY ·</div>
-        <h1>זיהוי נקודות חיכוך ושיפור חוויית משתמש</h1>
-        <p>פלטפורמת שיווק דיגיטלי לעסקים קטנים ובינוניים. זיהוי דפוסי לקוחות שעוקפים את המערכת ופתרונות שהורידו חיכוך ושיפרו את חוויית המשתמש.</p>
+        <h1 data-i18n="b2b-hero-h1">זיהוי נקודות חיכוך ושיפור חוויית משתמש</h1>
+        <p data-i18n="b2b-hero-p">פלטפורמת שיווק דיגיטלי לעסקים קטנים ובינוניים. זיהוי דפוסי לקוחות שעוקפים את המערכת ופתרונות שהורידו חיכוך ושיפרו את חוויית המשתמש.</p>
         <div class="b2b-pills">
           <span class="b2b-pill">B2B SaaS</span>
           <span class="b2b-pill">Web App · Mobile</span>
@@ -172,21 +175,21 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
 
     <section class="b2b-section">
       <div class="b2b-wrap">
-        <div class="b2b-eyebrow" style="color:#475569;">01 · הקשר</div>
-        <h2 class="b2b-h2">התפקיד</h2>
-        <p class="b2b-body">במסגרת תפקידי בסטארטאפ B2B היתי ב-Creative וגם Customer Success. במסגרת CS זה התבטא בעבודה היומיומית עם הפלטפורה עבור המנויים, כמו עזרה עם הממשק, הדרכות שימוש בו, ליווי מנויים חדשים ועוד, ניתחתי שיחות לקוחות, פניות תמיכה והדרכות לייב כדי לאתר נקודות חיכוך אצל בעלי עסקים קטנים ובינוניים. הבנייה הטכנית עצמה בוצעה על ידי צוות הפיתוח. לצד זה גם יצרתי תוכן ויזואלי לעסקים בתחומים השונים, החל מעולמות יופי וסלף קר, רופאים, מאמנים ומטפלים, עורכי דין ועוד. התוכן יועד לפלטפורמות דיגיטל וכלל פוסטים, דפי נחיתה ואתרי תדמית. קייס סטאדי כאן נוגע בנקודות הכאב ופתרונות שבלטו אצל המנויים בשימוש השוטף במערכת.</p>
+        <div class="b2b-eyebrow" style="color:#475569;" data-i18n="b2b-eyebrow-01">01 · הקשר</div>
+        <h2 class="b2b-h2" data-i18n="b2b-h2-01">התפקיד</h2>
+        <p class="b2b-body" data-i18n="b2b-body-01">במסגרת תפקידי בסטארטאפ B2B היתי ב-Creative וגם Customer Success. במסגרת CS זה התבטא בעבודה היומיומית עם הפלטפורה עבור המנויים, כמו עזרה עם הממשק, הדרכות שימוש בו, ליווי מנויים חדשים ועוד, ניתחתי שיחות לקוחות, פניות תמיכה והדרכות לייב כדי לאתר נקודות חיכוך אצל בעלי עסקים קטנים ובינוניים. הבנייה הטכנית עצמה בוצעה על ידי צוות הפיתוח. לצד זה גם יצרתי תוכן ויזואלי לעסקים בתחומים השונים, החל מעולמות יופי וסלף קר, רופאים, מאמנים ומטפלים, עורכי דין ועוד. התוכן יועד לפלטפורמות דיגיטל וכלל פוסטים, דפי נחיתה ואתרי תדמית. קייס סטאדי כאן נוגע בנקודות הכאב ופתרונות שבלטו אצל המנויים בשימוש השוטף במערכת.</p>
         <div class="b2b-cards-row">
           <div class="b2b-source-card">
-            <h4>שיחות אפיון</h4>
-            <p>שיחת אפיון עסק עם לקוח כדי לבסס חשיבה על התאמת המסרים</p>
+            <h4 data-i18n="b2b-card1-title">שיחות אפיון</h4>
+            <p data-i18n="b2b-card1-desc">שיחת אפיון עסק עם לקוח כדי לבסס חשיבה על התאמת המסרים</p>
           </div>
           <div class="b2b-source-card">
-            <h4>הדרכות לייב</h4>
-            <p>חשפו בזמן אמת איפה לקוחות נתקעים</p>
+            <h4 data-i18n="b2b-card2-title">הדרכות לייב</h4>
+            <p data-i18n="b2b-card2-desc">חשפו בזמן אמת איפה לקוחות נתקעים</p>
           </div>
           <div class="b2b-source-card">
-            <h4>פניות נכנסות</h4>
-            <p>חשפו דפוסים חוזרים: אותן שאלות, אותם תסכולים</p>
+            <h4 data-i18n="b2b-card3-title">פניות נכנסות</h4>
+            <p data-i18n="b2b-card3-desc">חשפו דפוסים חוזרים: אותן שאלות, אותם תסכולים</p>
           </div>
         </div>
       </div>
@@ -196,16 +199,16 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
 
     <section class="b2b-section">
       <div class="b2b-wrap">
-        <div class="b2b-eyebrow" style="color:#153F98;">02 · הבעיה</div>
-        <h2 class="b2b-h2">לקוחות עקפו את המערכת</h2>
+        <div class="b2b-eyebrow" style="color:#153F98;" data-i18n="b2b-eyebrow-02">02 · הבעיה</div>
+        <h2 class="b2b-h2" data-i18n="b2b-h2-02">לקוחות עקפו את המערכת</h2>
         <div class="b2b-problem-list">
-          <div class="b2b-problem-row"><div class="num">01</div><div class="txt">לא הבינו מה סטטוס בקשת התוכן שלהם לצוות הקריאטיב</div></div>
-          <div class="b2b-problem-row"><div class="num">02</div><div class="txt">לא היתה אפשרות להגיש בקשת תוכן חדשה דרך הממשק</div></div>
-          <div class="b2b-problem-row"><div class="num">03</div><div class="txt">לא הצליחו לענות לעומק בשיחת האפיון בזמן אמת</div></div>
-          <div class="b2b-problem-row"><div class="num">04</div><div class="txt">לא ידעו איך לתקשר עם הצוות דרך הצ'אט במערכת</div></div>
+          <div class="b2b-problem-row"><div class="num">01</div><div class="txt" data-i18n="b2b-problem-1">לא הבינו מה סטטוס בקשת התוכן שלהם לצוות הקריאטיב</div></div>
+          <div class="b2b-problem-row"><div class="num">02</div><div class="txt" data-i18n="b2b-problem-2">לא היתה אפשרות להגיש בקשת תוכן חדשה דרך הממשק</div></div>
+          <div class="b2b-problem-row"><div class="num">03</div><div class="txt" data-i18n="b2b-problem-3">לא הצליחו לענות לעומק בשיחת האפיון בזמן אמת</div></div>
+          <div class="b2b-problem-row"><div class="num">04</div><div class="txt" data-i18n="b2b-problem-4">לא ידעו איך לתקשר עם הצוות דרך הצ'אט במערכת</div></div>
         </div>
         <div class="b2b-quote">
-          <p>במקום להשתמש בפלטפורמה, הם עקפו אותה, מה שיצר עומס מיותר על הצוות ופגע בחוויית המשתמש.</p>
+          <p data-i18n="b2b-quote-02">במקום להשתמש בפלטפורמה, הם עקפו אותה, מה שיצר עומס מיותר על הצוות ופגע בחוויית המשתמש.</p>
         </div>
       </div>
     </section>
@@ -214,13 +217,13 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
 
     <section class="b2b-section">
       <div class="b2b-wrap mid" style="text-align:left;">
-        <div class="b2b-eyebrow b2b-think-label" style="text-align:right;">תהליך חשיבה</div>
-        <p class="b2b-think-text" style="text-align:right;">בסביבת סטארטאפ מהירת קצב, בחרתי בגישה קלה ומבוססת דאטה אמיתי במקום תהליך פורמלי של מיפוי מסע משתמש או וויירפריים מסודרים. זיהיתי דפוסים חוזרים ישירות משיחות ופניות לקוחות, וניסחתי כיוון פתרון בטקסט שנבדק בשיחה עם צוות הפיתוח לפני שהתקדמתי הלאה.</p>
-        <p class="b2b-think-text" style="text-align:right;">ההיגיון המנחה היה עקבי לאורך כל הפתרונות. ברוב המקרים לקוחות לא עקפו את המערכת כי העדיפו כלים אחרים, אלא כי המערכת לא נתנה להם תשובה גלויה או נגישה מספיק. לכן כל פתרון נבדק קודם כל מול השאלה הזו: האם הוא משאיר את הלקוח בתוך הממשק במקום לדחוף אותו החוצה.</p>
-        <p class="b2b-think-text" style="text-align:right;">ההחלטות גם המשיכו להתעדכן מול תגובת המשתמשים בפועל. כפתור בקשת התוכן, למשל, נבחן עם המנויים לאחר ההשקה, ולפי הפידבק שהתקבל, כי התהליך ארוך מדי הוא יועל בהמשך לזרימה פשוטה וקצרה יותר.</p>
-        <p class="b2b-think-text" style="text-align:right;">כל פתרון טופל בנפרד בהתאם למצב באותו זמן ולא תוכנן מראש כמקשה אחת, אבל כולם נגזרו מאותה השערת עבודה.</p>
+        <div class="b2b-eyebrow b2b-think-label" style="text-align:start;" data-i18n="b2b-think-label">תהליך חשיבה</div>
+        <p class="b2b-think-text" style="text-align:start;" data-i18n="b2b-think-1">בסביבת סטארטאפ מהירת קצב, בחרתי בגישה קלה ומבוססת דאטה אמיתי במקום תהליך פורמלי של מיפוי מסע משתמש או וויירפריים מסודרים. זיהיתי דפוסים חוזרים ישירות משיחות ופניות לקוחות, וניסחתי כיוון פתרון בטקסט שנבדק בשיחה עם צוות הפיתוח לפני שהתקדמתי הלאה.</p>
+        <p class="b2b-think-text" style="text-align:start;" data-i18n="b2b-think-2">ההיגיון המנחה היה עקבי לאורך כל הפתרונות. ברוב המקרים לקוחות לא עקפו את המערכת כי העדיפו כלים אחרים, אלא כי המערכת לא נתנה להם תשובה גלויה או נגישה מספיק. לכן כל פתרון נבדק קודם כל מול השאלה הזו: האם הוא משאיר את הלקוח בתוך הממשק במקום לדחוף אותו החוצה.</p>
+        <p class="b2b-think-text" style="text-align:start;" data-i18n="b2b-think-3">ההחלטות גם המשיכו להתעדכן מול תגובת המשתמשים בפועל. כפתור בקשת התוכן, למשל, נבחן עם המנויים לאחר ההשקה, ולפי הפידבק שהתקבל, כי התהליך ארוך מדי הוא יועל בהמשך לזרימה פשוטה וקצרה יותר.</p>
+        <p class="b2b-think-text" style="text-align:start;" data-i18n="b2b-think-4">כל פתרון טופל בנפרד בהתאם למצב באותו זמן ולא תוכנן מראש כמקשה אחת, אבל כולם נגזרו מאותה השערת עבודה.</p>
         <div class="b2b-sketch">
-          <div class="b2b-img-slot" style="aspect-ratio:363/723; border-radius:14px;">סקיצת וויירפריים<br>זמינה בקובץ הפרויקט בפיגמה</div>
+          <div class="b2b-img-slot" style="aspect-ratio:363/723; border-radius:14px;" data-i18n="b2b-sketch-text">סקיצת וויירפריים<br>זמינה בקובץ הפרויקט בפיגמה</div>
         </div>
       </div>
     </section>
@@ -232,11 +235,11 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
     <section class="b2b-section">
       <div class="b2b-wrap wide">
         <div class="b2b-summary-head">
-          <h2>כל השינויים במבט אחד</h2>
-          <p>תקציר של הפתרונות. לפירוט מלא על כל אחד אפשר לגלול למטה.</p>
+          <h2 data-i18n="b2b-summary-h2">כל השינויים במבט אחד</h2>
+          <p data-i18n="b2b-summary-p">תקציר של הפתרונות. לפירוט מלא על כל אחד אפשר לגלול למטה.</p>
         </div>
         <div class="b2b-summary-frame">
-          <img class="b2b-img-slot" src="assets/b2b-summary-home.png" alt="מסך הבית המלא של הפלטפורמה">
+          <img class="b2b-img-slot" src="assets/b2b-summary-home.png" alt="מסך הבית המלא של הפלטפורמה" data-i18n-alt="b2b-summary-img-alt">
           <svg class="b2b-callout-svg" viewBox="0 0 513 1032" preserveAspectRatio="none" aria-hidden="true">
             <defs>
               <marker id="b2bArrowBlue" markerWidth="7" markerHeight="7" refX="3.2" refY="3.5" orient="auto">
@@ -252,29 +255,29 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
             <path d="M160,918 Q210,895 254,872" fill="none" stroke="#B5730D" stroke-width="2.5" marker-end="url(#b2bArrowGold)"/>
             <path d="M345,690 Q372,720 393,747" fill="none" stroke="#B5730D" stroke-width="2.5" marker-end="url(#b2bArrowGold)"/>
           </svg>
-          <span class="b2b-summary-badge" style="right:4%; top:3%;">✓ הגשת בקשה בלחיצה אחת</span>
-          <span class="b2b-summary-badge" style="right:2%; top:14%;">✓ סטטוס גלוי בכל כרטיס</span>
-          <span class="b2b-summary-badge" style="left:2%; top:41%;">✓ הגשת בקשת עריכה מתוך כרטיסיית התוכן</span>
-          <span class="b2b-summary-badge" style="left:2%; top:87%; color:#B5730D;">○ כפתור הפלוס עבר לכאן</span>
-          <span class="b2b-summary-badge" style="right:2%; top:63%; color:#B5730D;">○ גישה מהירה לצ'אט עם הצוות מהדשבורד</span>
+          <span class="b2b-summary-badge" style="right:4%; top:3%;" data-i18n="b2b-badge-1">✓ הגשת בקשה בלחיצה אחת</span>
+          <span class="b2b-summary-badge" style="right:2%; top:14%;" data-i18n="b2b-badge-2">✓ סטטוס גלוי בכל כרטיס</span>
+          <span class="b2b-summary-badge" style="left:2%; top:41%;" data-i18n="b2b-badge-3">✓ הגשת בקשת עריכה מתוך כרטיסיית התוכן</span>
+          <span class="b2b-summary-badge" style="left:2%; top:87%; color:#B5730D;" data-i18n="b2b-badge-4">○ כפתור הפלוס עבר לכאן</span>
+          <span class="b2b-summary-badge" style="right:2%; top:63%; color:#B5730D;" data-i18n="b2b-badge-5">○ גישה מהירה לצ'אט עם הצוות מהדשבורד</span>
         </div>
       </div>
     </section>
 
     <section class="b2b-section">
       <div class="b2b-wrap mid">
-        <div class="b2b-eyebrow" style="color:#475569;">03 · פתרון 1 / 4</div>
+        <div class="b2b-eyebrow" style="color:#475569;" data-i18n="b2b-eyebrow-sol1">03 · פתרון 1 / 4</div>
         <div class="b2b-sol-tags">
-          <span class="b2b-status-pill">✓ יושם בפועל</span>
-          <h2 class="b2b-h2-sol">ייעול מעקב אחר בקשות תוכן</h2>
+          <span class="b2b-status-pill" data-i18n="b2b-status-implemented">✓ יושם בפועל</span>
+          <h2 class="b2b-h2-sol" data-i18n="b2b-sol1-h2">ייעול מעקב אחר בקשות תוכן</h2>
         </div>
-        <div class="b2b-sol-quote"><p>הלקוח לא פנה כי לא הבין. הוא פנה כי לא ראה</p></div>
-        <p class="b2b-body">לקוחות לא ידעו מה קורה עם הבקשה שהגישו לצוות הקריאטיב, וחוסר השקיפות הזה יצר חרדה ופניות חוזרות לצוות CS. נוספה תצוגת סטטוס ברורה בממשק עצמו.</p>
+        <div class="b2b-sol-quote"><p data-i18n="b2b-sol1-quote">הלקוח לא פנה כי לא הבין. הוא פנה כי לא ראה</p></div>
+        <p class="b2b-body" data-i18n="b2b-sol1-body">לקוחות לא ידעו מה קורה עם הבקשה שהגישו לצוות הקריאטיב, וחוסר השקיפות הזה יצר חרדה ופניות חוזרות לצוות CS. נוספה תצוגת סטטוס ברורה בממשק עצמו.</p>
         <div class="b2b-compare">
-          <div class="b2b-compare-col muted"><img class="b2b-img-slot" style="aspect-ratio:758/1463;" src="assets/b2b-sol1-before.png" alt="מסך לפני - ייעול מעקב בקשות תוכן"></div>
-          <div class="b2b-compare-col"><img class="b2b-img-slot" style="aspect-ratio:758/1463;" src="assets/b2b-sol1-after.png" alt="מסך אחרי - ייעול מעקב בקשות תוכן"></div>
+          <div class="b2b-compare-col muted"><img class="b2b-img-slot" style="aspect-ratio:758/1463;" src="assets/b2b-sol1-before.png" alt="מסך לפני - ייעול מעקב בקשות תוכן" data-i18n-alt="b2b-sol1-before-alt"></div>
+          <div class="b2b-compare-col"><img class="b2b-img-slot" style="aspect-ratio:758/1463;" src="assets/b2b-sol1-after.png" alt="מסך אחרי - ייעול מעקב בקשות תוכן" data-i18n-alt="b2b-sol1-after-alt"></div>
         </div>
-        <div class="b2b-quote blue big"><p>דפוס הפניות החוזר בנושא סטטוס הבקשה ירד בכ-20% לאחר ההטמעה.</p></div>
+        <div class="b2b-quote blue big"><p data-i18n="b2b-sol1-stat">דפוס הפניות החוזר בנושא סטטוס הבקשה ירד בכ-20% לאחר ההטמעה.</p></div>
       </div>
     </section>
 
@@ -282,55 +285,55 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
 
     <section class="b2b-section">
       <div class="b2b-wrap mid">
-        <div class="b2b-eyebrow" style="color:#475569;">03 · פתרון 2 / 4</div>
+        <div class="b2b-eyebrow" style="color:#475569;" data-i18n="b2b-eyebrow-sol2">03 · פתרון 2 / 4</div>
         <div class="b2b-sol-tags">
-          <span class="b2b-status-pill">✓ יושם בפועל</span>
-          <h2 class="b2b-h2-sol">שיפור אופן הגשת בקשות תוכן</h2>
+          <span class="b2b-status-pill" data-i18n="b2b-status-implemented">✓ יושם בפועל</span>
+          <h2 class="b2b-h2-sol" data-i18n="b2b-sol2-h2">שיפור אופן הגשת בקשות תוכן</h2>
         </div>
-        <div class="b2b-sol-quote"><p>כשהדרך לפעולה ארוכה מדי, המשתמש מתייאש</p></div>
-        <p class="b2b-body"><strong style="color:#D4183D;">הבעיה:</strong> לא היתה קיימת אפשרות להגיש בקשה חדשה דרך הממשק, רק בקשת עריכה עבור תוכן קיים שנבחר מתוך הגלריה. מנויים שרצו תוכן חדש לגמרי פנו בוואטסאפ, מה שיצר עומס על צוות ה-CS, הוסיף תחנה מיותרת לפני שהפנייה הגיעה לצוות הקריאטיב, והיווה בשלב מסויים כ-40% מהפניות הנכנסות.</p>
-        <p class="b2b-body"><strong style="color:#4F9E78;">הפתרון:</strong> נוסף כפתור ראשי ובולט בדשבורד לבקשת תוכן באופן דיגיטלי ועצמאי. כל מנוי יכול לבצע את הפעולה בקלות, מה שהפך אותם לעצמאיים ובטוחים יותר בממשק והוריד את העומס מהצוות. בנוסף, נוספה אפשרות מהירה להגיש בקשת עריכה ישירות מתוך התוכן עצמו, במקום דרך כפתור ה"עזרה" הלא אינטואיטיבי, מה שצמצם גם את הפניות בנושא זה שהיו עוברות בוואטסאפ.</p>
-        <p class="b2b-body"><strong style="color:#B5730D;">בהמשך:</strong> בעקבות פידבק ממנויים שהתהליך ארוך ומסורבל, הוא יועל לזרימה פשוטה וקצרה יותר.</p>
+        <div class="b2b-sol-quote"><p data-i18n="b2b-sol2-quote">כשהדרך לפעולה ארוכה מדי, המשתמש מתייאש</p></div>
+        <p class="b2b-body" data-i18n="b2b-sol2-body1"><strong style="color:#D4183D;">הבעיה:</strong> לא היתה קיימת אפשרות להגיש בקשה חדשה דרך הממשק, רק בקשת עריכה עבור תוכן קיים שנבחר מתוך הגלריה. מנויים שרצו תוכן חדש לגמרי פנו בוואטסאפ, מה שיצר עומס על צוות ה-CS, הוסיף תחנה מיותרת לפני שהפנייה הגיעה לצוות הקריאטיב, והיווה בשלב מסויים כ-40% מהפניות הנכנסות.</p>
+        <p class="b2b-body" data-i18n="b2b-sol2-body2"><strong style="color:#4F9E78;">הפתרון:</strong> נוסף כפתור ראשי ובולט בדשבורד לבקשת תוכן באופן דיגיטלי ועצמאי. כל מנוי יכול לבצע את הפעולה בקלות, מה שהפך אותם לעצמאיים ובטוחים יותר בממשק והוריד את העומס מהצוות. בנוסף, נוספה אפשרות מהירה להגיש בקשת עריכה ישירות מתוך התוכן עצמו, במקום דרך כפתור ה"עזרה" הלא אינטואיטיבי, מה שצמצם גם את הפניות בנושא זה שהיו עוברות בוואטסאפ.</p>
+        <p class="b2b-body" data-i18n="b2b-sol2-body3"><strong style="color:#B5730D;">בהמשך:</strong> בעקבות פידבק ממנויים שהתהליך ארוך ומסורבל, הוא יועל לזרימה פשוטה וקצרה יותר.</p>
 
         <div class="b2b-flow-card">
           <div class="b2b-flow-group">
-            <div class="b2b-flow-label">מסלול בקשת תוכן חדש, לא היתה קיימת בממשק</div>
+            <div class="b2b-flow-label" data-i18n="b2b-flow-label-new">מסלול בקשת תוכן חדש, לא היתה קיימת בממשק</div>
             <div class="b2b-flow-row">
-              <div class="b2b-flow-step"><div class="dot">1</div><p>בקשת תוכן חדש לגמרי</p></div>
+              <div class="b2b-flow-step"><div class="dot">1</div><p data-i18n="b2b-flow-new-1">בקשת תוכן חדש לגמרי</p></div>
               <div class="b2b-flow-connector"></div>
-              <div class="b2b-flow-step hot"><div class="dot">2</div><p>בממשק יש "עריכה" כק מתוכן שקיים בגלריה</p></div>
+              <div class="b2b-flow-step hot"><div class="dot">2</div><p data-i18n="b2b-flow-new-2">בממשק יש "עריכה" כק מתוכן שקיים בגלריה</p></div>
               <div class="b2b-flow-connector"></div>
-              <div class="b2b-flow-step hot"><div class="dot">3</div><p>פניה בוואטסאפ</p></div>
+              <div class="b2b-flow-step hot"><div class="dot">3</div><p data-i18n="b2b-flow-new-3">פניה בוואטסאפ</p></div>
               <div class="b2b-flow-connector"></div>
-              <div class="b2b-flow-step hot"><div class="dot">4</div><p>CS ניתוב הפנייה ל</p></div>
+              <div class="b2b-flow-step hot"><div class="dot">4</div><p data-i18n="b2b-flow-new-4">CS ניתוב הפנייה ל</p></div>
               <div class="b2b-flow-connector"></div>
-              <div class="b2b-flow-step"><div class="dot">5</div><p>העברה לצוות קריאטיב</p></div>
+              <div class="b2b-flow-step"><div class="dot">5</div><p data-i18n="b2b-flow-new-5">העברה לצוות קריאטיב</p></div>
             </div>
-            <div class="b2b-flow-note">כ-40% מהפניות הנכנסות עברו במסלול הזה</div>
+            <div class="b2b-flow-note" data-i18n="b2b-flow-note-new">כ-40% מהפניות הנכנסות עברו במסלול הזה</div>
           </div>
 
           <div class="b2b-flow-group">
-            <div class="b2b-flow-label muted">לשם השוואה - מסלול בקשת עריכה, קיים במערכת אך לא כפעולה ישירה</div>
+            <div class="b2b-flow-label muted" data-i18n="b2b-flow-label-edit">לשם השוואה - מסלול בקשת עריכה, קיים במערכת אך לא כפעולה ישירה</div>
             <div class="b2b-flow-row">
-              <div class="b2b-flow-step dim"><div class="dot">1</div><p>כניסה לתוכן קיים בגלריה</p></div>
+              <div class="b2b-flow-step dim"><div class="dot">1</div><p data-i18n="b2b-flow-edit-1">כניסה לתוכן קיים בגלריה</p></div>
               <div class="b2b-flow-connector"></div>
-              <div class="b2b-flow-step hot"><div class="dot">2</div><p>לחיצה על כפתור עזרה</p></div>
+              <div class="b2b-flow-step hot"><div class="dot">2</div><p data-i18n="b2b-flow-edit-2">לחיצה על כפתור עזרה</p></div>
               <div class="b2b-flow-connector"></div>
-              <div class="b2b-flow-step dim"><div class="dot">3</div><p>פנייה לצוות קריאטיב</p></div>
+              <div class="b2b-flow-step dim"><div class="dot">3</div><p data-i18n="b2b-flow-edit-3">פנייה לצוות קריאטיב</p></div>
               <div class="b2b-flow-connector"></div>
-              <div class="b2b-flow-step dim"><div class="dot">4</div><p>כתיבת בקשה + תמונות</p></div>
+              <div class="b2b-flow-step dim"><div class="dot">4</div><p data-i18n="b2b-flow-edit-4">כתיבת בקשה + תמונות</p></div>
               <div class="b2b-flow-connector"></div>
-              <div class="b2b-flow-step dim"><div class="dot">5</div><p>שליחה לצוות</p></div>
+              <div class="b2b-flow-step dim"><div class="dot">5</div><p data-i18n="b2b-flow-edit-5">שליחה לצוות</p></div>
             </div>
-            <div class="b2b-flow-note">ניתן לצרף תמונות בתהליך הגשת בקשת העריכה; קבצי וידאו או מסמכים רק דרך וואטסאפ. גם כאן: הכניסה דרך כפתור "עזרה" אינה מיקום אינטואיטיבי לבקשת שינוי תוכן.</div>
+            <div class="b2b-flow-note" data-i18n="b2b-flow-note-edit">ניתן לצרף תמונות בתהליך הגשת בקשת העריכה; קבצי וידאו או מסמכים רק דרך וואטסאפ. גם כאן: הכניסה דרך כפתור "עזרה" אינה מיקום אינטואיטיבי לבקשת שינוי תוכן.</div>
           </div>
         </div>
 
         <div class="b2b-compare" style="margin-top:24px;">
-          <div class="b2b-compare-col"><div class="cap">אחרי - בקשת תוכן חדש</div><img class="b2b-img-slot" style="aspect-ratio:815/1566;" src="assets/b2b-sol2-after-newcontent.png" alt="מסך אחרי - בקשת תוכן חדש"></div>
-          <div class="b2b-compare-col"><div class="cap">&nbsp;</div><img class="b2b-img-slot" style="aspect-ratio:815/1566;" src="assets/b2b-sol2-after-quickedit.png" alt="מסך אחרי - בקשת עריכה מהירה"></div>
+          <div class="b2b-compare-col"><div class="cap" data-i18n="b2b-sol2-cap1">אחרי - בקשת תוכן חדש</div><img class="b2b-img-slot" style="aspect-ratio:815/1566;" src="assets/b2b-sol2-after-newcontent.png" alt="מסך אחרי - בקשת תוכן חדש" data-i18n-alt="b2b-sol2-alt1"></div>
+          <div class="b2b-compare-col"><div class="cap">&nbsp;</div><img class="b2b-img-slot" style="aspect-ratio:815/1566;" src="assets/b2b-sol2-after-quickedit.png" alt="מסך אחרי - בקשת עריכה מהירה" data-i18n-alt="b2b-sol2-alt2"></div>
         </div>
-        <div class="b2b-quote blue big"><p>בחודש שבו הוטמע כפתור ישיר להגשת בקשה, כ-13% מהמנויים הגיבו לפעולה.</p></div>
+        <div class="b2b-quote blue big"><p data-i18n="b2b-sol2-stat">בחודש שבו הוטמע כפתור ישיר להגשת בקשה, כ-13% מהמנויים הגיבו לפעולה.</p></div>
       </div>
     </section>
 
@@ -338,18 +341,18 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
 
     <section class="b2b-section">
       <div class="b2b-wrap mid">
-        <div class="b2b-eyebrow" style="color:#475569;">03 · פתרון 3 / 4</div>
+        <div class="b2b-eyebrow" style="color:#475569;" data-i18n="b2b-eyebrow-sol3">03 · פתרון 3 / 4</div>
         <div class="b2b-sol-tags">
-          <span class="b2b-status-pill">✓ יושם בפועל</span>
-          <h2 class="b2b-h2-sol">ייעול תהליך אפיון לקוח</h2>
+          <span class="b2b-status-pill" data-i18n="b2b-status-implemented">✓ יושם בפועל</span>
+          <h2 class="b2b-h2-sol" data-i18n="b2b-sol3-h2">ייעול תהליך אפיון לקוח</h2>
         </div>
-        <div class="b2b-sol-quote"><p>שאלות על זהות עסקית דורשות מחשבה, לא תגובה מהירה</p></div>
-        <p class="b2b-body">תהליך האפיון הראשוני כלל שאלות מורכבות על קול המותג ובידול, ודרש שיחה של 15-30 דקות, שהיתה תלויה בזמינות ופניות הלקוח ולכן קיבלנו תשובות שטחיות. מה שפגע ביצירת תוכן מדויק, יצר שיחות נשנות עם המנויים והעריך את תהליך העבודה וגם תסכל. לאחר מחקר משתמשים עם מנויים, המרתי את התהליך לטופס דיגיטלי שהלקוח ממלא אחרי שהוא מצטרף למנוי, וכל האינפו נשמר בפרופיל שלו.</p>
+        <div class="b2b-sol-quote"><p data-i18n="b2b-sol3-quote">שאלות על זהות עסקית דורשות מחשבה, לא תגובה מהירה</p></div>
+        <p class="b2b-body" data-i18n="b2b-sol3-body">תהליך האפיון הראשוני כלל שאלות מורכבות על קול המותג ובידול, ודרש שיחה של 15-30 דקות, שהיתה תלויה בזמינות ופניות הלקוח ולכן קיבלנו תשובות שטחיות. מה שפגע ביצירת תוכן מדויק, יצר שיחות נשנות עם המנויים והעריך את תהליך העבודה וגם תסכל. לאחר מחקר משתמשים עם מנויים, המרתי את התהליך לטופס דיגיטלי שהלקוח ממלא אחרי שהוא מצטרף למנוי, וכל האינפו נשמר בפרופיל שלו.</p>
         <div class="b2b-compare">
-          <div class="b2b-compare-col muted"><div class="cap">לפני</div><img class="b2b-img-slot" style="aspect-ratio:758/1383;" src="assets/b2b-sol3-before.png" alt="מסך לפני - ייעול תהליך אפיון לקוח"></div>
-          <div class="b2b-compare-col"><div class="cap">אחרי</div><img class="b2b-img-slot" style="aspect-ratio:758/1383;" src="assets/b2b-sol3-after.png" alt="מסך אחרי - ייעול תהליך אפיון לקוח"></div>
+          <div class="b2b-compare-col muted"><div class="cap" data-i18n="b2b-cap-before">לפני</div><img class="b2b-img-slot" style="aspect-ratio:758/1383;" src="assets/b2b-sol3-before.png" alt="מסך לפני - ייעול תהליך אפיון לקוח" data-i18n-alt="b2b-sol3-alt-before"></div>
+          <div class="b2b-compare-col"><div class="cap" data-i18n="b2b-cap-after">אחרי</div><img class="b2b-img-slot" style="aspect-ratio:758/1383;" src="assets/b2b-sol3-after.png" alt="מסך אחרי - ייעול תהליך אפיון לקוח" data-i18n-alt="b2b-sol3-alt-after"></div>
         </div>
-        <div class="b2b-quote blue big"><p>המעבר לטופס יצר סלקציה טבעית: רוב הלקוחות השלימו את התהליך באופן עצמאי, ופינו לצוות זמן להתמקד במי שנדרשה לו שיחת אפיון מעמיקה יותר.</p></div>
+        <div class="b2b-quote blue big"><p data-i18n="b2b-sol3-stat">המעבר לטופס יצר סלקציה טבעית: רוב הלקוחות השלימו את התהליך באופן עצמאי, ופינו לצוות זמן להתמקד במי שנדרשה לו שיחת אפיון מעמיקה יותר.</p></div>
       </div>
     </section>
 
@@ -357,19 +360,19 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
 
     <section class="b2b-section">
       <div class="b2b-wrap mid">
-        <div class="b2b-eyebrow" style="color:#475569;">03 · פתרון 4 / 4</div>
+        <div class="b2b-eyebrow" style="color:#475569;" data-i18n="b2b-eyebrow-sol4">03 · פתרון 4 / 4</div>
         <div class="b2b-sol-tags">
-          <span class="b2b-status-pill proposed">מוצע · ממתין לתיעדוף</span>
-          <h2 class="b2b-h2-sol">שיפור נגישות הצ'אט בממשק</h2>
+          <span class="b2b-status-pill proposed" data-i18n="b2b-status-proposed">מוצע · ממתין לתיעדוף</span>
+          <h2 class="b2b-h2-sol" data-i18n="b2b-sol4-h2">שיפור נגישות הצ'אט בממשק</h2>
         </div>
-        <div class="b2b-sol-quote"><p>הלקוחות השתמשו במה שמוכר ובטוח. הם לא מצאו את הצ'אט של הממשק</p></div>
-        <p class="b2b-body">הצ'אט הפנימי היה קיים, אבל אף אחד לא ראה אותו, כיון שהיה בתפריט נסתר, לקוחות פנו בוואטסאפ כי זה מה שהכירו. כדי שהלקוחות יתנהלו בממשק הצעתי להעביר את הגישה לצ'אט למיקום בולט ומוכר. הבחירה במיקום צף נבעה מכך שזו התנהגות משתמש מוכרת מממשקים אחרים. לא היה צורך ללמד את המשתמש דפוס חדש, אלא להסתמך על תהליך אינטואיטיבי שהוא כבר מכיר, נהוג ומוכר.</p>
+        <div class="b2b-sol-quote"><p data-i18n="b2b-sol4-quote">הלקוחות השתמשו במה שמוכר ובטוח. הם לא מצאו את הצ'אט של הממשק</p></div>
+        <p class="b2b-body" data-i18n="b2b-sol4-body">הצ'אט הפנימי היה קיים, אבל אף אחד לא ראה אותו, כיון שהיה בתפריט נסתר, לקוחות פנו בוואטסאפ כי זה מה שהכירו. כדי שהלקוחות יתנהלו בממשק הצעתי להעביר את הגישה לצ'אט למיקום בולט ומוכר. הבחירה במיקום צף נבעה מכך שזו התנהגות משתמש מוכרת מממשקים אחרים. לא היה צורך ללמד את המשתמש דפוס חדש, אלא להסתמך על תהליך אינטואיטיבי שהוא כבר מכיר, נהוג ומוכר.</p>
         <div class="b2b-compare">
-          <div class="b2b-compare-col muted"><div class="cap">לפני - תפריט צד</div><img class="b2b-img-slot" style="aspect-ratio:467/902;" src="assets/b2b-sol4-before-sidemenu.png" alt="הצ'אט בתפריט הצד הנסתר"></div>
-          <div class="b2b-compare-col muted"><div class="cap">לפני - כפתור פלוס</div><img class="b2b-img-slot" style="aspect-ratio:467/902;" src="assets/b2b-sol4-before-plus.png" alt="הדרך הקיימת דרך כפתור הפלוס"></div>
-          <div class="b2b-compare-col"><div class="cap">אחרי</div><img class="b2b-img-slot" style="aspect-ratio:467/902;" src="assets/b2b-sol4-after.png" alt="מיקום צף חדש לצ'אט"></div>
+          <div class="b2b-compare-col muted"><div class="cap" data-i18n="b2b-sol4-cap1">לפני - תפריט צד</div><img class="b2b-img-slot" style="aspect-ratio:467/902;" src="assets/b2b-sol4-before-sidemenu.png" alt="הצ'אט בתפריט הצד הנסתר" data-i18n-alt="b2b-sol4-alt1"></div>
+          <div class="b2b-compare-col muted"><div class="cap" data-i18n="b2b-sol4-cap2">לפני - כפתור פלוס</div><img class="b2b-img-slot" style="aspect-ratio:467/902;" src="assets/b2b-sol4-before-plus.png" alt="הדרך הקיימת דרך כפתור הפלוס" data-i18n-alt="b2b-sol4-alt2"></div>
+          <div class="b2b-compare-col"><div class="cap" data-i18n="b2b-cap-after">אחרי</div><img class="b2b-img-slot" style="aspect-ratio:467/902;" src="assets/b2b-sol4-after.png" alt="מיקום צף חדש לצ'אט" data-i18n-alt="b2b-sol4-alt3"></div>
         </div>
-        <div class="b2b-quote"><p style="color:#475569; font-style:normal; font-weight:400;">המטרה: לעודד לקוחות להישאר בתוך הממשק במקום לעבור לוואטסאפ, עם תיעוד מלא והמשכיות טובה יותר לצוות.</p></div>
+        <div class="b2b-quote"><p style="color:#475569; font-style:normal; font-weight:400;" data-i18n="b2b-sol4-goal">המטרה: לעודד לקוחות להישאר בתוך הממשק במקום לעבור לוואטסאפ, עם תיעוד מלא והמשכיות טובה יותר לצוות.</p></div>
       </div>
     </section>
 
@@ -377,16 +380,16 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
 
     <section class="b2b-section">
       <div class="b2b-wrap">
-        <div class="b2b-eyebrow" style="color:#475569;">04 · תוצאה</div>
-        <h2 class="b2b-h2 blue">המכנה המשותף לכל הפתרונות</h2>
-        <p class="b2b-body">חלק מהפתרונות יושמו בפועל. פתרונות אחרים נמצאים בתיעדוף במפת הדרכים של המוצר. מסך הבית היחיד שתוכנן פתר בו-זמנית 3 מתוך 4 הבעיות שזוהו (סטטוס בקשה, יצירת בקשה חדשה ופנייה לצוות), הדגמה לכך שפתרון אחד ממוקד יכול להחליף כמה תיקונים נפרדים.</p>
+        <div class="b2b-eyebrow" style="color:#475569;" data-i18n="b2b-eyebrow-04">04 · תוצאה</div>
+        <h2 class="b2b-h2 blue" data-i18n="b2b-h2-04">המכנה המשותף לכל הפתרונות</h2>
+        <p class="b2b-body" data-i18n="b2b-body-04">חלק מהפתרונות יושמו בפועל. פתרונות אחרים נמצאים בתיעדוף במפת הדרכים של המוצר. מסך הבית היחיד שתוכנן פתר בו-זמנית 3 מתוך 4 הבעיות שזוהו (סטטוס בקשה, יצירת בקשה חדשה ופנייה לצוות), הדגמה לכך שפתרון אחד ממוקד יכול להחליף כמה תיקונים נפרדים.</p>
         <div class="b2b-stats-row">
-          <div class="b2b-stat-card"><h4>פחות פניות חוזרות</h4><p>הורדת עומס מצוות ה-cs על ידי מתן מידע ישיר בממשק</p></div>
-          <div class="b2b-stat-card"><h4>אפיון מדויק יותר</h4><p>טופס דיגיטלי הניב תשובות עמוקות ותוכן שיווקי אמיתי</p></div>
-          <div class="b2b-stat-card"><h4>תקשורת בכלים הנכונים</h4><p>הפחתת תקשורת מחוץ למערכת וחזרה לכלים שנבנו לכך</p></div>
+          <div class="b2b-stat-card"><h4 data-i18n="b2b-stat1-title">פחות פניות חוזרות</h4><p data-i18n="b2b-stat1-desc">הורדת עומס מצוות ה-cs על ידי מתן מידע ישיר בממשק</p></div>
+          <div class="b2b-stat-card"><h4 data-i18n="b2b-stat2-title">אפיון מדויק יותר</h4><p data-i18n="b2b-stat2-desc">טופס דיגיטלי הניב תשובות עמוקות ותוכן שיווקי אמיתי</p></div>
+          <div class="b2b-stat-card"><h4 data-i18n="b2b-stat3-title">תקשורת בכלים הנכונים</h4><p data-i18n="b2b-stat3-desc">הפחתת תקשורת מחוץ למערכת וחזרה לכלים שנבנו לכך</p></div>
         </div>
-        <div class="b2b-quote black"><p>כל פתרון נשען על דאטה אמיתי שנאסף מהשטח. הגישה הישירה ללקוח היא נקודת המוצא הנכונה לכל שיפור בחוויית המשתמש.</p></div>
-        <div class="b2b-footnote">המסכים המוצגים הם המחשה סכמטית</div>
+        <div class="b2b-quote black"><p data-i18n="b2b-quote-04">כל פתרון נשען על דאטה אמיתי שנאסף מהשטח. הגישה הישירה ללקוח היא נקודת המוצא הנכונה לכל שיפור בחוויית המשתמש.</p></div>
+        <div class="b2b-footnote" data-i18n="b2b-footnote-04">המסכים המוצגים הם המחשה סכמטית</div>
       </div>
     </section>
 
@@ -394,29 +397,31 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
 
   <section class="case-bottom-cta">
     <div class="wrap case-bottom-buttons">
-      <a href="index.html#work" class="btn btn-outline">חזרה לכל הפרויקטים</a>
-      <a href="https://www.figma.com/design/Nw5uc38gAZYAv5YkaHJZHD/BC-%D7%9E%D7%A1%D7%9B%D7%99%D7%9D-%D7%95%D7%93%D7%99%D7%96%D7%99%D7%99%D7%9F?node-id=4-3&t=KmPATba28AYD9hav-0" target="_blank" rel="noopener" class="btn btn-primary">לפרויקט המלא</a>
+      <a href="index.html#work" class="btn btn-outline" data-i18n="case-back-all">חזרה לכל הפרויקטים</a>
+      <a href="https://www.figma.com/design/Nw5uc38gAZYAv5YkaHJZHD/BC-%D7%9E%D7%A1%D7%9B%D7%99%D7%9D-%D7%95%D7%93%D7%99%D7%96%D7%99%D7%99%D7%9F?node-id=4-3&t=KmPATba28AYD9hav-0" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="case-full-project">לפרויקט המלא</a>
     </div>
   </section>
 </main>
 
 <footer>
-  <div class="wrap">
+  <div class="wrap" data-i18n="footer-text">
     Digital Creative &amp; UX/UI Designer • טיאנה פולקנפולק 2026 ©
   </div>
 </footer>
 
 <div class="trivia-teaser" id="trivia-teaser">
-  <button class="trivia-teaser-close" aria-label="סגירה">&times;</button>
+  <button class="trivia-teaser-close" data-i18n-aria="trivia-close-aria" aria-label="סגירה">&times;</button>
   <a href="about.html#trivia" class="trivia-teaser-link">
-    <span class="trivia-teaser-text">רגע...<strong>בואו נכיר קצת יותר</strong></span>
+    <span class="trivia-teaser-text" data-i18n="trivia-teaser-text">רגע...<strong>בואו נכיר קצת יותר</strong></span>
   </a>
 </div>
 
-<a href="https://wa.me/972525218873" target="_blank" rel="noopener" class="whatsapp-fab" aria-label="שליחת הודעה בוואטסאפ">
+<a href="https://wa.me/972525218873" target="_blank" rel="noopener" class="whatsapp-fab" data-i18n-aria="whatsapp-aria" aria-label="שליחת הודעה בוואטסאפ">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.298-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/></svg>
 </a>
 
+<script src="js/i18n-data.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

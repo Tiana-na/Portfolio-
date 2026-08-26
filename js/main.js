@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var quizResults = document.getElementById('quiz-results');
     var AUTO_ADVANCE_DELAY = 1800;
 
-    var triviaData = [
+    var triviaDataHe = [
       {
         type: 'fact',
         question: 'איך נקרא המכשיר שבו סטאר-לורד שומע מוזיקה?',
@@ -139,12 +139,85 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     ];
 
+    var triviaDataEn = [
+      {
+        type: 'fact',
+        question: 'What is the device Star-Lord listens to music on?',
+        options: [
+          { text: 'Discman', correct: false },
+          { text: 'Walkman', correct: true },
+          { text: 'iPod', correct: false }
+        ],
+        feedbackCorrect: 'Yes! The legendary Sony Walkman. A product with UX so timeless it survived deep-space voyages and old mixtapes.',
+        feedbackWrong: 'Nope, it’s the nostalgic Walkman! With all due respect to the iPod, nothing beats the physical UX of hitting a real PLAY button on a spaceship.'
+      },
+      {
+        type: 'personal',
+        question: 'Which superhero suits you best?',
+        options: [
+          { text: 'Iron Man - money solves everything', feedback: 'The budget factor! A project with an unlimited budget and insane tech is every product designer’s dream. Designing with no constraints... bliss.' },
+          { text: 'Dr. Strange - knowing everything beats brute force', feedback: 'A User Research master! Knowing everything, reading the data, and seeing 14 million possible futures for every user journey.' },
+          { text: 'Thor - he’s got a hammer', feedback: 'The most practical one. Sometimes you don’t need fancy magic or complex tech - you just need one solid tool to smash an annoying bug.' }
+        ]
+      },
+      {
+        type: 'fact',
+        question: 'Who helped design and engineer the original Hot Wheels cars so they’d be the fastest in the world?',
+        options: [
+          { text: 'A real race car driver', correct: false },
+          { text: 'A rocket scientist', correct: true },
+          { text: 'The founder’s 8-year-old kid', correct: false }
+        ],
+        feedbackCorrect: 'Nailed it! Jack Ryan, a former missile engineer, designed the wheel axles. Proof that great design and UX sometimes really do take rocket science!',
+        feedbackWrong: 'Sounds logical, but no! It was an actual rocket scientist. Because when you want to build a frictionless product - you call in the pros.'
+      },
+      {
+        type: 'personal',
+        question: 'What do a packed workday and a Hot Wheels track in a 5-year-old’s living room have in common?',
+        options: [
+          { text: 'Both have crazy loops, sharp turns, and eventually someone steps on something and yells', feedback: 'Totally! The only difference is that in Figma you at least can’t step on a tiny car and break a toe in the middle of the night.' },
+          { text: 'Both start with tons of energy and end in a mess you have to clean up', feedback: 'Haha so true! I wish that at real work you could just take the whole complicated track apart at the end of the day and rebuild it tomorrow morning.' },
+          { text: 'For us it’s all smooth, a straight line, and top speed', feedback: 'Wow!' }
+        ]
+      },
+      {
+        type: 'personal',
+        question: 'What’s your reading style?',
+        options: [
+          { text: 'One book at a time, cover to cover', feedback: 'Laser focus! Sounds exactly like a single-tasking style, with a lot of depth, thoroughness, and commitment to a project until it ships.' },
+          { text: 'A few books at once, depending on my mood', feedback: 'Multitasking in your blood! Great lateral thinking, with the ability to juggle tasks and adjust pace as needed, just like in the studio.' },
+          { text: 'Start a lot, finish a few', feedback: 'The spirit of a true researcher! The Discovery and research phase is the most fun, full of curiosity and fresh ideas (just remember to close the Figma tabs eventually).' }
+        ]
+      },
+      {
+        type: 'personal',
+        question: 'Which digital annoyance drives you the craziest online?',
+        options: [
+          { text: 'The tiny close (X) button you always miss' },
+          { text: 'Endless CAPTCHA tests ("I’m not a robot")' },
+          { text: 'Password requirements that need a capital letter and a dragon’s blood sample' }
+        ],
+        feedbackGeneral: 'Haha totally! We all suffer from exactly the same things.'
+      }
+    ];
+
+    function isEnglish() {
+      return document.documentElement.lang === 'en';
+    }
+
+    function getTriviaData() {
+      return isEnglish() ? triviaDataEn : triviaDataHe;
+    }
+
     var currentIndex = 0;
     var advanceTimer = null;
 
     function renderQuizQuestion() {
+      var triviaData = getTriviaData();
       var data = triviaData[currentIndex];
-      quizProgressText.textContent = 'שאלה ' + (currentIndex + 1) + ' מתוך ' + triviaData.length;
+      quizProgressText.textContent = isEnglish()
+        ? 'Question ' + (currentIndex + 1) + ' of ' + triviaData.length
+        : 'שאלה ' + (currentIndex + 1) + ' מתוך ' + triviaData.length;
       quizProgressBar.style.width = (((currentIndex + 1) / triviaData.length) * 100) + '%';
       quizQText.textContent = data.question;
       quizQOptions.innerHTML = '';
@@ -163,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function selectQuizOption(opt, clickedButton) {
-      var data = triviaData[currentIndex];
+      var data = getTriviaData()[currentIndex];
       var buttons = quizQOptions.querySelectorAll('.quiz-option');
       if (quizQOptions.classList.contains('answered')) return;
       quizQOptions.classList.add('answered');
@@ -192,7 +265,7 @@ document.addEventListener('DOMContentLoaded', function () {
       setTimeout(function () {
         currentIndex++;
         quizQuestionBlock.classList.remove('leaving');
-        if (currentIndex < triviaData.length) {
+        if (currentIndex < getTriviaData().length) {
           renderQuizQuestion();
           quizQuestionBlock.classList.add('settling');
           setTimeout(function () {
@@ -227,6 +300,12 @@ document.addEventListener('DOMContentLoaded', function () {
         showQuizResults();
       });
     }
+
+    document.addEventListener('sitelangchange', function () {
+      if (!quizCard.hidden && quizResults.hidden) {
+        renderQuizQuestion();
+      }
+    });
   }
 
   /* ---------- cursor trail (decoration zones only, never over text) ---------- */
@@ -264,6 +343,65 @@ document.addEventListener('DOMContentLoaded', function () {
           if (dot.parentNode) dot.parentNode.removeChild(dot);
         }, 650);
       });
+    });
+  }
+
+  /* ---------- custom cursor (whole site, desktop pointer only) ---------- */
+  var supportsFinePointer = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
+
+  if (!prefersNoMotion && hasHover && supportsFinePointer) {
+    var cursorEl = document.createElement('div');
+    cursorEl.className = 'custom-cursor';
+    document.body.appendChild(cursorEl);
+    document.documentElement.classList.add('custom-cursor-active');
+
+    document.addEventListener('mousemove', function (e) {
+      cursorEl.style.left = e.clientX + 'px';
+      cursorEl.style.top = e.clientY + 'px';
+    });
+
+    var VIEW_SELECTOR = '.work-row, .card';
+    var CLICK_SELECTOR = '.btn, .work-btn, .quiz-start-btn, .quiz-icon-btn, .whatsapp-fab, .nav-cv-btn, .trivia-teaser-link, .quiz-option, button:not(.menu-toggle):not(.trivia-teaser-close)';
+    var HINT_SELECTOR = '.ed-intro-portrait-wrap';
+    var ALL_HOVERABLE = VIEW_SELECTOR + ', ' + CLICK_SELECTOR + ', ' + HINT_SELECTOR;
+
+    document.addEventListener('mouseover', function (e) {
+      var clickTarget = e.target.closest(CLICK_SELECTOR);
+      var viewTarget = e.target.closest(VIEW_SELECTOR);
+      var hintTarget = e.target.closest(HINT_SELECTOR);
+
+      var cursorIsEnglish = document.documentElement.lang === 'en';
+
+      if (clickTarget) {
+        cursorEl.style.width = '54px';
+        cursorEl.style.height = '54px';
+        cursorEl.style.whiteSpace = 'nowrap';
+        cursorEl.style.fontSize = '10px';
+        cursorEl.textContent = cursorIsEnglish ? 'Click' : 'לחיצה';
+      } else if (viewTarget) {
+        cursorEl.style.width = '64px';
+        cursorEl.style.height = '64px';
+        cursorEl.style.whiteSpace = 'nowrap';
+        cursorEl.style.fontSize = '10px';
+        cursorEl.textContent = cursorIsEnglish ? 'View' : 'צפייה';
+      } else if (hintTarget) {
+        cursorEl.style.width = '80px';
+        cursorEl.style.height = '80px';
+        cursorEl.style.whiteSpace = 'normal';
+        cursorEl.style.fontSize = '9px';
+        cursorEl.textContent = cursorIsEnglish ? 'There’s a quiz here' : 'יש פה חידון';
+      }
+    });
+
+    document.addEventListener('mouseout', function (e) {
+      var stillOver = e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest(ALL_HOVERABLE);
+      if (stillOver) return;
+      var leavingHoverable = e.target.closest(ALL_HOVERABLE);
+      if (!leavingHoverable) return;
+      cursorEl.style.width = '14px';
+      cursorEl.style.height = '14px';
+      cursorEl.style.whiteSpace = 'nowrap';
+      cursorEl.textContent = '';
     });
   }
 
