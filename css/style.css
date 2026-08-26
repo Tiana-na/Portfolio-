@@ -396,7 +396,7 @@ html[dir="ltr"] .hero-detail-mark{
 @media (hover: none){
   .btn:active{ opacity:.8; transform: scale(.97); }
   .work-card:active{ transform: scale(.98); border-color: var(--accent); }
-  .card:active{ border-color: var(--accent); }
+  .card:active{ border-color: #E1D5CA; }
 }
 
 /* ===== Page header (about/contact) ===== */
@@ -912,7 +912,7 @@ html[dir="ltr"] .hero-detail-mark{
 
 .pastel-accent-bar{
   position: absolute;
-  top: 4px;
+  top: 0;
   inset-inline-start: -14px;
   width: 5px;
   height: calc(100% - 8px);
@@ -978,7 +978,7 @@ html[dir="ltr"] .hero-detail-mark{
 }
 
 .card:hover{
-  border-color: var(--accent);
+  border-color: #E1D5CA;
   transform: translateY(-3px);
 }
 
@@ -1007,7 +1007,7 @@ html[dir="ltr"] .hero-detail-mark{
 }
 
 .tag{
-  background: var(--accent-soft);
+  background: #E1D5CA;
   color: var(--accent);
   border-radius: 6px;
   padding: 3px 8px;
@@ -1017,7 +1017,7 @@ html[dir="ltr"] .hero-detail-mark{
   white-space: nowrap;
 }
 
-.tag:hover{ background: rgba(30,27,22,.25); }
+.tag:hover{ background: #D2C3B4; }
 
 @media (max-width: 860px){
   .card-grid{ grid-template-columns: 1fr; }

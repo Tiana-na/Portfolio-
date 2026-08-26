@@ -143,6 +143,7 @@ window.I18N = {
     'b2b-flow-edit-5': 'Send to the team',
     'b2b-flow-note-edit': "Images could be attached during the edit-request process; video files or documents only via WhatsApp. Here too: entering through the “Help” button isn't an intuitive place to request a content change.",
     'b2b-sol2-cap1': 'After – new content request',
+    'b2b-sol2-cap2': 'After – quick edit request',
     'b2b-sol2-alt1': 'After screen – new content request',
     'b2b-sol2-alt2': 'After screen – quick edit request',
     'b2b-sol2-stat': 'In the month the direct request button launched, roughly 13% of subscribers engaged with the action.',
