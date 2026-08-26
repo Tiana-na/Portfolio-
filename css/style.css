@@ -341,7 +341,7 @@ html[dir="ltr"] .hero-detail-mark{
 .hero .subline{
   font-size: 1.35rem;
   font-weight: 600;
-  color: var(--accent);
+  color: #7A6A9E;
   margin-bottom: 20px;
 }
 
@@ -790,7 +790,7 @@ html[dir="ltr"] .hero-detail-mark{
 }
 
 .ed-intro-float--1{ top: 6%; inset-inline-start: -2%; }
-.ed-intro-float--2{ top: 22%; inset-inline-end: 0; }
+.ed-intro-float--2{ top: 22%; inset-inline-end: -10%; }
 .ed-intro-float--3{ bottom: 10px; inset-inline-start: -2%; }
 
 @media (max-width: 860px){
@@ -819,7 +819,7 @@ html[dir="ltr"] .hero-detail-mark{
 }
 
 .ed-statement{
-  max-width: 640px;
+  max-width: 980px;
   margin: 8px auto 0;
   padding: 0 24px;
 }
@@ -829,7 +829,18 @@ html[dir="ltr"] .hero-detail-mark{
   font-size: 1.35rem;
   line-height: 1.6;
   color: var(--accent);
+  text-wrap: pretty;
+  max-width: none;
+  margin-bottom: 0;
 }
+
+.ed-statement p + p{
+  margin-top: 24px;
+}
+
+.lang-en .about-hero-wrap{ max-width: 1244px; }
+.lang-en .about-editorial{ max-width: 1180px; }
+.lang-en .ed-statement{ max-width: 1180px; }
 
 .ed-statement strong{
   font-style: normal;
@@ -869,6 +880,15 @@ html[dir="ltr"] .hero-detail-mark{
 .pastel-zone{
   position: relative;
   overflow: hidden;
+}
+
+/* the quiz-block's eyebrow uses .pastel-zone just for the accent-bar layout,
+   not for clipping a background shape - overflow:hidden here was clipping
+   the .reveal element's pre-animation translateY(40px) offset, which kept
+   it permanently outside the observer's intersection area (0% visible,
+   so it never got .in-view and stayed invisible). */
+.quiz-block .pastel-zone{
+  overflow: visible;
 }
 
 .pastel-zone > .wrap,
