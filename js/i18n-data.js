@@ -44,7 +44,7 @@ window.I18N = {
   },
 
   about: {
-    'ed-h1': 'Instead of a store and a customer journey,<br>a screen and a user flow.',
+    'ed-h1': 'Instead of store & customer journey, <br class="ed-h1-break">a screen & user flow.',
     'ed-portrait-alt': 'Tiana Folkenfolk',
     'ed-float-1': '<span class="ed-intro-chip ed-intro-chip--yellow">Background</span><br>\n            I’m a UX/UI designer with a rich background in commercial design and creating experiences in physical spaces. Over the years, I’ve learned that design is about much more than what you see. It shapes how people feel and make decisions, through the planning of space, visual hierarchy, and the placement of messages and products.',
     'ed-quote-lead': 'I’ve worked with international brands like H&amp;M and IKEA, where I designed shopping experiences, window displays, and visual communication, always guided by the same question:',

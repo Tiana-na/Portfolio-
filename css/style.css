@@ -803,7 +803,8 @@ html[dir="ltr"] .hero-detail-mark{
 
 @media (max-width: 860px){
   .ed-intro{ padding: 40px 24px 20px; }
-  .ed-intro-heading-block .ed-intro-heading{ font-size: 1.8rem; }
+  .ed-intro-heading-block{ margin-inline: -24px; }
+  .ed-intro-heading-block .ed-intro-heading{ font-size: clamp(16.5px, 5.2vw, 24px); }
   .ed-intro-portrait{ width: 82%; }
   .ed-intro-float{ position: relative; max-width: none; margin: 24px auto; box-shadow: 0 10px 22px rgba(30,27,22,.10); }
   .ed-intro-float--1,
@@ -881,7 +882,11 @@ html[dir="ltr"] .hero-detail-mark{
 
 /* ===== Quiz block (inline, about page) ===== */
 .quiz-block{
-  margin: 20px 0 8px;
+  margin: 64px 0 8px;
+}
+
+@media (max-width: 640px){
+  .quiz-block{ margin-top: 48px; }
 }
 
 /* ===== Pastel decoration zones (non-case-study pages only) ===== */
