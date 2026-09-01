@@ -353,11 +353,8 @@ html[dir="ltr"] .hero-detail-mark{
   margin-bottom: 20px;
 }
 
-.subline-break{ display:none; }
-
 @media (max-width: 600px){
   .hero .subline{ font-size: 1.1rem; }
-  .subline-break{ display: initial; }
 }
 
 .btn-row{
