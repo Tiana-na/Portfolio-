@@ -282,28 +282,26 @@ section{ padding: 90px 0; }
   margin-inline-end: 4px;
 }
 
-.hero-detail-row{
+.hero-lede-block{
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: 8px;
   max-width: 680px;
   margin-inline: 0 auto;
 }
 
 .hero-detail-mark{
-  width: 13px;
+  width: 22px;
   height: auto;
   flex: 0 0 auto;
-  margin-top: 6px;
+  margin-top: 2px;
 }
 
 html[dir="ltr"] .hero-detail-mark{
   transform: scaleX(-1);
 }
 
-.hero .hero-detail-row .hero-detail{
-  max-width: none;
-  margin: 0;
+.hero .hero-detail{
   font-size: 1.125rem;
   font-weight: 500;
   line-height: 1.7;
@@ -313,28 +311,21 @@ html[dir="ltr"] .hero-detail-mark{
 @media (max-width: 600px){
   .hero h1{ font-size: 2rem; }
   .hero p.hero-lede{ font-size: 1.3rem; }
-  .hero .hero-detail-row .hero-detail{ font-size: 1.02rem; }
+  .hero .hero-detail{ font-size: 1.02rem; }
+  .hero-lede-block{ gap: 6px; }
+  .hero-detail-mark{ width: 19px; margin-top: 2px; }
 }
 
 .footnote-ref{
+  font: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
   font-size: .65em;
   vertical-align: super;
   color: var(--accent);
   margin-inline-start: 2px;
-}
-
-.page-footnote{
-  border-top: 1px solid var(--border);
-}
-
-.page-footnote .wrap{
-  padding: 18px 32px;
-  font-size: .8rem;
-  color: var(--text-muted);
-}
-
-[data-page="index"] .page-footnote .wrap{
-  color: #6D5F8E;
 }
 
 .footnote-asterisk{
@@ -344,6 +335,61 @@ html[dir="ltr"] .hero-detail-mark{
 
 [data-page="index"] .footnote-asterisk{
   color: #6D5F8E;
+}
+
+/* inline expanding note - pushes the content below it down instead of covering anything */
+.footnote-popup{
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows .25s ease, opacity .2s ease;
+}
+
+.footnote-popup.show{
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-bottom: 20px;
+}
+
+.footnote-popup-inner{
+  overflow: hidden;
+  min-height: 0;
+}
+
+.footnote-popup-card{
+  position: relative;
+  max-width: 320px;
+  background: var(--card);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  padding: 14px 34px 14px 18px;
+  margin-top: 4px;
+}
+
+.footnote-popup-close{
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.footnote-popup-close:hover{ color: var(--text); }
+
+.footnote-popup-text{
+  font-size: .8rem;
+  line-height: 1.5;
+  color: #6D5F8E;
+}
+
+@media (max-width: 600px){
+  .footnote-popup-card{ max-width: none; }
+  .footnote-popup-text{ font-size: .78rem; }
 }
 
 .hero .subline{

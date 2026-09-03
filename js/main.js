@@ -60,6 +60,40 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  /* ---------- footnote inline note (e.g. "Handywoman*") - expands in place, never covers other text ---------- */
+  /* delegated listeners so this keeps working after i18n swaps the trigger's markup on language toggle */
+  function closeAllFootnotePopups() {
+    document.querySelectorAll('.footnote-popup.show').forEach(function (p) {
+      p.classList.remove('show');
+    });
+  }
+
+  document.addEventListener('click', function (e) {
+    var trigger = e.target.closest('[data-footnote-trigger]');
+    if (trigger) {
+      var popup = document.getElementById('footnote-popup-' + trigger.getAttribute('data-footnote-trigger'));
+      if (!popup) return;
+      var isOpen = popup.classList.contains('show');
+      closeAllFootnotePopups();
+      if (!isOpen) popup.classList.add('show');
+      return;
+    }
+
+    var closeBtn = e.target.closest('.footnote-popup-close');
+    if (closeBtn) {
+      closeAllFootnotePopups();
+      return;
+    }
+
+    if (!e.target.closest('.footnote-popup')) {
+      closeAllFootnotePopups();
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeAllFootnotePopups();
+  });
+
   /* ---------- trivia quiz ---------- */
   var quizStartBtn = document.getElementById('quiz-start-btn');
   var quizCard = document.getElementById('quiz-card');

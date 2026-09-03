@@ -21,7 +21,7 @@ window.I18N = {
 
   index: {
     'hero-h1': 'Hi,<br>I’m Tiana',
-    'hero-subline': 'Coffee and book lover, Marvel fan. <br class="subline-break">Curious. <br class="subline-break">Handywoman.<a href="#footnote-handywoman" class="footnote-ref">*</a>',
+    'hero-subline': 'Coffee and book lover, Marvel fan. <br class="subline-break">Curious. <br class="subline-break">Handywoman.<button type="button" class="footnote-ref" data-footnote-trigger="handywoman">*</button>',
     'hero-lede': '<span class="lede-prefix">Also,</span> I’m a UX/UI designer who turns a deep understanding of users, behavior, and visual hierarchy into simple, effective digital experiences.',
     'hero-detail': 'I come from a background in customer experience design, commercial design, and visual communication in physical spaces. I love aesthetics in all its forms, but I believe it shouldn’t come at the expense of comfort. Bye,&nbsp;heels.',
     'work-eyebrow': 'Projects',
@@ -75,7 +75,7 @@ window.I18N = {
 
   workB2b: {
     'case-header-h1': 'B2B Digital Marketing Platform: Identifying Friction Points and Improving UX',
-    'case-header-p': 'Customers were bypassing the SaaS system and going straight to the creative team, because they couldn’t track request status, couldn’t find how to submit a new content request, and didn’t know how to communicate with the team inside the system. I identified the friction points and led four product solutions.',
+    'case-header-p': 'Customers were bypassing the SaaS system and going straight to the CS team, because they couldn’t track request status, couldn’t find how to submit a new content request, and didn’t know how to communicate with the team inside the system. I identified the friction points and led four product solutions.',
     'b2b-hero-h1': 'Identifying Friction Points and Improving UX',
     'b2b-hero-p': 'A digital marketing platform for small and medium businesses. Identifying patterns of customers bypassing the system, and solutions that reduced friction and improved the user experience.',
 
