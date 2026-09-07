@@ -86,10 +86,21 @@
     }
   }
 
+  var CV_HE = 'assets/tiana-folkenfolk-cv.pdf';
+  var CV_EN = 'assets/tiana-folkenfolk-cv-en.pdf';
+
+  function updateCvLinks(lang) {
+    var links = document.querySelectorAll('.nav-cv-btn');
+    for (var i = 0; i < links.length; i++) {
+      links[i].setAttribute('href', lang === 'en' ? CV_EN : CV_HE);
+    }
+  }
+
   window.setSiteLang = function (lang) {
     applyChrome(lang);
     applyTranslations(lang);
     updateToggleButtons(lang);
+    updateCvLinks(lang);
     storeLang(lang);
     var evt;
     try {

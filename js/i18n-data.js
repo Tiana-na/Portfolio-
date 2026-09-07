@@ -57,7 +57,7 @@ window.I18N = {
     'quiz-start-btn': 'Let’s play!',
     'quiz-skip-btn': 'Skip to results ✕',
     'quiz-results-title': 'You made it!',
-    'quiz-results-text': '\n              Thanks for taking a few minutes to play and discover a bit of my world (and Hot Wheels rocket science). Whether your coffee order is a black coffee or a latte, and whether your superpower is reading minds or just surviving morning traffic, it was a lot of fun hosting you here.\n              <br><br>\n              Our next UX could already be a real meeting (or a quick Zoom) over a cup of coffee.\n            ',
+    'quiz-results-text': '\n              Thanks for taking a few minutes to play and discover a bit of my world (and Hot Wheels rocket science). Whether your coffee order is a black coffee or a latte, and whether your superpower is reading minds or just surviving morning traffic, it was a lot of fun hosting you here.\n              <br><br>\n              Maybe our next project starts with a real meeting (or a quick Zoom) over coffee.\n            ',
     'skills-uxui-title': 'UX/UI Skills',
     'skills-ai-title': 'AI Skills',
     'education-title': 'Education',

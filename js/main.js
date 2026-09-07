@@ -108,8 +108,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var quizQText = document.getElementById('quiz-q-text');
     var quizQOptions = document.getElementById('quiz-q-options');
     var quizQFeedback = document.getElementById('quiz-q-feedback');
+    var quizNextBtn = document.getElementById('quiz-next-btn');
     var quizResults = document.getElementById('quiz-results');
-    var AUTO_ADVANCE_DELAY = 1800;
 
     var triviaDataHe = [
       {
@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var triviaDataEn = [
       {
         type: 'fact',
-        question: 'What is the device Star-Lord listens to music on?',
+        question: 'What does Star-Lord listen to music on?',
         options: [
           { text: 'Discman', correct: false },
           { text: 'Walkman', correct: true },
@@ -210,8 +210,8 @@ document.addEventListener('DOMContentLoaded', function () {
         question: 'What do a packed workday and a Hot Wheels track in a 5-year-old’s living room have in common?',
         options: [
           { text: 'Both have crazy loops, sharp turns, and eventually someone steps on something and yells', feedback: 'Totally! The only difference is that in Figma you at least can’t step on a tiny car and break a toe in the middle of the night.' },
-          { text: 'Both start with tons of energy and end in a mess you have to clean up', feedback: 'Haha so true! I wish that at real work you could just take the whole complicated track apart at the end of the day and rebuild it tomorrow morning.' },
-          { text: 'For us it’s all smooth, a straight line, and top speed', feedback: 'Wow!' }
+          { text: 'Both start with tons of energy and end in a mess you have to clean up', feedback: 'Haha so true! I wish real work actually worked that way. You could just tear down the whole complicated track at the end of the day and rebuild it tomorrow morning.' },
+          { text: 'For me it’s all smooth, a straight line, and top speed', feedback: 'Wow!' }
         ]
       },
       {
@@ -219,7 +219,7 @@ document.addEventListener('DOMContentLoaded', function () {
         question: 'What’s your reading style?',
         options: [
           { text: 'One book at a time, cover to cover', feedback: 'Laser focus! Sounds exactly like a single-tasking style, with a lot of depth, thoroughness, and commitment to a project until it ships.' },
-          { text: 'A few books at once, depending on my mood', feedback: 'Multitasking in your blood! Great lateral thinking, with the ability to juggle tasks and adjust pace as needed, just like in the studio.' },
+          { text: 'A few books at once, depending on my mood', feedback: 'Multitasking is in your blood! Great lateral thinking, with the ability to juggle tasks and adjust pace as needed, just like in the studio.' },
           { text: 'Start a lot, finish a few', feedback: 'The spirit of a true researcher! The Discovery and research phase is the most fun, full of curiosity and fresh ideas (just remember to close the Figma tabs eventually).' }
         ]
       },
@@ -244,7 +244,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     var currentIndex = 0;
-    var advanceTimer = null;
 
     function renderQuizQuestion() {
       var triviaData = getTriviaData();
@@ -258,6 +257,7 @@ document.addEventListener('DOMContentLoaded', function () {
       quizQOptions.classList.remove('answered');
       quizQFeedback.textContent = '';
       quizQFeedback.classList.remove('show');
+      quizNextBtn.hidden = true;
 
       data.options.forEach(function (opt) {
         var button = document.createElement('button');
@@ -288,8 +288,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
       quizQFeedback.classList.add('show');
 
-      clearTimeout(advanceTimer);
-      advanceTimer = setTimeout(advanceQuiz, AUTO_ADVANCE_DELAY);
+      var isLastQuestion = currentIndex >= getTriviaData().length - 1;
+      quizNextBtn.textContent = isEnglish()
+        ? (isLastQuestion ? 'See results' : 'Next question')
+        : (isLastQuestion ? 'לתוצאות' : 'לשאלה הבאה');
+      quizNextBtn.hidden = false;
     }
 
     var QUIZ_EXIT_MS = 460;
@@ -312,12 +315,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function showQuizResults() {
-      clearTimeout(advanceTimer);
       quizQuestionBlock.hidden = true;
       quizNav.hidden = true;
       quizProgressTrack.hidden = true;
       quizResults.hidden = false;
     }
+
+    quizNextBtn.addEventListener('click', function () {
+      quizNextBtn.hidden = true;
+      advanceQuiz();
+    });
 
     quizStartBtn.addEventListener('click', function () {
       quizStartBtn.hidden = true;
