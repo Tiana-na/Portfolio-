@@ -14,7 +14,7 @@ window.I18N = {
     'case-back': 'Back to projects',
     'case-back-all': 'Back to all projects',
     'case-figma-btn': 'Open project file in Figma',
-    'case-full-project': 'View full project',
+    'case-full-project': 'View full project in Figma',
     'linkedin-aria': 'Go to LinkedIn profile',
     'email-aria': 'Send an email'
   },
@@ -59,6 +59,7 @@ window.I18N = {
     'quiz-results-title': 'You made it!',
     'quiz-results-text': '\n              Thanks for taking a few minutes to play and discover a bit of my world (and Hot Wheels rocket science). Whether your coffee order is a black coffee or a latte, and whether your superpower is reading minds or just surviving morning traffic, it was a lot of fun hosting you here.\n              <br><br>\n              Maybe our next project starts with a real meeting (or a quick Zoom) over coffee.\n            ',
     'skills-uxui-title': 'UX/UI Skills',
+    'skills-visual-title': 'Visual &amp; Creative Skills',
     'skills-ai-title': 'AI Skills',
     'education-title': 'Education',
     'education-text': '\n            <strong style="color:var(--accent)">HackerU</strong><br>\n            UI/UX Course: Specification and Digital Design<br>\n            2023 to 2024\n          ',

@@ -417,24 +417,28 @@ document.addEventListener('DOMContentLoaded', function () {
       var cursorIsEnglish = document.documentElement.lang === 'en';
 
       if (clickTarget) {
+        cursorEl.classList.add('is-hover');
         cursorEl.style.width = '54px';
         cursorEl.style.height = '54px';
         cursorEl.style.whiteSpace = 'nowrap';
         cursorEl.style.fontSize = '10px';
         cursorEl.textContent = cursorIsEnglish ? 'Click' : 'לחיצה';
       } else if (viewTarget) {
+        cursorEl.classList.add('is-hover');
         cursorEl.style.width = '64px';
         cursorEl.style.height = '64px';
         cursorEl.style.whiteSpace = 'nowrap';
         cursorEl.style.fontSize = '10px';
         cursorEl.textContent = cursorIsEnglish ? 'View' : 'צפייה';
       } else if (hintNearTarget) {
+        cursorEl.classList.add('is-hover');
         cursorEl.style.width = '64px';
         cursorEl.style.height = '64px';
         cursorEl.style.whiteSpace = 'nowrap';
         cursorEl.style.fontSize = '10px';
         cursorEl.textContent = cursorIsEnglish ? 'Let’s play' : 'שנשחק';
       } else if (hintFarTarget) {
+        cursorEl.classList.add('is-hover');
         cursorEl.style.width = '80px';
         cursorEl.style.height = '80px';
         cursorEl.style.whiteSpace = 'normal';
@@ -448,8 +452,9 @@ document.addEventListener('DOMContentLoaded', function () {
       if (stillOver) return;
       var leavingHoverable = e.target.closest(ALL_HOVERABLE);
       if (!leavingHoverable) return;
-      cursorEl.style.width = '14px';
-      cursorEl.style.height = '14px';
+      cursorEl.classList.remove('is-hover');
+      cursorEl.style.width = '16px';
+      cursorEl.style.height = '17px';
       cursorEl.style.whiteSpace = 'nowrap';
       cursorEl.textContent = '';
     });

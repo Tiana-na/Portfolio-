@@ -1158,6 +1158,13 @@ html[dir="ltr"] .hero-detail-mark{
 .work-tags--b2b .work-tag{ color:#2563EB; border-color:rgba(37,99,235,.4); }
 .work-tags--dogether .work-tag{ color:#F26D0E; border-color:rgba(242,109,14,.4); }
 .work-tags--mixmatch .work-tag{ color:#73BAE5; border-color:rgba(115,186,229,.4); }
+.work-tags--fashion .work-tag{ color:#C1568A; border-color:rgba(193,86,138,.4); }
+
+/* category tag: same pill style, bolder weight so it reads first when scanning */
+.work-tag--category{
+  font-weight: 700;
+  background: transparent;
+}
 
 .work-content h3{
   font-size: 1.25rem;
@@ -1414,6 +1421,32 @@ html[dir="ltr"] .hero-detail-mark{
 .quiz-start-btn{
   display:block;
   margin: 20px 0 0;
+}
+
+/* English version: real photographed keycap asset (Hebrew version pending) */
+.lang-en .quiz-start-btn{
+  width: 260px;
+  max-width: 100%;
+  aspect-ratio: 979 / 417;
+  background-image: url('../assets/quiz-start-btn-keycap-en.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  font-size: 0;
+  transition: transform .12s ease, filter .12s ease;
+}
+.lang-en .quiz-start-btn:hover{
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+.lang-en .quiz-start-btn:active{
+  transform: translateY(1px) scale(.98);
+  filter: brightness(.94);
 }
 
 .quiz-card{
@@ -1716,13 +1749,16 @@ html.custom-cursor-active *{
   position: fixed;
   top: 0;
   left: 0;
-  width: 14px;
-  height: 14px;
-  background: #D9D2EA;
-  border-radius: 50%;
+  width: 16px;
+  height: 17px;
+  background-image: url('../assets/logo-tf-dot.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 0;
   pointer-events: none;
   transform: translate(-50%, -50%);
-  transition: width .2s ease, height .2s ease, background .2s ease;
+  transition: width .2s ease, height .2s ease, background-color .2s ease, border-radius .2s ease;
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -1735,6 +1771,12 @@ html.custom-cursor-active *{
   padding: 4px;
   box-sizing: border-box;
   will-change: left, top;
+}
+
+.custom-cursor.is-hover{
+  background-image: none;
+  background-color: #D9D2EA;
+  border-radius: 50%;
 }
 
 @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce){
