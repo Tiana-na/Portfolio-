@@ -219,6 +219,16 @@ window.I18N = {
     'dg-persona2-bio2': "The kids also don't give enough advance notice about a special school activity, a get-together with friends, and so on.",
     'dg-persona2-bio3': "Ben and Devi want to be more in sync in running the household day-to-day, to share the load more equally, and they also want to instill in the kids the habit of being more active and involved in the routine.",
 
+    'dg-process-title': 'Process',
+    'dg-process-subtitle': 'Same information, two experiences',
+    'dg-process-body': "Both see the same tasks, but not the same thing. The parent, who runs the household, gets an overall picture of priorities and the event calendar. The child, who needs a reason to get moving, gets a level, a streak, and a goal waiting for them.",
+    'dg-process-child-label': 'Child screen',
+    'dg-process-child-desc': 'Motivation and achievement: level, streak, and a specific goal',
+    'dg-process-child-alt': "Child's screen: profile, streak and level, today's task list",
+    'dg-process-parent-label': 'Parent screen',
+    'dg-process-parent-desc': 'Management and control: full visibility, clear priorities',
+    'dg-process-parent-alt': "Parent's screen: shared breakfast tasks, progress and upcoming events",
+
     'dg-brand-title': 'Branding',
 
     'dg-ia-title': 'Information Architecture',
@@ -250,7 +260,11 @@ window.I18N = {
     'dg-screen1-alt': "Home screen: today's tasks, progress, and upcoming events",
     'dg-screen2-alt': 'Confirmation of successfully completing a task',
     'dg-screen3-alt': 'Celebration screen for completing all tasks and earning points',
-    'dg-screens-caption': 'Full app screenshots are available in the Figma project file.'
+    'dg-screens-caption': 'Full app screenshots are available in the Figma project file.',
+
+    'dg-design-system-title': 'Design System',
+    'dg-design-system-alt': 'The design system: task cards, buttons, input fields, assignee/participant pickers, and task cards across all urgency levels',
+    'dg-design-system-caption': 'The full design system is also available in the Figma project file.'
   },
 
   workMixmatch: {

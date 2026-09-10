@@ -401,63 +401,7 @@ document.addEventListener('DOMContentLoaded', function () {
       cursorEl.style.top = e.clientY + 'px';
     });
 
-    var VIEW_SELECTOR = '.work-row, .card';
-    var CLICK_SELECTOR = '.btn, .work-btn, .quiz-start-btn, .quiz-icon-btn, .whatsapp-fab, .nav-cv-btn, .trivia-teaser-link, .quiz-option, button:not(.menu-toggle):not(.trivia-teaser-close)';
-    var HINT_FAR_SELECTOR = '.ed-intro-portrait-wrap';
-    var HINT_NEAR_SELECTOR = '.quiz-block';
-    var HINT_SELECTOR = HINT_FAR_SELECTOR + ', ' + HINT_NEAR_SELECTOR;
-    var ALL_HOVERABLE = VIEW_SELECTOR + ', ' + CLICK_SELECTOR + ', ' + HINT_SELECTOR;
-
-    document.addEventListener('mouseover', function (e) {
-      var clickTarget = e.target.closest(CLICK_SELECTOR);
-      var viewTarget = e.target.closest(VIEW_SELECTOR);
-      var hintNearTarget = e.target.closest(HINT_NEAR_SELECTOR);
-      var hintFarTarget = e.target.closest(HINT_FAR_SELECTOR);
-
-      var cursorIsEnglish = document.documentElement.lang === 'en';
-
-      if (clickTarget) {
-        cursorEl.classList.add('is-hover');
-        cursorEl.style.width = '54px';
-        cursorEl.style.height = '54px';
-        cursorEl.style.whiteSpace = 'nowrap';
-        cursorEl.style.fontSize = '10px';
-        cursorEl.textContent = cursorIsEnglish ? 'Click' : 'לחיצה';
-      } else if (viewTarget) {
-        cursorEl.classList.add('is-hover');
-        cursorEl.style.width = '64px';
-        cursorEl.style.height = '64px';
-        cursorEl.style.whiteSpace = 'nowrap';
-        cursorEl.style.fontSize = '10px';
-        cursorEl.textContent = cursorIsEnglish ? 'View' : 'צפייה';
-      } else if (hintNearTarget) {
-        cursorEl.classList.add('is-hover');
-        cursorEl.style.width = '64px';
-        cursorEl.style.height = '64px';
-        cursorEl.style.whiteSpace = 'nowrap';
-        cursorEl.style.fontSize = '10px';
-        cursorEl.textContent = cursorIsEnglish ? 'Let’s play' : 'שנשחק';
-      } else if (hintFarTarget) {
-        cursorEl.classList.add('is-hover');
-        cursorEl.style.width = '80px';
-        cursorEl.style.height = '80px';
-        cursorEl.style.whiteSpace = 'normal';
-        cursorEl.style.fontSize = '9px';
-        cursorEl.textContent = cursorIsEnglish ? 'Scroll me down, let’s play' : 'גללו אותי למטה ונשחק';
-      }
-    });
-
-    document.addEventListener('mouseout', function (e) {
-      var stillOver = e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest(ALL_HOVERABLE);
-      if (stillOver) return;
-      var leavingHoverable = e.target.closest(ALL_HOVERABLE);
-      if (!leavingHoverable) return;
-      cursorEl.classList.remove('is-hover');
-      cursorEl.style.width = '16px';
-      cursorEl.style.height = '17px';
-      cursorEl.style.whiteSpace = 'nowrap';
-      cursorEl.textContent = '';
-    });
+    /* Cursor stays the same logo-dot everywhere - no hover-grow / text state. */
   }
 
 });

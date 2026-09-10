@@ -73,6 +73,17 @@
 .dg-screen-slot{ width:180px; background:rgba(255,255,255,.06); border-radius:16px; overflow:hidden; }
 .dg-screen-slot img{ width:100%; display:block; }
 
+.dg-process-row{ display:flex; gap:28px; justify-content:center; flex-wrap:wrap; margin-top:24px; }
+.dg-process-col{ flex:1 1 220px; max-width:280px; text-align:center; }
+.dg-process-label{ color:#F26D0E; font-weight:600; font-size:16px; margin-bottom:8px; }
+.dg-process-desc{ color:rgba(255,255,255,.7); font-size:14px; line-height:1.5; margin-bottom:14px; }
+.dg-process-img-wrap{ background:rgba(255,255,255,.06); border-radius:16px; overflow:hidden; }
+.dg-process-img-wrap img{ width:100%; display:block; }
+@media (max-width:700px){
+  .dg-process-row{ flex-direction:column; align-items:center; }
+  .dg-process-col{ max-width:320px; width:100%; }
+}
+
 /* ===== IA diagram ===== */
 .dg-ia-canvas{ background:#fff; border-radius:14px; padding:32px 20px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
 .dg-ia{ min-width:860px; font-family:'Rubik',sans-serif; transform-origin: top right; transition: none; }
@@ -247,6 +258,29 @@
 
     <section class="dg-section">
       <div class="dg-wrap">
+        <div class="dg-title" data-i18n="dg-process-title">תהליך</div>
+        <div class="dg-card">
+          <h3 data-i18n="dg-process-subtitle">אותו מידע, שתי חוויות</h3>
+          <div class="dg-bar"></div>
+          <p data-i18n="dg-process-body">שניהם רואים את אותן משימות, אבל לא את אותו דבר. ההורה, שמנהל את המשפחה, מקבל תמונה כוללת של דחיפויות ולוח אירועים. הילד, שצריך סיבה לזוז, מקבל רמה, סטריק ויעד שמחכה לו.</p>
+          <div class="dg-process-row">
+            <div class="dg-process-col">
+              <div class="dg-process-label" data-i18n="dg-process-child-label">מסך ילד</div>
+              <p class="dg-process-desc" data-i18n="dg-process-child-desc">מוטיבציה והישג, רמה, סטריק ויעד ספציפי</p>
+              <div class="dg-process-img-wrap"><img class="reveal" src="assets/dg-process-child-screen.png" alt="מסך הילד: פרופיל, רצף ימים ורמה, רשימת משימות היום" data-i18n-alt="dg-process-child-alt"></div>
+            </div>
+            <div class="dg-process-col">
+              <div class="dg-process-label" data-i18n="dg-process-parent-label">מסך הורה</div>
+              <p class="dg-process-desc" data-i18n="dg-process-parent-desc">ניהול ושליטה, ראייה מלאה, סדרי עדיפויות ברורים</p>
+              <div class="dg-process-img-wrap"><img class="reveal" src="assets/dg-process-parent-screen.png" alt="מסך ההורה: ארוחות בוקר יחד, התקדמות ואירועים קרובים" data-i18n-alt="dg-process-parent-alt"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dg-section">
+      <div class="dg-wrap">
         <div class="dg-brand-card">
           <h3 style="color:#fff;font-weight:600;font-size:22px;margin-bottom:24px;" data-i18n="dg-brand-title">מיתוג</h3>
           <div class="dg-brand-word">Rubik</div>
@@ -373,11 +407,21 @@
         <div class="dg-card">
           <h3 data-i18n="dg-screens-title">מסכים</h3>
           <div class="dg-screens-row" style="margin-top:20px;">
-            <div class="dg-screen-slot reveal"><img src="assets/dg-screen-home.png" alt="מסך הבית: משימות היום, התקדמות ואירועים קרובים" data-i18n-alt="dg-screen1-alt"></div>
-            <div class="dg-screen-slot reveal"><img src="assets/dg-screen-complete.png" alt="אישור השלמת משימה בהצלחה" data-i18n-alt="dg-screen2-alt"></div>
+            <div class="dg-screen-slot reveal"><img src="assets/dg-process-parent-screen.png" alt="מסך ההורה: ארוחות בוקר יחד, התקדמות ואירועים קרובים" data-i18n-alt="dg-process-parent-alt"></div>
+            <div class="dg-screen-slot reveal"><img src="assets/dg-process-child-screen.png" alt="מסך הילד: פרופיל, רצף ימים ורמה, רשימת משימות היום" data-i18n-alt="dg-process-child-alt"></div>
             <div class="dg-screen-slot reveal"><img src="assets/dg-screen-celebrate.png" alt="מסך חגיגה על השלמת כל המשימות וצבירת נקודות" data-i18n-alt="dg-screen3-alt"></div>
           </div>
           <p style="text-align:center;color:rgba(255,255,255,.6);margin-top:16px;" data-i18n="dg-screens-caption">צילומי המסך המלאים של האפליקציה זמינים בקובץ הפרויקט בפיגמה.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="dg-section">
+      <div class="dg-wrap">
+        <div class="dg-title" data-i18n="dg-design-system-title">מערכת עיצוב</div>
+        <div class="dg-card">
+          <img class="reveal" src="assets/dg-design-system.jpg" alt="מערכת העיצוב: כרטיסיות משימות, כפתורים, שדות קלט, בחירת אחראי ומשתתפים, וכרטיסיות משימה בכל רמות הדחיפות" data-i18n-alt="dg-design-system-alt" style="width:100%;border-radius:8px;display:block;">
+          <p style="text-align:center;color:rgba(255,255,255,.5);margin-top:18px;font-size:13px;" data-i18n="dg-design-system-caption">מערכת העיצוב המלאה זמינה גם בקובץ הפרויקט בפיגמה.</p>
         </div>
       </div>
     </section>
