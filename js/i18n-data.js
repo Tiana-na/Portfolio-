@@ -44,7 +44,7 @@ window.I18N = {
   },
 
   about: {
-    'ed-h1': 'Instead of store & customer journey, <br class="ed-h1-break">a screen & user flow.',
+    'ed-h1': '<span class="ed-h1-old">Instead of store &amp; customer journey,</span> <br class="ed-h1-break"><span class="ed-h1-arrow"><svg width="34" height="14" viewBox="0 0 34 14" aria-hidden="true"><path d="M33 7 H6" stroke="#7A6A9E" stroke-width="1.5" stroke-dasharray="4 4"></path><path d="M11 2 L5 7 L11 12" stroke="#7A6A9E" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="ed-h1-new">a screen &amp; user flow.</span>',
     'ed-portrait-alt': 'Tiana Folkenfolk',
     'ed-float-1': '<span class="ed-intro-chip ed-intro-chip--yellow">Background</span><br>\n            I’m a UX/UI designer with a rich background in commercial design and creating experiences in physical spaces. Over the years, I’ve learned that design is about much more than what you see. It shapes how people feel and make decisions, through the planning of space, visual hierarchy, and the placement of messages and products.',
     'ed-quote-lead': 'I’ve worked with international brands like H&amp;M and IKEA, where I designed shopping experiences, window displays, and visual communication, always guided by the same question:',

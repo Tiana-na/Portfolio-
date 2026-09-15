@@ -394,14 +394,160 @@ document.addEventListener('DOMContentLoaded', function () {
     var cursorEl = document.createElement('div');
     cursorEl.className = 'custom-cursor';
     document.body.appendChild(cursorEl);
+
+    var cursorHintEl = document.createElement('div');
+    cursorHintEl.className = 'custom-cursor-hint';
+    document.body.appendChild(cursorHintEl);
+
     document.documentElement.classList.add('custom-cursor-active');
 
     document.addEventListener('mousemove', function (e) {
       cursorEl.style.left = e.clientX + 'px';
       cursorEl.style.top = e.clientY + 'px';
+      cursorHintEl.style.left = e.clientX + 'px';
+      cursorHintEl.style.top = e.clientY + 'px';
     });
 
-    /* Cursor stays the same logo-dot everywhere - no hover-grow / text state. */
+    /* The cursor dot itself never changes shape/color - only a small text
+       hint appears next to it on certain elements (view / click / play). */
+    var VIEW_SELECTOR = '.work-row, .card';
+    var CLICK_SELECTOR = '.btn, .work-btn, .quiz-start-btn, .quiz-icon-btn, .whatsapp-fab, .nav-cv-btn, .trivia-teaser-link, .quiz-option, button:not(.menu-toggle):not(.trivia-teaser-close)';
+    var HINT_FAR_SELECTOR = '.ed-intro-portrait-wrap';
+    var HINT_NEAR_SELECTOR = '.quiz-block';
+    var HINT_SELECTOR = HINT_FAR_SELECTOR + ', ' + HINT_NEAR_SELECTOR;
+    var ALL_HOVERABLE = VIEW_SELECTOR + ', ' + CLICK_SELECTOR + ', ' + HINT_SELECTOR;
+
+    document.addEventListener('mouseover', function (e) {
+      var clickTarget = e.target.closest(CLICK_SELECTOR);
+      var viewTarget = e.target.closest(VIEW_SELECTOR);
+      var hintNearTarget = e.target.closest(HINT_NEAR_SELECTOR);
+      var hintFarTarget = e.target.closest(HINT_FAR_SELECTOR);
+
+      var cursorIsEnglish = document.documentElement.lang === 'en';
+
+      if (clickTarget) {
+        cursorHintEl.textContent = cursorIsEnglish ? 'Click' : 'לחיצה';
+        cursorHintEl.classList.add('is-visible');
+      } else if (viewTarget) {
+        cursorHintEl.textContent = cursorIsEnglish ? 'View' : 'צפייה';
+        cursorHintEl.classList.add('is-visible');
+      } else if (hintNearTarget) {
+        cursorHintEl.textContent = cursorIsEnglish ? 'Let’s play' : 'שנשחק';
+        cursorHintEl.classList.add('is-visible');
+      } else if (hintFarTarget) {
+        cursorHintEl.textContent = cursorIsEnglish ? 'Scroll me down, let’s play' : 'גללו אותי למטה ונשחק';
+        cursorHintEl.classList.add('is-visible');
+      }
+    });
+
+    document.addEventListener('mouseout', function (e) {
+      var stillOver = e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest(ALL_HOVERABLE);
+      if (stillOver) return;
+      var leavingHoverable = e.target.closest(ALL_HOVERABLE);
+      if (!leavingHoverable) return;
+      cursorHintEl.classList.remove('is-visible');
+      cursorHintEl.textContent = '';
+    });
+
+  }
+
+  /* ---------- about page: flow-chain reveal (portrait -> cards, story order) ---------- */
+  var flowWrap = document.querySelector('.ed-intro-portrait-wrap');
+  var flowSvg = document.getElementById('flow-svg');
+
+  if (flowWrap && flowSvg) {
+    var flowChainEls = [
+      document.querySelector('.ed-intro-portrait'),
+      document.querySelector('.ed-intro-float--1'),
+      document.querySelector('.ed-intro-float--2'),
+      document.querySelector('.ed-intro-float--3')
+    ];
+
+    var buildFlowChain = function () {
+      var wrapRect = flowWrap.getBoundingClientRect();
+      function rel(rect) {
+        return {
+          left: rect.left - wrapRect.left, top: rect.top - wrapRect.top,
+          right: rect.right - wrapRect.left, bottom: rect.bottom - wrapRect.top,
+          cx: rect.left - wrapRect.left + rect.width / 2, cy: rect.top - wrapRect.top + rect.height / 2
+        };
+      }
+      var svgns = 'http://www.w3.org/2000/svg';
+      flowSvg.innerHTML = '';
+      var defs = document.createElementNS(svgns, 'defs');
+      defs.innerHTML = '<marker id="flow-arrow" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#7A6A9E"></path></marker>';
+      flowSvg.appendChild(defs);
+
+      var items = [];
+      for (var i = 0; i < flowChainEls.length - 1; i++) {
+        var a = rel(flowChainEls[i].getBoundingClientRect());
+        var b = rel(flowChainEls[i + 1].getBoundingClientRect());
+        var fromLeft = b.cx < a.cx;
+        var x1 = fromLeft ? a.left : a.right;
+        var y1 = Math.min(Math.max(b.cy, a.top + 12), a.bottom - 12);
+        var x2 = fromLeft ? b.right : b.left;
+        var y2 = b.cy;
+        var c1x = x1 + (x2 - x1) * 0.5;
+        var c2x = x2 - (x2 - x1) * 0.5;
+
+        var path = document.createElementNS(svgns, 'path');
+        path.setAttribute('d', 'M ' + x1 + ',' + y1 + ' C ' + c1x + ',' + y1 + ' ' + c2x + ',' + y2 + ' ' + x2 + ',' + y2);
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke', '#7A6A9E');
+        path.setAttribute('stroke-width', '1.5');
+        path.setAttribute('marker-end', 'url(#flow-arrow)');
+        flowSvg.appendChild(path);
+
+        var startDot = document.createElementNS(svgns, 'circle');
+        startDot.setAttribute('cx', x1); startDot.setAttribute('cy', y1); startDot.setAttribute('r', 4.5);
+        startDot.setAttribute('fill', '#faf6e9'); startDot.setAttribute('stroke', '#7A6A9E'); startDot.setAttribute('stroke-width', '1.5');
+        flowSvg.appendChild(startDot);
+
+        var len = path.getTotalLength();
+        path.style.transition = 'none';
+        path.style.strokeDasharray = len;
+        path.style.strokeDashoffset = len;
+        items.push({ path: path, targetEl: flowChainEls[i + 1] });
+      }
+      return items;
+    };
+
+    var playFlowChain = function () {
+      if (prefersNoMotion) {
+        flowChainEls.forEach(function (el) { el.classList.add('flow-in'); });
+        return;
+      }
+      var items = buildFlowChain();
+      items.forEach(function (item) { item.path.getBoundingClientRect(); }); /* force paint of hidden state */
+
+      var delay = 150;
+      items.forEach(function (item) {
+        setTimeout(function () {
+          item.path.style.transition = 'stroke-dashoffset .55s cubic-bezier(.4,0,.2,1)';
+          item.path.style.strokeDashoffset = '0';
+          setTimeout(function () { item.targetEl.classList.add('flow-in'); }, 480);
+        }, delay);
+        delay += 750;
+      });
+    };
+
+    if (window.matchMedia && window.matchMedia('(min-width: 861px)').matches) {
+      if ('IntersectionObserver' in window) {
+        var flowIo = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              playFlowChain();
+              flowIo.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.35 });
+        flowIo.observe(flowWrap);
+      } else {
+        flowChainEls.forEach(function (el) { el.classList.add('flow-in'); });
+      }
+    } else {
+      flowChainEls.forEach(function (el) { el.classList.add('flow-in'); });
+    }
   }
 
 });

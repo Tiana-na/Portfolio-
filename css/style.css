@@ -844,6 +844,53 @@ html[dir="ltr"] .hero-detail-mark{
 .ed-intro-float--2{ top: 22%; inset-inline-end: -10%; }
 .ed-intro-float--3{ bottom: 10px; inset-inline-start: -2%; }
 
+/* ===== Heading: dramatize the "instead of X, Y" contrast already in the words ===== */
+.ed-h1-old{ color: var(--text-muted); font-weight: 600; }
+.ed-h1-new{ color: #7A6A9E; }
+.ed-h1-arrow{ display: inline-flex; align-items: center; vertical-align: -6px; margin-inline: 8px; opacity: .85; }
+.ed-h1-arrow svg{ display: block; }
+.lang-en .ed-h1-arrow svg{ transform: scaleX(-1); }
+
+/* ===== Intro cluster: digital-canvas depth + flow-chain reveal (desktop only) ===== */
+@media (min-width: 861px){
+  .ed-intro-portrait-wrap{
+    isolation: isolate;
+    background-image: radial-gradient(rgba(30,27,22,.07) 1px, transparent 1px);
+    background-size: 18px 18px;
+    border-radius: 24px;
+  }
+  .ed-intro-portrait{
+    position: relative;
+    z-index: 2;
+    border: 1.5px solid #7A6A9E;
+    box-shadow: 0 4px 14px rgba(30,27,22,.08), 0 24px 40px rgba(122,106,158,.16);
+  }
+  .ed-intro-float{
+    z-index: 2;
+    border: 1.5px solid #7A6A9E;
+    box-shadow: 0 2px 8px rgba(30,27,22,.05), 0 16px 30px rgba(30,27,22,.09);
+    opacity: 0;
+    transform: scale(.93);
+    transition: opacity .35s ease, transform .4s cubic-bezier(.34,1.56,.64,1);
+  }
+  .ed-intro-float.flow-in{
+    opacity: 1;
+    transform: scale(1);
+  }
+  .flow-svg{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+    overflow: visible;
+  }
+}
+@media (max-width: 860px){
+  .flow-svg{ display: none; }
+}
+
 @media (max-width: 860px){
   .ed-intro{ padding: 40px 24px 20px; }
   .ed-intro-heading-block{ margin-inline: -24px; }
@@ -1761,8 +1808,32 @@ html.custom-cursor-active *{
   will-change: left, top;
 }
 
+.custom-cursor-hint{
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translate(14px, 14px) scale(.85);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9998;
+  background: #1E1B16;
+  color: #F2EDE4;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  padding: 5px 11px;
+  border-radius: 20px;
+  transition: opacity .15s ease, transform .15s ease;
+  will-change: left, top;
+}
+.custom-cursor-hint.is-visible{
+  opacity: 1;
+  transform: translate(14px, 14px) scale(1);
+}
+
 @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce){
   .custom-cursor{ display: none !important; }
+  .custom-cursor-hint{ display: none !important; }
 }
 
 /* ===== Footer ===== */
