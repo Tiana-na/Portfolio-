@@ -1,0 +1,77 @@
+diff --git a/about.html b/about.html
+index 60067eb..4f9edcd 100644
+--- a/about.html
++++ b/about.html
+@@ -187,8 +187,8 @@
+           <h3 data-i18n="languages-title">שפות</h3>
+           <p data-i18n="languages-text">
+             עברית - שפת אם<br>
+-            אנגלית - רמה בינונית<br>
+-            רוסית - רמה בינונית
++            אנגלית - רמה מתקדמת<br>
++            רוסית - רמה מתקדמת
+           </p>
+         </div>
+       </div>
+diff --git a/js/i18n-data.js b/js/i18n-data.js
+index cba4e32..2722c90 100644
+--- a/js/i18n-data.js
++++ b/js/i18n-data.js
+@@ -53,7 +53,7 @@ window.I18N = {
+     'ed-statement-1': 'After thorough professional training in digital design and UX/UI, I now bring the knowledge and experience I built over years in commercial design and customer experience into the world of digital products. I’ve learned to work with UX processes, research, specification, and interface design, translating both <strong>user and business needs</strong> into simple, effective digital solutions.',
+     'ed-statement-2': 'I believe good design connects <strong>aesthetics, usability, and purpose</strong>,<br>and that the experience should always be clear and intuitive.',
+     'quiz-eyebrow': 'A bit beyond the résumé',
+-    'quiz-intro': 'A few fun facts, a few work habits, let’s get acquainted.',
++    'quiz-intro': 'A few fun facts, a few work habits, let’s break the ice.',
+     'quiz-start-btn': 'Let’s play!',
+     'quiz-skip-btn': 'Skip to results ✕',
+     'quiz-results-title': 'You made it!',
+@@ -64,7 +64,7 @@ window.I18N = {
+     'education-title': 'Education',
+     'education-text': '\n            <strong style="color:var(--accent)">HackerU</strong><br>\n            UI/UX Course: Specification and Digital Design<br>\n            2023 to 2024\n          ',
+     'languages-title': 'Languages',
+-    'languages-text': '\n            Hebrew: Native<br>\n            English: Intermediate<br>\n            Russian: Intermediate\n          ',
++    'languages-text': '\n            Hebrew: Native<br>\n            English: Advanced<br>\n            Russian: Advanced\n          ',
+     'quiz-progress-initial': 'Question 1 of 6'
+   },
+ 
+@@ -75,7 +75,7 @@ window.I18N = {
+   },
+ 
+   workB2b: {
+-    'case-header-h1': 'B2B Digital Marketing Platform: Identifying Friction Points and Improving UX',
++    'case-header-h1': 'An Interface That Didn’t Speak the User’s Language',
+     'case-header-p': 'Customers were bypassing the SaaS system and going straight to the CS team, because they couldn’t track request status, couldn’t find how to submit a new content request, and didn’t know how to communicate with the team inside the system. I identified the friction points and led four product solutions.',
+     'b2b-hero-h1': 'Identifying Friction Points and Improving UX',
+     'b2b-hero-p': 'A digital marketing platform for small and medium businesses. Identifying patterns of customers bypassing the system, and solutions that reduced friction and improved the user experience.',
+@@ -185,7 +185,7 @@ window.I18N = {
+   },
+ 
+   workDogether: {
+-    'case-header-h1': 'A Household Management App',
++    'case-header-h1': 'Syncing the Whole Family',
+     'case-header-p': 'An app for coordinating and managing household tasks for complex families (including divorced parents), syncing tasks between two homes, single-parent/separated-parent modes, and gamification that encourages kids to take part in chores.',
+     'dg-hero-label': 'About the App',
+     'dg-hero-h1': 'A Household Management App',
+@@ -268,7 +268,7 @@ window.I18N = {
+   },
+ 
+   workMixmatch: {
+-    'case-header-h1': 'Branding and Brand Book for a New Concept: Mix.Match',
++    'case-header-h1': 'A Full Closet. Nothing to Wear.',
+     'case-header-p': 'A full brand book for a closet-organizing app, with a logo concept drawn from the closet’s own architecture (shelves and compartments, not the garment itself). Color palette, typography, brand principles, and digital and print applications.'
+   }
+ 
+diff --git a/js/i18n.js b/js/i18n.js
+index 0b785b9..9f12766 100644
+--- a/js/i18n.js
++++ b/js/i18n.js
+@@ -113,7 +113,7 @@
+   };
+ 
+   document.addEventListener('DOMContentLoaded', function () {
+-    var lang = getStoredLang() || 'he';
++    var lang = getStoredLang() || 'en';
+     window.setSiteLang(lang);
+ 
+     var toggles = document.querySelectorAll('.lang-toggle');

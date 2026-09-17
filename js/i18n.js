@@ -113,7 +113,7 @@
   };
 
   document.addEventListener('DOMContentLoaded', function () {
-    var lang = getStoredLang() || 'he';
+    var lang = getStoredLang() || 'en';
     window.setSiteLang(lang);
 
     var toggles = document.querySelectorAll('.lang-toggle');
