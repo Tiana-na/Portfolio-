@@ -1,7 +1,16 @@
 diff --git a/about.html b/about.html
-index 4f9edcd..4827a4b 100644
+index 4f9edcd..c6cfd24 100644
 --- a/about.html
 +++ b/about.html
+@@ -1,7 +1,7 @@
+ <!DOCTYPE html>
+ <html lang="he" dir="rtl">
+ <head>
+-<script>(function(){try{if(localStorage.getItem('site-lang')==='en'){document.documentElement.lang='en';document.documentElement.dir='ltr';document.documentElement.classList.add('lang-en');}}catch(e){}})();</script>
++<script>(function(){try{if(localStorage.getItem('site-lang-v2')!=='he'){document.documentElement.lang='en';document.documentElement.dir='ltr';document.documentElement.classList.add('lang-en');}}catch(e){}})();</script>
+ <!-- Google tag (gtag.js) -->
+ <script async src="https://www.googletagmanager.com/gtag/js?id=G-1SDQXED43L"></script>
+ <script>
 @@ -16,7 +16,7 @@
  <title>מי אני | טיאנה פולקנפולק</title>
  <meta name="description" content="קצת עליי — המסע מהעולם המסחרי לעולם ה-UX/UI, כישורים והשכלה.">
@@ -72,6 +81,19 @@ index 4f9edcd..4827a4b 100644
            </div>
          </div>
        </div>
+diff --git a/contact.html b/contact.html
+index ea935bd..9a1b9e9 100644
+--- a/contact.html
++++ b/contact.html
+@@ -1,7 +1,7 @@
+ <!DOCTYPE html>
+ <html lang="he" dir="rtl">
+ <head>
+-<script>(function(){try{if(localStorage.getItem('site-lang')==='en'){document.documentElement.lang='en';document.documentElement.dir='ltr';document.documentElement.classList.add('lang-en');}}catch(e){}})();</script>
++<script>(function(){try{if(localStorage.getItem('site-lang-v2')!=='he'){document.documentElement.lang='en';document.documentElement.dir='ltr';document.documentElement.classList.add('lang-en');}}catch(e){}})();</script>
+ <!-- Google tag (gtag.js) -->
+ <script async src="https://www.googletagmanager.com/gtag/js?id=G-1SDQXED43L"></script>
+ <script>
 diff --git a/css/style.css b/css/style.css
 index c13df07..83b51ef 100644
 --- a/css/style.css
@@ -376,6 +398,19 @@ index c13df07..83b51ef 100644
  }
  
  .ed-statement{
+diff --git a/index.html b/index.html
+index 2741d9a..b3b31b7 100644
+--- a/index.html
++++ b/index.html
+@@ -1,7 +1,7 @@
+ <!DOCTYPE html>
+ <html lang="he" dir="rtl">
+ <head>
+-<script>(function(){try{if(localStorage.getItem('site-lang')==='en'){document.documentElement.lang='en';document.documentElement.dir='ltr';document.documentElement.classList.add('lang-en');}}catch(e){}})();</script>
++<script>(function(){try{if(localStorage.getItem('site-lang-v2')!=='he'){document.documentElement.lang='en';document.documentElement.dir='ltr';document.documentElement.classList.add('lang-en');}}catch(e){}})();</script>
+ <!-- Google tag (gtag.js) -->
+ <script async src="https://www.googletagmanager.com/gtag/js?id=G-1SDQXED43L"></script>
+ <script>
 diff --git a/js/i18n-data.js b/js/i18n-data.js
 index 2722c90..c963013 100644
 --- a/js/i18n-data.js
@@ -416,6 +451,18 @@ index 2722c90..c963013 100644
    },
  
    workDogether: {
+diff --git a/js/i18n.js b/js/i18n.js
+index 9f12766..81b0287 100644
+--- a/js/i18n.js
++++ b/js/i18n.js
+@@ -1,6 +1,6 @@
+ /* ===== i18n engine: Hebrew <-> English site-wide language switch ===== */
+ (function () {
+-  var LANG_KEY = 'site-lang';
++  var LANG_KEY = 'site-lang-v2';
+ 
+   function getStoredLang() {
+     try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; }
 diff --git a/js/main.js b/js/main.js
 index ac6b530..8af0aff 100644
 --- a/js/main.js
@@ -889,9 +936,18 @@ index ac6b530..8af0aff 100644
 +
  });
 diff --git a/work-b2b.html b/work-b2b.html
-index 6865f64..073f926 100644
+index 6865f64..aa83fb9 100644
 --- a/work-b2b.html
 +++ b/work-b2b.html
+@@ -1,7 +1,7 @@
+ <!DOCTYPE html>
+ <html lang="he" dir="rtl">
+ <head>
+-<script>(function(){try{if(localStorage.getItem('site-lang')==='en'){document.documentElement.lang='en';document.documentElement.dir='ltr';document.documentElement.classList.add('lang-en');}}catch(e){}})();</script>
++<script>(function(){try{if(localStorage.getItem('site-lang-v2')!=='he'){document.documentElement.lang='en';document.documentElement.dir='ltr';document.documentElement.classList.add('lang-en');}}catch(e){}})();</script>
+ <!-- Google tag (gtag.js) -->
+ <script async src="https://www.googletagmanager.com/gtag/js?id=G-1SDQXED43L"></script>
+ <script>
 @@ -168,6 +168,7 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
            <span class="b2b-pill">Web App · Mobile</span>
            <span class="b2b-pill">Creative &amp; Customer Success</span>
@@ -909,9 +965,18 @@ index 6865f64..073f926 100644
      </section>
  
 diff --git a/work-dogether.html b/work-dogether.html
-index c27163e..c05f52c 100644
+index c27163e..e8f868b 100644
 --- a/work-dogether.html
 +++ b/work-dogether.html
+@@ -1,7 +1,7 @@
+ <!DOCTYPE html>
+ <html lang="he" dir="rtl">
+ <head>
+-<script>(function(){try{if(localStorage.getItem('site-lang')==='en'){document.documentElement.lang='en';document.documentElement.dir='ltr';document.documentElement.classList.add('lang-en');}}catch(e){}})();</script>
++<script>(function(){try{if(localStorage.getItem('site-lang-v2')!=='he'){document.documentElement.lang='en';document.documentElement.dir='ltr';document.documentElement.classList.add('lang-en');}}catch(e){}})();</script>
+ <!-- Google tag (gtag.js) -->
+ <script async src="https://www.googletagmanager.com/gtag/js?id=G-1SDQXED43L"></script>
+ <script>
 @@ -85,8 +85,13 @@
  }
  
@@ -949,3 +1014,16 @@ index c27163e..c05f52c 100644
  })();
  </script>
  </body>
+diff --git a/work-mixmatch.html b/work-mixmatch.html
+index 4793b50..b101878 100644
+--- a/work-mixmatch.html
++++ b/work-mixmatch.html
+@@ -1,7 +1,7 @@
+ <!DOCTYPE html>
+ <html lang="he" dir="rtl">
+ <head>
+-<script>(function(){try{if(localStorage.getItem('site-lang')==='en'){document.documentElement.lang='en';document.documentElement.dir='ltr';document.documentElement.classList.add('lang-en');}}catch(e){}})();</script>
++<script>(function(){try{if(localStorage.getItem('site-lang-v2')!=='he'){document.documentElement.lang='en';document.documentElement.dir='ltr';document.documentElement.classList.add('lang-en');}}catch(e){}})();</script>
+ <!-- Google tag (gtag.js) -->
+ <script async src="https://www.googletagmanager.com/gtag/js?id=G-1SDQXED43L"></script>
+ <script>
