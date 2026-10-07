@@ -16,7 +16,7 @@
 <title>מי אני | טיאנה פולקנפולק</title>
 <meta name="description" content="קצת עליי — המסע מהעולם המסחרי לעולם ה-UX/UI, כישורים והשכלה.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body data-page="about">
@@ -48,25 +48,42 @@
   <section class="page-hero">
     <div class="wrap about-hero-wrap">
       <div class="ed-intro">
-        <div class="ed-intro-heading-block">
-          <h1 class="ed-intro-heading" data-i18n="ed-h1"><span class="ed-h1-old">במקום חנות ומסלול תנועה,</span> <br class="ed-h1-break"><span class="ed-h1-arrow"><svg width="34" height="14" viewBox="0 0 34 14" aria-hidden="true"><path d="M33 7 H6" stroke="#7A6A9E" stroke-width="1.5" stroke-dasharray="4 4"></path><path d="M11 2 L5 7 L11 12" stroke="#7A6A9E" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="ed-h1-new">מסך וזרימת משתמש.</span></h1>
-        </div>
-        <div class="ed-intro-portrait-wrap">
-          <svg class="flow-svg" id="flow-svg" aria-hidden="true"></svg>
-          <div class="ed-intro-portrait reveal-stack">
-            <img src="assets/tiana-portrait.jpg" alt="טיאנה פולקנפולק" data-i18n-alt="ed-portrait-alt" loading="lazy">
+        <div class="mag-page">
+          <div class="mag-photo">
+            <img id="magPhotoImg" src="assets/tiana-portrait.jpg" alt="טיאנה פולקנפולק" data-i18n-alt="ed-portrait-alt" loading="lazy">
+            <canvas id="magStage" aria-hidden="true"></canvas>
+            <div class="mag-top">
+              <span data-i18n="ed-masthead-left">עליי</span>
+              <span data-i18n="ed-masthead-right">מעצבת UX/UI · מעצבת ויזואלית</span>
+            </div>
+            <div class="mag-scrim"></div>
+            <div class="mag-cover-head" id="magCoverHead">
+              <h1 class="mag-head" data-i18n="ed-h1">במקום חנות ומסלול תנועה, <em>מסך</em> וזרימת משתמש.</h1>
+            </div>
           </div>
-          <div class="ed-intro-float ed-intro-float--support ed-intro-float--1" data-i18n="ed-float-1">
-            <span class="ed-intro-chip ed-intro-chip--yellow">רקע</span><br>
-            אני מעצבת UX/UI ומביאה איתי רקע עשיר בעיצוב מסחרי ויצירת חוויות במרחב הפיזי. לאורך השנים למדתי שעיצוב הוא הרבה מעבר למה שרואים.
-          </div>
-          <div class="ed-intro-float ed-intro-float--quote ed-intro-float--2">
-            <p class="ed-intro-quote-lead" data-i18n="ed-quote-lead">עבדתי עם מותגים בינלאומיים כמו H&amp;M ו-IKEA, שם עיצבתי חוויות קנייה, חלונות ראווה ותקשורת חזותית, תמיד מתוך אותה שאלה:</p>
-            <p class="ed-intro-quote-main" data-i18n="ed-quote-main">&rdquo;מה המשתמש <strong>רואה, מרגיש וצריך</strong> כדי להבין ולקבל החלטה?&rdquo;</p>
-          </div>
-          <div class="ed-intro-float ed-intro-float--support ed-intro-float--3" data-i18n="ed-float-3">
-            <span class="ed-intro-chip ed-intro-chip--purple">מעבר</span><br>
-            המעבר ל-UX/UI היה עבורי המשך טבעי של אותה דרך חשיבה, המרחב שבו אני מעצבת פשוט משתנה ועובר טרנספורמציה דיגיטלית.
+
+          <div class="mag-body" id="magBody">
+            <p class="mag-quote-lead" data-i18n="ed-quote-lead">עבדתי עם מותגים בינלאומיים כמו H&amp;M ו-IKEA, שם עיצבתי חוויות קנייה, חלונות ראווה ותקשורת חזותית, תמיד מתוך אותה שאלה:</p>
+            <p class="mag-quote" data-i18n="ed-quote-main">&rdquo;מה המשתמש <strong>רואה, מרגיש וצריך</strong> כדי להבין ולקבל החלטה?&rdquo;</p>
+
+            <div class="mag-facts">
+              <div class="mag-fact">
+                <svg class="mag-trace-svg"><rect x="0.75" y="0.75" width="0" height="0"/></svg>
+                <div class="mag-fact-scan-bar"></div>
+                <div class="mag-fact-inner">
+                  <div class="mag-fact-label" data-i18n="ed-fact1-chip">רקע</div>
+                  <div class="mag-fact-text" data-i18n="ed-fact1-body">אני מעצבת UX/UI ומביאה איתי רקע עשיר בעיצוב מסחרי ויצירת חוויות במרחב הפיזי. לאורך השנים למדתי שעיצוב הוא הרבה מעבר למה שרואים.</div>
+                </div>
+              </div>
+              <div class="mag-fact">
+                <svg class="mag-trace-svg"><rect x="0.75" y="0.75" width="0" height="0"/></svg>
+                <div class="mag-fact-scan-bar"></div>
+                <div class="mag-fact-inner">
+                  <div class="mag-fact-label" data-i18n="ed-fact2-chip">מעבר</div>
+                  <div class="mag-fact-text" data-i18n="ed-fact2-body">המעבר ל-UX/UI היה עבורי המשך טבעי של אותה דרך חשיבה, המרחב שבו אני מעצבת פשוט משתנה ועובר טרנספורמציה דיגיטלית.</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

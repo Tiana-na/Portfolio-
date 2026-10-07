@@ -1,77 +1,951 @@
 diff --git a/about.html b/about.html
-index 60067eb..4f9edcd 100644
+index 4f9edcd..4827a4b 100644
 --- a/about.html
 +++ b/about.html
-@@ -187,8 +187,8 @@
-           <h3 data-i18n="languages-title">שפות</h3>
-           <p data-i18n="languages-text">
-             עברית - שפת אם<br>
--            אנגלית - רמה בינונית<br>
--            רוסית - רמה בינונית
-+            אנגלית - רמה מתקדמת<br>
-+            רוסית - רמה מתקדמת
-           </p>
+@@ -16,7 +16,7 @@
+ <title>מי אני | טיאנה פולקנפולק</title>
+ <meta name="description" content="קצת עליי — המסע מהעולם המסחרי לעולם ה-UX/UI, כישורים והשכלה.">
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+-<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
++<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="css/style.css">
+ </head>
+ <body data-page="about">
+@@ -48,25 +48,42 @@
+   <section class="page-hero">
+     <div class="wrap about-hero-wrap">
+       <div class="ed-intro">
+-        <div class="ed-intro-heading-block">
+-          <h1 class="ed-intro-heading" data-i18n="ed-h1"><span class="ed-h1-old">במקום חנות ומסלול תנועה,</span> <br class="ed-h1-break"><span class="ed-h1-arrow"><svg width="34" height="14" viewBox="0 0 34 14" aria-hidden="true"><path d="M33 7 H6" stroke="#7A6A9E" stroke-width="1.5" stroke-dasharray="4 4"></path><path d="M11 2 L5 7 L11 12" stroke="#7A6A9E" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="ed-h1-new">מסך וזרימת משתמש.</span></h1>
+-        </div>
+-        <div class="ed-intro-portrait-wrap">
+-          <svg class="flow-svg" id="flow-svg" aria-hidden="true"></svg>
+-          <div class="ed-intro-portrait reveal-stack">
+-            <img src="assets/tiana-portrait.jpg" alt="טיאנה פולקנפולק" data-i18n-alt="ed-portrait-alt" loading="lazy">
+-          </div>
+-          <div class="ed-intro-float ed-intro-float--support ed-intro-float--1" data-i18n="ed-float-1">
+-            <span class="ed-intro-chip ed-intro-chip--yellow">רקע</span><br>
+-            אני מעצבת UX/UI ומביאה איתי רקע עשיר בעיצוב מסחרי ויצירת חוויות במרחב הפיזי. לאורך השנים למדתי שעיצוב הוא הרבה מעבר למה שרואים.
+-          </div>
+-          <div class="ed-intro-float ed-intro-float--quote ed-intro-float--2">
+-            <p class="ed-intro-quote-lead" data-i18n="ed-quote-lead">עבדתי עם מותגים בינלאומיים כמו H&amp;M ו-IKEA, שם עיצבתי חוויות קנייה, חלונות ראווה ותקשורת חזותית, תמיד מתוך אותה שאלה:</p>
+-            <p class="ed-intro-quote-main" data-i18n="ed-quote-main">&rdquo;מה המשתמש <strong>רואה, מרגיש וצריך</strong> כדי להבין ולקבל החלטה?&rdquo;</p>
++        <div class="mag-page">
++          <div class="mag-photo">
++            <img id="magPhotoImg" src="assets/tiana-portrait.jpg" alt="טיאנה פולקנפולק" data-i18n-alt="ed-portrait-alt" loading="lazy">
++            <canvas id="magStage" aria-hidden="true"></canvas>
++            <div class="mag-top">
++              <span data-i18n="ed-masthead-left">עליי</span>
++              <span data-i18n="ed-masthead-right">מעצבת UX/UI · מעצבת ויזואלית</span>
++            </div>
++            <div class="mag-scrim"></div>
++            <div class="mag-cover-head" id="magCoverHead">
++              <h1 class="mag-head" data-i18n="ed-h1">במקום חנות ומסלול תנועה, <em>מסך</em> וזרימת משתמש.</h1>
++            </div>
+           </div>
+-          <div class="ed-intro-float ed-intro-float--support ed-intro-float--3" data-i18n="ed-float-3">
+-            <span class="ed-intro-chip ed-intro-chip--purple">מעבר</span><br>
+-            המעבר ל-UX/UI היה עבורי המשך טבעי של אותה דרך חשיבה, המרחב שבו אני מעצבת פשוט משתנה ועובר טרנספורמציה דיגיטלית.
++
++          <div class="mag-body" id="magBody">
++            <p class="mag-quote-lead" data-i18n="ed-quote-lead">עבדתי עם מותגים בינלאומיים כמו H&amp;M ו-IKEA, שם עיצבתי חוויות קנייה, חלונות ראווה ותקשורת חזותית, תמיד מתוך אותה שאלה:</p>
++            <p class="mag-quote" data-i18n="ed-quote-main">&rdquo;מה המשתמש <strong>רואה, מרגיש וצריך</strong> כדי להבין ולקבל החלטה?&rdquo;</p>
++
++            <div class="mag-facts">
++              <div class="mag-fact">
++                <svg class="mag-trace-svg"><rect x="0.75" y="0.75" width="0" height="0"/></svg>
++                <div class="mag-fact-scan-bar"></div>
++                <div class="mag-fact-inner">
++                  <div class="mag-fact-label" data-i18n="ed-fact1-chip">רקע</div>
++                  <div class="mag-fact-text" data-i18n="ed-fact1-body">אני מעצבת UX/UI ומביאה איתי רקע עשיר בעיצוב מסחרי ויצירת חוויות במרחב הפיזי. לאורך השנים למדתי שעיצוב הוא הרבה מעבר למה שרואים.</div>
++                </div>
++              </div>
++              <div class="mag-fact">
++                <svg class="mag-trace-svg"><rect x="0.75" y="0.75" width="0" height="0"/></svg>
++                <div class="mag-fact-scan-bar"></div>
++                <div class="mag-fact-inner">
++                  <div class="mag-fact-label" data-i18n="ed-fact2-chip">מעבר</div>
++                  <div class="mag-fact-text" data-i18n="ed-fact2-body">המעבר ל-UX/UI היה עבורי המשך טבעי של אותה דרך חשיבה, המרחב שבו אני מעצבת פשוט משתנה ועובר טרנספורמציה דיגיטלית.</div>
++                </div>
++              </div>
++            </div>
+           </div>
          </div>
        </div>
+diff --git a/css/style.css b/css/style.css
+index c13df07..83b51ef 100644
+--- a/css/style.css
++++ b/css/style.css
+@@ -734,187 +734,153 @@ html[dir="ltr"] .hero-detail-mark{
+   text-align: center;
+ }
+ 
+-/* ===== About: intro (heading + portrait + scattered highlight cards) ===== */
++/* ===== About: magazine-cover hero (full-bleed photo scan -> headline -> card reveal) ===== */
+ .ed-intro{
+   max-width: 1180px;
+   margin: 0 auto;
+   padding: 70px 0 40px;
+ }
+ 
+-.ed-intro-heading-block{
+-  max-width: 1000px;
+-  margin: 0 auto 56px;
+-  text-align: center;
+-}
+-
+-.ed-intro-heading-block .ed-intro-heading{
+-  font-size: 3rem;
+-  font-weight: 700;
+-  line-height: 1.4;
+-  max-width: none;
+-  margin-bottom: 0;
+-  color: var(--accent);
+-}
+-
+-.ed-intro-portrait-wrap{
+-  position: relative;
+-  max-width: 980px;
++.mag-page{
++  max-width: 720px;
+   margin: 0 auto;
+-  padding: 20px 0 12px;
+ }
+ 
+-.ed-intro-portrait{
+-  width: 54%;
+-  margin: 0 auto;
+-  aspect-ratio: 4 / 4.9;
+-  border-radius: 12px;
++.mag-photo{
++  position: relative;
++  width: 100%;
++  aspect-ratio: 4 / 5;
+   overflow: hidden;
+-  background: #cfcac0;
++  background: #000;
++  border-radius: 14px;
+ }
+ 
+-.ed-intro-portrait img{
+-  display: block;
+-  width: 100%;
+-  height: 100%;
+-  object-fit: cover;
+-  object-position: center 10%;
++.mag-photo img{
++  position: absolute; inset: 0; width: 100%; height: 100%;
++  object-fit: cover; object-position: center 20%; display: block;
++  filter: grayscale(45%) contrast(1.06) brightness(1.03);
+ }
+ 
+-.ed-intro-float{
+-  position: absolute;
+-  background: var(--card-alt);
+-  border-radius: 4px;
+-  box-shadow: 0 16px 34px rgba(30,27,22,.12);
+-  color: var(--text);
+-  text-align: start;
++.mag-photo canvas{ position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 2; }
++
++.mag-top{
++  position: absolute; top: 0; left: 0; right: 0; z-index: 4;
++  display: flex; justify-content: space-between; align-items: center;
++  padding: 18px 24px; color: #fdfcf8;
++  font-size: .68rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
++  text-shadow: 0 1px 6px rgba(0,0,0,.45);
+ }
+ 
+-.ed-intro-float--support{
+-  max-width: 300px;
+-  padding-block: 18px;
+-  padding-inline: 24px 18px;
+-  font-size: .94rem;
+-  line-height: 1.6;
++.mag-scrim{
++  position: absolute; left: 0; right: 0; bottom: 0; height: 56%; z-index: 3;
++  background: linear-gradient(to top, rgba(10,8,6,.72) 0%, rgba(10,8,6,.38) 45%, rgba(10,8,6,0) 100%);
+ }
+ 
+-.ed-intro-float--quote{
+-  max-width: 340px;
+-  padding-block: 34px 30px;
+-  padding-inline: 32px 24px;
+-  background: var(--card);
++.mag-cover-head{
++  position: absolute; left: 0; right: 0; bottom: 0; z-index: 4;
++  padding: 0 26px 26px; color: #fdfcf8;
++  opacity: 0; transform: translateY(10px);
++  transition: opacity 900ms ease, transform 900ms ease;
+ }
++.mag-cover-head.in{ opacity: 1; transform: translateY(0); }
+ 
+-.ed-intro-chip{
+-  display: inline-block;
+-  padding: 4px 12px;
+-  border-radius: 5px;
+-  font-size: .78rem;
+-  font-weight: 600;
+-  letter-spacing: .04em;
+-  color: var(--text);
+-  margin-bottom: 10px;
++/* scoped as ".mag-cover-head .mag-head" (not just ".mag-head") so this
++   beats the generic ".page-hero h1" rule elsewhere in the stylesheet,
++   which would otherwise win on specificity and silently override the
++   color/size here with the plain dark-text heading style. */
++.mag-cover-head .mag-head{
++  font-family: 'Bodoni Moda', serif; font-weight: 500; color: #fdfcf8;
++  font-size: clamp(24px, 4vw, 38px); line-height: 1.18; letter-spacing: -.01em; margin: 0;
++  text-shadow: 0 2px 20px rgba(0,0,0,.35);
++  text-align: start; max-width: none;
+ }
++.mag-cover-head .mag-head em{ font-style: italic; font-weight: 600; color: #e7e0f3; }
+ 
+-.ed-intro-chip--yellow{ background: rgba(232,212,136,.55); }
+-.ed-intro-chip--purple{ background: rgba(122,106,158,.18); }
++/* ===== About: body content revealed after the photo settles ===== */
++.mag-body{ padding: 34px 4px 0; }
+ 
+-.ed-intro-quote-lead{
+-  font-size: 1rem;
+-  line-height: 1.75;
+-  color: var(--text-muted);
+-  margin: 0 0 16px;
++/* scoped as ".mag-body .mag-quote-lead" / ".mag-body .mag-quote" (not
++   just the bare class) so these beat the generic ".page-hero p" rule
++   elsewhere in the stylesheet, which otherwise wins on specificity and
++   silently overrides the color/max-width/margin set here. */
++.mag-body .mag-quote-lead{
++  font-size: .92rem; line-height: 1.7; color: var(--text-muted); max-width: 62ch; margin: 0 0 14px;
++  text-align: start;
++  opacity: 0; transform: translateY(16px);
++  transition: opacity 700ms ease, transform 700ms ease;
+ }
++.mag-body .mag-quote-lead strong{ color: var(--text); font-weight: 600; }
+ 
+-.ed-intro-quote-main{
+-  font-size: 1.55rem;
+-  line-height: 1.5;
+-  font-style: italic;
+-  font-weight: 600;
+-  color: var(--accent);
+-  margin: 0;
++.mag-body .mag-quote{
++  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
++  padding: 22px 0; margin: 0 0 36px;
++  font-family: 'Bodoni Moda', serif; font-style: italic; font-weight: 500;
++  font-size: clamp(19px, 2.4vw, 25px); line-height: 1.45; color: var(--text); max-width: 62ch;
++  text-align: start;
++  opacity: 0; transform: translateY(16px);
++  transition: opacity 700ms ease, transform 700ms ease;
+ }
++.mag-body .mag-quote strong{ color: #7A6A9E; font-weight: 700; font-style: normal; }
+ 
+-.ed-intro-quote-main strong{
+-  color: #7A6A9E;
+-  font-style: normal;
+-  font-weight: 700;
++.mag-body.content-in .mag-quote-lead{ opacity: 1; transform: none; transition-delay: 0ms; }
++.mag-body.content-in .mag-quote{ opacity: 1; transform: none; transition-delay: 120ms; }
++
++.mag-facts{ display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
++
++/* the card starts as a fully transparent, borderless box: its own reveal
++   first draws the frame (border + corner chip), then a scan-line sweeps
++   down through that frame revealing the content, decoding the label into
++   place as it crosses it - two effects, one cause, triggered per-card in
++   a short staggered sequence (no element travels between cards). */
++.mag-fact{
++  position: relative; padding: 16px 16px 14px; text-align: start;
++  background: transparent; border: 1px solid transparent; border-radius: 4px; box-shadow: none;
++  transition: background 260ms ease, border-color 260ms ease, box-shadow 260ms ease;
+ }
++.mag-fact.frame-in{ background: var(--card); border-color: var(--border); box-shadow: 0 16px 28px -14px rgba(37,31,28,.4); }
+ 
+-.ed-intro-float--1{ top: 6%; inset-inline-start: -2%; }
+-.ed-intro-float--2{ top: 22%; inset-inline-end: -10%; }
+-.ed-intro-float--3{ bottom: 10px; inset-inline-start: -2%; }
+-
+-/* ===== Heading: dramatize the "instead of X, Y" contrast already in the words ===== */
+-.ed-h1-old{ color: var(--text-muted); font-weight: 600; }
+-.ed-h1-new{ color: #7A6A9E; }
+-.ed-h1-arrow{ display: inline-flex; align-items: center; vertical-align: -6px; margin-inline: 8px; opacity: .85; }
+-.ed-h1-arrow svg{ display: block; }
+-.lang-en .ed-h1-arrow svg{ transform: scaleX(-1); }
+-
+-/* ===== Intro cluster: digital-canvas depth + flow-chain reveal (desktop only) ===== */
+-@media (min-width: 861px){
+-  .ed-intro-portrait-wrap{
+-    isolation: isolate;
+-    background-image: radial-gradient(rgba(30,27,22,.07) 1px, transparent 1px);
+-    background-size: 18px 18px;
+-    border-radius: 24px;
+-  }
+-  .ed-intro-portrait{
+-    position: relative;
+-    z-index: 2;
+-    border: 1.5px solid #7A6A9E;
+-    box-shadow: 0 4px 14px rgba(30,27,22,.08), 0 24px 40px rgba(122,106,158,.16);
+-  }
+-  .ed-intro-float{
+-    z-index: 2;
+-    border: 1.5px solid #7A6A9E;
+-    box-shadow: 0 2px 8px rgba(30,27,22,.05), 0 16px 30px rgba(30,27,22,.09);
+-    opacity: 0;
+-    transform: scale(.93);
+-    transition: opacity .35s ease, transform .4s cubic-bezier(.34,1.56,.64,1);
+-  }
+-  .ed-intro-float.flow-in{
+-    opacity: 1;
+-    transform: scale(1);
+-  }
+-  .flow-svg{
+-    position: absolute;
+-    inset: 0;
+-    width: 100%;
+-    height: 100%;
+-    z-index: 3;
+-    pointer-events: none;
+-    overflow: visible;
+-  }
++.mag-fact::before{
++  content: ""; position: absolute; top: 0; inset-inline-start: 0; width: 13px; height: 13px; background: #7A6A9E; z-index: 3;
++  opacity: 0; transform: scale(.4);
++  transition: opacity 200ms ease, transform 240ms cubic-bezier(.22,1.61,.36,1);
+ }
+-@media (max-width: 860px){
+-  .flow-svg{ display: none; }
++.mag-fact.frame-in::before{ opacity: 1; transform: scale(1); }
++
++.mag-trace-svg{ position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; overflow: visible; pointer-events: none; }
++.mag-trace-svg rect{ fill: none; stroke: #7A6A9E; stroke-width: 1.5; }
++
++.mag-fact-inner{ position: relative; clip-path: inset(0 0 100% 0); }
++.mag-fact.scanning .mag-fact-inner{ animation: magFactScanClip 820ms cubic-bezier(.65,0,.35,1) forwards; }
++@keyframes magFactScanClip{ from{ clip-path: inset(0 0 100% 0); } to{ clip-path: inset(0 0 0% 0); } }
++
++.mag-fact-scan-bar{
++  position: absolute; left: 0; right: 0; height: 2px; top: 0; z-index: 4; opacity: 0;
++  background: linear-gradient(90deg, transparent, #7A6A9E 20%, #fff 50%, #7A6A9E 80%, transparent);
++  box-shadow: 0 0 14px 2px rgba(122,106,158,.85); pointer-events: none;
+ }
++.mag-fact.scanning .mag-fact-scan-bar{ animation: magFactScanBar 820ms cubic-bezier(.65,0,.35,1) forwards; }
++@keyframes magFactScanBar{ 0%{ top: 0; opacity: 1; } 88%{ opacity: 1; } 100%{ top: 100%; opacity: 0; } }
+ 
+-@media (max-width: 860px){
+-  .ed-intro{ padding: 40px 24px 20px; }
+-  .ed-intro-heading-block{ margin-inline: -24px; }
+-  .ed-intro-heading-block .ed-intro-heading{ font-size: clamp(16.5px, 5.2vw, 24px); }
+-  .ed-intro-portrait{ width: 82%; }
+-  .ed-intro-float{ position: relative; max-width: none; margin: 24px auto; box-shadow: 0 10px 22px rgba(30,27,22,.10); }
+-  .ed-intro-float--1,
+-  .ed-intro-float--2,
+-  .ed-intro-float--3{ top: auto; bottom: auto; inset-inline-start: auto; inset-inline-end: auto; }
+-}
+-
+-/* ===== Reveal-stack: cards climbing over each other on scroll ===== */
+-.reveal-stack{
+-  opacity: 0;
+-  transform: translateY(-22px) scale(.95);
+-  transition: opacity .6s cubic-bezier(.22,.8,.32,1), transform .6s cubic-bezier(.22,.8,.32,1);
+-  transition-delay: var(--reveal-delay, 0ms);
++.mag-fact-label{
++  font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #7A6A9E;
++  margin: 6px 0 8px; min-height: 13px;
+ }
+-.reveal-stack.in-view{
+-  opacity: 1;
+-  transform: translateY(0) scale(1);
++.mag-fact-text{ font-size: .92rem; line-height: 1.7; color: var(--text-muted); }
++.mag-fact-text strong{ color: var(--text); font-weight: 600; }
++
++@media (max-width: 760px){
++  .mag-top{ padding: 14px 18px; font-size: .62rem; }
++  .mag-cover-head{ padding: 0 20px 20px; }
++  .mag-body{ padding: 26px 4px 0; }
++  .mag-body .mag-quote{ font-size: 20px; }
++  .mag-facts{ grid-template-columns: 1fr; gap: 20px; }
+ }
++
+ @media (prefers-reduced-motion: reduce){
+-  .reveal-stack{ opacity:1; transform:none; transition:none; transition-delay:0ms; }
++  .mag-cover-head{ opacity: 1; transform: none; transition: none; }
++  .mag-body .mag-quote-lead, .mag-body .mag-quote{ opacity: 1; transform: none; transition: none; }
++  .mag-fact{ background: var(--card); border-color: var(--border); }
++  .mag-fact::before{ opacity: 1; transform: none; }
+ }
+ 
+ .ed-statement{
 diff --git a/js/i18n-data.js b/js/i18n-data.js
-index cba4e32..2722c90 100644
+index 2722c90..c963013 100644
 --- a/js/i18n-data.js
 +++ b/js/i18n-data.js
-@@ -53,7 +53,7 @@ window.I18N = {
+@@ -44,12 +44,16 @@ window.I18N = {
+   },
+ 
+   about: {
+-    'ed-h1': '<span class="ed-h1-old">Instead of store &amp; customer journey,</span> <br class="ed-h1-break"><span class="ed-h1-arrow"><svg width="34" height="14" viewBox="0 0 34 14" aria-hidden="true"><path d="M33 7 H6" stroke="#7A6A9E" stroke-width="1.5" stroke-dasharray="4 4"></path><path d="M11 2 L5 7 L11 12" stroke="#7A6A9E" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="ed-h1-new">a screen &amp; user flow.</span>',
++    'ed-h1': 'Instead of store &amp; customer journey, a <em>screen</em> &amp; user flow.',
+     'ed-portrait-alt': 'Tiana Folkenfolk',
+-    'ed-float-1': '<span class="ed-intro-chip ed-intro-chip--yellow">Background</span><br>\n            I’m a UX/UI designer with a rich background in commercial design and creating experiences in physical spaces. Over the years, I’ve learned that design is about much more than what you see. It shapes how people feel and make decisions, through the planning of space, visual hierarchy, and the placement of messages and products.',
++    'ed-masthead-left': 'About Me',
++    'ed-masthead-right': 'UX/UI Designer · Visual Designer',
++    'ed-fact1-chip': 'Background',
++    'ed-fact1-body': 'I’m a UX/UI designer with a rich background in commercial design and creating experiences in physical spaces. Over the years, I’ve learned that design is about much more than what you see. It shapes how people feel and make decisions, through the planning of space, visual hierarchy, and the placement of messages and products.',
+     'ed-quote-lead': 'I’ve worked with international brands like H&amp;M and IKEA, where I designed shopping experiences, window displays, and visual communication, always guided by the same question:',
+     'ed-quote-main': '”What does the user <strong>see, feel, and need</strong> to understand and decide?”',
+-    'ed-float-3': '<span class="ed-intro-chip ed-intro-chip--purple">Digital Shift</span><br>\n            Moving into UX/UI felt like a natural continuation of that same way of thinking. The space I design in simply shifted, going through its own digital transformation.',
++    'ed-fact2-chip': 'Digital Shift',
++    'ed-fact2-body': 'Moving into UX/UI felt like a natural continuation of that same way of thinking. The space I design in simply shifted, going through its own digital transformation.',
      'ed-statement-1': 'After thorough professional training in digital design and UX/UI, I now bring the knowledge and experience I built over years in commercial design and customer experience into the world of digital products. I’ve learned to work with UX processes, research, specification, and interface design, translating both <strong>user and business needs</strong> into simple, effective digital solutions.',
      'ed-statement-2': 'I believe good design connects <strong>aesthetics, usability, and purpose</strong>,<br>and that the experience should always be clear and intuitive.',
      'quiz-eyebrow': 'A bit beyond the résumé',
--    'quiz-intro': 'A few fun facts, a few work habits, let’s get acquainted.',
-+    'quiz-intro': 'A few fun facts, a few work habits, let’s break the ice.',
-     'quiz-start-btn': 'Let’s play!',
-     'quiz-skip-btn': 'Skip to results ✕',
-     'quiz-results-title': 'You made it!',
-@@ -64,7 +64,7 @@ window.I18N = {
-     'education-title': 'Education',
-     'education-text': '\n            <strong style="color:var(--accent)">HackerU</strong><br>\n            UI/UX Course: Specification and Digital Design<br>\n            2023 to 2024\n          ',
-     'languages-title': 'Languages',
--    'languages-text': '\n            Hebrew: Native<br>\n            English: Intermediate<br>\n            Russian: Intermediate\n          ',
-+    'languages-text': '\n            Hebrew: Native<br>\n            English: Advanced<br>\n            Russian: Advanced\n          ',
-     'quiz-progress-initial': 'Question 1 of 6'
-   },
- 
-@@ -75,7 +75,7 @@ window.I18N = {
-   },
- 
-   workB2b: {
--    'case-header-h1': 'B2B Digital Marketing Platform: Identifying Friction Points and Improving UX',
-+    'case-header-h1': 'An Interface That Didn’t Speak the User’s Language',
+@@ -79,6 +83,7 @@ window.I18N = {
      'case-header-p': 'Customers were bypassing the SaaS system and going straight to the CS team, because they couldn’t track request status, couldn’t find how to submit a new content request, and didn’t know how to communicate with the team inside the system. I identified the friction points and led four product solutions.',
      'b2b-hero-h1': 'Identifying Friction Points and Improving UX',
      'b2b-hero-p': 'A digital marketing platform for small and medium businesses. Identifying patterns of customers bypassing the system, and solutions that reduced friction and improved the user experience.',
-@@ -185,7 +185,7 @@ window.I18N = {
++    'b2b-disclaimer-top': 'This project was carried out in a real, live work environment. The screens shown here are schematic wireframes — the company’s internal interface cannot be disclosed.',
+ 
+     'b2b-eyebrow-01': '01 · Context',
+     'b2b-h2-01': 'My Role',
+@@ -181,7 +186,6 @@ window.I18N = {
+     'b2b-stat3-title': 'Communication through the right channels',
+     'b2b-stat3-desc': 'Reduced off-platform communication, redirected back to the tools built for it',
+     'b2b-quote-04': 'Every solution was grounded in real data gathered from the field. Direct access to the customer is the right starting point for any improvement to the user experience.',
+-    'b2b-footnote-04': 'The screens shown are a schematic illustration'
    },
  
    workDogether: {
--    'case-header-h1': 'A Household Management App',
-+    'case-header-h1': 'Syncing the Whole Family',
-     'case-header-p': 'An app for coordinating and managing household tasks for complex families (including divorced parents), syncing tasks between two homes, single-parent/separated-parent modes, and gamification that encourages kids to take part in chores.',
-     'dg-hero-label': 'About the App',
-     'dg-hero-h1': 'A Household Management App',
-@@ -268,7 +268,7 @@ window.I18N = {
-   },
+diff --git a/js/main.js b/js/main.js
+index ac6b530..8af0aff 100644
+--- a/js/main.js
++++ b/js/main.js
+@@ -412,7 +412,7 @@ document.addEventListener('DOMContentLoaded', function () {
+        hint appears next to it on certain elements (view / click / play). */
+     var VIEW_SELECTOR = '.work-row, .card';
+     var CLICK_SELECTOR = '.btn, .work-btn, .quiz-start-btn, .quiz-icon-btn, .whatsapp-fab, .nav-cv-btn, .trivia-teaser-link, .quiz-option, button:not(.menu-toggle):not(.trivia-teaser-close)';
+-    var HINT_FAR_SELECTOR = '.ed-intro-portrait-wrap';
++    var HINT_FAR_SELECTOR = '.mag-page';
+     var HINT_NEAR_SELECTOR = '.quiz-block';
+     var HINT_SELECTOR = HINT_FAR_SELECTOR + ', ' + HINT_NEAR_SELECTOR;
+     var ALL_HOVERABLE = VIEW_SELECTOR + ', ' + CLICK_SELECTOR + ', ' + HINT_SELECTOR;
+@@ -451,103 +451,381 @@ document.addEventListener('DOMContentLoaded', function () {
  
-   workMixmatch: {
--    'case-header-h1': 'Branding and Brand Book for a New Concept: Mix.Match',
-+    'case-header-h1': 'A Full Closet. Nothing to Wear.',
-     'case-header-p': 'A full brand book for a closet-organizing app, with a logo concept drawn from the closet’s own architecture (shelves and compartments, not the garment itself). Color palette, typography, brand principles, and digital and print applications.'
    }
  
-diff --git a/js/i18n.js b/js/i18n.js
-index 0b785b9..9f12766 100644
---- a/js/i18n.js
-+++ b/js/i18n.js
-@@ -113,7 +113,7 @@
-   };
+-  /* ---------- about page: flow-chain reveal (portrait -> cards, story order) ---------- */
+-  var flowWrap = document.querySelector('.ed-intro-portrait-wrap');
+-  var flowSvg = document.getElementById('flow-svg');
++  /* ---------- about page: magazine hero (canvas scan -> headline -> fact-card reveal) ---------- */
++  var magPhotoImg = document.getElementById('magPhotoImg');
++  var magStage = document.getElementById('magStage');
++
++  if (magPhotoImg && magStage) {
++    var magCtx = magStage.getContext('2d');
++    var magCoverHead = document.getElementById('magCoverHead');
++    var magBody = document.getElementById('magBody');
++
++    var MAG_RASTER_W = 480, MAG_RASTER_H = 600; /* 4:5, matches the cover crop */
++    var MAG_T_SCAN_START = 700;     /* ms, hold before the scan starts */
++    var MAG_T_SCAN_DUR = 1900;      /* ms, sweep duration */
++    var MAG_T_HOLD_DOTS = 700;      /* ms, hold fully-halftone before crossfading back */
++    var MAG_T_FADE_BACK = 850;      /* ms, canvas fades out revealing the real photo */
++    var MAG_T_CONTENT_DELAY = 150;  /* ms, extra pause after the photo settles before content lands */
++    var MAG_SHADOW = { r: 0x4a, g: 0x3f, b: 0x66 };
++    var MAG_ACCENT = '#7A6A9E';
++
++    var magRaster, magRasterData;
++    var MAG_COLS = 18, MAG_ROWS = 22;
++    var magCw, magCh;
++    var magFragments = [];
++
++    function magSeededRand(seed) {
++      var v = Math.sin(seed * 12.9898) * 43758.5453;
++      return v - Math.floor(v);
++    }
  
-   document.addEventListener('DOMContentLoaded', function () {
--    var lang = getStoredLang() || 'he';
-+    var lang = getStoredLang() || 'en';
-     window.setSiteLang(lang);
+-  if (flowWrap && flowSvg) {
+-    var flowChainEls = [
+-      document.querySelector('.ed-intro-portrait'),
+-      document.querySelector('.ed-intro-float--1'),
+-      document.querySelector('.ed-intro-float--2'),
+-      document.querySelector('.ed-intro-float--3')
+-    ];
++    function magBuildRaster() {
++      var off = document.createElement('canvas');
++      off.width = MAG_RASTER_W; off.height = MAG_RASTER_H;
++      var octx = off.getContext('2d');
++      var iw = magPhotoImg.naturalWidth, ih = magPhotoImg.naturalHeight;
++      var targetR = MAG_RASTER_W / MAG_RASTER_H, srcR = iw / ih;
++      var sx, sy, sw, sh;
++      if (srcR > targetR) { sh = ih; sw = ih * targetR; sx = (iw - sw) / 2; sy = 0; }
++      else { sw = iw; sh = iw / targetR; sx = 0; sy = (ih - sh) * 0.20; }
++      octx.filter = 'grayscale(1) contrast(1.25) brightness(1.02)';
++      octx.drawImage(magPhotoImg, sx, sy, sw, sh, 0, 0, MAG_RASTER_W, MAG_RASTER_H);
++      octx.filter = 'none';
++      magRaster = off;
++      magRasterData = octx.getImageData(0, 0, MAG_RASTER_W, MAG_RASTER_H).data;
++    }
++
++    function magDarknessAt(cx, cy) {
++      var x = Math.max(0, Math.min(MAG_RASTER_W - 1, Math.round(cx)));
++      var y = Math.max(0, Math.min(MAG_RASTER_H - 1, Math.round(cy)));
++      var idx = (y * MAG_RASTER_W + x) * 4;
++      return 1 - (magRasterData[idx] / 255);
++    }
++
++    var MAG_SUB_N = 5;
++    function magBuildSubDots(baseX, baseY, cellW, cellH) {
++      var subW = cellW / MAG_SUB_N, subH = cellH / MAG_SUB_N;
++      var subR = Math.min(subW, subH) * 0.62;
++      var dots = [];
++      for (var b = 0; b < MAG_SUB_N; b++) {
++        for (var a = 0; a < MAG_SUB_N; a++) {
++          var sx = baseX + (a + 0.5) * subW;
++          var sy = baseY + (b + 0.5) * subH;
++          var dark = magDarknessAt(sx, sy);
++          var r = dark * subR;
++          if (r > 0.4) dots.push({ dx: sx, dy: sy, r: r });
++        }
++      }
++      return dots;
++    }
++
++    function magBuildFragments() {
++      magCw = MAG_RASTER_W / MAG_COLS; magCh = MAG_RASTER_H / MAG_ROWS;
++      magFragments = [];
++      for (var j = 0; j < MAG_ROWS; j++) {
++        for (var i = 0; i < MAG_COLS; i++) {
++          var x = i * magCw, y = j * magCh;
++          var seed = i * 97 + j * 131;
++          var axis = magSeededRand(seed) > 0.5 ? 'x' : 'y';
++          var mag = (magSeededRand(seed + 1) < 0.5 ? -1 : 1) * (magCw * 1.3 + magSeededRand(seed + 2) * magCw * 1.6);
++          var scatterX = axis === 'x' ? mag : 0;
++          var scatterY = axis === 'y' ? mag * (magCh / magCw) : 0;
++          var triggerFrac = j / (MAG_ROWS - 1); /* top row triggers first - vertical scan, top to bottom */
++          magFragments.push({
++            sx: x, sy: y, sw: magCw, sh: magCh,
++            scatterX: scatterX, scatterY: scatterY,
++            triggerFrac: triggerFrac,
++            subDots: magBuildSubDots(x, y, magCw, magCh)
++          });
++        }
++      }
++    }
++
++    function magEaseInOutQuad(x) { return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
++
++    function magDrawFragmentPhoto(f, ox, oy, alpha) {
++      if (alpha <= 0.01) return;
++      magCtx.save();
++      magCtx.globalAlpha = alpha;
++      magCtx.drawImage(magRaster, f.sx, f.sy, f.sw, f.sh, f.sx + ox, f.sy + oy, f.sw, f.sh);
++      magCtx.restore();
++    }
++
++    /* same tile, but "lifted" off the surface with a small dark offset behind
++       it - a cheap stand-in for a cube's shadowed side face, used only while a
++       fragment is actually airborne (displaced), giving the break-apart a bit
++       of a 3D, physical-block feel instead of a flat cutout sliding around. */
++    function magDrawFragmentPhoto3D(f, ox, oy, alpha) {
++      if (alpha <= 0.01) return;
++      var depth = Math.max(2, f.sw * 0.16);
++      magCtx.save();
++      magCtx.globalAlpha = alpha * 0.85;
++      magCtx.fillStyle = 'rgba(18,14,28,0.5)';
++      magCtx.fillRect(f.sx + ox + depth * 0.55, f.sy + oy + depth * 0.55, f.sw, f.sh);
++      magCtx.restore();
++      magCtx.save();
++      magCtx.globalAlpha = alpha;
++      magCtx.drawImage(magRaster, f.sx, f.sy, f.sw, f.sh, f.sx + ox, f.sy + oy, f.sw, f.sh);
++      magCtx.restore();
++    }
++
++    function magDrawDot(x, y, r, alpha) {
++      if (alpha <= 0.01 || r <= 0.3) return;
++      magCtx.save();
++      magCtx.globalAlpha = alpha;
++      magCtx.fillStyle = 'rgb(' + MAG_SHADOW.r + ',' + MAG_SHADOW.g + ',' + MAG_SHADOW.b + ')';
++      magCtx.beginPath();
++      magCtx.arc(x, y, r, 0, Math.PI * 2);
++      magCtx.fill();
++      magCtx.restore();
++    }
++
++    var MAG_BURST_WIDTH = 0.16, MAG_SETTLE_WIDTH = 0.22;
++    var MAG_WAVE_MAX = 1 + MAG_BURST_WIDTH + MAG_SETTLE_WIDTH;
++
++    function magDrawScanLine(waveProgress) {
++      if (waveProgress <= 0 || waveProgress >= 1) return;
++      var y = MAG_RASTER_H * waveProgress;
++      magCtx.save();
++      magCtx.globalAlpha = 0.9;
++      magCtx.shadowColor = MAG_ACCENT;
++      magCtx.shadowBlur = 10;
++      magCtx.strokeStyle = MAG_ACCENT;
++      magCtx.lineWidth = 2.5;
++      magCtx.beginPath();
++      magCtx.moveTo(0, y);
++      magCtx.lineTo(MAG_RASTER_W, y);
++      magCtx.stroke();
++      magCtx.restore();
++    }
++
++    function magDrawScanFrame(waveP) {
++      magCtx.clearRect(0, 0, MAG_RASTER_W, MAG_RASTER_H);
++      magFragments.forEach(function (f) {
++        var d = waveP - f.triggerFrac;
++        if (d <= 0) {
++          magDrawFragmentPhoto(f, 0, 0, 1);
++        } else if (d < MAG_BURST_WIDTH) {
++          var lp = d / MAG_BURST_WIDTH;
++          magDrawFragmentPhoto3D(f, f.scatterX * lp, f.scatterY * lp, 1);
++        } else if (d < MAG_BURST_WIDTH + MAG_SETTLE_WIDTH) {
++          var lp2 = (d - MAG_BURST_WIDTH) / MAG_SETTLE_WIDTH;
++          var ox = f.scatterX * (1 - lp2), oy = f.scatterY * (1 - lp2);
++          magDrawFragmentPhoto3D(f, ox, oy, 1 - lp2);
++          f.subDots.forEach(function (dot) { magDrawDot(dot.dx + ox, dot.dy + oy, dot.r, lp2); });
++        } else {
++          f.subDots.forEach(function (dot) { magDrawDot(dot.dx, dot.dy, dot.r, 1); });
++        }
++      });
++      magDrawScanLine(Math.min(waveP, 1));
++    }
++
++    function magDrawAllDots() {
++      magCtx.clearRect(0, 0, MAG_RASTER_W, MAG_RASTER_H);
++      magFragments.forEach(function (f) {
++        f.subDots.forEach(function (d) { magDrawDot(d.dx, d.dy, d.r, 1); });
++      });
++    }
  
-     var toggles = document.querySelectorAll('.lang-toggle');
+-    var buildFlowChain = function () {
+-      var wrapRect = flowWrap.getBoundingClientRect();
+-      function rel(rect) {
+-        return {
+-          left: rect.left - wrapRect.left, top: rect.top - wrapRect.top,
+-          right: rect.right - wrapRect.left, bottom: rect.bottom - wrapRect.top,
+-          cx: rect.left - wrapRect.left + rect.width / 2, cy: rect.top - wrapRect.top + rect.height / 2
+-        };
++    var magRafId = null;
++    function magCancelLoop() { if (magRafId) { cancelAnimationFrame(magRafId); magRafId = null; } }
++
++    /* ---- card reveal: frame draws itself, then a scan-line sweeps down
++       through it, decoding the label right as the sweep crosses it ---- */
++    function magSizeFactTrace(fact) {
++      var svg = fact.querySelector('.mag-trace-svg');
++      var rect = fact.querySelector('rect');
++      var w = fact.offsetWidth, h = fact.offsetHeight;
++      svg.setAttribute('width', w); svg.setAttribute('height', h);
++      rect.setAttribute('width', Math.max(0, w - 1.5));
++      rect.setAttribute('height', Math.max(0, h - 1.5));
++      var perim = 2 * ((w - 1.5) + (h - 1.5));
++      rect.style.transition = 'none';
++      rect.style.strokeDasharray = perim + ' ' + perim;
++      rect.style.strokeDashoffset = perim;
++    }
++    function magDecodeFactLabel(el, duration) {
++      var finalText = el.getAttribute('data-final') || '';
++      var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#*/';
++      var start = null;
++      var len = finalText.length;
++      function frame(ts) {
++        if (!start) start = ts;
++        var t = Math.min(1, (ts - start) / duration);
++        var revealCount = Math.floor(t * len);
++        var out = '';
++        for (var i = 0; i < len; i++) {
++          if (i < revealCount || finalText[i] === ' ') out += finalText[i];
++          else out += chars[Math.floor(Math.random() * chars.length)];
++        }
++        el.textContent = out;
++        if (t < 1) requestAnimationFrame(frame); else el.textContent = finalText;
+       }
+-      var svgns = 'http://www.w3.org/2000/svg';
+-      flowSvg.innerHTML = '';
+-      var defs = document.createElementNS(svgns, 'defs');
+-      defs.innerHTML = '<marker id="flow-arrow" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#7A6A9E"></path></marker>';
+-      flowSvg.appendChild(defs);
+-
+-      var items = [];
+-      for (var i = 0; i < flowChainEls.length - 1; i++) {
+-        var a = rel(flowChainEls[i].getBoundingClientRect());
+-        var b = rel(flowChainEls[i + 1].getBoundingClientRect());
+-        var fromLeft = b.cx < a.cx;
+-        var x1 = fromLeft ? a.left : a.right;
+-        var y1 = Math.min(Math.max(b.cy, a.top + 12), a.bottom - 12);
+-        var x2 = fromLeft ? b.right : b.left;
+-        var y2 = b.cy;
+-        var c1x = x1 + (x2 - x1) * 0.5;
+-        var c2x = x2 - (x2 - x1) * 0.5;
+-
+-        var path = document.createElementNS(svgns, 'path');
+-        path.setAttribute('d', 'M ' + x1 + ',' + y1 + ' C ' + c1x + ',' + y1 + ' ' + c2x + ',' + y2 + ' ' + x2 + ',' + y2);
+-        path.setAttribute('fill', 'none');
+-        path.setAttribute('stroke', '#7A6A9E');
+-        path.setAttribute('stroke-width', '1.5');
+-        path.setAttribute('marker-end', 'url(#flow-arrow)');
+-        flowSvg.appendChild(path);
+-
+-        var startDot = document.createElementNS(svgns, 'circle');
+-        startDot.setAttribute('cx', x1); startDot.setAttribute('cy', y1); startDot.setAttribute('r', 4.5);
+-        startDot.setAttribute('fill', '#faf6e9'); startDot.setAttribute('stroke', '#7A6A9E'); startDot.setAttribute('stroke-width', '1.5');
+-        flowSvg.appendChild(startDot);
+-
+-        var len = path.getTotalLength();
+-        path.style.transition = 'none';
+-        path.style.strokeDasharray = len;
+-        path.style.strokeDashoffset = len;
+-        items.push({ path: path, targetEl: flowChainEls[i + 1] });
++      requestAnimationFrame(frame);
++    }
++    function magResetCardReveal(card) {
++      card.classList.remove('frame-in', 'scanning');
++      var label = card.querySelector('.mag-fact-label');
++      /* capture whatever text is on the label right now (current site
++         language) as the "final" text to decode into - this keeps the
++         effect correct even if the language was switched before this
++         card's reveal ever ran. Guarded so a redundant reset call (this
++         runs both at the start of magPlaySequence and again right before
++         magTriggerCardReveals) never overwrites the captured text with
++         an already-blanked label. */
++      if (label.textContent) {
++        label.setAttribute('data-final', label.textContent);
+       }
+-      return items;
+-    };
++      label.textContent = '';
++      magSizeFactTrace(card);
++    }
++    function magRevealCard(card) {
++      var rect = card.querySelector('rect');
++      rect.style.transition = 'stroke-dashoffset 260ms cubic-bezier(.4,0,.2,1)';
++      rect.style.strokeDashoffset = '0';
++      card.classList.add('frame-in');
++      magCardTimers.push(setTimeout(function () {
++        card.classList.add('scanning');
++        magCardTimers.push(setTimeout(function () {
++          magDecodeFactLabel(card.querySelector('.mag-fact-label'), 380);
++        }, 150));
++      }, 260));
++    }
++
++    /* ---- card reveal trigger: after the hero photo settles, each fact
++       card reveals itself (frame -> scan -> decode, see magRevealCard
++       above) in a short staggered sequence. No traveling element connects
++       the photo to the cards - each card just wakes up on its own, one
++       after another. ---- */
++    var magCardTimers = [];
++    var MAG_CARD_START_DELAY = 320, MAG_CARD_STAGGER = 360;
++
++    function magCancelCardReveals() {
++      magCardTimers.forEach(function (id) { clearTimeout(id); });
++      magCardTimers = [];
++    }
++
++    function magTriggerCardReveals() {
++      var facts = Array.prototype.slice.call(document.querySelectorAll('.mag-facts .mag-fact'));
++      facts.forEach(magResetCardReveal);
++      if (!facts.length) return;
++      magCancelCardReveals();
++      facts.forEach(function (card, i) {
++        magCardTimers.push(setTimeout(function () {
++          magRevealCard(card);
++        }, MAG_CARD_START_DELAY + i * MAG_CARD_STAGGER));
++      });
++    }
++
++    function magPlaySequence() {
++      magCancelLoop();
++      magCancelCardReveals();
++      magCoverHead.classList.remove('in');
++      magBody.classList.remove('content-in');
++      document.querySelectorAll('.mag-facts .mag-fact').forEach(magResetCardReveal);
++      magStage.style.transition = 'none';
++      magStage.style.opacity = '1';
++      magCtx.clearRect(0, 0, MAG_RASTER_W, MAG_RASTER_H);
++      magCtx.drawImage(magRaster, 0, 0, MAG_RASTER_W, MAG_RASTER_H);
+ 
+-    var playFlowChain = function () {
+       if (prefersNoMotion) {
+-        flowChainEls.forEach(function (el) { el.classList.add('flow-in'); });
++        magDrawAllDots();
++        requestAnimationFrame(function () {
++          magStage.style.transition = 'opacity 400ms ease';
++          magStage.style.opacity = '0';
++        });
++        magCoverHead.classList.add('in');
++        magBody.classList.add('content-in');
++        document.querySelectorAll('.mag-facts .mag-fact').forEach(function (f) {
++          f.classList.add('frame-in', 'scanning');
++          var label = f.querySelector('.mag-fact-label');
++          label.textContent = label.getAttribute('data-final');
++        });
+         return;
+       }
+-      var items = buildFlowChain();
+-      items.forEach(function (item) { item.path.getBoundingClientRect(); }); /* force paint of hidden state */
+ 
+-      var delay = 150;
+-      items.forEach(function (item) {
+-        setTimeout(function () {
+-          item.path.style.transition = 'stroke-dashoffset .55s cubic-bezier(.4,0,.2,1)';
+-          item.path.style.strokeDashoffset = '0';
+-          setTimeout(function () { item.targetEl.classList.add('flow-in'); }, 480);
+-        }, delay);
+-        delay += 750;
+-      });
+-    };
++      var SCAN_END = MAG_T_SCAN_START + MAG_T_SCAN_DUR;
++      var HOLD_END = SCAN_END + MAG_T_HOLD_DOTS;
++      var FADE_END = HOLD_END + MAG_T_FADE_BACK;
++      var TOTAL = FADE_END + MAG_T_CONTENT_DELAY;
++      var headlineShown = false, contentShown = false;
++      var start = null;
++      function frame(ts) {
++        if (!start) start = ts;
++        var elapsed = ts - start;
++
++        /* draw the current visual state - computed from elapsed directly
++           (not branch side-effects), so a slow/stalled frame that jumps
++           past a window still lands on the correct final picture instead
++           of an in-between one. */
++        if (elapsed < MAG_T_SCAN_START) {
++          magCtx.clearRect(0, 0, MAG_RASTER_W, MAG_RASTER_H);
++          magCtx.drawImage(magRaster, 0, 0, MAG_RASTER_W, MAG_RASTER_H);
++        } else if (elapsed < SCAN_END) {
++          var p = (elapsed - MAG_T_SCAN_START) / MAG_T_SCAN_DUR;
++          var waveP = magEaseInOutQuad(p) * MAG_WAVE_MAX;
++          magDrawScanFrame(waveP);
++        } else if (elapsed < HOLD_END) {
++          magDrawAllDots();
++          magStage.style.opacity = '1';
++        } else if (elapsed < FADE_END) {
++          magDrawAllDots();
++          var fp = (elapsed - HOLD_END) / MAG_T_FADE_BACK;
++          magStage.style.opacity = String(Math.max(0, 1 - fp));
++        } else {
++          magStage.style.opacity = '0';
++        }
++
++        /* reveal triggers - threshold checks, independent of the draw
++           branches above, so they still fire even if a frame skips over
++           the window where they'd normally be set. */
++        if (!headlineShown && elapsed >= SCAN_END) {
++          magCoverHead.classList.add('in');
++          headlineShown = true;
++        }
++        if (!contentShown && elapsed >= TOTAL) {
++          magBody.classList.add('content-in');
++          contentShown = true;
++          magTriggerCardReveals();
++          magRafId = null;
++          return;
++        }
++        magRafId = requestAnimationFrame(frame);
++      }
++      magRafId = requestAnimationFrame(frame);
++    }
++
++    function magInit() {
++      magStage.width = MAG_RASTER_W * 2; magStage.height = MAG_RASTER_H * 2;
++      magCtx.scale(2, 2);
++      magBuildRaster();
++      magBuildFragments();
+ 
+-    if (window.matchMedia && window.matchMedia('(min-width: 861px)').matches) {
+       if ('IntersectionObserver' in window) {
+-        var flowIo = new IntersectionObserver(function (entries) {
++        var magIo = new IntersectionObserver(function (entries) {
+           entries.forEach(function (entry) {
+             if (entry.isIntersecting) {
+-              playFlowChain();
+-              flowIo.unobserve(entry.target);
++              magPlaySequence();
++              magIo.unobserve(entry.target);
+             }
+           });
+         }, { threshold: 0.35 });
+-        flowIo.observe(flowWrap);
++        magIo.observe(magStage.closest('.mag-photo'));
+       } else {
+-        flowChainEls.forEach(function (el) { el.classList.add('flow-in'); });
++        magPlaySequence();
+       }
++
++      window.addEventListener('resize', function () {
++        document.querySelectorAll('.mag-facts .mag-fact').forEach(magSizeFactTrace);
++      });
++    }
++
++    if (magPhotoImg.complete && magPhotoImg.naturalWidth) {
++      magInit();
+     } else {
+-      flowChainEls.forEach(function (el) { el.classList.add('flow-in'); });
++      magPhotoImg.addEventListener('load', magInit);
+     }
+   }
+ 
++
+ });
+diff --git a/work-b2b.html b/work-b2b.html
+index 6865f64..073f926 100644
+--- a/work-b2b.html
++++ b/work-b2b.html
+@@ -168,6 +168,7 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
+           <span class="b2b-pill">Web App · Mobile</span>
+           <span class="b2b-pill">Creative &amp; Customer Success</span>
+         </div>
++        <div class="b2b-footnote" style="margin-top:18px;" data-i18n="b2b-disclaimer-top">הפרויקט בוצע בפועל בסביבת עבודה אמיתית. המסכים המוצגים כאן הם וויירפריימים סכמטיים — הממשק הפנימי של החברה אינו ניתן לחשיפה.</div>
+       </div>
+     </div>
+ 
+@@ -389,7 +390,6 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
+           <div class="b2b-stat-card"><h4 data-i18n="b2b-stat3-title">תקשורת בכלים הנכונים</h4><p data-i18n="b2b-stat3-desc">הפחתת תקשורת מחוץ למערכת וחזרה לכלים שנבנו לכך</p></div>
+         </div>
+         <div class="b2b-quote black"><p data-i18n="b2b-quote-04">כל פתרון נשען על דאטה אמיתי שנאסף מהשטח. הגישה הישירה ללקוח היא נקודת המוצא הנכונה לכל שיפור בחוויית המשתמש.</p></div>
+-        <div class="b2b-footnote" data-i18n="b2b-footnote-04">המסכים המוצגים הם המחשה סכמטית</div>
+       </div>
+     </section>
+ 
+diff --git a/work-dogether.html b/work-dogether.html
+index c27163e..c05f52c 100644
+--- a/work-dogether.html
++++ b/work-dogether.html
+@@ -85,8 +85,13 @@
+ }
+ 
+ /* ===== IA diagram ===== */
+-.dg-ia-canvas{ background:#fff; border-radius:14px; padding:32px 20px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+-.dg-ia{ min-width:860px; font-family:'Rubik',sans-serif; transform-origin: top right; transition: none; }
++/* overflow is intentionally hidden, not auto: the JS below always scales the
++   diagram to fit the available width, so a scrollbar should never be needed -
++   relying on overflow:auto here used to leave a small, unwanted scrollbar
++   even when the diagram visually fit, because scrollWidth reflects the
++   diagram's natural (unscaled) layout size, not its scaled-down visual size. */
++.dg-ia-canvas{ background:#fff; border-radius:14px; padding:32px 20px; overflow:hidden; -webkit-overflow-scrolling:touch; }
++.dg-ia{ min-width:860px; font-family:'Rubik',sans-serif; transition: none; }
+ @media (max-width: 900px){
+   .dg-ia-canvas{ overflow-x:hidden; padding:20px 10px; }
+ }
+@@ -462,6 +467,12 @@
+     var canvas = document.querySelector('.dg-ia-canvas');
+     var diagram = document.querySelector('.dg-ia');
+     if(!canvas || !diagram) return;
++    // the diagram's natural overflow direction (and so which corner stays
++    // put while scaling down) depends on the page direction: in RTL it
++    // hangs off to the left of its own top-right corner, in LTR it hangs
++    // off to the right of its own top-left corner - anchor the scale there.
++    var isRtl = document.documentElement.dir === 'rtl';
++    diagram.style.transformOrigin = isRtl ? 'top right' : 'top left';
+     diagram.style.transform = 'none';
+     canvas.style.height = '';
+     var canvasStyle = getComputedStyle(canvas);
+@@ -478,6 +489,7 @@
+   }
+   window.addEventListener('load', fitIaDiagram);
+   window.addEventListener('resize', fitIaDiagram);
++  document.addEventListener('sitelangchange', fitIaDiagram);
+ })();
+ </script>
+ </body>

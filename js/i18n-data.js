@@ -44,12 +44,16 @@ window.I18N = {
   },
 
   about: {
-    'ed-h1': '<span class="ed-h1-old">Instead of store &amp; customer journey,</span> <br class="ed-h1-break"><span class="ed-h1-arrow"><svg width="34" height="14" viewBox="0 0 34 14" aria-hidden="true"><path d="M33 7 H6" stroke="#7A6A9E" stroke-width="1.5" stroke-dasharray="4 4"></path><path d="M11 2 L5 7 L11 12" stroke="#7A6A9E" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="ed-h1-new">a screen &amp; user flow.</span>',
+    'ed-h1': 'Instead of store &amp; customer journey, a <em>screen</em> &amp; user flow.',
     'ed-portrait-alt': 'Tiana Folkenfolk',
-    'ed-float-1': '<span class="ed-intro-chip ed-intro-chip--yellow">Background</span><br>\n            I’m a UX/UI designer with a rich background in commercial design and creating experiences in physical spaces. Over the years, I’ve learned that design is about much more than what you see. It shapes how people feel and make decisions, through the planning of space, visual hierarchy, and the placement of messages and products.',
+    'ed-masthead-left': 'About Me',
+    'ed-masthead-right': 'UX/UI Designer · Visual Designer',
+    'ed-fact1-chip': 'Background',
+    'ed-fact1-body': 'I’m a UX/UI designer with a rich background in commercial design and creating experiences in physical spaces. Over the years, I’ve learned that design is about much more than what you see. It shapes how people feel and make decisions, through the planning of space, visual hierarchy, and the placement of messages and products.',
     'ed-quote-lead': 'I’ve worked with international brands like H&amp;M and IKEA, where I designed shopping experiences, window displays, and visual communication, always guided by the same question:',
     'ed-quote-main': '”What does the user <strong>see, feel, and need</strong> to understand and decide?”',
-    'ed-float-3': '<span class="ed-intro-chip ed-intro-chip--purple">Digital Shift</span><br>\n            Moving into UX/UI felt like a natural continuation of that same way of thinking. The space I design in simply shifted, going through its own digital transformation.',
+    'ed-fact2-chip': 'Digital Shift',
+    'ed-fact2-body': 'Moving into UX/UI felt like a natural continuation of that same way of thinking. The space I design in simply shifted, going through its own digital transformation.',
     'ed-statement-1': 'After thorough professional training in digital design and UX/UI, I now bring the knowledge and experience I built over years in commercial design and customer experience into the world of digital products. I’ve learned to work with UX processes, research, specification, and interface design, translating both <strong>user and business needs</strong> into simple, effective digital solutions.',
     'ed-statement-2': 'I believe good design connects <strong>aesthetics, usability, and purpose</strong>,<br>and that the experience should always be clear and intuitive.',
     'quiz-eyebrow': 'A bit beyond the résumé',
@@ -79,6 +83,7 @@ window.I18N = {
     'case-header-p': 'Customers were bypassing the SaaS system and going straight to the CS team, because they couldn’t track request status, couldn’t find how to submit a new content request, and didn’t know how to communicate with the team inside the system. I identified the friction points and led four product solutions.',
     'b2b-hero-h1': 'Identifying Friction Points and Improving UX',
     'b2b-hero-p': 'A digital marketing platform for small and medium businesses. Identifying patterns of customers bypassing the system, and solutions that reduced friction and improved the user experience.',
+    'b2b-disclaimer-top': 'This project was carried out in a real, live work environment. The screens shown here are schematic wireframes — the company’s internal interface cannot be disclosed.',
 
     'b2b-eyebrow-01': '01 · Context',
     'b2b-h2-01': 'My Role',
@@ -181,7 +186,6 @@ window.I18N = {
     'b2b-stat3-title': 'Communication through the right channels',
     'b2b-stat3-desc': 'Reduced off-platform communication, redirected back to the tools built for it',
     'b2b-quote-04': 'Every solution was grounded in real data gathered from the field. Direct access to the customer is the right starting point for any improvement to the user experience.',
-    'b2b-footnote-04': 'The screens shown are a schematic illustration'
   },
 
   workDogether: {

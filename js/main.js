@@ -412,7 +412,7 @@ document.addEventListener('DOMContentLoaded', function () {
        hint appears next to it on certain elements (view / click / play). */
     var VIEW_SELECTOR = '.work-row, .card';
     var CLICK_SELECTOR = '.btn, .work-btn, .quiz-start-btn, .quiz-icon-btn, .whatsapp-fab, .nav-cv-btn, .trivia-teaser-link, .quiz-option, button:not(.menu-toggle):not(.trivia-teaser-close)';
-    var HINT_FAR_SELECTOR = '.ed-intro-portrait-wrap';
+    var HINT_FAR_SELECTOR = '.mag-page';
     var HINT_NEAR_SELECTOR = '.quiz-block';
     var HINT_SELECTOR = HINT_FAR_SELECTOR + ', ' + HINT_NEAR_SELECTOR;
     var ALL_HOVERABLE = VIEW_SELECTOR + ', ' + CLICK_SELECTOR + ', ' + HINT_SELECTOR;
@@ -451,103 +451,381 @@ document.addEventListener('DOMContentLoaded', function () {
 
   }
 
-  /* ---------- about page: flow-chain reveal (portrait -> cards, story order) ---------- */
-  var flowWrap = document.querySelector('.ed-intro-portrait-wrap');
-  var flowSvg = document.getElementById('flow-svg');
+  /* ---------- about page: magazine hero (canvas scan -> headline -> fact-card reveal) ---------- */
+  var magPhotoImg = document.getElementById('magPhotoImg');
+  var magStage = document.getElementById('magStage');
 
-  if (flowWrap && flowSvg) {
-    var flowChainEls = [
-      document.querySelector('.ed-intro-portrait'),
-      document.querySelector('.ed-intro-float--1'),
-      document.querySelector('.ed-intro-float--2'),
-      document.querySelector('.ed-intro-float--3')
-    ];
+  if (magPhotoImg && magStage) {
+    var magCtx = magStage.getContext('2d');
+    var magCoverHead = document.getElementById('magCoverHead');
+    var magBody = document.getElementById('magBody');
 
-    var buildFlowChain = function () {
-      var wrapRect = flowWrap.getBoundingClientRect();
-      function rel(rect) {
-        return {
-          left: rect.left - wrapRect.left, top: rect.top - wrapRect.top,
-          right: rect.right - wrapRect.left, bottom: rect.bottom - wrapRect.top,
-          cx: rect.left - wrapRect.left + rect.width / 2, cy: rect.top - wrapRect.top + rect.height / 2
-        };
+    var MAG_RASTER_W = 480, MAG_RASTER_H = 600; /* 4:5, matches the cover crop */
+    var MAG_T_SCAN_START = 700;     /* ms, hold before the scan starts */
+    var MAG_T_SCAN_DUR = 1900;      /* ms, sweep duration */
+    var MAG_T_HOLD_DOTS = 700;      /* ms, hold fully-halftone before crossfading back */
+    var MAG_T_FADE_BACK = 850;      /* ms, canvas fades out revealing the real photo */
+    var MAG_T_CONTENT_DELAY = 150;  /* ms, extra pause after the photo settles before content lands */
+    var MAG_SHADOW = { r: 0x4a, g: 0x3f, b: 0x66 };
+    var MAG_ACCENT = '#7A6A9E';
+
+    var magRaster, magRasterData;
+    var MAG_COLS = 18, MAG_ROWS = 22;
+    var magCw, magCh;
+    var magFragments = [];
+
+    function magSeededRand(seed) {
+      var v = Math.sin(seed * 12.9898) * 43758.5453;
+      return v - Math.floor(v);
+    }
+
+    function magBuildRaster() {
+      var off = document.createElement('canvas');
+      off.width = MAG_RASTER_W; off.height = MAG_RASTER_H;
+      var octx = off.getContext('2d');
+      var iw = magPhotoImg.naturalWidth, ih = magPhotoImg.naturalHeight;
+      var targetR = MAG_RASTER_W / MAG_RASTER_H, srcR = iw / ih;
+      var sx, sy, sw, sh;
+      if (srcR > targetR) { sh = ih; sw = ih * targetR; sx = (iw - sw) / 2; sy = 0; }
+      else { sw = iw; sh = iw / targetR; sx = 0; sy = (ih - sh) * 0.20; }
+      octx.filter = 'grayscale(1) contrast(1.25) brightness(1.02)';
+      octx.drawImage(magPhotoImg, sx, sy, sw, sh, 0, 0, MAG_RASTER_W, MAG_RASTER_H);
+      octx.filter = 'none';
+      magRaster = off;
+      magRasterData = octx.getImageData(0, 0, MAG_RASTER_W, MAG_RASTER_H).data;
+    }
+
+    function magDarknessAt(cx, cy) {
+      var x = Math.max(0, Math.min(MAG_RASTER_W - 1, Math.round(cx)));
+      var y = Math.max(0, Math.min(MAG_RASTER_H - 1, Math.round(cy)));
+      var idx = (y * MAG_RASTER_W + x) * 4;
+      return 1 - (magRasterData[idx] / 255);
+    }
+
+    var MAG_SUB_N = 5;
+    function magBuildSubDots(baseX, baseY, cellW, cellH) {
+      var subW = cellW / MAG_SUB_N, subH = cellH / MAG_SUB_N;
+      var subR = Math.min(subW, subH) * 0.62;
+      var dots = [];
+      for (var b = 0; b < MAG_SUB_N; b++) {
+        for (var a = 0; a < MAG_SUB_N; a++) {
+          var sx = baseX + (a + 0.5) * subW;
+          var sy = baseY + (b + 0.5) * subH;
+          var dark = magDarknessAt(sx, sy);
+          var r = dark * subR;
+          if (r > 0.4) dots.push({ dx: sx, dy: sy, r: r });
+        }
       }
-      var svgns = 'http://www.w3.org/2000/svg';
-      flowSvg.innerHTML = '';
-      var defs = document.createElementNS(svgns, 'defs');
-      defs.innerHTML = '<marker id="flow-arrow" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#7A6A9E"></path></marker>';
-      flowSvg.appendChild(defs);
+      return dots;
+    }
 
-      var items = [];
-      for (var i = 0; i < flowChainEls.length - 1; i++) {
-        var a = rel(flowChainEls[i].getBoundingClientRect());
-        var b = rel(flowChainEls[i + 1].getBoundingClientRect());
-        var fromLeft = b.cx < a.cx;
-        var x1 = fromLeft ? a.left : a.right;
-        var y1 = Math.min(Math.max(b.cy, a.top + 12), a.bottom - 12);
-        var x2 = fromLeft ? b.right : b.left;
-        var y2 = b.cy;
-        var c1x = x1 + (x2 - x1) * 0.5;
-        var c2x = x2 - (x2 - x1) * 0.5;
-
-        var path = document.createElementNS(svgns, 'path');
-        path.setAttribute('d', 'M ' + x1 + ',' + y1 + ' C ' + c1x + ',' + y1 + ' ' + c2x + ',' + y2 + ' ' + x2 + ',' + y2);
-        path.setAttribute('fill', 'none');
-        path.setAttribute('stroke', '#7A6A9E');
-        path.setAttribute('stroke-width', '1.5');
-        path.setAttribute('marker-end', 'url(#flow-arrow)');
-        flowSvg.appendChild(path);
-
-        var startDot = document.createElementNS(svgns, 'circle');
-        startDot.setAttribute('cx', x1); startDot.setAttribute('cy', y1); startDot.setAttribute('r', 4.5);
-        startDot.setAttribute('fill', '#faf6e9'); startDot.setAttribute('stroke', '#7A6A9E'); startDot.setAttribute('stroke-width', '1.5');
-        flowSvg.appendChild(startDot);
-
-        var len = path.getTotalLength();
-        path.style.transition = 'none';
-        path.style.strokeDasharray = len;
-        path.style.strokeDashoffset = len;
-        items.push({ path: path, targetEl: flowChainEls[i + 1] });
+    function magBuildFragments() {
+      magCw = MAG_RASTER_W / MAG_COLS; magCh = MAG_RASTER_H / MAG_ROWS;
+      magFragments = [];
+      for (var j = 0; j < MAG_ROWS; j++) {
+        for (var i = 0; i < MAG_COLS; i++) {
+          var x = i * magCw, y = j * magCh;
+          var seed = i * 97 + j * 131;
+          var axis = magSeededRand(seed) > 0.5 ? 'x' : 'y';
+          var mag = (magSeededRand(seed + 1) < 0.5 ? -1 : 1) * (magCw * 1.3 + magSeededRand(seed + 2) * magCw * 1.6);
+          var scatterX = axis === 'x' ? mag : 0;
+          var scatterY = axis === 'y' ? mag * (magCh / magCw) : 0;
+          var triggerFrac = j / (MAG_ROWS - 1); /* top row triggers first - vertical scan, top to bottom */
+          magFragments.push({
+            sx: x, sy: y, sw: magCw, sh: magCh,
+            scatterX: scatterX, scatterY: scatterY,
+            triggerFrac: triggerFrac,
+            subDots: magBuildSubDots(x, y, magCw, magCh)
+          });
+        }
       }
-      return items;
-    };
+    }
 
-    var playFlowChain = function () {
+    function magEaseInOutQuad(x) { return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
+
+    function magDrawFragmentPhoto(f, ox, oy, alpha) {
+      if (alpha <= 0.01) return;
+      magCtx.save();
+      magCtx.globalAlpha = alpha;
+      magCtx.drawImage(magRaster, f.sx, f.sy, f.sw, f.sh, f.sx + ox, f.sy + oy, f.sw, f.sh);
+      magCtx.restore();
+    }
+
+    /* same tile, but "lifted" off the surface with a small dark offset behind
+       it - a cheap stand-in for a cube's shadowed side face, used only while a
+       fragment is actually airborne (displaced), giving the break-apart a bit
+       of a 3D, physical-block feel instead of a flat cutout sliding around. */
+    function magDrawFragmentPhoto3D(f, ox, oy, alpha) {
+      if (alpha <= 0.01) return;
+      var depth = Math.max(2, f.sw * 0.16);
+      magCtx.save();
+      magCtx.globalAlpha = alpha * 0.85;
+      magCtx.fillStyle = 'rgba(18,14,28,0.5)';
+      magCtx.fillRect(f.sx + ox + depth * 0.55, f.sy + oy + depth * 0.55, f.sw, f.sh);
+      magCtx.restore();
+      magCtx.save();
+      magCtx.globalAlpha = alpha;
+      magCtx.drawImage(magRaster, f.sx, f.sy, f.sw, f.sh, f.sx + ox, f.sy + oy, f.sw, f.sh);
+      magCtx.restore();
+    }
+
+    function magDrawDot(x, y, r, alpha) {
+      if (alpha <= 0.01 || r <= 0.3) return;
+      magCtx.save();
+      magCtx.globalAlpha = alpha;
+      magCtx.fillStyle = 'rgb(' + MAG_SHADOW.r + ',' + MAG_SHADOW.g + ',' + MAG_SHADOW.b + ')';
+      magCtx.beginPath();
+      magCtx.arc(x, y, r, 0, Math.PI * 2);
+      magCtx.fill();
+      magCtx.restore();
+    }
+
+    var MAG_BURST_WIDTH = 0.16, MAG_SETTLE_WIDTH = 0.22;
+    var MAG_WAVE_MAX = 1 + MAG_BURST_WIDTH + MAG_SETTLE_WIDTH;
+
+    function magDrawScanLine(waveProgress) {
+      if (waveProgress <= 0 || waveProgress >= 1) return;
+      var y = MAG_RASTER_H * waveProgress;
+      magCtx.save();
+      magCtx.globalAlpha = 0.9;
+      magCtx.shadowColor = MAG_ACCENT;
+      magCtx.shadowBlur = 10;
+      magCtx.strokeStyle = MAG_ACCENT;
+      magCtx.lineWidth = 2.5;
+      magCtx.beginPath();
+      magCtx.moveTo(0, y);
+      magCtx.lineTo(MAG_RASTER_W, y);
+      magCtx.stroke();
+      magCtx.restore();
+    }
+
+    function magDrawScanFrame(waveP) {
+      magCtx.clearRect(0, 0, MAG_RASTER_W, MAG_RASTER_H);
+      magFragments.forEach(function (f) {
+        var d = waveP - f.triggerFrac;
+        if (d <= 0) {
+          magDrawFragmentPhoto(f, 0, 0, 1);
+        } else if (d < MAG_BURST_WIDTH) {
+          var lp = d / MAG_BURST_WIDTH;
+          magDrawFragmentPhoto3D(f, f.scatterX * lp, f.scatterY * lp, 1);
+        } else if (d < MAG_BURST_WIDTH + MAG_SETTLE_WIDTH) {
+          var lp2 = (d - MAG_BURST_WIDTH) / MAG_SETTLE_WIDTH;
+          var ox = f.scatterX * (1 - lp2), oy = f.scatterY * (1 - lp2);
+          magDrawFragmentPhoto3D(f, ox, oy, 1 - lp2);
+          f.subDots.forEach(function (dot) { magDrawDot(dot.dx + ox, dot.dy + oy, dot.r, lp2); });
+        } else {
+          f.subDots.forEach(function (dot) { magDrawDot(dot.dx, dot.dy, dot.r, 1); });
+        }
+      });
+      magDrawScanLine(Math.min(waveP, 1));
+    }
+
+    function magDrawAllDots() {
+      magCtx.clearRect(0, 0, MAG_RASTER_W, MAG_RASTER_H);
+      magFragments.forEach(function (f) {
+        f.subDots.forEach(function (d) { magDrawDot(d.dx, d.dy, d.r, 1); });
+      });
+    }
+
+    var magRafId = null;
+    function magCancelLoop() { if (magRafId) { cancelAnimationFrame(magRafId); magRafId = null; } }
+
+    /* ---- card reveal: frame draws itself, then a scan-line sweeps down
+       through it, decoding the label right as the sweep crosses it ---- */
+    function magSizeFactTrace(fact) {
+      var svg = fact.querySelector('.mag-trace-svg');
+      var rect = fact.querySelector('rect');
+      var w = fact.offsetWidth, h = fact.offsetHeight;
+      svg.setAttribute('width', w); svg.setAttribute('height', h);
+      rect.setAttribute('width', Math.max(0, w - 1.5));
+      rect.setAttribute('height', Math.max(0, h - 1.5));
+      var perim = 2 * ((w - 1.5) + (h - 1.5));
+      rect.style.transition = 'none';
+      rect.style.strokeDasharray = perim + ' ' + perim;
+      rect.style.strokeDashoffset = perim;
+    }
+    function magDecodeFactLabel(el, duration) {
+      var finalText = el.getAttribute('data-final') || '';
+      var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#*/';
+      var start = null;
+      var len = finalText.length;
+      function frame(ts) {
+        if (!start) start = ts;
+        var t = Math.min(1, (ts - start) / duration);
+        var revealCount = Math.floor(t * len);
+        var out = '';
+        for (var i = 0; i < len; i++) {
+          if (i < revealCount || finalText[i] === ' ') out += finalText[i];
+          else out += chars[Math.floor(Math.random() * chars.length)];
+        }
+        el.textContent = out;
+        if (t < 1) requestAnimationFrame(frame); else el.textContent = finalText;
+      }
+      requestAnimationFrame(frame);
+    }
+    function magResetCardReveal(card) {
+      card.classList.remove('frame-in', 'scanning');
+      var label = card.querySelector('.mag-fact-label');
+      /* capture whatever text is on the label right now (current site
+         language) as the "final" text to decode into - this keeps the
+         effect correct even if the language was switched before this
+         card's reveal ever ran. Guarded so a redundant reset call (this
+         runs both at the start of magPlaySequence and again right before
+         magTriggerCardReveals) never overwrites the captured text with
+         an already-blanked label. */
+      if (label.textContent) {
+        label.setAttribute('data-final', label.textContent);
+      }
+      label.textContent = '';
+      magSizeFactTrace(card);
+    }
+    function magRevealCard(card) {
+      var rect = card.querySelector('rect');
+      rect.style.transition = 'stroke-dashoffset 260ms cubic-bezier(.4,0,.2,1)';
+      rect.style.strokeDashoffset = '0';
+      card.classList.add('frame-in');
+      magCardTimers.push(setTimeout(function () {
+        card.classList.add('scanning');
+        magCardTimers.push(setTimeout(function () {
+          magDecodeFactLabel(card.querySelector('.mag-fact-label'), 380);
+        }, 150));
+      }, 260));
+    }
+
+    /* ---- card reveal trigger: after the hero photo settles, each fact
+       card reveals itself (frame -> scan -> decode, see magRevealCard
+       above) in a short staggered sequence. No traveling element connects
+       the photo to the cards - each card just wakes up on its own, one
+       after another. ---- */
+    var magCardTimers = [];
+    var MAG_CARD_START_DELAY = 320, MAG_CARD_STAGGER = 360;
+
+    function magCancelCardReveals() {
+      magCardTimers.forEach(function (id) { clearTimeout(id); });
+      magCardTimers = [];
+    }
+
+    function magTriggerCardReveals() {
+      var facts = Array.prototype.slice.call(document.querySelectorAll('.mag-facts .mag-fact'));
+      facts.forEach(magResetCardReveal);
+      if (!facts.length) return;
+      magCancelCardReveals();
+      facts.forEach(function (card, i) {
+        magCardTimers.push(setTimeout(function () {
+          magRevealCard(card);
+        }, MAG_CARD_START_DELAY + i * MAG_CARD_STAGGER));
+      });
+    }
+
+    function magPlaySequence() {
+      magCancelLoop();
+      magCancelCardReveals();
+      magCoverHead.classList.remove('in');
+      magBody.classList.remove('content-in');
+      document.querySelectorAll('.mag-facts .mag-fact').forEach(magResetCardReveal);
+      magStage.style.transition = 'none';
+      magStage.style.opacity = '1';
+      magCtx.clearRect(0, 0, MAG_RASTER_W, MAG_RASTER_H);
+      magCtx.drawImage(magRaster, 0, 0, MAG_RASTER_W, MAG_RASTER_H);
+
       if (prefersNoMotion) {
-        flowChainEls.forEach(function (el) { el.classList.add('flow-in'); });
+        magDrawAllDots();
+        requestAnimationFrame(function () {
+          magStage.style.transition = 'opacity 400ms ease';
+          magStage.style.opacity = '0';
+        });
+        magCoverHead.classList.add('in');
+        magBody.classList.add('content-in');
+        document.querySelectorAll('.mag-facts .mag-fact').forEach(function (f) {
+          f.classList.add('frame-in', 'scanning');
+          var label = f.querySelector('.mag-fact-label');
+          label.textContent = label.getAttribute('data-final');
+        });
         return;
       }
-      var items = buildFlowChain();
-      items.forEach(function (item) { item.path.getBoundingClientRect(); }); /* force paint of hidden state */
 
-      var delay = 150;
-      items.forEach(function (item) {
-        setTimeout(function () {
-          item.path.style.transition = 'stroke-dashoffset .55s cubic-bezier(.4,0,.2,1)';
-          item.path.style.strokeDashoffset = '0';
-          setTimeout(function () { item.targetEl.classList.add('flow-in'); }, 480);
-        }, delay);
-        delay += 750;
-      });
-    };
+      var SCAN_END = MAG_T_SCAN_START + MAG_T_SCAN_DUR;
+      var HOLD_END = SCAN_END + MAG_T_HOLD_DOTS;
+      var FADE_END = HOLD_END + MAG_T_FADE_BACK;
+      var TOTAL = FADE_END + MAG_T_CONTENT_DELAY;
+      var headlineShown = false, contentShown = false;
+      var start = null;
+      function frame(ts) {
+        if (!start) start = ts;
+        var elapsed = ts - start;
 
-    if (window.matchMedia && window.matchMedia('(min-width: 861px)').matches) {
+        /* draw the current visual state - computed from elapsed directly
+           (not branch side-effects), so a slow/stalled frame that jumps
+           past a window still lands on the correct final picture instead
+           of an in-between one. */
+        if (elapsed < MAG_T_SCAN_START) {
+          magCtx.clearRect(0, 0, MAG_RASTER_W, MAG_RASTER_H);
+          magCtx.drawImage(magRaster, 0, 0, MAG_RASTER_W, MAG_RASTER_H);
+        } else if (elapsed < SCAN_END) {
+          var p = (elapsed - MAG_T_SCAN_START) / MAG_T_SCAN_DUR;
+          var waveP = magEaseInOutQuad(p) * MAG_WAVE_MAX;
+          magDrawScanFrame(waveP);
+        } else if (elapsed < HOLD_END) {
+          magDrawAllDots();
+          magStage.style.opacity = '1';
+        } else if (elapsed < FADE_END) {
+          magDrawAllDots();
+          var fp = (elapsed - HOLD_END) / MAG_T_FADE_BACK;
+          magStage.style.opacity = String(Math.max(0, 1 - fp));
+        } else {
+          magStage.style.opacity = '0';
+        }
+
+        /* reveal triggers - threshold checks, independent of the draw
+           branches above, so they still fire even if a frame skips over
+           the window where they'd normally be set. */
+        if (!headlineShown && elapsed >= SCAN_END) {
+          magCoverHead.classList.add('in');
+          headlineShown = true;
+        }
+        if (!contentShown && elapsed >= TOTAL) {
+          magBody.classList.add('content-in');
+          contentShown = true;
+          magTriggerCardReveals();
+          magRafId = null;
+          return;
+        }
+        magRafId = requestAnimationFrame(frame);
+      }
+      magRafId = requestAnimationFrame(frame);
+    }
+
+    function magInit() {
+      magStage.width = MAG_RASTER_W * 2; magStage.height = MAG_RASTER_H * 2;
+      magCtx.scale(2, 2);
+      magBuildRaster();
+      magBuildFragments();
+
       if ('IntersectionObserver' in window) {
-        var flowIo = new IntersectionObserver(function (entries) {
+        var magIo = new IntersectionObserver(function (entries) {
           entries.forEach(function (entry) {
             if (entry.isIntersecting) {
-              playFlowChain();
-              flowIo.unobserve(entry.target);
+              magPlaySequence();
+              magIo.unobserve(entry.target);
             }
           });
         }, { threshold: 0.35 });
-        flowIo.observe(flowWrap);
+        magIo.observe(magStage.closest('.mag-photo'));
       } else {
-        flowChainEls.forEach(function (el) { el.classList.add('flow-in'); });
+        magPlaySequence();
       }
+
+      window.addEventListener('resize', function () {
+        document.querySelectorAll('.mag-facts .mag-fact').forEach(magSizeFactTrace);
+      });
+    }
+
+    if (magPhotoImg.complete && magPhotoImg.naturalWidth) {
+      magInit();
     } else {
-      flowChainEls.forEach(function (el) { el.classList.add('flow-in'); });
+      magPhotoImg.addEventListener('load', magInit);
     }
   }
+
 
 });

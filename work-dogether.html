@@ -85,8 +85,13 @@
 }
 
 /* ===== IA diagram ===== */
-.dg-ia-canvas{ background:#fff; border-radius:14px; padding:32px 20px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
-.dg-ia{ min-width:860px; font-family:'Rubik',sans-serif; transform-origin: top right; transition: none; }
+/* overflow is intentionally hidden, not auto: the JS below always scales the
+   diagram to fit the available width, so a scrollbar should never be needed -
+   relying on overflow:auto here used to leave a small, unwanted scrollbar
+   even when the diagram visually fit, because scrollWidth reflects the
+   diagram's natural (unscaled) layout size, not its scaled-down visual size. */
+.dg-ia-canvas{ background:#fff; border-radius:14px; padding:32px 20px; overflow:hidden; -webkit-overflow-scrolling:touch; }
+.dg-ia{ min-width:860px; font-family:'Rubik',sans-serif; transition: none; }
 @media (max-width: 900px){
   .dg-ia-canvas{ overflow-x:hidden; padding:20px 10px; }
 }
@@ -462,6 +467,12 @@
     var canvas = document.querySelector('.dg-ia-canvas');
     var diagram = document.querySelector('.dg-ia');
     if(!canvas || !diagram) return;
+    // the diagram's natural overflow direction (and so which corner stays
+    // put while scaling down) depends on the page direction: in RTL it
+    // hangs off to the left of its own top-right corner, in LTR it hangs
+    // off to the right of its own top-left corner - anchor the scale there.
+    var isRtl = document.documentElement.dir === 'rtl';
+    diagram.style.transformOrigin = isRtl ? 'top right' : 'top left';
     diagram.style.transform = 'none';
     canvas.style.height = '';
     var canvasStyle = getComputedStyle(canvas);
@@ -478,6 +489,7 @@
   }
   window.addEventListener('load', fitIaDiagram);
   window.addEventListener('resize', fitIaDiagram);
+  document.addEventListener('sitelangchange', fitIaDiagram);
 })();
 </script>
 </body>
