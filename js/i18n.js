@@ -1,4 +1,4 @@
-/* ===== i18n engine: Hebrew <-> English site-wide language switch ===== */
+/* ===== i18n engine: English (default, lives in the HTML) <-> Hebrew (js/i18n-data.js) ===== */
 (function () {
   var LANG_KEY = 'site-lang-v2';
 
@@ -32,6 +32,8 @@
     return merged;
   }
 
+  /* The HTML is English. The first time we run, remember the English
+     markup of every translatable element so we can switch back to it. */
   function applyTranslations(lang) {
     var dict = getDict();
 
@@ -39,13 +41,13 @@
     for (var i = 0; i < textEls.length; i++) {
       var el = textEls[i];
       var key = el.getAttribute('data-i18n');
-      if (!el.hasAttribute('data-i18n-he')) {
-        el.setAttribute('data-i18n-he', el.innerHTML);
+      if (!el.hasAttribute('data-i18n-en')) {
+        el.setAttribute('data-i18n-en', el.innerHTML);
       }
-      if (lang === 'en' && dict[key] !== undefined) {
+      if (lang === 'he' && dict[key] !== undefined) {
         el.innerHTML = dict[key];
       } else {
-        el.innerHTML = el.getAttribute('data-i18n-he');
+        el.innerHTML = el.getAttribute('data-i18n-en');
       }
     }
 
@@ -53,13 +55,13 @@
     for (var j = 0; j < ariaEls.length; j++) {
       var elA = ariaEls[j];
       var keyA = elA.getAttribute('data-i18n-aria');
-      if (!elA.hasAttribute('data-i18n-aria-he')) {
-        elA.setAttribute('data-i18n-aria-he', elA.getAttribute('aria-label') || '');
+      if (!elA.hasAttribute('data-i18n-aria-en')) {
+        elA.setAttribute('data-i18n-aria-en', elA.getAttribute('aria-label') || '');
       }
-      if (lang === 'en' && dict[keyA] !== undefined) {
+      if (lang === 'he' && dict[keyA] !== undefined) {
         elA.setAttribute('aria-label', dict[keyA]);
       } else {
-        elA.setAttribute('aria-label', elA.getAttribute('data-i18n-aria-he'));
+        elA.setAttribute('aria-label', elA.getAttribute('data-i18n-aria-en'));
       }
     }
 
@@ -67,14 +69,29 @@
     for (var m = 0; m < altEls.length; m++) {
       var elAlt = altEls[m];
       var keyAlt = elAlt.getAttribute('data-i18n-alt');
-      if (!elAlt.hasAttribute('data-i18n-alt-he')) {
-        elAlt.setAttribute('data-i18n-alt-he', elAlt.getAttribute('alt') || '');
+      if (!elAlt.hasAttribute('data-i18n-alt-en')) {
+        elAlt.setAttribute('data-i18n-alt-en', elAlt.getAttribute('alt') || '');
       }
-      if (lang === 'en' && dict[keyAlt] !== undefined) {
+      if (lang === 'he' && dict[keyAlt] !== undefined) {
         elAlt.setAttribute('alt', dict[keyAlt]);
       } else {
-        elAlt.setAttribute('alt', elAlt.getAttribute('data-i18n-alt-he'));
+        elAlt.setAttribute('alt', elAlt.getAttribute('data-i18n-alt-en'));
       }
+    }
+  }
+
+  /* Browser-tab title + meta description (English lives in the HTML) */
+  var enTitle = null, enDescription = null;
+  function applyMeta(lang) {
+    var dict = getDict();
+    var descEl = document.querySelector('meta[name="description"]');
+    if (enTitle === null) enTitle = document.title;
+    if (enDescription === null && descEl) enDescription = descEl.getAttribute('content') || '';
+
+    document.title = (lang === 'he' && dict['meta-title']) ? dict['meta-title'] : enTitle;
+    if (descEl) {
+      descEl.setAttribute('content',
+        (lang === 'he' && dict['meta-description']) ? dict['meta-description'] : enDescription);
     }
   }
 
@@ -99,6 +116,7 @@
   window.setSiteLang = function (lang) {
     applyChrome(lang);
     applyTranslations(lang);
+    applyMeta(lang);
     updateToggleButtons(lang);
     updateCvLinks(lang);
     storeLang(lang);
@@ -113,7 +131,8 @@
   };
 
   document.addEventListener('DOMContentLoaded', function () {
-    var lang = getStoredLang() || 'en';
+    /* English unless the visitor explicitly chose Hebrew */
+    var lang = getStoredLang() === 'he' ? 'he' : 'en';
     window.setSiteLang(lang);
 
     var toggles = document.querySelectorAll('.lang-toggle');

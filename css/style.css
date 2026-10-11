@@ -1171,7 +1171,6 @@ html[dir="ltr"] .hero-detail-mark{
 .work-tags--b2b .work-tag{ color:#2563EB; border-color:rgba(37,99,235,.4); }
 .work-tags--dogether .work-tag{ color:#F26D0E; border-color:rgba(242,109,14,.4); }
 .work-tags--mixmatch .work-tag{ color:#73BAE5; border-color:rgba(115,186,229,.4); }
-.work-tags--fashion .work-tag{ color:#C1568A; border-color:rgba(193,86,138,.4); }
 
 /* category tag: same pill style, bolder weight so it reads first when scanning */
 .work-tag--category{
