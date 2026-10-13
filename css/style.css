@@ -753,6 +753,14 @@ html[dir="ltr"] .hero-detail-mark{
   max-width: 720px;
   margin: 0 auto;
 }
+/* desktop/laptop: keep the whole cover (incl. the H1 at its bottom) inside the first screen */
+@media (min-width: 761px){
+  .ed-intro{ padding-top: 28px; }
+  .mag-page{ max-width: min(720px, calc((100vh - 120px) * .8)); min-width: 460px; }
+  @supports (height: 100svh){
+    .mag-page{ max-width: min(720px, calc((100svh - 120px) * .8)); min-width: 460px; }
+  }
+}
 
 .mag-photo{
   position: relative;
@@ -914,8 +922,9 @@ html[dir="ltr"] .hero-detail-mark{
 }
 
 .lang-en .about-hero-wrap{ max-width: 1244px; padding-inline: 16px; }
-.lang-en .about-editorial{ max-width: 1270px; margin-inline: -29px; }
-.lang-en .ed-statement{ max-width: 1270px; }
+/* EN: slightly wider than HE, but never wider than the viewport (was -29px margins => 13px sideways scroll on phones)
+   and capped for readable line length (was ~1220px = ~140 characters per line) */
+.lang-en .ed-statement{ max-width: 1040px; }
 
 .ed-statement strong{
   font-style: normal;
@@ -1053,7 +1062,8 @@ html[dir="ltr"] .hero-detail-mark{
   transform: translateY(-3px);
 }
 
-.card h3{
+.card h3,
+.card h2{
   font-size: .95rem;
   margin-bottom: 9px;
 }
@@ -1070,19 +1080,19 @@ html[dir="ltr"] .hero-detail-mark{
   display:flex;
   flex-wrap:wrap;
   justify-content:flex-start;
-  gap: 5px;
+  gap: 6px;
 }
 
 .tag-list--tight{
-  max-width: 380px;
+  max-width: 460px;
 }
 
 .tag{
   background: #E1D5CA;
   color: var(--accent);
   border-radius: 6px;
-  padding: 3px 8px;
-  font-size: .68rem;
+  padding: 4px 10px;
+  font-size: .8125rem;
   font-weight:500;
   transition: background .15s ease;
   white-space: nowrap;
@@ -1450,7 +1460,9 @@ a.contact-hero-accent--yellow:focus-visible{
 }
 
 @media (max-width: 600px){
-  .whatsapp-fab{ width: 52px; height: 52px; right: 16px; bottom: 16px; }
+  .whatsapp-fab{ width: 52px; height: 52px; right: 16px; bottom: 16px; transition: transform .25s ease, opacity .25s ease, box-shadow .15s ease; }
+  /* phones: tucks away while scrolling down so it never sits on top of the text, returns on scroll up */
+  .whatsapp-fab.fab-away{ transform: translateY(90px); opacity: 0; pointer-events: none; }
   .whatsapp-fab svg{ width: 25px; height: 25px; }
 }
 
@@ -1786,7 +1798,7 @@ a.contact-hero-accent--yellow:focus-visible{
 }
 
 @media (max-width: 600px){
-  .trivia-teaser{ right: 16px; left: 16px; max-width: none; top: 78px; padding: 10px 14px; }
+  .trivia-teaser{ right: 84px; left: 16px; max-width: none; top: auto; bottom: 16px; padding: 10px 14px; }
   .trivia-teaser-emoji{ font-size: 1.2rem; }
   .trivia-teaser-text{ font-size: .78rem; }
   .trivia-teaser-text strong{ display:inline; margin-top:0; margin-inline-start:4px; }
@@ -1874,4 +1886,21 @@ footer{
   font-weight:500;
   padding:3px 10px;
   border-radius:999px;
+}
+
+/* ===== About: closing line + button ===== */
+.about-closing{
+  text-align: center;
+  margin: 56px auto 8px;
+}
+.about-closing p{
+  font-size: 1.25rem;
+  color: var(--accent);
+  margin: 0 auto 18px;
+  max-width: none;
+}
+.about-closing .btn-primary{ background: #6D5F8E; }
+@media (max-width: 600px){
+  .about-closing{ margin-top: 44px; }
+  .about-closing p{ font-size: 1.1rem; }
 }

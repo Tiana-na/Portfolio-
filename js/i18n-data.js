@@ -77,6 +77,8 @@ window.I18N = {
     "skills-ai-title": "כישורי AI",
     "education-title": "השכלה",
     "education-text": "<strong style=\"color:var(--accent)\">HackerU</strong><br> קורס UX/UI- אפיון חווית משתמש ועיצוב לדיגיטל<br> 2024 - 2023",
+    "about-cta-line": "אהבתם? בואו נדבר",
+    "about-cta-btn": "בואו נדבר",
     "languages-title": "שפות",
     "languages-text": "עברית - שפת אם<br> אנגלית - רמה מתקדמת<br> רוסית - רמה מתקדמת",
     "meta-title": "מי אני | טיאנה פולקנפולק",

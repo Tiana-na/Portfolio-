@@ -29,6 +29,19 @@ document.addEventListener('DOMContentLoaded', function () {
     revealEls.forEach(function (el) { el.classList.add('in-view'); });
   }
 
+  /* ---------- WhatsApp button: hide while scrolling down on phones, show on scroll up ---------- */
+  var waFab = document.querySelector('.whatsapp-fab');
+  if (waFab) {
+    var lastY = window.pageYOffset || 0;
+    window.addEventListener('scroll', function () {
+      var y = window.pageYOffset || 0;
+      var nearBottom = (window.innerHeight + y) >= (document.documentElement.scrollHeight - 120);
+      if (y > lastY + 6 && y > 120 && !nearBottom) { waFab.classList.add('fab-away'); }
+      else if (y < lastY - 6 || nearBottom || y <= 120) { waFab.classList.remove('fab-away'); }
+      lastY = y;
+    }, { passive: true });
+  }
+
   /* ---------- trivia teaser (surprise popup) ---------- */
   var teaser = document.getElementById('trivia-teaser');
   if (teaser) {
@@ -37,9 +50,13 @@ document.addEventListener('DOMContentLoaded', function () {
     try { alreadyDismissed = localStorage.getItem(TEASER_KEY) === '1'; } catch (e) {}
 
     if (!alreadyDismissed) {
-      var showDelay = 6000 + Math.random() * 4000; /* 6-10s, feels less scripted */
+      /* appears once, after the visitor has had time to read (22-28s), and fades away on its own after 9s
+         so it never sits on top of the text; either way it is not shown again */
+      var showDelay = 22000 + Math.random() * 6000;
       setTimeout(function () {
         teaser.classList.add('show');
+        try { localStorage.setItem(TEASER_KEY, '1'); } catch (e) {}
+        setTimeout(function () { teaser.classList.remove('show'); }, 9000);
       }, showDelay);
     }
 
