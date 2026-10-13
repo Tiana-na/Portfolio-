@@ -64,18 +64,30 @@
     <div class="wrap about-hero-wrap">
       <div class="ed-intro">
         <div class="mag-page">
-          <div class="mag-photo">
-            <img id="magPhotoImg" src="assets/tiana-portrait.jpg" alt="Tiana Folkenfolk" data-i18n-alt="ed-portrait-alt" loading="lazy">
-            <canvas id="magStage" aria-hidden="true"></canvas>
-            <div class="mag-top">
-              <span data-i18n="ed-masthead-left">About Me</span>
-              <span data-i18n="ed-masthead-right">UX/UI&nbsp;Designer&nbsp;· <span style="white-space:nowrap">Digital Creative Designer</span></span>
-            </div>
-            <div class="mag-scrim"></div>
-            <div class="mag-cover-head" id="magCoverHead">
-              <h1 class="mag-head" data-i18n="ed-h1">Instead of store &amp; customer journey, a <em>screen</em> &amp; user flow.</h1>
+          <div class="lh" id="lh">
+          <div class="lh-eyebrow" data-i18n="ed-masthead-left">About Me</div>
+          <div class="lh-stage" id="lhStage" role="img" data-i18n-aria="ed-portrait-alt" aria-label="Tiana Folkenfolk">
+            <div class="lh-shadow" id="lhShadow" aria-hidden="true"></div>
+            <div class="lh-rig" id="lhRig" aria-hidden="true">
+              <div class="lh-layer"><div class="lh-paper" style="background:#fffdf8"></div><div class="lh-fill lh-pic" style="background-image:url(assets/tiana-hero.jpg)"></div></div>
+              <div class="lh-layer"><div class="lh-paper" style="background:#f4ecd8"></div><div class="lh-fill lh-sketch" style="background-image:url(assets/tiana-sketch.webp)"></div></div>
+              <div class="lh-layer"><div class="lh-paper" style="background:#e9e4f3"></div>
+                <svg class="lh-fill lh-wf" viewBox="0 0 380 475" fill="none" stroke="#7A6A9E" stroke-width="1.4">
+                  <g opacity=".45" stroke-width=".8"><path d="M63 0v475M127 0v475M190 0v475M253 0v475M317 0v475"/></g>
+                  <rect x="14" y="14" width="352" height="26" rx="4"/><rect x="24" y="22" width="56" height="10" rx="3" fill="#7A6A9E" fill-opacity=".25"/><rect x="250" y="22" width="30" height="10" rx="3"/><rect x="290" y="22" width="30" height="10" rx="3"/><rect x="330" y="22" width="26" height="10" rx="3"/>
+                  <rect x="14" y="52" width="352" height="290" rx="6"/><path d="M14 52L366 342M366 52L14 342" stroke-opacity=".5"/>
+                  <rect x="22" y="362" width="236" height="16" rx="4" fill="#7A6A9E" fill-opacity=".3"/><rect x="22" y="386" width="190" height="16" rx="4" fill="#7A6A9E" fill-opacity=".3"/>
+                  <rect x="22" y="414" width="300" height="8" rx="4"/><rect x="22" y="430" width="260" height="8" rx="4"/><rect x="22" y="446" width="92" height="14" rx="7"/>
+                </svg></div>
+              <div class="lh-layer"><div class="lh-paper" style="background:#fffdf8"></div>
+                <div class="lh-fill lh-ui"><div class="lh-imgbox"></div><div class="lh-btn"></div><div class="lh-scrim"></div><div class="lh-tscrim"></div><div class="lh-skl" style="bottom:46px;width:260px"></div><div class="lh-skl" style="bottom:24px;width:190px"></div></div></div>
+              <div class="lh-T">
+                <div class="lh-role" data-i18n="ed-masthead-right">UX/UI&nbsp;Designer&nbsp;· <span style="white-space:nowrap">Digital Creative Designer</span></div>
+                <h1 class="lh-head" data-i18n="ed-h1">Instead of store &amp; customer journey, a <em>screen</em> &amp; user flow.</h1>
+              </div>
             </div>
           </div>
+        </div>
 
           <div class="mag-body" id="magBody">
             <p class="mag-quote-lead" data-i18n="ed-quote-lead">I’ve worked with international brands like H&amp;M and IKEA, where I designed shopping experiences, window displays, and visual communication, always guided by the same question:</p>
@@ -83,16 +95,12 @@
 
             <div class="mag-facts">
               <div class="mag-fact">
-                <svg class="mag-trace-svg"><rect x="0.75" y="0.75" width="0" height="0"/></svg>
-                <div class="mag-fact-scan-bar"></div>
                 <div class="mag-fact-inner">
                   <h2 class="mag-fact-label" data-i18n="ed-fact1-chip">Background</h2>
                   <div class="mag-fact-text" data-i18n="ed-fact1-body">I’m a UX/UI designer with a rich background in commercial design and creating experiences in physical spaces. Over the years, I’ve learned that design is about much more than what you see. It shapes how people feel and make decisions, through the planning of space, visual hierarchy, and the placement of messages and products.</div>
                 </div>
               </div>
               <div class="mag-fact">
-                <svg class="mag-trace-svg"><rect x="0.75" y="0.75" width="0" height="0"/></svg>
-                <div class="mag-fact-scan-bar"></div>
                 <div class="mag-fact-inner">
                   <h2 class="mag-fact-label" data-i18n="ed-fact2-chip">Digital Shift</h2>
                   <div class="mag-fact-text" data-i18n="ed-fact2-body">Moving into UX/UI felt like a natural continuation of that same way of thinking. The space I design in simply shifted, going through its own digital transformation.</div>
@@ -250,5 +258,6 @@
 <script src="js/i18n-data.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/main.js"></script>
+<script src="js/layers-hero.js"></script>
 </body>
 </html>
