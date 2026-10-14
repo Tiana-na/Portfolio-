@@ -2179,6 +2179,21 @@ html.dot-away .logo-dot{ opacity: 0; }
 /* footer credit line */
 footer .footer-credit{ margin-top: 6px; font-size: .78rem; opacity: .8; letter-spacing: .02em; }
 
+/* cards behind: no placeholder bars - the card's own content shows faintly through the frosted glass, as a hint that there is text there */
+.stk .stk-card:not(.is-front)::before{ content: none !important; }
+.stk .stk-card:not(.is-front) > *:not(.stk-spine){ opacity: .16; filter: blur(.5px); }
+.stk .stk-card > *:not(.stk-spine){ transition: opacity .3s ease .12s, filter .3s ease .12s; }
+
+/* case-study rows: calmer, even rhythm between description / tools / results / button */
+.work-content .work-desc{ margin-bottom: 18px; }
+.work-content .work-tools{ gap: 8px; margin-bottom: 18px; }
+.work-content .work-meta--results{ gap: 8px; margin: 0 0 22px; line-height: 1.5; }
+.work-content .work-tools:last-of-type{ margin-bottom: 22px; }
+.work-content .work-btn{ margin-top: 0; }
+/* the title is already written on the spine - only the body hints through */
+.stk .stk-card.stk-card:not(.is-front) > :is(h2, h3, h4), .stk .stk-card.stk-card:not(.is-front) .mag-fact-label{ opacity: 0; }
+.stk .stk-card:not(.is-front) .mag-fact-inner > *{ transition: none; }
+
 /* =====================================================================
    One key language across the site: cream keys (secondary / icons), purple keys (primary)
    ===================================================================== */

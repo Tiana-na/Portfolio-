@@ -282,12 +282,7 @@
     var extra = '';
     function PX(p) { return [p[0] - mainLeft, p[1] - mainTop]; }
     stations.forEach(function (st) {
-      if (st.kind === 'pair' && !narrowMode && st.cards.length === 2) {
-        st.cards.forEach(function (c, ci) {
-          var cy = c.r.top + c.r.height / 2 - mainTop, edge = ci === 0 ? c.r.right : c.r.left, x0 = st.ex - mainLeft;
-          extra += '<path class="rs" d="M' + f1(x0) + ',' + f1(cy) + 'H' + f1(edge - mainLeft + (ci === 0 ? 1 : -1)) + '"/>';
-        });
-      }
+      /* no side branches into the pair: the line simply runs down the gap between the two cards */
       if (narrowMode && st.kind !== 'end') extra += '<circle class="rp" cx="' + f1(xg - mainLeft) + '" cy="' + f1(st.y - mainTop) + '" r="5"/>';
     });
     /* desktop: a numbered stop where the line reaches each element, a small port where it leaves */
