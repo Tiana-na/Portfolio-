@@ -2152,8 +2152,8 @@ html.dot-away .logo-dot{ opacity: 0; }
 }
 
 /* ---- the spine (desktop): the line goes through the elements; branches into Education + Languages; nodes on a phone's margin ---- */
-.flow-rail .rs{ stroke: #D3C8EA; stroke-width: 3.2px; stroke-linecap: round; fill: none; opacity: 0; transition: opacity .6s ease; }
-.flow-rail .rs.on{ opacity: 1; }
+.flow-rail .rs{ stroke: #B7A6E2; stroke-width: 3.2px; stroke-linecap: round; stroke-linejoin: round; fill: none; opacity: 0; stroke-dasharray: 1 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.5s cubic-bezier(.4,.1,.3,1), opacity .2s ease, stroke 2.4s ease 1.2s; }
+.flow-rail .rs.on{ opacity: 1; stroke-dashoffset: 0; stroke: #D8CBBE; }
 .flow-rail .rp{ fill: var(--bg, #faf6e9); stroke: #B7A6E2; stroke-width: 2px; opacity: 0; transition: opacity .4s ease, fill .4s ease; }
 .flow-rail .rp.on{ opacity: 1; fill: #B7A6E2; }
 /* numbered stops and small ports on the line (desktop): they appear once the dot has started to ride */
@@ -2193,6 +2193,20 @@ footer .footer-credit{ margin-top: 6px; font-size: .78rem; opacity: .8; letter-s
 /* the title is already written on the spine - only the body hints through */
 .stk .stk-card.stk-card:not(.is-front) > :is(h2, h3, h4), .stk .stk-card.stk-card:not(.is-front) .mag-fact-label{ opacity: 0; }
 .stk .stk-card:not(.is-front) .mag-fact-inner > *{ transition: none; }
+
+/* one voice for every card title: the "Background / Digital Shift" labels use the same serif as the other card titles and as the spine, so the title doesn't change typeface when a card comes forward */
+.stk--story .mag-fact-label{
+  font-family: 'Bodoni Moda', 'Rubik', serif; font-size: 1.05rem; font-weight: 500;
+  letter-spacing: normal; text-transform: none; color: var(--text, #251f1c); margin: 0 0 9px;
+}
+
+/* a finer line, so the wrapped paths leave the cards room to breathe */
+.flow-rail path{ stroke-width: 2.2; }
+.flow-rail path.rg3{ stroke-width: 2.2px; }
+.flow-rail .rs{ stroke-width: 2.2px; }
+
+/* Contact: the dot lives inside <main> there (not fixed to the window) */
+.cl-dot{ position: absolute; }
 
 /* =====================================================================
    One key language across the site: cream keys (secondary / icons), purple keys (primary)
@@ -2396,3 +2410,8 @@ footer .footer-credit{ margin-top: 6px; font-size: .78rem; opacity: .8; letter-s
 
 .custom-cursor{ opacity: 0; }
 .custom-cursor.is-on{ opacity: 1; }
+
+/* no ruled-paper stripes on the lavender sheets - plain paper only */
+.stk--story .stk-card:nth-child(2), .stk--skills .stk-card:nth-child(1),
+.card-grid .card:nth-child(1), .card-grid .card:nth-child(4), .card-pair .card{ background-image: none !important; }
+.contact-callme-wrap::before{ background: #e9e4f3 !important; }

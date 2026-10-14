@@ -157,14 +157,14 @@
 
     function stackSt(el) {
       var i = stackInfo(el), ex = clamp(xs, i.l + 36, i.r - 36);
-      return { kind: 'stack', el: el, top: i.top, bottom: i.bottom, ex: ex, y: i.top + TOPOFF };
+      return { kind: 'stack', el: el, top: i.top, bottom: i.bottom, ex: ex, y: i.top + TOPOFF, bl: Math.min(i.l, i.edge), br: Math.max(i.r, i.edge) };
     }
     if (sStory) list.push(stackSt(sStory));
     if (strip && qb) {
       var sb = box(strip), qbb = box(qb), bot = qbb.bottom;
       if (qk && qk.offsetParent) bot = Math.max(bot, box(qk).bottom);
       var chip = doc.querySelector('.quiz-block .pastel-eyebrow-chip');
-      list.push({ kind: 'quiz', el: strip, top: sb.top, bottom: bot + 4, ex: xs, y: chip ? box(chip).top + box(chip).height / 2 : sb.top + 19 });
+      list.push({ kind: 'quiz', el: strip, top: sb.top, bottom: bot + 4, ex: xs, y: chip ? box(chip).top + box(chip).height / 2 : sb.top + 19, bl: Math.min(sb.left, qbb.left), br: Math.max(sb.right, qbb.right) });
     }
     if (sSkills) list.push(stackSt(sSkills));
     stubs = [];
@@ -174,7 +174,7 @@
       if (cs.length) {
         cs.sort(function (a, b) { return a.r.left - b.r.left; });
         var top = Math.min.apply(null, cs.map(function (c) { return c.r.top; })), bottom = Math.max.apply(null, cs.map(function (c) { return c.r.bottom; }));
-        pairSt = { kind: 'pair', el: pair, top: top, bottom: bottom, ex: xs, y: top + TOPOFF, cards: cs };
+        pairSt = { kind: 'pair', el: pair, top: top, bottom: bottom, ex: xs, y: top + TOPOFF, cards: cs, bl: cs[0].r.left, br: cs[cs.length - 1].r.right };
         list.push(pairSt);
       }
     }
@@ -242,17 +242,29 @@
   function buildPath(xs) {
     var pts = [[xg, yStart]], pins = [{ i: 0, P: yStart }], idx = [];
     function push(x, y) { var l = pts[pts.length - 1]; if (Math.abs(l[0] - x) < .5 && Math.abs(l[1] - y) < .5) return pts.length - 1; pts.push([x, y]); return pts.length - 1; }
-    var JG = 30, i, s, lastS = null, endS = null;
+    var JG = 30, BM = 20, i, s, lastS = null, endS = null;
     var closeP = doc.querySelector('.about-closing p'), textRect = null;
     if (!narrowMode) {
       for (i = 0; i < stations.length; i++) {
         s = stations[i];
-        if (lastS == null) { var yJ = Math.max(s.top - JG, yStart + 20); push(xg, yJ); push(s.ex, yJ); }
-        else if (s.top - lastS.bottom > 200) { var yA = lastS.bottom + JG, yB = s.top - JG; push(lastS.ex, yA); push(xg, yA); push(xg, yB); push(s.ex, yB); }
+        var gapT = s.kind === 'end' ? JG : JG + BM, gapB = lastS && lastS.kind === 'end' ? JG : JG + BM;
+        if (lastS == null) { var yJ = Math.max(s.top - gapT, yStart + 20); push(xg, yJ); push(s.ex, yJ); }
+        else if (s.top - lastS.bottom > 200) { var yA = lastS.bottom + gapB, yB = s.top - gapT; push(lastS.ex, yA); push(xg, yA); push(xg, yB); push(s.ex, yB); }
         else if (Math.abs(lastS.ex - s.ex) > 1) { var ym = (lastS.bottom + s.top) / 2; push(lastS.ex, ym); push(s.ex, ym); }
+        if (s.kind !== 'end' && s.bl != null) {
+          /* the line never crosses an element: it splits above it, runs round both outer sides and meets again underneath */
+          var yT = s.top - BM, yB = s.bottom + BM;
+          var xl = Math.max(s.bl - 34, mainLeft + 12), xr = Math.min(s.br + 34, mainLeft + mainW - 12);
+          s.loop = { xl: xl, xr: xr, yT: yT, yB: yB };
+          var ie0 = push(s.ex, yT); s.vi = ie0; pins.push({ i: ie0, P: s.top - 30 });
+          var a1 = push(xl, yT); pins.push({ i: a1, P: s.top + 10 });
+          var a2 = push(xl, yB); pins.push({ i: a2, P: s.bottom - 10 });
+          var a3 = push(s.ex, yB); s.vx = a3; pins.push({ i: a3, P: s.bottom + 30 });
+        } else {
         var ie = push(s.ex, s.top); s.vi = ie; pins.push({ i: ie, P: s.top });
         if (s.kind !== 'end') { var ix = push(s.ex, s.bottom); s.vx = ix; pins.push({ i: ix, P: s.bottom }); }
         else endS = s;
+        }
         lastS = s;
       }
     } else {
@@ -282,14 +294,18 @@
     var extra = '';
     function PX(p) { return [p[0] - mainLeft, p[1] - mainTop]; }
     stations.forEach(function (st) {
-      /* no side branches into the pair: the line simply runs down the gap between the two cards */
+      if (st.loop) {
+        /* the second branch (right of the pair): drawn in as the dot goes round the first */
+        var L = st.loop, x0 = st.ex - mainLeft, xr2 = L.xr - mainLeft, yT2 = L.yT - mainTop, yB2 = L.yB - mainTop, rr = Math.min(R, (yB2 - yT2) / 2);
+        extra += '<path class="rs" data-si="' + stations.indexOf(st) + '" pathLength="1" d="M' + f1(x0) + ',' + f1(yT2) + 'H' + f1(xr2 - rr) + 'Q' + f1(xr2) + ',' + f1(yT2) + ' ' + f1(xr2) + ',' + f1(yT2 + rr) + 'V' + f1(yB2 - rr) + 'Q' + f1(xr2) + ',' + f1(yB2) + ' ' + f1(xr2 - rr) + ',' + f1(yB2) + 'H' + f1(x0) + '"/>';
+      }
       if (narrowMode && st.kind !== 'end') extra += '<circle class="rp" cx="' + f1(xg - mainLeft) + '" cy="' + f1(st.y - mainTop) + '" r="5"/>';
     });
     /* desktop: a numbered stop where the line reaches each element, a small port where it leaves */
     if (!narrowMode) stations.forEach(function (st, si) {
-      var bx = st.ex - mainLeft, by = st.top - mainTop - (st.kind === 'end' ? 15 : 17), n = ('0' + (si + 1)).slice(-2);
+      var bx = st.ex - mainLeft, by = (st.loop ? st.loop.yT : st.top - (st.kind === 'end' ? 15 : 17)) - mainTop, n = ('0' + (si + 1)).slice(-2);
       extra += '<g class="pb" data-si="' + si + '"><circle cx="' + f1(bx) + '" cy="' + f1(by) + '" r="10.5"/><text x="' + f1(bx) + '" y="' + f1(by + .5) + '">' + n + '</text></g>';
-      if (st.kind !== 'end') extra += '<circle class="px" data-si="' + si + '" cx="' + f1(bx) + '" cy="' + f1(st.bottom - mainTop + 11) + '" r="4.2"/>';
+      if (st.kind !== 'end') extra += '<circle class="px" data-si="' + si + '" cx="' + f1(bx) + '" cy="' + f1((st.loop ? st.loop.yB : st.bottom + 11) - mainTop) + '" r="4.2"/>';
     });
     railSvg.setAttribute('width', mainW); railSvg.setAttribute('height', mainH);
     railSvg.innerHTML = '<defs><mask id="flowMask" maskUnits="userSpaceOnUse" x="0" y="0" width="' + mainW + '" height="' + mainH + '"><rect x="0" y="0" width="' + mainW + '" height="' + mainH + '" fill="#fff"/>' + maskRect + '</mask></defs>' +
@@ -300,12 +316,12 @@
     stubs = Array.prototype.slice.call(railSvg.querySelectorAll('.rs'));
     rings = Array.prototype.slice.call(railSvg.querySelectorAll('.rp'));
     stations.forEach(function (st, si) {
-      st.badge = railSvg.querySelector('.pb[data-si="' + si + '"]'); st.port = railSvg.querySelector('.px[data-si="' + si + '"]'); st.portOn = false; st.seen = false;
+      st.rbr = railSvg.querySelector('.rs[data-si="' + si + '"]'); st.badge = railSvg.querySelector('.pb[data-si="' + si + '"]'); st.port = railSvg.querySelector('.px[data-si="' + si + '"]'); st.portOn = false; st.seen = false;
     });
     pathLen = baseEl.getTotalLength();
     var k = mp.total > 0 ? pathLen / mp.total : 1;      /* the browser's own length for the same line */
     if (Math.abs(k - 1) > .0005) { map.forEach(function (e) { e.s0 *= k; e.s1 *= k; }); stations.forEach(function (st) { st.sOpen *= k; }); }
-    baseEl.style.strokeWidth = narrowMode ? '2.6px' : '3.2px';
+    baseEl.style.strokeWidth = narrowMode ? '2px' : '2.2px';
     baseEl.style.opacity = 0;   /* stays hidden until the dot has left the hero and starts to ride */
     stations.forEach(function (st, si) { if (st.opened) setLit(st); });
     sCur = null;
@@ -327,7 +343,7 @@
   }
   /* what the rail itself shows once a station is reached (branches, nodes) */
   function setLit(s) {
-    if (s.kind === 'pair') stubs.forEach(function (e) { e.classList.add('on'); });
+    if (s.rbr) s.rbr.classList.add('on');
     if (narrowMode && s.kind !== 'end') { var ix = stations.indexOf(s); if (rings[ix]) rings[ix].classList.add('on'); }
     if (s.badge) s.badge.classList.add('on');
   }
