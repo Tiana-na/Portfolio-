@@ -408,15 +408,17 @@ document.addEventListener('DOMContentLoaded', function () {
   var supportsFinePointer = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
 
   if (!prefersNoMotion && hasHover && supportsFinePointer) {
+    /* on the About page the logo's dot is the page's own character, so the pointer stays a normal pointer there (no second dot) */
+    var dotPage = document.documentElement.classList.contains('dot-away');
     var cursorEl = document.createElement('div');
     cursorEl.className = 'custom-cursor';
-    document.body.appendChild(cursorEl);
+    if (!dotPage) document.body.appendChild(cursorEl);
 
     var cursorHintEl = document.createElement('div');
     cursorHintEl.className = 'custom-cursor-hint';
     document.body.appendChild(cursorHintEl);
 
-    document.documentElement.classList.add('custom-cursor-active');
+    if (!dotPage) document.documentElement.classList.add('custom-cursor-active');
 
     document.addEventListener('mousemove', function (e) {
       cursorEl.style.left = e.clientX + 'px';

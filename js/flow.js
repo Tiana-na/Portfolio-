@@ -243,6 +243,7 @@
     pathLen = baseEl.getTotalLength(); lenTab = [];
     for (var li = 0; li <= 600; li++) { var lp = baseEl.getPointAtLength(pathLen * li / 600); lenTab.push([lp.y, pathLen * li / 600]); }
     baseEl.style.strokeWidth = narrow ? '2.6px' : '3.2px';
+    baseEl.style.opacity = 0;   /* stays hidden until the dot has left the hero and starts to ride */
   }
 
   function mix(a, b, t) {
