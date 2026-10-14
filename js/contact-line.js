@@ -56,7 +56,7 @@
     }
     var wrap = hero.querySelector('.contact-callme-wrap'), row = hero.querySelector('.contact-icon-row');
     var parts = [];
-    if (wrap) { var w = rel(off(wrap)); parts.push({ l: w.l - 34, t: w.t - 14, r: w.r + 34, b: w.b + 16 }); }
+    if (wrap) { var w = rel(off(wrap)); parts.push({ l: w.l - 34, t: w.t - 6, r: w.r + 34, b: w.b + 16 }); }
     Array.prototype.forEach.call(hero.querySelectorAll('h1, p'), function (el) { parts.push(textBox(el)); });
     var rr = null;
     if (row) {
@@ -66,13 +66,13 @@
     var T = Infinity, B = -Infinity, Lx = Infinity, Rx = -Infinity;
     parts.forEach(function (p) { T = Math.min(T, p.t); B = Math.max(B, p.b); Lx = Math.min(Lx, p.l); Rx = Math.max(Rx, p.r); });
 
-    var pts, extra = '', R = narrow ? 12 : 18, cx = W / 2;
+    var pts, extra = '', R = narrow ? 12 : 26, cx = W / 2;
     svg.setAttribute('width', W); svg.setAttribute('height', H);
     dot.style.setProperty('--ds', narrow ? '14px' : '22px');
     rbr = badge = port = ring = null;
     if (!narrow) {
-      var yT = Math.max(26, T - 22), yB = B + 22;
-      var xl = Math.max(Lx - 40, 12), xr = Math.min(Rx + 40, W - 12);
+      var yT = Math.max(30, T - 48), yB = B + 42;
+      var xl = Math.max(Lx - 76, 12), xr = Math.min(Rx + 76, W - 12);
       pts = [[cx, 0], [cx, yT], [xl, yT], [xl, yB], [cx, yB]];
       splitS = yT;
       var rd = Math.min(R, (yB - yT) / 2);
