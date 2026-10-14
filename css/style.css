@@ -2208,6 +2208,31 @@ footer .footer-credit{ margin-top: 6px; font-size: .78rem; opacity: .8; letter-s
 /* Contact: the dot lives inside <main> there (not fixed to the window) */
 .cl-dot{ position: absolute; }
 
+/* ---- the inner layer revealed under the pointer on the assembled portrait ---- */
+.lh-rv{ position: absolute; inset: 0; pointer-events: none; transform: translateZ(14px); opacity: 0; transition: opacity .18s ease; --vx: 190px; --vy: 237px; --vr: 0px; }
+.lh-rv.is-on{ opacity: 1; }
+.lh-rv-clip{
+  position: absolute; inset: 0; border-radius: 14px; overflow: hidden;
+  background: #f4ecd8 url(../assets/tiana-sketch.webp) center / cover no-repeat;
+  -webkit-mask-image: radial-gradient(circle at var(--vx) var(--vy), #000 calc(var(--vr) - .6px), transparent calc(var(--vr) + .6px));
+  mask-image: radial-gradient(circle at var(--vx) var(--vy), #000 calc(var(--vr) - .6px), transparent calc(var(--vr) + .6px));
+}
+.lh-rv-clip .lh-role{ opacity: 1; color: #251f1c; }
+.lh-rv-clip .lh-head{ opacity: 1; transform: none; text-shadow: none; color: #251f1c; }
+.lh-rv-ring{
+  position: absolute; left: var(--vx); top: var(--vy); width: calc(var(--vr) * 2); height: calc(var(--vr) * 2);
+  margin: calc(var(--vr) * -1) 0 0 calc(var(--vr) * -1); border-radius: 50%;
+  border: 2px solid rgba(122,106,158,.8); box-shadow: 0 0 0 1px rgba(255,253,248,.35), 0 4px 18px rgba(37,31,28,.22);
+}
+html.lh-peek .custom-cursor, html.lh-peek .custom-cursor-hint{ opacity: 0 !important; }
+html.lh-peek .lh-stage, html.lh-peek .lh-stage.is-dragging{ cursor: none; }
+/* paper wash behind the headline and the role line, so the ink text stays readable on top of the sketch */
+.lh-rv-clip::before{ content: ""; position: absolute; inset: 0; z-index: 0;
+  background: linear-gradient(to top, #f4ecd8 0, rgba(244,236,216,.94) 17%, rgba(244,236,216,.55) 30%, rgba(244,236,216,0) 46%), linear-gradient(to bottom, rgba(244,236,216,.9) 0, rgba(244,236,216,0) 13%); }
+.lh-rv-clip .lh-role, .lh-rv-clip .lh-head{ z-index: 1; }
+/* while the circle is out, the headline's italic word sits flat so the circle always covers it (otherwise its pale lavender floats above the paper) */
+html.lh-peek .lh-T .lh-head em{ transform: none !important; }
+
 /* =====================================================================
    One key language across the site: cream keys (secondary / icons), purple keys (primary)
    ===================================================================== */

@@ -458,6 +458,48 @@
     });
   }
 
+  /* ---- the inner layer: once the portrait is assembled, the pointer becomes a circle that shows the sketch layer beneath it
+     (same framing as the photo, the headline set in ink on paper). Mouse only; off while dragging, and with reduced motion. ---- */
+  if (fine && !reduce) (function () {
+    var rv = document.createElement('div'); rv.className = 'lh-rv'; rv.setAttribute('aria-hidden', 'true');
+    var clip = document.createElement('div'); clip.className = 'lh-rv-clip';
+    var ring = document.createElement('div'); ring.className = 'lh-rv-ring';
+    function twin(src, cls) {
+      var d = document.createElement('div'); d.className = cls; d.innerHTML = src.innerHTML;
+      var k = src.getAttribute('data-i18n'); if (k) d.setAttribute('data-i18n', k);
+      Array.prototype.forEach.call(d.querySelectorAll('[style]'), function (n) { n.removeAttribute('style'); });   /* the original's animated colours must not follow it here */
+      return d;
+    }
+    clip.appendChild(twin(role, 'lh-role')); clip.appendChild(twin(head, 'lh-head'));
+    rv.appendChild(clip); rv.appendChild(ring); T.appendChild(rv);
+    var R = 58, cur = { x: 190, y: 237, r: 0 }, tg2 = { x: 190, y: 237, r: 0 }, loop = 0, inside = false;
+    function ready() { return stage.classList.contains('lh-done') && !dragging && Math.abs(ud.x) < 1.5 && Math.abs(ud.y) < 1.5; }
+    function paint() {
+      rv.style.setProperty('--vx', cur.x.toFixed(1) + 'px'); rv.style.setProperty('--vy', cur.y.toFixed(1) + 'px'); rv.style.setProperty('--vr', Math.max(0, cur.r).toFixed(1) + 'px');
+      rv.classList.toggle('is-on', cur.r > .8);
+    }
+    function tick() {
+      cur.x += (tg2.x - cur.x) * .38; cur.y += (tg2.y - cur.y) * .38; cur.r += (tg2.r - cur.r) * .2;
+      paint();
+      if (Math.abs(tg2.x - cur.x) > .2 || Math.abs(tg2.y - cur.y) > .2 || Math.abs(tg2.r - cur.r) > .3) loop = requestAnimationFrame(tick);
+      else { loop = 0; cur.x = tg2.x; cur.y = tg2.y; cur.r = tg2.r; paint(); }
+    }
+    function go() { if (!loop) loop = requestAnimationFrame(tick); }
+    function setPeek(on) { document.documentElement.classList.toggle('lh-peek', on); }
+    function off() { if (inside) { inside = false; setPeek(false); } tg2.r = 0; go(); }
+    stage.addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse' || !ready()) { if (inside) off(); return; }
+      var b = rv.getBoundingClientRect();   /* the plane the circle lives on, so the circle stays under the pointer */
+      if (!b.width) return;
+      var x = (e.clientX - b.left) / b.width * PW, y = (e.clientY - b.top) / b.height * PH;
+      if (x < 0 || y < 0 || x > PW || y > PH) { off(); return; }
+      if (!inside) { inside = true; cur.x = tg2.x = x; cur.y = tg2.y = y; setPeek(true); }
+      tg2.x = x; tg2.y = y; tg2.r = R; go();
+    });
+    stage.addEventListener('pointerleave', off);
+    stage.addEventListener('pointerdown', off);
+  })();
+
   TF.heroT = function () { return tNow; };
   TF.heroDone = function () { return tNow >= T_END || reduce; };
 })();
