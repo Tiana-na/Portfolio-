@@ -251,7 +251,7 @@
         else if (s.top - lastS.bottom > 200) { var yA = lastS.bottom + JG, yB = s.top - JG; push(lastS.ex, yA); push(xg, yA); push(xg, yB); push(s.ex, yB); }
         else if (Math.abs(lastS.ex - s.ex) > 1) { var ym = (lastS.bottom + s.top) / 2; push(lastS.ex, ym); push(s.ex, ym); }
         var ie = push(s.ex, s.top); s.vi = ie; pins.push({ i: ie, P: s.top });
-        if (s.kind !== 'end') { var ix = push(s.ex, s.bottom); pins.push({ i: ix, P: s.bottom }); }
+        if (s.kind !== 'end') { var ix = push(s.ex, s.bottom); s.vx = ix; pins.push({ i: ix, P: s.bottom }); }
         else endS = s;
         lastS = s;
       }
@@ -268,7 +268,7 @@
     var R = narrowMode ? 12 : 18;
     var mp = makePath(pts, R);
     buildMap(mp.pieces, pins, mp.total);
-    stations.forEach(function (st) { st.sOpen = st.vi != null ? mp.sAt[st.vi] : 0; });
+    stations.forEach(function (st) { st.sOpen = st.vi != null ? mp.sAt[st.vi] : 0; st.sExit = st.vx != null ? mp.sAt[st.vx] : null; });
 
     /* a gap in the line behind the closing sentence (the line passes behind it, like a label on a wire) */
     var maskRect = '';
@@ -290,6 +290,12 @@
       }
       if (narrowMode && st.kind !== 'end') extra += '<circle class="rp" cx="' + f1(xg - mainLeft) + '" cy="' + f1(st.y - mainTop) + '" r="5"/>';
     });
+    /* desktop: a numbered stop where the line reaches each element, a small port where it leaves */
+    if (!narrowMode) stations.forEach(function (st, si) {
+      var bx = st.ex - mainLeft, by = st.top - mainTop - (st.kind === 'end' ? 15 : 17), n = ('0' + (si + 1)).slice(-2);
+      extra += '<g class="pb" data-si="' + si + '"><circle cx="' + f1(bx) + '" cy="' + f1(by) + '" r="10.5"/><text x="' + f1(bx) + '" y="' + f1(by + .5) + '">' + n + '</text></g>';
+      if (st.kind !== 'end') extra += '<circle class="px" data-si="' + si + '" cx="' + f1(bx) + '" cy="' + f1(st.bottom - mainTop + 11) + '" r="4.2"/>';
+    });
     railSvg.setAttribute('width', mainW); railSvg.setAttribute('height', mainH);
     railSvg.innerHTML = '<defs><mask id="flowMask" maskUnits="userSpaceOnUse" x="0" y="0" width="' + mainW + '" height="' + mainH + '"><rect x="0" y="0" width="' + mainW + '" height="' + mainH + '" fill="#fff"/>' + maskRect + '</mask></defs>' +
       '<g mask="url(#flowMask)"><g transform="translate(' + f1(-mainLeft) + ',' + f1(-mainTop) + ')">' + g + '</g></g>' + extra;
@@ -298,6 +304,9 @@
     baseEl = railSvg.querySelector('g path');
     stubs = Array.prototype.slice.call(railSvg.querySelectorAll('.rs'));
     rings = Array.prototype.slice.call(railSvg.querySelectorAll('.rp'));
+    stations.forEach(function (st, si) {
+      st.badge = railSvg.querySelector('.pb[data-si="' + si + '"]'); st.port = railSvg.querySelector('.px[data-si="' + si + '"]'); st.portOn = false; st.seen = false;
+    });
     pathLen = baseEl.getTotalLength();
     var k = mp.total > 0 ? pathLen / mp.total : 1;      /* the browser's own length for the same line */
     if (Math.abs(k - 1) > .0005) { map.forEach(function (e) { e.s0 *= k; e.s1 *= k; }); stations.forEach(function (st) { st.sOpen *= k; }); }
@@ -325,6 +334,7 @@
   function setLit(s) {
     if (s.kind === 'pair') stubs.forEach(function (e) { e.classList.add('on'); });
     if (narrowMode && s.kind !== 'end') { var ix = stations.indexOf(s); if (rings[ix]) rings[ix].classList.add('on'); }
+    if (s.badge) s.badge.classList.add('on');
   }
   function openStation(s) {
     s.opened = true; if (s.el) s.el.__stOpened = true;
@@ -411,6 +421,9 @@
       if (sCur < 1.5) baseEl.style.opacity = 0;
       else { baseEl.style.opacity = 1; baseEl.style.strokeDasharray = sCur.toFixed(1) + ' ' + (pathLen + 400); }
     }
+    railSvg.classList.toggle('is-active', sCur >= 1.5);
+    stations.forEach(function (st) { if (st.badge && !st.seen && sCur >= st.sOpen - 220) { st.seen = true; st.badge.classList.add('seen'); if (st.port) st.port.classList.add('seen'); } });
+    stations.forEach(function (st) { if (st.port && !st.portOn && st.sExit != null && sCur >= st.sExit) { st.portOn = true; st.port.classList.add('on'); } });
     /* each element lights when the dot gets there */
     for (var i = 0; i < stations.length; i++) {
       var s = stations[i];

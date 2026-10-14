@@ -2156,13 +2156,28 @@ html.dot-away .logo-dot{ opacity: 0; }
 .flow-rail .rs.on{ opacity: 1; }
 .flow-rail .rp{ fill: var(--bg, #faf6e9); stroke: #B7A6E2; stroke-width: 2px; opacity: 0; transition: opacity .4s ease, fill .4s ease; }
 .flow-rail .rp.on{ opacity: 1; fill: #B7A6E2; }
+/* numbered stops and small ports on the line (desktop): they appear once the dot has started to ride */
+.flow-rail .pb, .flow-rail .px{ opacity: 0; transition: opacity .5s ease; }
+.flow-rail.is-active .pb.seen, .flow-rail.is-active .px.seen{ opacity: 1; }
+.flow-rail .pb circle{ fill: var(--bg, #faf6e9); stroke: #C9BFE0; stroke-width: 2px; transition: fill .45s ease, stroke .45s ease; }
+.flow-rail .pb text{ font: 600 9.5px 'Rubik', system-ui, sans-serif; letter-spacing: .02em; fill: #9a8fb8; text-anchor: middle; dominant-baseline: central; transition: fill .45s ease; }
+.flow-rail .pb.on circle{ fill: #7A6A9E; stroke: #7A6A9E; }
+.flow-rail .pb.on text{ fill: #fff; }
+.flow-rail .px{ fill: var(--bg, #faf6e9); stroke: #C9BFE0; stroke-width: 2px; transition: opacity .5s ease, fill .45s ease, stroke .45s ease; }
+.flow-rail .px.on{ fill: #B7A6E2; stroke: #B7A6E2; }
 @media (min-width: 761px){
-  /* room around the first stack for the line to step out and back in */
+  /* room around the stations for the line, its numbered stop and its port */
   .stk--story{ margin-top: 76px; margin-bottom: 76px; }
-  .about-closing p{ margin-bottom: 30px; }
+  .stk--skills{ margin-top: 76px; }
+  .card-pair{ margin-top: 76px; }
+  .about-closing{ margin-top: 76px; }
+  .about-closing p{ margin-bottom: 42px; }
   /* wide enough channel between Education and Languages for the line and its two branches */
   .card-pair{ column-gap: 48px; }
 }
+
+/* footer credit line */
+footer .footer-credit{ margin-top: 6px; font-size: .78rem; opacity: .8; letter-spacing: .02em; }
 
 /* =====================================================================
    One key language across the site: cream keys (secondary / icons), purple keys (primary)
