@@ -22,6 +22,7 @@
   var base, glow = [], rbr = null, badge = null, port = null, ring = null, L = 0, splitS = 0;
   var played = false, running = false, curS = 0, raf = 0, narrow = false, started = false;
   var buttons = Array.prototype.slice.call(doc.querySelectorAll('.contact-icon-row .quiz-icon-btn'));
+  var mail = doc.querySelector('.contact-icon-row a[href^="mailto"]'), phone = doc.querySelector('.contact-icon-row a[href^="tel"]');
 
   function f1(n) { return Math.round(n * 10) / 10; }
   function unit(a, b) { var dx = b[0] - a[0], dy = b[1] - a[1], l = Math.sqrt(dx * dx + dy * dy) || 1; return [dx / l, dy / l, l]; }
@@ -73,12 +74,15 @@
     if (!narrow) {
       var yT = Math.max(30, T - 48), yB = B + 42;
       var xl = Math.max(Lx - 76, 12), xr = Math.min(Rx + 76, W - 12);
-      pts = [[cx, 0], [cx, yT], [xl, yT], [xl, yB], [cx, yB]];
+      /* the line plugs into the e-mail key: both branches meet under it, then a short stub rises to the key */
+      var mx = cx, yEnd = yB - 28;
+      if (mail) { var mb = rel(off(mail)); mx = (mb.l + mb.r) / 2; yEnd = Math.min(yB - 18, mb.b + 16); }
+      pts = [[cx, 0], [cx, yT], [xl, yT], [xl, yB], [mx, yB], [mx, yEnd]];
       splitS = yT;
       var rd = Math.min(R, (yB - yT) / 2);
-      extra += '<path class="rs" pathLength="1" d="M' + f1(cx) + ',' + f1(yT) + 'H' + f1(xr - rd) + 'Q' + f1(xr) + ',' + f1(yT) + ' ' + f1(xr) + ',' + f1(yT + rd) + 'V' + f1(yB - rd) + 'Q' + f1(xr) + ',' + f1(yB) + ' ' + f1(xr - rd) + ',' + f1(yB) + 'H' + f1(cx) + '"/>';
+      extra += '<path class="rs" pathLength="1" d="M' + f1(cx) + ',' + f1(yT) + 'H' + f1(xr - rd) + 'Q' + f1(xr) + ',' + f1(yT) + ' ' + f1(xr) + ',' + f1(yT + rd) + 'V' + f1(yB - rd) + 'Q' + f1(xr) + ',' + f1(yB) + ' ' + f1(xr - rd) + ',' + f1(yB) + 'H' + f1(mx) + '"/>';
       extra += '<g class="pb" data-cl="b"><circle cx="' + f1(cx) + '" cy="' + f1(yT) + '" r="10.5"/><text x="' + f1(cx) + '" y="' + f1(yT + .5) + '">06</text></g>';
-      extra += '<circle class="px" data-cl="p" cx="' + f1(cx) + '" cy="' + f1(yB) + '" r="4.2"/>';
+      extra += '<circle class="px" data-cl="p" cx="' + f1(mx) + '" cy="' + f1(yB) + '" r="4.2"/>';
     } else {
       var gx = rtl ? W - 8 : 8, ry = rr ? (rr.t + rr.b) / 2 : B;
       pts = [[gx, 0], [gx, ry]];
@@ -117,11 +121,10 @@
   function ease(t) { return t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
   function land() {
     dot.classList.remove('is-land'); void dot.offsetWidth; dot.classList.add('is-land');
-    buttons.forEach(function (b, i) {
-      b.classList.add('pw'); b.classList.remove('is-spark'); void b.offsetWidth;
-      b.style.animationDelay = (i * 130) + 'ms'; b.classList.add('is-spark');
-      setTimeout(function () { b.classList.remove('is-spark'); b.style.animationDelay = ''; }, 1500 + i * 130);
-    });
+    /* the key is pressed, then the line "connects" and the phone key rings */
+    if (mail) { mail.classList.add('is-pressed'); setTimeout(function () { mail.classList.remove('is-pressed'); }, 230); }
+    svg.classList.add('is-connect', 'cl-after'); setTimeout(function () { svg.classList.remove('is-connect'); }, 1500);
+    if (phone) { setTimeout(function () { phone.classList.add('is-ring'); setTimeout(function () { phone.classList.remove('is-ring'); }, 2000); }, 260); }
   }
   function play() {
     if (started) return; started = true;
