@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ---------- trivia teaser (surprise popup) ---------- */
   var teaser = document.getElementById('trivia-teaser');
-  if (teaser) {
+  if (teaser && document.body.getAttribute('data-page') !== 'about') {   /* not on the page that already holds the quiz */
     var TEASER_KEY = 'trivia-teaser-dismissed';
     var alreadyDismissed = false;
     try { alreadyDismissed = localStorage.getItem(TEASER_KEY) === '1'; } catch (e) {}
@@ -408,19 +408,19 @@ document.addEventListener('DOMContentLoaded', function () {
   var supportsFinePointer = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
 
   if (!prefersNoMotion && hasHover && supportsFinePointer) {
-    /* on the About page the logo's dot is the page's own character, so the pointer stays a normal pointer there (no second dot) */
-    var dotPage = document.documentElement.classList.contains('dot-away');
+    /* the pointer is a soft purple ring - the logo's dot is the page's character and must never be duplicated by the cursor */
     var cursorEl = document.createElement('div');
     cursorEl.className = 'custom-cursor';
-    if (!dotPage) document.body.appendChild(cursorEl);
+    document.body.appendChild(cursorEl);
 
     var cursorHintEl = document.createElement('div');
     cursorHintEl.className = 'custom-cursor-hint';
     document.body.appendChild(cursorHintEl);
 
-    if (!dotPage) document.documentElement.classList.add('custom-cursor-active');
+    document.documentElement.classList.add('custom-cursor-active');
 
     document.addEventListener('mousemove', function (e) {
+      cursorEl.classList.add('is-on');
       cursorEl.style.left = e.clientX + 'px';
       cursorEl.style.top = e.clientY + 'px';
       cursorHintEl.style.left = e.clientX + 'px';
@@ -443,6 +443,9 @@ document.addEventListener('DOMContentLoaded', function () {
       var hintFarTarget = e.target.closest(HINT_FAR_SELECTOR);
 
       var cursorIsEnglish = document.documentElement.lang === 'en';
+      cursorEl.classList.toggle('is-hover', !!(clickTarget || viewTarget));
+      /* "Let's play" only invites before the quiz has started */
+      if (hintNearTarget && quizStartBtn && quizStartBtn.hidden) hintNearTarget = null;
 
       if (clickTarget) {
         cursorHintEl.textContent = cursorIsEnglish ? 'Click' : 'לחיצה';
@@ -464,6 +467,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (stillOver) return;
       var leavingHoverable = e.target.closest(ALL_HOVERABLE);
       if (!leavingHoverable) return;
+      cursorEl.classList.remove('is-hover');
       cursorHintEl.classList.remove('is-visible');
       cursorHintEl.textContent = '';
     });

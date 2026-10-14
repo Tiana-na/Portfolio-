@@ -17,7 +17,7 @@ window.I18N = {
     "stk-next": "הכרטיס הבא",
     "trivia-close-aria": "סגירה",
     "footer-text": "UX/UI Designer &amp; Digital Creative Designer • טיאנה פולקנפולק 2026 ©",
-    "trivia-teaser-text": "רגע...<strong>בואו נכיר קצת יותר</strong>",
+    "trivia-teaser-text": "רגע...<strong>משחק קטן?</strong>",
     "whatsapp-aria": "שליחת הודעה בוואטסאפ",
     "linkedin-aria": "מעבר לפרופיל הלינקדאין",
     "email-aria": "שליחת מייל",

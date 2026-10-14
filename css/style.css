@@ -2131,6 +2131,39 @@ html.dot-away .logo-dot{ opacity: 0; }
 /* measuring a stack in its open pose without animating */
 .stk-measuring, .stk-measuring *{ transition: none !important; }
 
+/* a card behind: beside its title on the spine, a few quiet vertical lines - like text seen along a page's edge - so it never looks empty */
+.stk .stk-card:not(.is-front)::before{
+  content: ""; position: absolute; z-index: 1; pointer-events: none;
+  top: 16px; bottom: 18px; inset-inline-start: 5px; width: 17px;
+  background:
+    linear-gradient(rgba(122,106,158,.30), rgba(122,106,158,.30)) 0 0 / 3px 78% no-repeat,
+    linear-gradient(rgba(122,106,158,.22), rgba(122,106,158,.22)) 7px 10% / 3px 56% no-repeat,
+    linear-gradient(rgba(122,106,158,.16), rgba(122,106,158,.16)) 14px 0 / 3px 66% no-repeat;
+  border-radius: 2px; opacity: 1; transition: opacity .35s ease;
+}
+.stk .stk-card.is-front::before{ content: none; }
+@media (max-width: 760px){
+  .stk .stk-card:not(.is-front)::before{
+    inset-inline-start: 5px; width: 12px;
+    background:
+      linear-gradient(rgba(122,106,158,.30), rgba(122,106,158,.30)) 0 0 / 2.5px 78% no-repeat,
+      linear-gradient(rgba(122,106,158,.20), rgba(122,106,158,.20)) 6px 10% / 2.5px 56% no-repeat;
+  }
+}
+
+/* ---- the spine (desktop): the line goes through the elements; branches into Education + Languages; nodes on a phone's margin ---- */
+.flow-rail .rs{ stroke: #D3C8EA; stroke-width: 3.2px; stroke-linecap: round; fill: none; opacity: 0; transition: opacity .6s ease; }
+.flow-rail .rs.on{ opacity: 1; }
+.flow-rail .rp{ fill: var(--bg, #faf6e9); stroke: #B7A6E2; stroke-width: 2px; opacity: 0; transition: opacity .4s ease, fill .4s ease; }
+.flow-rail .rp.on{ opacity: 1; fill: #B7A6E2; }
+@media (min-width: 761px){
+  /* room around the first stack for the line to step out and back in */
+  .stk--story{ margin-top: 76px; margin-bottom: 76px; }
+  .about-closing p{ margin-bottom: 30px; }
+  /* wide enough channel between Education and Languages for the line and its two branches */
+  .card-pair{ column-gap: 48px; }
+}
+
 /* =====================================================================
    One key language across the site: cream keys (secondary / icons), purple keys (primary)
    ===================================================================== */
@@ -2261,3 +2294,75 @@ html.dot-away .logo-dot{ opacity: 0; }
 @media (prefers-reduced-motion: reduce){
   .quiz-icon-btn, .work-btn, .nav-links .nav-cv-btn{ transition: none; }
 }
+
+/* ===== The pointer: a soft purple ring (never the logo's dot) ===== */
+.custom-cursor{
+  width: 22px; height: 22px;
+  background: rgba(122,106,158,.08);
+  background-image: none;
+  border: 2px solid #7A6A9E;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1.5px rgba(255,253,248,.9), 0 2px 8px rgba(37,31,28,.14);
+  transition: width .18s ease, height .18s ease, background-color .18s ease, border-color .18s ease;
+}
+.custom-cursor.is-hover{
+  width: 40px; height: 40px;
+  background: rgba(122,106,158,.16);
+  border-color: #6D5F8E;
+}
+.custom-cursor-hint{ transform: translate(22px, 22px) scale(.85); }
+.custom-cursor-hint.is-visible{ transform: translate(22px, 22px) scale(1); }
+
+/* ===== More keys: language switch, quiz buttons, "back to projects" ===== */
+.lang-toggle{
+  --key-side: #D9CDB4; --key-deep: #C4B598;
+  position: relative;
+  border: 0; border-radius: 12px; padding: 6px 13px 7px;
+  background: linear-gradient(180deg, #FBF6E8, #F1E8D0);
+  color: var(--text); font-size: .8rem; font-weight: 600;
+  box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 -1px 3px rgba(120,100,30,.10) inset, 0 3px 0 var(--key-side), 0 5px 0 var(--key-deep), 0 9px 12px -6px rgba(37,31,28,.3);
+  transform: translateY(-2px);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.lang-toggle:hover{ border: 0; color: var(--text); transform: translateY(-4px); }
+.lang-toggle:active{ transform: translateY(1px); box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 -1px 3px rgba(120,100,30,.10) inset, 0 1px 0 var(--key-side), 0 2px 0 var(--key-deep), 0 4px 6px -4px rgba(37,31,28,.3); }
+.lang-toggle:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 4px; }
+.mobile-menu .lang-toggle--mobile{ margin-bottom: 6px; }
+
+/* smaller keys for in-flow actions */
+.btn.keycap.keycap--mini{ padding: 11px 24px 12px; font-size: .88rem; border-radius: 15px; margin-bottom: 7px; }
+.btn.keycap.keycap--mini::before{ inset: 4px; border-radius: 11px; }
+.btn.keycap.keycap--mini.keycap--cream{
+  box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 -2px 4px rgba(120,100,30,.10) inset, 0 4px 0 var(--key-side), 0 6px 0 var(--key-deep), 0 12px 16px -8px rgba(37,31,28,.32);
+}
+.btn.keycap.keycap--mini.keycap--purple{
+  box-shadow: 0 1px 0 rgba(255,255,255,.35) inset, 0 -2px 4px rgba(30,20,60,.25) inset, 0 4px 0 var(--key-side), 0 6px 0 var(--key-deep), 0 12px 16px -8px rgba(37,31,28,.38);
+}
+.btn.keycap.keycap--mini:active{ transform: translateY(4px); }
+.btn.keycap.keycap--mini.keycap--cream:active{ box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 -2px 4px rgba(120,100,30,.10) inset, 0 1px 0 var(--key-side), 0 2px 0 var(--key-deep), 0 5px 8px -5px rgba(37,31,28,.32); }
+.btn.keycap.keycap--mini.keycap--purple:active{ box-shadow: 0 1px 0 rgba(255,255,255,.35) inset, 0 -2px 4px rgba(30,20,60,.25) inset, 0 1px 0 var(--key-side), 0 2px 0 var(--key-deep), 0 5px 8px -5px rgba(37,31,28,.38); }
+.btn.keycap.quiz-next-btn{ display: flex; margin-top: 22px; margin-bottom: 8px; }
+.btn.keycap.case-back{ display: inline-flex; margin-bottom: 30px; color: var(--text); }
+.btn.keycap.case-back:hover{ color: var(--text); }
+
+.quiz-skip-btn{
+  --key-side: #D9CDB4; --key-deep: #C4B598;
+  position: relative;
+  padding: 6px 14px 7px; border: 0; border-radius: 12px;
+  background: linear-gradient(180deg, #FBF6E8, #F1E8D0);
+  color: var(--text); font-size: .78rem; font-weight: 600; text-decoration: none;
+  box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 -1px 3px rgba(120,100,30,.10) inset, 0 3px 0 var(--key-side), 0 5px 0 var(--key-deep), 0 9px 12px -6px rgba(37,31,28,.28);
+  transform: translateY(-2px);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.quiz-skip-btn:hover{ color: var(--text); transform: translateY(-4px); }
+.quiz-skip-btn:active{ transform: translateY(1px); box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 -1px 3px rgba(120,100,30,.10) inset, 0 1px 0 var(--key-side), 0 2px 0 var(--key-deep), 0 4px 6px -4px rgba(37,31,28,.28); }
+.quiz-skip-btn:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 4px; }
+
+/* phones, About: a little more room at the edges so the dot can park beside things with the same air as on desktop */
+@media (max-width: 760px){
+  [data-page="about"] .wrap, [data-page="about"] .about-hero-wrap{ padding-inline: 26px; }
+}
+
+.custom-cursor{ opacity: 0; }
+.custom-cursor.is-on{ opacity: 1; }

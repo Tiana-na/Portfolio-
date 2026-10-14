@@ -317,6 +317,7 @@
 
   function release() {
     if (released) return; released = true;
+    try { sessionStorage.setItem('tf-hero-seen', '1'); } catch (e) {}
     TF.heroOwns = false;
     if (TF.dock) TF.dock(false);
   }
@@ -374,7 +375,9 @@
     revealBodyNow();
   } else {
     var scrolledPast = stage.getBoundingClientRect().bottom < 0;
-    if (scrolledPast) {
+    var seenBefore = false;
+    try { seenBefore = sessionStorage.getItem('tf-hero-seen') === '1' && !/[?&]hero=1/.test(location.search) && window.__fixed === undefined; } catch (e) {}
+    if (scrolledPast || seenBefore) {
       started = true; tReal = T_END; stage.classList.add('lh-done'); render(T_END); revealBodyNow();
     } else {
       render(0);
