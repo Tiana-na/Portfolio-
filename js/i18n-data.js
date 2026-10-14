@@ -13,6 +13,8 @@ window.I18N = {
     "nav-cv": "קורות חיים",
     "brand-aria": "טיאנה פולקנפולק",
     "menu-toggle-aria": "פתיחת תפריט",
+    "stk-prev": "הכרטיס הקודם",
+    "stk-next": "הכרטיס הבא",
     "trivia-close-aria": "סגירה",
     "footer-text": "UX/UI Designer &amp; Digital Creative Designer • טיאנה פולקנפולק 2026 ©",
     "trivia-teaser-text": "רגע...<strong>בואו נכיר קצת יותר</strong>",

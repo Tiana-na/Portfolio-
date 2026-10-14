@@ -46,7 +46,7 @@
       <li><button class="lang-toggle" type="button" aria-label="עבור לעברית">עב</button></li>
     </ul>
     <div class="brand logo-lockup" role="img" data-i18n-aria="brand-aria" aria-label="Tiana Folkenfolk">
-      <img class="logo-mark" src="assets/logo-tf.png" alt="" aria-hidden="true">
+      <svg class="logo-mark" viewBox="0 0 106 124" aria-hidden="true" focusable="false"><g fill="#1f1c1d"><path d="M0,5C0,2.24,2.24,0,5,0h49c2.76,0,5,2.24,5,5v6c0,2.76-2.24,5-5,5H5c-2.76,0-5-2.24-5-5v-6Z"/><path d="M49,0h15c2.76,0,5,2.24,5,5v119h-20V0Z"/><path d="M59,47c0-2.76,2.24-5,5-5h21c2.76,0,5,2.24,5,5v6c0,2.76-2.24,5-5,5h-21c-2.76,0-5-2.24-5-5v-6Z"/></g><path id="logoDot" class="logo-dot" fill="#E1D5CA" d="M90.5,0h10a5,5 0 0 1 5,5V16h-15Z"/></svg>
     </div>
     <button class="menu-toggle" data-i18n-aria="menu-toggle-aria" aria-label="Open menu">&#9776;</button>
   </nav>
@@ -59,7 +59,8 @@
   </div>
 </header>
 
-<main>
+<main id="flowMain">
+  <svg class="flow-rail" id="flowRail" aria-hidden="true" focusable="false"></svg>
   <section class="page-hero">
     <div class="wrap about-hero-wrap">
       <div class="ed-intro">
@@ -93,18 +94,25 @@
             <p class="mag-quote-lead" data-i18n="ed-quote-lead">I’ve worked with international brands like H&amp;M and IKEA, where I designed shopping experiences, window displays, and visual communication, always guided by the same question:</p>
             <p class="mag-quote" data-i18n="ed-quote-main">”What does the user <strong>see, feel, and need</strong> to understand and decide?”</p>
 
-            <div class="mag-facts">
-              <div class="mag-fact">
+            <div class="stk stk--story reveal" data-stack="story" style="--n:2">
+              <div class="stk-stage">
+              <div class="mag-fact stk-card">
                 <div class="mag-fact-inner">
                   <h2 class="mag-fact-label" data-i18n="ed-fact1-chip">Background</h2>
                   <div class="mag-fact-text" data-i18n="ed-fact1-body">I’m a UX/UI designer with a rich background in commercial design and creating experiences in physical spaces. Over the years, I’ve learned that design is about much more than what you see. It shapes how people feel and make decisions, through the planning of space, visual hierarchy, and the placement of messages and products.</div>
                 </div>
               </div>
-              <div class="mag-fact">
+              <div class="mag-fact stk-card">
                 <div class="mag-fact-inner">
                   <h2 class="mag-fact-label" data-i18n="ed-fact2-chip">Digital Shift</h2>
                   <div class="mag-fact-text" data-i18n="ed-fact2-body">Moving into UX/UI felt like a natural continuation of that same way of thinking. The space I design in simply shifted, going through its own digital transformation.</div>
                 </div>
+              </div>
+              </div>
+              <div class="stk-nav" data-stk-nav>
+                <button class="stk-btn stk-prev" type="button" data-i18n-aria="stk-prev" aria-label="Previous card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+                <span class="stk-count" dir="ltr" aria-hidden="true"><b>1</b> / 2</span>
+                <button class="stk-btn stk-next" type="button" data-i18n-aria="stk-next" aria-label="Next card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
               </div>
             </div>
           </div>
@@ -126,7 +134,7 @@
           </div>
         </div>
         <p class="reveal" data-i18n="quiz-intro">A few fun facts, a few work habits, let’s break the ice.</p>
-        <button class="btn btn-primary quiz-start-btn reveal" id="quiz-start-btn" type="button" data-i18n="quiz-start-btn">Let’s play!</button>
+        <button class="btn keycap quiz-start-btn reveal" id="quiz-start-btn" type="button" data-i18n="quiz-start-btn">Let’s play!</button>
 
         <div class="quiz-card reveal" id="quiz-card" hidden>
 
@@ -173,8 +181,9 @@
         </div>
       </div>
 
-      <div class="card-grid">
-        <div class="card reveal">
+      <div class="stk stk--skills reveal" data-stack="skills" style="--n:3">
+        <div class="stk-stage">
+          <div class="card stk-card">
           <h2 data-i18n="skills-uxui-title">UX/UI Skills</h2>
           <div class="tag-list tag-list--tight">
             <span class="tag">Figma</span>
@@ -186,20 +195,7 @@
             <span class="tag">User Research</span>
           </div>
         </div>
-
-        <div class="card reveal">
-          <h2 data-i18n="skills-visual-title">Visual &amp; Creative Skills</h2>
-          <div class="tag-list tag-list--tight">
-            <span class="tag">Photoshop</span>
-            <span class="tag">Illustrator</span>
-            <span class="tag">InDesign</span>
-            <span class="tag">Brand Identity</span>
-            <span class="tag">Campaign Concept</span>
-            <span class="tag">Graphic Design</span>
-          </div>
-        </div>
-
-        <div class="card reveal">
+          <div class="card stk-card">
           <h2 data-i18n="skills-ai-title">AI Skills</h2>
           <div class="tag-list">
             <span class="tag">Google AI</span>
@@ -212,7 +208,25 @@
             <span class="tag">Image Generation</span>
           </div>
         </div>
-
+          <div class="card stk-card">
+          <h2 data-i18n="skills-visual-title">Visual &amp; Creative Skills</h2>
+          <div class="tag-list tag-list--tight">
+            <span class="tag">Photoshop</span>
+            <span class="tag">Illustrator</span>
+            <span class="tag">InDesign</span>
+            <span class="tag">Brand Identity</span>
+            <span class="tag">Campaign Concept</span>
+            <span class="tag">Graphic Design</span>
+          </div>
+        </div>
+        </div>
+        <div class="stk-nav" data-stk-nav>
+                <button class="stk-btn stk-prev" type="button" data-i18n-aria="stk-prev" aria-label="Previous card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+                <span class="stk-count" dir="ltr" aria-hidden="true"><b>1</b> / 3</span>
+                <button class="stk-btn stk-next" type="button" data-i18n-aria="stk-next" aria-label="Next card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+              </div>
+      </div>
+      <div class="card-grid card-pair">
         <div class="card reveal">
           <h2 data-i18n="education-title">Education</h2>
           <p data-i18n="education-text">
@@ -221,7 +235,6 @@
             2023 to 2024
           </p>
         </div>
-
         <div class="card reveal">
           <h2 data-i18n="languages-title">Languages</h2>
           <p data-i18n="languages-text">
@@ -231,10 +244,9 @@
           </p>
         </div>
       </div>
-
       <div class="about-closing reveal">
         <p data-i18n="about-cta-line">Like what you see? Let’s talk.</p>
-        <a href="contact.html" class="btn btn-primary" data-i18n="about-cta-btn">Let’s Talk</a>
+        <a href="contact.html" class="btn keycap keycap--purple" data-i18n="about-cta-btn">Let’s Talk</a>
       </div>
     </div>
   </section>
@@ -255,9 +267,12 @@
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.298-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/></svg>
 </a>
 
+<div class="flow-dot" id="flowDot" aria-hidden="true"><i class="flow-dot-core"><b></b></i></div>
+
 <script src="js/i18n-data.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/main.js"></script>
-<script src="js/layers-hero.js"></script>
+<script src="js/chain-hero.js"></script>
+<script src="js/flow.js"></script>
 </body>
 </html>

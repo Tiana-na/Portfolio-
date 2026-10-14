@@ -848,7 +848,7 @@ html[dir="ltr"] .hero-detail-mark{
 .mag-facts{ display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
 
 /* paper cards - same planes as the hero layers: cream (sketch), lavender (wireframe), soft layered shadow */
-.paper-card, .mag-fact, .card-grid .card{
+.paper-card, .stk-card, .card-grid .card{
   --paper: #fffdf8;
   background: var(--paper);
   border: 1px solid rgba(122,106,158,.16);
@@ -857,8 +857,8 @@ html[dir="ltr"] .hero-detail-mark{
   transform-origin: 50% 100%;
 }
 .mag-fact{ position: relative; padding: 18px 18px 16px; text-align: start; }
-.mag-fact:nth-child(1){ --paper: #f4ecd8; }
-.mag-fact:nth-child(2){ --paper: #e9e4f3; background-image: repeating-linear-gradient(90deg, rgba(122,106,158,.10) 0 1px, transparent 1px 63px); }
+.stk--story .stk-card:nth-child(1){ --paper: #f4ecd8; }
+.stk--story .stk-card:nth-child(2){ --paper: #e9e4f3; background-image: repeating-linear-gradient(90deg, rgba(122,106,158,.10) 0 1px, transparent 1px 63px); }
 .mag-fact-inner{ position: relative; }
 .mag-fact-label{
   font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #6D5F8E;
@@ -867,32 +867,15 @@ html[dir="ltr"] .hero-detail-mark{
 .mag-fact-text{ font-size: .92rem; line-height: 1.7; color: var(--text-muted); }
 .mag-fact-text strong{ color: var(--text); font-weight: 600; }
 
-/* depth-in: cards arrive from behind and settle flat (the hero's convergence, again) */
-.mag-fact{
-  opacity: 0;
-  transform: perspective(900px) translate3d(0, 34px, -90px) rotateX(10deg);
-  transition: opacity 800ms cubic-bezier(.2,.7,.3,1), transform 900ms cubic-bezier(.2,.7,.3,1);
-}
-.mag-body.content-in .mag-fact{
-  opacity: 1;
-  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-}
-.mag-body.content-in .mag-fact:nth-child(1){ transition-delay: 240ms, 240ms; }
-.mag-body.content-in .mag-fact:nth-child(2){ transition-delay: 460ms, 460ms; }
-.mag-body.content-in .mag-fact.is-tilting{ transition: transform .12s ease-out, opacity .8s; transition-delay: 0ms; }
-
 @media (max-width: 760px){
   .lh-eyebrow{ font-size: .7rem; }
   .mag-body{ padding: 26px 4px 0; }
   .mag-body .mag-quote{ font-size: 20px; }
   .mag-facts{ grid-template-columns: 1fr; gap: 20px; }
-  .mag-fact{ transform: translateY(24px); }
-  .mag-body.content-in .mag-fact{ transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce){
   .mag-body .mag-quote-lead, .mag-body .mag-quote{ opacity: 1; transform: none; transition: none; }
-  .mag-fact{ opacity: 1; transform: none; transition: none; }
 }
 
 .ed-statement{
@@ -902,7 +885,7 @@ html[dir="ltr"] .hero-detail-mark{
 }
 
 .ed-statement p{
-  font-style: italic;
+  font-style: normal;
   font-size: 1.35rem;
   line-height: 1.6;
   color: var(--accent);
@@ -1501,32 +1484,6 @@ a.contact-hero-accent--yellow:focus-visible{
   margin: 20px 0 0;
 }
 
-/* English version: real photographed keycap asset (Hebrew version pending) */
-.lang-en .quiz-start-btn{
-  width: 260px;
-  max-width: 100%;
-  aspect-ratio: 979 / 417;
-  background-image: url('../assets/quiz-start-btn-keycap-en.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-color: transparent;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-  padding: 0;
-  font-size: 0;
-  transition: transform .12s ease, filter .12s ease;
-}
-.lang-en .quiz-start-btn:hover{
-  transform: translateY(-2px);
-  filter: brightness(1.08);
-}
-.lang-en .quiz-start-btn:active{
-  transform: translateY(1px) scale(.98);
-  filter: brightness(.94);
-}
-
 .quiz-card{
   background: var(--card);
   border: 1px solid var(--border);
@@ -1912,8 +1869,261 @@ footer{
   margin: 0 auto 18px;
   max-width: none;
 }
-.about-closing .btn-primary{ background: #6D5F8E; }
+
 @media (max-width: 600px){
   .about-closing{ margin-top: 44px; }
   .about-closing p{ font-size: 1.1rem; }
 }
+
+
+/* ===== Keycap button: the one tactile "physical key" of the site - yellow, pressed like a real key ===== */
+.btn.keycap{
+  --key: #E8D488; --key-top: #F3E6AE; --key-side: #CDB866; --key-deep: #B8A24F;
+  position: relative; isolation: isolate;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 17px 40px 18px; border: 0; border-radius: 19px;   /* logo geometry: corner radius 5 on a 16-high bar = 31% of the height */
+  background: linear-gradient(180deg, #EFDFA0, var(--key));
+  color: var(--text); font-weight: 600; font-size: 1.02rem; letter-spacing: .01em;
+  cursor: pointer;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.7) inset,
+    0 -2px 5px rgba(120,100,30,.18) inset,
+    0 5px 0 var(--key-side),
+    0 8px 0 var(--key-deep),
+    0 16px 22px -8px rgba(37,31,28,.42);
+  transition: transform .12s ease, box-shadow .12s ease;
+  margin-bottom: 8px;
+}
+.btn.keycap::before{
+  content: ""; position: absolute; inset: 5px; z-index: -1; border-radius: 14px;
+  background: linear-gradient(180deg, var(--key-top), #EBDA94);
+  box-shadow: 0 1px 0 rgba(255,255,255,.75) inset, 0 -1px 3px rgba(120,100,30,.22) inset;
+}
+.btn.keycap:hover{ transform: translateY(-2px); }
+.btn.keycap:active{
+  transform: translateY(6px);
+  box-shadow: 0 1px 0 rgba(255,255,255,.7) inset, 0 -2px 5px rgba(120,100,30,.18) inset, 0 1px 0 var(--key-side), 0 2px 0 var(--key-deep), 0 6px 10px -6px rgba(37,31,28,.4);
+}
+.btn.keycap:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 4px; }
+.quiz-start-btn.keycap{ display: flex; margin: 24px 0 0; }
+@media (hover: none){ .btn.keycap:active{ opacity: 1; transform: translateY(6px); } }
+@media (prefers-reduced-motion: reduce){ .btn.keycap{ transition: none; } }
+
+/* purple key (closing "Let's talk") */
+.btn.keycap.keycap--purple{
+  --key-side: #5A4D7E; --key-deep: #483D66;
+  background: linear-gradient(180deg, #8678AA, #6D5F8E);
+  color: #fffdf8;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.35) inset,
+    0 -2px 5px rgba(30,20,60,.25) inset,
+    0 5px 0 var(--key-side),
+    0 8px 0 var(--key-deep),
+    0 16px 22px -8px rgba(37,31,28,.42);
+}
+.btn.keycap.keycap--purple::before{
+  background: linear-gradient(180deg, #7F70A3, #725F95 100%);
+  box-shadow: 0 1px 0 rgba(255,255,255,.3) inset, 0 -1px 3px rgba(30,20,60,.3) inset;
+}
+.btn.keycap.keycap--purple:active{
+  box-shadow: 0 1px 0 rgba(255,255,255,.35) inset, 0 -2px 5px rgba(30,20,60,.25) inset, 0 1px 0 var(--key-side), 0 2px 0 var(--key-deep), 0 6px 10px -6px rgba(37,31,28,.4);
+}
+
+/* =====================================================================
+   About flow: the logo's dot sets off a chain reaction (hero), then rolls
+   down the page opening each stack. Shapes come from the site's own language:
+   keycaps, pills, paper cards, the three pastel rails.
+   ===================================================================== */
+
+/* ---- header logo: the dot is its own element so it can leave ---- */
+.logo-mark{ overflow: visible; }
+.logo-dot{ transition: opacity .25s ease; }
+html.dot-away .logo-dot{ opacity: 0; }
+
+/* ---- hero stage: wide window, the table fades out at the top and bottom while it plays ---- */
+.lh-stage{
+  width: min(100vw, 1240px);
+  margin-inline: calc(50% - min(100vw, 1240px) / 2);
+}
+.lh-stage.is-playing{
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 9%, #000 91%, transparent 100%), linear-gradient(to right, transparent 0, #000 9%, #000 91%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to bottom, transparent 0, #000 9%, #000 91%, transparent 100%), linear-gradient(to right, transparent 0, #000 9%, #000 91%, transparent 100%);
+  mask-composite: intersect;
+}
+.lh-cam{ position: absolute; left: 0; top: 0; width: 0; height: 0; transform-style: preserve-3d; }
+.lh-floor{
+  position: absolute; left: -1500px; top: -1100px; width: 3600px; height: 2400px;
+  background-image: radial-gradient(circle, rgba(122,106,158,.30) 1.2px, transparent 1.7px);
+  background-size: 46px 46px;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 50%, #000 18%, transparent 60%);
+  mask-image: radial-gradient(ellipse at 50% 50%, #000 18%, transparent 60%);
+  pointer-events: none;
+}
+.lh-abs{ position: absolute; left: 0; top: 0; transform-style: preserve-3d; }
+.lh-fl{ position: absolute; left: 0; top: 0; border-radius: 50%; background: radial-gradient(ellipse, rgba(37,31,28,.32), transparent 70%); pointer-events: none; }
+.lh-cam > .lh-layer{ left: -190px; top: -237px; }
+
+/* the dot: the logo's own detail (one rounded corner), made 3D */
+.lh-ball{
+  width: 22px; height: 22px; margin: -11px 0 0 -11px;
+  filter: drop-shadow(0 6px 5px rgba(37,31,28,.16)) drop-shadow(0 0 10px rgba(190,175,230,.85));
+}
+.lh-ball b{ position: absolute; inset: 0; border-radius: 0 33% 0 0; background: #E1D5CA; }
+
+/* the printed portrait: a light bar sweeps down the stack; what it passes becomes the photo */
+.lh-print{ position: absolute; left: 0; top: 0; width: 380px; height: 475px; border-radius: 14px; opacity: 0; pointer-events: none; filter: grayscale(45%) contrast(1.06) brightness(1.03); }
+.lh-shade{ position: absolute; inset: 0; border-radius: 14px; opacity: 0; pointer-events: none;
+  background: linear-gradient(to top, rgba(10,8,6,.72), rgba(10,8,6,0) 52%), linear-gradient(to bottom, rgba(10,8,6,.55), rgba(10,8,6,0) 26%); }
+/* the trail: one soft stripe on the floor, under the sheets */
+.lh-trail{ position: absolute; left: -700px; top: -400px; width: 1800px; height: 1100px; transform: translate3d(0,0,-.4px); pointer-events: none; }
+.lh-trail svg{ display: block; overflow: visible; }
+
+/* ---- the dot that travels with the page ---- */
+.flow-dot{
+  position: fixed; left: 0; top: 0; z-index: 55; width: 0; height: 0; pointer-events: none;
+  opacity: 0; will-change: transform;
+  --ds: 22px; --sh: 1;
+}
+@property --halo{ syntax: '<number>'; inherits: true; initial-value: 0; }
+.flow-dot{ --o1: 0px; --o2: 0px; --o3: calc(var(--ds) * .22 * var(--sh)); --b3: calc(var(--ds) * .3 * var(--sh)); --a3: calc(.16 * var(--sh)); --c1: #cdbfb1; --c2: #b9aa9a; --km: 0; --halo: 0; transition: --halo .6s ease; }
+.flow-dot.is-key{ transition: opacity .22s ease; }
+.flow-dot-core{
+  position: absolute; left: 0; top: 0; display: block;
+  width: var(--dw, var(--ds)); height: var(--dh, var(--ds)); margin: calc(var(--dh, var(--ds)) / -2) 0 0 calc(var(--dw, var(--ds)) / -2);
+  filter: drop-shadow(0 var(--o1) 0 var(--c1)) drop-shadow(0 var(--o2) 0 var(--c2)) drop-shadow(0 var(--o3) var(--b3) rgba(37,31,28,var(--a3))) drop-shadow(0 0 calc(var(--ds) * .6 * var(--halo)) rgba(183,166,226,calc(.95 * var(--halo))));
+}
+.flow-dot-core b{
+  position: absolute; inset: 0; border-radius: var(--r-tl, 0) var(--r-tr, 33%) var(--r-br, 0) var(--r-bl, 0); transform: rotate(var(--rot, 0rad));
+  background: #E1D5CA;
+}
+/* at the very end the dot turns into the closing key: purple face + inner bevel fade in as it grows */
+.flow-dot-core b::before{ content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(180deg, #8678AA, #6D5F8E); opacity: var(--km); }
+.flow-dot-core b::after{ content: ""; position: absolute; inset: calc(5px * var(--km)); border-radius: calc(14px * var(--km)); background: linear-gradient(180deg, #7F70A3, #725F95); box-shadow: 0 1px 0 rgba(255,255,255,.3) inset; opacity: var(--km); }
+.btn.keycap.is-pending{ visibility: hidden; }
+.flow-dot.is-pop .flow-dot-core{ animation: dotPop .6s cubic-bezier(.3,1.4,.4,1); }
+@keyframes dotPop{ 0%{ transform: scale(0); } 100%{ transform: scale(1); } }
+.flow-dot.is-land .flow-dot-core{ animation: dotLand .5s cubic-bezier(.3,.7,.3,1); }
+@keyframes dotLand{ 0%{ transform: scale(1,1); } 30%{ transform: scale(1.3,.72); } 62%{ transform: scale(.9,1.12); } 100%{ transform: scale(1,1); } }
+
+/* rail: one soft stripe, drawn as the dot descends */
+#flowMain{ position: relative; }
+.flow-rail{ position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 0; }
+.flow-rail path{ fill: none; stroke: #D8CBBE; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+/* the current: the stretch the dot has just passed glows, then settles back to its calm colour */
+.flow-rail path.rg{ stroke: #B7A6E2; opacity: 0; transition: opacity 1.1s ease; filter: drop-shadow(0 0 5px rgba(183,166,226,.95)); }
+.flow-rail path.rg3{ stroke: #D2C8EC; stroke-width: 3px; }
+.flow-rail.is-moving path.rg{ opacity: 1; transition-duration: .1s; }
+
+/* things wait, un-powered, until the dot reaches them - then they come alive */
+.pw-armed .pw{ filter: saturate(.25) opacity(.5); transition: filter .9s ease; }
+.pw-armed .pw.is-lit{ filter: none; }
+.pw.is-spark{ animation: pwSpark 1.1s ease-out; }
+@keyframes pwSpark{ 0%{ filter: brightness(1.14) drop-shadow(0 0 18px rgba(183,166,226,.95)); } 100%{ filter: brightness(1) drop-shadow(0 0 0 rgba(183,166,226,0)); } }
+.stk .stk-card::after{ content: ""; position: absolute; inset: -1px; border-radius: inherit; pointer-events: none; opacity: 0; }
+.stk.is-spark .stk-card::after{ animation: cardLit 1.2s ease-out; animation-delay: calc(var(--d, 0) * 140ms); }
+@keyframes cardLit{ 0%{ opacity: 0; box-shadow: 0 0 0 0 rgba(183,166,226,.9); } 30%{ opacity: 1; box-shadow: 0 0 24px 4px rgba(183,166,226,.85), inset 0 0 18px rgba(183,166,226,.5); } 100%{ opacity: 0; box-shadow: 0 0 0 0 rgba(183,166,226,0); } }
+
+
+/* ---- stacks: a small library, seen from the side ---- */
+.stk{
+  --gap: 30px; --lz: -200px; --tilt: 24deg; --reach: 110px; --dir: 1; --open: 1;
+  position: relative; max-width: min(780px, calc(100% - 32px)); margin: 0 auto 28px;
+  padding-inline-start: calc((var(--n) - 1) * var(--reach));
+  perspective: 1350px; perspective-origin: 62% 30%;
+}
+[dir="rtl"] .stk{ --dir: -1; perspective-origin: 38% 30%; }
+.stk--skills{ margin-top: 36px; }
+.stk-stage{
+  display: grid; position: relative; transform-style: preserve-3d;
+  transform: rotateY(calc(var(--tilt) * var(--dir) * var(--open)));
+  transition: transform .9s cubic-bezier(.2,.85,.25,1);
+}
+.stk .stk-card{
+  grid-area: 1 / 1; position: relative; z-index: calc(20 - var(--d, 0));
+  --lift: 0px; --dx: 0px; --dr: 0deg; --lx: 0px; --lz2: 0px;
+  transform-style: preserve-3d;
+  transform: translate3d(calc(var(--d, 0) * var(--gap) * var(--dir) * var(--open) * -1 + var(--dx) + var(--lx)), calc(var(--lift) * -1), calc(var(--d, 0) * var(--lz) * var(--open) + var(--lz2)))
+             rotate(var(--dr));
+  transition: transform .7s cubic-bezier(.2,.85,.25,1), box-shadow .3s ease;
+  transition-delay: calc(var(--d, 0) * 70ms);
+  opacity: 1; touch-action: pan-y; -webkit-tap-highlight-color: transparent;
+}
+/* spine: the title of a card that sits behind, written along its edge like a book */
+.stk-spine{
+  position: absolute; top: 1px; bottom: 1px; inset-inline-start: 1px; width: calc(var(--reach) - 14px); z-index: 2;
+  display: flex; align-items: flex-start; justify-content: center; padding-top: 14px;
+  background: transparent; border-radius: 13px 0 0 13px;
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  font-family: 'Bodoni Moda', 'Rubik', serif; font-size: .95rem; font-weight: 500; letter-spacing: .01em; color: #4b3f6b; white-space: nowrap; line-height: 1;
+  transition: opacity .35s ease; pointer-events: none;
+}
+[dir="rtl"] .stk-spine{ border-radius: 0 13px 13px 0; transform: none; }
+.stk .stk-card.is-front .stk-spine{ opacity: 0; }
+/* cards behind are frosted glass: you can tell there is something there, and read its title on the spine */
+.stk .stk-card{ transition: transform .7s cubic-bezier(.2,.85,.25,1), box-shadow .3s ease, background-color .45s ease; }
+.stk .stk-card:not(.is-front){ background-color: color-mix(in srgb, var(--paper) 62%, transparent); border-color: rgba(122,106,158,.22); }
+/* a card behind shows only its spine (title) - its contents wait until it comes to the front, so a peek never shows cut words */
+.stk .stk-card > *:not(.stk-spine){ transition: opacity .3s ease .12s; }
+.stk .stk-card:not(.is-front) > *:not(.stk-spine){ opacity: 0; transition-delay: 0s; }
+.stk.is-armed:not(.is-open){ --open: 0; }
+.stk .stk-card.is-front{ cursor: grab; transition-delay: 0ms; }
+.stk .stk-card.is-front.is-dragging{ cursor: grabbing; transition: none; }
+.stk .stk-card:not(.is-front){ cursor: pointer; }
+.stk .stk-card:not(.is-front) > *:not(.stk-spine){ pointer-events: none; }
+@media (hover: hover){
+.stk.is-open .stk-card:not(.is-front):hover,
+.stk.is-open .stk-card:not(.is-front):focus-visible{
+  --lx: calc(-26px * var(--dir)); --lz2: 44px; --lift: 6px; transition-delay: 0ms; transition-duration: .3s;
+  box-shadow: 0 1px 0 rgba(255,255,255,.7) inset, 0 22px 30px -18px rgba(37,31,28,.5), 0 4px 10px -4px rgba(37,31,28,.2);
+}
+}
+.stk .stk-card:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 3px; }
+.stk--skills .stk-card{ padding: 16px 20px 18px; min-height: 196px; }
+.stk--story .stk-card{ min-height: 178px; }
+.stk--skills .stk-card:nth-child(1){ --paper: #e9e4f3; background-image: repeating-linear-gradient(90deg, rgba(122,106,158,.10) 0 1px, transparent 1px 63px); }
+.stk--skills .stk-card:nth-child(2){ --paper: #fffdf8; }
+.stk--skills .stk-card:nth-child(3){ --paper: #f4ecd8; }
+.stk--skills .tag-list--tight{ max-width: none; }
+
+.stk-nav{ display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin-top: 16px; }
+.stk-count{ font-size: .8rem; letter-spacing: .06em; color: #7b6f8f; min-width: 3.2em; text-align: center; font-variant-numeric: tabular-nums; }
+.stk-count b{ color: #4b3f6b; font-weight: 600; }
+.stk-btn{
+  width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+  border: 1.5px solid rgba(122,106,158,.5); background: rgba(255,253,248,.85); color: #5b4d7e;
+  box-shadow: 0 3px 0 rgba(122,106,158,.28); transition: transform .12s ease, box-shadow .12s ease, background .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.stk-btn svg{ width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.stk-btn:hover{ background: #e9e4f3; }
+.stk-btn:active{ transform: translateY(3px); box-shadow: 0 0 0 rgba(122,106,158,.28); }
+.stk-btn:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 3px; }
+[dir="rtl"] .stk-btn svg{ transform: scaleX(-1); }
+
+/* education + languages stay open and visible */
+.card-pair{ max-width: min(720px, calc(100% - 32px)); margin: 18px auto 0; }
+
+/* a station is reached: little pulses on the target */
+.pastel-accent.is-hit .pastel-accent-bar{ animation: barPing .9s ease; transform-origin: 50% 0; }
+.pastel-accent.is-hit .pastel-eyebrow-chip{ animation: chipHop .6s cubic-bezier(.3,.7,.3,1); }
+@keyframes barPing{ 0%{ transform: scaleY(1); } 35%{ transform: scaleY(1.6); } 100%{ transform: scaleY(1); } }
+@keyframes chipHop{ 0%{ transform: translateY(0); } 35%{ transform: translateY(-5px); } 100%{ transform: translateY(0); } }
+.btn.keycap.is-landed{ animation: keyLand .6s cubic-bezier(.3,.7,.3,1); }
+@keyframes keyLand{ 0%{ transform: translateY(0); } 30%{ transform: translateY(5px); } 100%{ transform: translateY(0); } }
+
+@media (max-width: 760px){
+  .stk{ --gap: 14px; --lz: -130px; --tilt: 20deg; --reach: 58px; }
+  .stk--skills{ margin-top: 28px; }
+  .stk-spine{ font-size: .86rem; padding-top: 12px; }
+  .flow-dot{ --ds: 16px; }
+}
+@media (prefers-reduced-motion: reduce){
+  .flow-dot, .flow-rail{ display: none; }
+  .pw-armed .pw{ filter: none; }
+  .stk .stk-card{ transition: none; }
+}
+
+/* let the hero's table reach the screen edges; the page itself never scrolls sideways */
+.ed-intro{ overflow-x: visible; }
+#flowMain{ overflow-x: clip; }
