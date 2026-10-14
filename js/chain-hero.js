@@ -120,7 +120,7 @@
 
   var TRAIL_C = '#D3C4B6';
   var WP = [[-370, -165], [-300, -100], [-200, -55], [-90, -15], [20, 55], [130, 85], [210, 72], [400, 102], [570, 124], [604, 128],
-            [657, 174], [711, 274], [765, 374], [818, 420]];
+            [657, 174], [711, 274], [765, 374], [818, 420], [884, 440], [948, 455], [1000, 462]];
   var OX = 700, OY = 400;
   var trailEl = el('lh-trail'), trailSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'), trailPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
   trailSvg.setAttribute('width', '1800'); trailSvg.setAttribute('height', '1100'); trailSvg.setAttribute('viewBox', '0 0 1800 1100');
@@ -227,7 +227,7 @@
     trailEl.style.opacity = props * vis * (tu > 0 ? 1 : 0);
 
     /* sheets */
-    var appear = [13.4, 3.2, 6.2, 9.9];
+    var appear = [13.4, 3.2, 6.2, 9.4], glowAt = [0, appear[1] + .05, appear[2] + .05, 9.8];
     var spread = lerp(70, 1.5, ease(seg(t, 11.8, 14.4)));
     var sp = lerp(spread, 200 * (nar ? .62 : 1), o);
     layers.forEach(function (L, i) {
@@ -239,7 +239,7 @@
       L.style.opacity = ap;
       L.style.transform = 'translate3d(' + x + 'px,' + y + 'px,' + (zi + dz) + 'px) rotateZ(' + yaw + 'deg) scale(' + sc + ')';
       var shd = 1 - pe;
-      var gl = i === 0 ? 0 : seg(t, appear[i] + .05, appear[i] + .3) * (1 - seg(t, appear[i] + .3, appear[i] + 1.2));
+      var gl = i === 0 ? 0 : seg(t, glowAt[i], glowAt[i] + .25) * (1 - seg(t, glowAt[i] + .25, glowAt[i] + 1.15));
       L.style.boxShadow = '0 ' + (14 * shd) + 'px ' + (26 * shd) + 'px rgba(37,31,28,' + (.18 * shd * ap) + '),0 0 0 ' + (o ? 1 : 0) + 'px rgba(37,31,28,' + (.1 * o) + ')' + (gl > 0.01 ? ',0 0 ' + (30 * gl) + 'px ' + (6 * gl) + 'px rgba(183,166,226,' + (.85 * gl) + ')' : '');
       if (i > 0) { papers[i].style.opacity = 1; if (pr * (1 - o) > .62) L.style.opacity = 0; }
     });

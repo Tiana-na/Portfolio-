@@ -133,23 +133,35 @@
     xg = rtl ? vw - gut : gut;
 
     stations = [];
-    var st = doc.querySelector('.stk--story');
+    /* every station is met the same way: the dot parks a fixed breath of air beside the element's near edge, at a fixed height from its top */
+    var AIR = ds / 2 + (narrow ? 8 : 12), TOPOFF = 28;
+    function park(edge) {
+      var x = rtl ? edge + AIR : edge - AIR;
+      return rtl ? Math.min(x, vw - ds / 2 - 2) : Math.max(x, ds / 2 + 2);
+    }
+    /* where a stack's near edge really is once it is open (the tilt pulls the cards in, so the plain arithmetic misses) */
+    function stackEdge(s) {
+      var wasOpen = s.classList.contains('is-open'), e = rtl ? -1e9 : 1e9;
+      s.classList.add('stk-measuring'); if (!wasOpen) s.classList.add('is-open');
+      void s.offsetWidth;
+      Array.prototype.forEach.call(s.querySelectorAll('.stk-card'), function (c) { var r = c.getBoundingClientRect(); e = rtl ? Math.max(e, r.right) : Math.min(e, r.left); });
+      if (!wasOpen) s.classList.remove('is-open');
+      void s.offsetWidth; s.classList.remove('stk-measuring');
+      return e + sx;
+    }
     function stackAnchor(s) {
       var r = box(s.querySelector('.stk-stage'));
-      var tab = parseFloat(getComputedStyle(s).getPropertyValue('--tab')) || 40;
-      var nn = parseFloat(getComputedStyle(s).getPropertyValue('--n')) || 2;
-      var gp = parseFloat(getComputedStyle(s).getPropertyValue('--reach')) || 46;
-      return { x: rtl ? r.right + (nn - 1) * gp - 6 : r.left - (nn - 1) * gp + 6, y: r.top + 20 };
+      return { x: park(stackEdge(s)), y: r.top + TOPOFF };
     }
     var sStory = doc.querySelector('.stk--story'), sSkills = doc.querySelector('.stk--skills');
     if (sStory) { var a = stackAnchor(sStory); stations.push(station('stack', sStory, a)); }
     var chip = doc.querySelector('.quiz-block .pastel-eyebrow-chip');
-    if (chip) { var cr = box(chip); var off = Math.max(12, ds / 2 + 2 - 0); var cxq = rtl ? cr.right + 12 : cr.left - 12; cxq = rtl ? Math.min(cxq, vw - ds / 2 - 2) : Math.max(cxq, ds / 2 + 2); var qs = station('quiz', chip.closest('.pastel-accent'), { x: cxq, y: cr.top + cr.height / 2 }); var qb = box(doc.querySelector('.quiz-block')); qs.ayEnd = Math.max(qs.ay + 10, qb.bottom - 26); stations.push(qs); }
+    if (chip) { var cr = box(chip); var qs = station('quiz', chip.closest('.pastel-accent'), { x: park(rtl ? cr.right : cr.left), y: cr.top + cr.height / 2 }); var qb = box(doc.querySelector('.quiz-block')); qs.ayEnd = Math.max(qs.ay + 10, qb.bottom - 26); stations.push(qs); }
     if (sSkills) { var a2 = stackAnchor(sSkills); stations.push(station('stack', sSkills, a2)); }
     var pair = doc.querySelector('.card-pair');
-    if (pair) { var pr = box(pair); stations.push(station('pair', pair, { x: rtl ? pr.right : pr.left, y: pr.top + 24 })); }
+    if (pair) { var pr = box(pair); stations.push(station('pair', pair, { x: park(rtl ? pr.right : pr.left), y: pr.top + TOPOFF })); }
     var key = doc.querySelector('.about-closing .btn.keycap');
-    if (key) { var kr = box(key); stations.push(station('end', key, { x: rtl ? kr.right - 6 : kr.left + 6, y: kr.top + kr.height * .5 })); }
+    if (key) { var kr = box(key); stations.push(station('end', key, { x: park(rtl ? kr.right : kr.left), y: kr.top + kr.height * .5 })); }
     stations.forEach(function (s0) {
       var tg = s0.kind === 'quiz' ? (doc.querySelector('.quiz-block') || s0.el) : s0.kind === 'end' ? (doc.querySelector('.about-closing') || s0.el) : s0.el;
       s0.pw = tg; if (tg) tg.classList.add('pw');
@@ -184,39 +196,53 @@
     return d;
   }
 
+  var baseEl = null, Lelbow = 0;
   function buildPath() {
-    pts = [[yStart, xg]];
-    var prevY = yStart, hold = 18;
+    var hold = 18, dir = rtl ? -1 : 1, Pm = [[yStart, xg]], curX = xg, curY = yStart;
+    function sIn(x0, x1, y0, y1) { for (var k = 1; k <= 14; k++) { var u = k / 14; Pm.push([lerp(y0, y1, u), lerp(x0, x1, sm(u))]); } }
+    function need(x) { return clamp(.55 * Math.abs(x - xg), 44, 200); }   /* vertical room an S-bend wants so it never turns sharply */
+    var endS = null;
     for (var i = 0; i < stations.length; i++) {
       var s = stations[i];
-      var endY = s.ayEnd || s.ay;
-      var gPrev = s.ay - (i ? (stations[i - 1].ayEnd || stations[i - 1].ay) : yStart);
-      var gNext = i < stations.length - 1 ? stations[i + 1].ay - endY : 9999;
-      if (s.kind === 'end') {
-        var cp = doc.querySelector('.about-closing p'), cb = cp ? box(cp) : null;
-        var yS = Math.max(prevY + 8, cb ? cb.bottom + 3 : s.ay - 50);
-        pts.push([yS, xg]);
-        for (var ke = 1; ke <= 26; ke++) { var ue = ke / 26; pts.push([lerp(yS, s.ay, ue), lerp(xg, s.ax, sm(ue))]); }
-        prevY = s.ay; break;
+      if (s.kind === 'end') { endS = s; break; }
+      var yA = s.ay - hold / 2, yB = (s.ayEnd || s.ay) + hold / 2, avail = yA - curY, wIn = need(s.ax);
+      if (curX === xg) {
+        var w = Math.min(wIn, Math.max(20, avail)), y0 = Math.max(yA - w, curY + 1);
+        if (y0 > curY + .5) Pm.push([y0, xg]);
+        sIn(xg, s.ax, y0, yA);
+      } else {
+        var wOut = need(curX);
+        if (avail >= wOut + wIn + 24) {          /* room enough: back to the main line, then out again */
+          var y3 = curY + wOut; sIn(curX, xg, curY, y3);
+          var y0b = Math.max(yA - wIn, y3 + 1); if (y0b > y3 + .5) Pm.push([y0b, xg]);
+          sIn(xg, s.ax, y0b, yA);
+        } else sIn(curX, s.ax, curY, Math.max(yA, curY + 2));   /* close together: one gentle S straight across */
       }
-      var win = clamp(Math.min(170, (Math.min(gPrev, gNext) - 30) / 2.2), 24, 170);
-      var y0 = s.ay - hold / 2 - win, y1 = s.ay - hold / 2, y2 = endY + hold / 2, y3 = y2 + win;
-      if (y0 < prevY + 4) y0 = prevY + 4;
-      pts.push([y0, xg]);
-      for (var k = 1; k <= 14; k++) { var u = k / 14; pts.push([lerp(y0, y1, u), lerp(xg, s.ax, sm(u))]); }
-      pts.push([y2, s.ax]);
-      if (s.kind === 'end') { prevY = y2; break; }
-      for (var k2 = 1; k2 <= 14; k2++) { var u2 = k2 / 14; pts.push([lerp(y2, y3, u2), lerp(s.ax, xg, sm(u2))]); }
-      prevY = y3;
+      Pm.push([yB, s.ax]); curX = s.ax; curY = yB;
     }
-    /* draw: ONE soft stripe - the sampled points become a smooth curve (no corners) */
     var narrow = window.innerWidth <= 760;
-    var d = monoPath(pts.map(function (p) { return [p[0] - mainTop, p[1] - mainLeft]; }), true);
-    railSvg.innerHTML = '<path d="' + d + '"/><path class="rg rg3" d="' + d + '"/><path class="rg rg2" d="' + d + '"/><path class="rg rg1" d="' + d + '"/>';
+    function P(p) { return [p[0] - mainTop, p[1] - mainLeft]; }
+    var dMono, dFull;
+    if (endS) {
+      var ay = endS.ay, axE = endS.ax;
+      var R = clamp(Math.min(64, Math.abs(axE - xg) * .5), 16, 64);
+      if (curX !== xg) { var yo = Math.min(curY + need(curX), ay - R - 6); yo = Math.max(yo, curY + 10); sIn(curX, xg, curY, yo); curX = xg; curY = yo; }
+      var yE = Math.max(ay - R, curY + 1); R = ay - yE;
+      if (yE > curY + .5) Pm.push([yE, xg]);
+      dMono = monoPath(Pm.map(P), true);
+      var k0 = .5523, x1 = xg - mainLeft, y1 = yE - mainTop, yA2 = ay - mainTop;
+      dFull = dMono + 'C' + x1.toFixed(1) + ',' + (y1 + k0 * R).toFixed(1) + ' ' + (x1 + dir * R * (1 - k0)).toFixed(1) + ',' + yA2.toFixed(1) + ' ' + (x1 + dir * R).toFixed(1) + ',' + yA2.toFixed(1);
+      if ((axE - (xg + dir * R)) * dir > 1) dFull += 'L' + (axE - mainLeft).toFixed(1) + ',' + yA2.toFixed(1);
+    } else { dMono = dFull = monoPath(Pm.map(P), true); }
+    pts = Pm;
+    /* draw: ONE soft stripe with round ends - smooth bends, and a rounded corner into the last key */
+    railSvg.innerHTML = '<path d="' + dFull + '"/><path class="rg rg3" d="' + dFull + '"/><path class="rg rg2" d="' + dFull + '"/><path class="rg rg1" d="' + dFull + '"/>';
     glow = [railSvg.querySelector('.rg3'), railSvg.querySelector('.rg2'), railSvg.querySelector('.rg1')];
-    var base = railSvg.querySelector('path'); pathLen = base.getTotalLength(); lenTab = [];
-    for (var li = 0; li <= 360; li++) { var lp = base.getPointAtLength(pathLen * li / 360); lenTab.push([lp.y, pathLen * li / 360]); }
-    railSvg.querySelector('path').style.strokeWidth = narrow ? '2.6px' : '3.2px';
+    baseEl = railSvg.querySelector('path');
+    var tmp = document.createElementNS('http://www.w3.org/2000/svg', 'path'); tmp.setAttribute('d', dMono); Lelbow = tmp.getTotalLength();
+    pathLen = baseEl.getTotalLength(); lenTab = [];
+    for (var li = 0; li <= 600; li++) { var lp = baseEl.getPointAtLength(pathLen * li / 600); lenTab.push([lp.y, pathLen * li / 600]); }
+    baseEl.style.strokeWidth = narrow ? '2.6px' : '3.2px';
   }
 
   function mix(a, b, t) {
@@ -276,7 +302,14 @@
       var er = endS.el.getBoundingClientRect(); kw = er.width; kh = er.height;
       kc = { x: er.left + er.width / 2, y: er.top + er.height / 2 };
     }
-    var rx = xAt(docYe), ry = docYe - sy;
+    var rx = xAt(docYe), ry = docYe - sy, sDot = null;
+    if (endS && m1 > 0 && baseEl) {
+      /* the last stretch is followed by arc length (it bends round the corner and runs sideways into the key) */
+      var sF = Math.min(lengthAtY(docY - mainTop), Lelbow);
+      sDot = lerp(sF, pathLen, m1);
+      var Pd = baseEl.getPointAtLength(sDot);
+      rx = mainLeft + Pd.x; ry = mainTop + Pd.y - sy; docYe = mainTop + Pd.y;
+    }
     var x = lerp(hd.x, rx, k), y = lerp(hd.y, ry, k);
     var size = lerp(hd.d, ds, k), round = k, shade = k;
     var rot = 0, docYg = docYe;
@@ -306,7 +339,7 @@
     dot.style.setProperty('--sh', shade.toFixed(3));
     dot.style.setProperty('--rot', rot.toFixed(3) + 'rad');
     dot.style.setProperty('--halo', (k > 0 && m < .6 ? .8 : 0).toFixed(2));
-    if (pathLen) { var Lh = lengthAtY(docYg - mainTop); glow.forEach(function (g, gi) { var tl = TAILS[gi]; g.style.strokeDasharray = tl + ' ' + (pathLen + 400); g.style.strokeDashoffset = (-(Lh - tl)).toFixed(1); }); }
+    if (pathLen) { var Lh = sDot != null ? sDot : lengthAtY(docYg - mainTop); glow.forEach(function (g, gi) { var tl = TAILS[gi]; g.style.strokeDasharray = tl + ' ' + (pathLen + 400); g.style.strokeDashoffset = (-(Lh - tl)).toFixed(1); }); }
     if (m > 0) {
       var sh1 = shade;
       dot.style.setProperty('--o1', lerp(0, 5, m).toFixed(2) + 'px');
@@ -320,8 +353,12 @@
       ['--o1', '--o2', '--o3', '--b3', '--a3', '--c1', '--c2'].forEach(function (n) { dot.style.removeProperty(n); });
     }
     /* the rail grows behind the dot */
-    var drawn = clamp(docYe - mainTop + 3, 0, mainH);
-    railSvg.style.clipPath = 'inset(0 0 ' + Math.max(0, mainH - drawn) + 'px 0)';
+    if (baseEl) {
+      var Lrev = sDot != null ? sDot : lengthAtY(docYe - mainTop + 3);
+      railSvg.style.clipPath = 'none';
+      if (Lrev < 1.5) baseEl.style.opacity = 0;
+      else { baseEl.style.opacity = 1; baseEl.style.strokeDasharray = Lrev.toFixed(1) + ' ' + (pathLen + 400); }
+    }
     /* stations open when the dot reaches them */
     for (var i = 0; i < stations.length; i++) {
       var s = stations[i];

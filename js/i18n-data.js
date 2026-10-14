@@ -29,7 +29,7 @@ window.I18N = {
 
   index: {
     "hero-h1": "היי,<br>אני טיאנה",
-    "hero-subline": "חובבת קפה, ספרים ומארוול. <br class=\"subline-break\">סקרנית. <br class=\"subline-break\">הנדי וומן.<button type=\"button\" class=\"footnote-ref\" data-footnote-trigger=\"handywoman\">*</button>",
+    "hero-subline": "חובבת קפה, ספרים, אופנה ומארוול. <br class=\"subline-break\">סקרנית. <br class=\"subline-break\">הנדי וומן.<button type=\"button\" class=\"footnote-ref\" data-footnote-trigger=\"handywoman\">*</button>",
     "footnote-handywoman": "<span class=\"footnote-asterisk\">*</span> הנדי וומן: אישה עצמאית לחלוטין שיודעת לקרוא לבעל לבד כדי שיעזור.",
     "hero-lede": "בנוסף, אני מעצבת UX/UI. במשך שנים עיצבתי <span class=\"hl\">חוויות לקוח במרחבים פיזיים</span> עבור מותגים בינלאומיים, ומאז 2024 אני עושה את אותו הדבר במוצרים דיגיטליים. אני מביאה עין להתנהגות משתמשים ולהיררכיה ויזואלית לכל ממשק שאני מעצבת. הפרק הבא שלי הוא דיגיטלי. אני רוצה להתפתח בו ולוודא שהוא נשאר אנושי, גם כשה-AI מאיץ הכול.",
     "hero-closing": "אוהבת אסתטיקה בכל ביטוי שלה, אבל מאמינה שהיא לא צריכה לבוא על חשבון נוחות. ביי&nbsp;עקבים.",
