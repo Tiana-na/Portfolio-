@@ -429,7 +429,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /* The cursor dot itself never changes shape/color - only a small text
        hint appears next to it on certain elements (view / click / play). */
-    var VIEW_SELECTOR = '.work-row, .card';
+    var VIEW_SELECTOR = '.work-image';
     var CLICK_SELECTOR = '.btn, .work-btn, .quiz-start-btn, .quiz-icon-btn, .whatsapp-fab, .nav-cv-btn, .trivia-teaser-link, .quiz-option, button:not(.menu-toggle):not(.trivia-teaser-close)';
     var HINT_FAR_SELECTOR = '.mag-body';
     var HINT_NEAR_SELECTOR = '.quiz-block';
@@ -474,4 +474,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
   }
 
+});
+
+/* logo = home. On the home page itself it glides back to the top instead of reloading */
+document.addEventListener('DOMContentLoaded', function () {
+  var logo = document.querySelector('a.logo-lockup');
+  if (!logo) return;
+  logo.addEventListener('click', function (e) {
+    var onHome = /(^|\/)(index\.html)?$/.test(location.pathname);
+    if (!onHome) return;
+    e.preventDefault();
+    var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: calm ? 'auto' : 'smooth' });
+  });
 });

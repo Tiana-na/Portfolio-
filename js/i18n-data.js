@@ -7,7 +7,7 @@
 window.I18N = {
 
   common: {
-    "nav-home": "בית",
+    "nav-home": "פרויקטים",
     "nav-about": "מי אני",
     "nav-contact": "בואו נדבר",
     "nav-cv": "קורות חיים",
@@ -89,7 +89,7 @@ window.I18N = {
   },
 
   contact: {
-    "contact-h1": "בואו <span class=\"contact-hero-accent contact-hero-accent--purple\">נדבר</span>,",
+    "contact-h1": "בואו <span class=\"contact-hero-accent contact-hero-accent--purple\">נדבר,</span>",
     "contact-subtext": "אפשר גם הודעה קולית ב<a href=\"https://wa.me/972525218873\" target=\"_blank\" rel=\"noopener\" class=\"contact-hero-accent contact-hero-accent--yellow\">וואטסאפ</a>",
     "contact-looking": "מחפשת צוות. את הקפה מביאה בעצמי.",
     "contact-photo-alt": "טיאנה מחזיקה שפופרת של טלפון ציבורי כתום ומחייכת",
