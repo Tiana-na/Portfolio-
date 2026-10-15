@@ -1,15 +1,15 @@
-/* The info cards on About are BUILT by the line's dot. The dot arrives at a station, draws the card as a wireframe
-   (a dashed block where every line of text and every chip will be) and then runs down the card's height like a print head:
-   the blocks wipe away under it and the real content is printed from top to bottom. Plays once per card.
-   The text stays in the DOM the whole time; with reduced motion (or if the line engine is missing) nothing is hidden for long. */
+/* The info cards on About "build" themselves, in the site's own language: first a wireframe of the card appears
+   (a dashed block where every line of text and every chip will be), then the blocks wipe away and the real content is printed
+   underneath. Plays once, when a card first scrolls into view. The text stays in the DOM the whole time; with reduced motion
+   (or without IntersectionObserver) nothing is hidden at all. */
 (function () {
   'use strict';
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduce || !('IntersectionObserver' in window)) return;
-  var doc = document, TF = window.TF = window.TF || {};
-  var SEL = '.stk--story .stk-card:first-child, .stk--skills .stk-card:first-child, .card-pair .card';
-  var cards = Array.prototype.slice.call(doc.querySelectorAll(SEL));
+  var SEL = window.TF_BUILD_SEL || '.stk--story .stk-card:first-child, .stk--skills .stk-card:first-child, .card-pair .card';
+  var cards = Array.prototype.slice.call(document.querySelectorAll(SEL));
   if (!cards.length) return;
+  var doc = document;
 
   function boxes(card) {
     var pt = card.style.transform, ptr = card.style.transition;
@@ -33,74 +33,44 @@
       rows.forEach(function (m) { add({ left: m.left - 3, top: m.top + 1, width: m.right - m.left + 6, height: m.bottom - m.top - 2 }); });
     }
     card.style.transform = pt; card.style.transition = ptr;
-    out.sort(function (a, b) { return a.y - b.y || a.x - b.x; });
-    return { list: out, h: cr.height / k };
+    out.sort(function (a, b) { return (a.y - b.y) > 6 ? 1 : (b.y - a.y) > 6 ? -1 : a.x - b.x; });
+    return out;
   }
 
   function prep(card) {
     if (card.__bld) return card.__bld;
     var ov = doc.createElement('div'); ov.className = 'bld-ov'; ov.setAttribute('aria-hidden', 'true');
     card.appendChild(ov);
-    var st = { card: card, ov: ov, bars: [], head: null, done: false, h: 0 };
+    var st = { card: card, ov: ov, bars: [], done: false, armed: false };
     card.__bld = st; return st;
   }
   function arm(st) {
-    var card = st.card, rtl = doc.documentElement.dir === 'rtl', b = boxes(card);
-    st.ov.innerHTML = ''; st.bars = []; st.h = b.h;
-    b.list.forEach(function (o) {
+    var card = st.card, rtl = doc.documentElement.dir === 'rtl';
+    st.ov.innerHTML = ''; st.bars = [];
+    boxes(card).forEach(function (b, i) {
       var d = doc.createElement('i'); d.className = 'bld-bar';
-      d.style.cssText = 'left:' + o.x + 'px;top:' + o.y + 'px;width:' + o.w + 'px;height:' + o.h + 'px;transform-origin:' + (rtl ? 'left' : 'right') + ' center';
-      d._y = o.y + o.h * .5; st.ov.appendChild(d); st.bars.push(d);
+      d.style.cssText = 'left:' + b.x + 'px;top:' + b.y + 'px;width:' + b.w + 'px;height:' + b.h + 'px;transform-origin:' + (rtl ? 'left' : 'right') + ' center';
+      st.ov.appendChild(d); st.bars.push(d);
     });
-    st.head = doc.createElement('i'); st.head.className = 'bld-head'; st.ov.appendChild(st.head);
-    card.classList.add('bld-hide');
+    card.classList.add('bld-hide'); st.armed = true;
+    setTimeout(function () { card.classList.remove('bld-hide'); }, 7000);
   }
-
   function play(st) {
     if (st.done) return; st.done = true;
     arm(st);
-    var n = st.bars.length, H = st.h, D = Math.max(850, Math.min(1500, H * 2.6));
-    /* 1. the plan: every block appears, top to bottom, quickly */
-    st.bars.forEach(function (d, i) { setTimeout(function () { d.classList.add('in'); }, 40 + (d._y / H) * 320); });
-    var T0 = 520;
-    /* 2. the print head runs down the card; whatever it passes is revealed */
-    setTimeout(function () {
-      st.card.classList.remove('bld-hide');
-      st.head.classList.add('go');
-      var t0 = performance.now(), next = 0;
-      (function tick(now) {
-        var t = Math.min(1, (now - t0) / D), y = t * (H + 8);
-        st.head.style.transform = 'translateY(' + y.toFixed(1) + 'px)';
-        while (next < n && st.bars[next]._y <= y) { st.bars[next].classList.add('out'); next++; }
-        if (t < 1) requestAnimationFrame(tick);
-        else {
-          while (next < n) { st.bars[next].classList.add('out'); next++; }
-          st.head.classList.add('off');
-          setTimeout(function () { st.ov.remove(); st.card.classList.remove('bld-hide'); }, 700);
-        }
-      })(t0);
-    }, T0);
+    var n = st.bars.length, step = Math.min(55, 650 / Math.max(1, n)), drawEnd = 80 + n * step + 380;
+    st.bars.forEach(function (d, i) { setTimeout(function () { d.classList.add('in'); }, 80 + i * step); });
+    setTimeout(function () { st.card.classList.remove('bld-hide'); }, drawEnd - 40);
+    var wstep = Math.min(45, 520 / Math.max(1, n));
+    st.bars.forEach(function (d, i) { setTimeout(function () { d.classList.add('out'); }, drawEnd + i * wstep); });
+    setTimeout(function () { st.ov.remove(); st.card.classList.remove('bld-hide'); }, drawEnd + n * wstep + 700);
   }
-
-  /* the line engine calls this when its dot reaches a station */
-  TF.onStation = function (s) {
-    var els = [];
-    if (s.kind === 'stack') { var f = s.el.querySelector('.stk-card'); if (f) els.push(f); }
-    else if (s.kind === 'pair') els = Array.prototype.slice.call(s.el.querySelectorAll('.card'));
-    els.forEach(function (c, i) { var st = c.__bld; if (st) setTimeout(function () { play(st); }, i * 260); });
-  };
 
   function start() {
-    cards.forEach(function (c) { arm(prep(c)); });
-    /* fallback: if the dot never gets there (no line engine, odd layout) the card still builds once it has been on screen a while */
     var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        var st = e.target.__bld; io.unobserve(e.target);
-        setTimeout(function () { if (st && !st.done) play(st); }, 2600);
-      });
-    }, { threshold: .5 });
-    cards.forEach(function (c) { io.observe(c); });
+      es.forEach(function (e) { if (e.isIntersecting) { var st = e.target.__bld; io.unobserve(e.target); if (st) setTimeout(function () { play(st); }, 480); } });
+    }, { threshold: .4 });
+    cards.forEach(function (c) { var st = prep(c); arm(st); io.observe(c); });
   }
-  (doc.fonts && doc.fonts.ready ? doc.fonts.ready : Promise.resolve()).then(function () { setTimeout(start, 300); });
+  (doc.fonts && doc.fonts.ready ? doc.fonts.ready : Promise.resolve()).then(function () { setTimeout(start, 400); });
 })();

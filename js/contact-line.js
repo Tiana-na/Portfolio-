@@ -76,13 +76,12 @@
       var xl = Math.max(Lx - 76, 12), xr = Math.min(Rx + 76, W - 12);
       /* the line plugs into the e-mail key: both branches meet under it, then a short stub rises to the key */
       var mx = cx, yEnd = yB - 28;
-      if (mail) { var mb = rel(off(mail)); mx = (mb.l + mb.r) / 2; yEnd = Math.min(yB - 18, mb.b + 16); }
+      if (mail) { var mb = rel(off(mail)); mx = (mb.l + mb.r) / 2; yEnd = Math.min(yB - 14, mb.b + 11); }
       pts = [[cx, 0], [cx, yT], [xl, yT], [xl, yB], [mx, yB], [mx, yEnd]];
       splitS = yT;
       var rd = Math.min(R, (yB - yT) / 2);
       extra += '<path class="rs" pathLength="1" d="M' + f1(cx) + ',' + f1(yT) + 'H' + f1(xr - rd) + 'Q' + f1(xr) + ',' + f1(yT) + ' ' + f1(xr) + ',' + f1(yT + rd) + 'V' + f1(yB - rd) + 'Q' + f1(xr) + ',' + f1(yB) + ' ' + f1(xr - rd) + ',' + f1(yB) + 'H' + f1(mx) + '"/>';
       extra += '<g class="pb" data-cl="b"><circle cx="' + f1(cx) + '" cy="' + f1(yT) + '" r="10.5"/><text x="' + f1(cx) + '" y="' + f1(yT + .5) + '">06</text></g>';
-      extra += '<circle class="px" data-cl="p" cx="' + f1(mx) + '" cy="' + f1(yB) + '" r="4.2"/>';
     } else {
       var gx = rtl ? W - 8 : 8, ry = rr ? (rr.t + rr.b) / 2 : B;
       pts = [[gx, 0], [gx, ry]];
@@ -109,7 +108,7 @@
     svg.classList.toggle('is-moving', !!moving);
     var p = base.getPointAtLength(s);
     dot.style.transform = 'translate3d(' + f1(p.x) + 'px,' + f1(p.y) + 'px,0)';
-    dot.style.opacity = s > 0.5 || played ? 1 : 0;
+    dot.style.opacity = (s >= L - 0.5 && (played || !moving)) ? 0 : (s > 0.5 || played ? 1 : 0);
     var reachedSplit = s >= splitS - 1 && s > 1;
     if (rbr) rbr.classList.toggle('on', reachedSplit);
     if (badge) { badge.classList.toggle('on', reachedSplit); badge.classList.toggle('seen', reachedSplit); }

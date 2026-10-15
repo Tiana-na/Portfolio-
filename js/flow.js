@@ -354,7 +354,6 @@
       s.pw.classList.add('is-lit'); s.pw.classList.remove('is-spark'); void s.pw.offsetWidth; s.pw.classList.add('is-spark');
       var pwEl = s.pw; setTimeout(function () { pwEl.classList.remove('is-spark'); }, 1500);
     }
-    if (window.TF && TF.onStation) { try { TF.onStation(s); } catch (e) { /* decorative */ } }
     if (s.kind === 'stack') { var o = stackOf(s.el); if (o) o.open(); }
     else if (s.kind === 'quiz') { s.el.classList.remove('is-hit'); void s.el.offsetWidth; s.el.classList.add('is-hit'); }
     else if (s.kind === 'end') { s.el.classList.remove('is-landed'); void s.el.offsetWidth; s.el.classList.add('is-landed'); }
