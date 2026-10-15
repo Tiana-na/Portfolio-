@@ -2394,6 +2394,12 @@ html.lh-peek .lh-T .lh-head em{ transform: none !important; }
 .cl-rail.is-connect > path:first-child, .cl-rail.is-connect .rs{ stroke: #7A6A9E; transition: stroke .3s ease; }
 @media (prefers-reduced-motion: reduce){ .quiz-icon-btn.is-ring svg, .quiz-icon-btn.is-ring::after{ animation: none; } }
 .cl-rail.cl-after .rs{ transition: stroke .5s ease, opacity .2s ease; }
+.cl-dot{ transition: opacity .3s ease !important; }
+/* print head: a thin lavender line that runs down the card */
+.bld-head{ position: absolute; left: -2px; right: -2px; top: -2px; height: 3px; border-radius: 2px; background: linear-gradient(90deg, rgba(183,166,226,0), #B7A6E2 12%, #7A6A9E 50%, #B7A6E2 88%, rgba(183,166,226,0)); box-shadow: 0 0 10px 2px rgba(183,166,226,.75); opacity: 0; transition: opacity .25s ease; }
+.bld-head.go{ opacity: 1; }
+.bld-head.off{ opacity: 0; transition: opacity .5s ease; }
+.bld-bar.out{ transition-duration: .38s, .5s; }
 
 /* =====================================================================
    One key language across the site: cream keys (secondary / icons), purple keys (primary)
