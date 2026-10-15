@@ -301,10 +301,10 @@
       }
       if (narrowMode && st.kind !== 'end') extra += '<circle class="rp" cx="' + f1(xg - mainLeft) + '" cy="' + f1(st.y - mainTop) + '" r="5"/>';
     });
-    /* desktop: a numbered stop where the line reaches each element, a small port where it leaves */
+    /* desktop: a small node where the line reaches each element, a small port where it leaves */
     if (!narrowMode) stations.forEach(function (st, si) {
-      var bx = st.ex - mainLeft, by = (st.loop ? st.loop.yT : st.top - (st.kind === 'end' ? 15 : 17)) - mainTop, n = ('0' + (si + 1)).slice(-2);
-      extra += '<g class="pb" data-si="' + si + '"><circle cx="' + f1(bx) + '" cy="' + f1(by) + '" r="10.5"/><text x="' + f1(bx) + '" y="' + f1(by + .5) + '">' + n + '</text></g>';
+      var bx = st.ex - mainLeft, by = (st.loop ? st.loop.yT : st.top - (st.kind === 'end' ? 15 : 17)) - mainTop;
+      extra += '<g class="pb" data-si="' + si + '"><circle cx="' + f1(bx) + '" cy="' + f1(by) + '" r="5.5"/></g>';
       if (st.kind !== 'end') extra += '<circle class="px" data-si="' + si + '" cx="' + f1(bx) + '" cy="' + f1((st.loop ? st.loop.yB : st.bottom + 11) - mainTop) + '" r="4.2"/>';
     });
     railSvg.setAttribute('width', mainW); railSvg.setAttribute('height', mainH);
