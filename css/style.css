@@ -1965,6 +1965,11 @@ html.dot-away .logo-dot{ opacity: 0; }
 .lh-cam > .lh-layer{ left: -190px; top: -237px; }
 
 /* the dot: the logo's own detail (one rounded corner), made 3D */
+.lh-cube{ width: 0; height: 0; transform-style: preserve-3d; }
+.lh-cf{ position: absolute; left: -10px; top: -10px; width: 20px; height: 20px; border-radius: 3px; box-sizing: border-box; backface-visibility: hidden;
+  border: 1px solid rgba(120,98,78,.28); box-shadow: inset 0 0 6px rgba(120,98,78,.18); }
+.lh-cp::after{ content: ""; position: absolute; left: 50%; top: 50%; width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; border-radius: 50%; background: #7A6A9E; opacity: .85; }
+.lh-sp{ position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .lh-ball{ width: 28px; height: 28px; margin: -14px 0 0 -14px; transform-style: preserve-3d; }
 .lh-bbody{ position: absolute; inset: 0; display: block; transform-style: preserve-3d; transform: rotateX(-20deg) rotateY(-30deg); }
 .lh-bs{ position: absolute; inset: 0; display: block; border-radius: 0 33% 0 0; backface-visibility: hidden; }

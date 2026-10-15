@@ -94,8 +94,9 @@
   var SH = [{ x: 0, y: 0, yaw: 0 }, { x: -215, y: -50, yaw: -7 }, { x: 400, y: 70, yaw: 5 }, { x: 1010, y: 470, yaw: -4 }];
   var KA = [-370, -165];
 
+  /* the print head: the logo's tile with real depth (stacked slices), lit from the top-left */
   var ball = el('lh-abs lh-ball'); var ballBody = document.createElement('span'); ballBody.className = 'lh-bbody'; ball.appendChild(ballBody);
-  (function () { /* a small extruded tile: the logo's own detail with real depth (stacked slices), lit from the top-left */
+  (function () {
     var N = 8;
     for (var k = N; k >= 0; k--) {
       var sl = document.createElement('i'); sl.className = k === 0 ? 'lh-bs lh-bf' : 'lh-bs';
@@ -104,7 +105,14 @@
       ballBody.appendChild(sl);
     }
   })();
+  /* the traveller: a small cube that tumbles along the road, one face at a time */
+  var CS = 20;
+  var cube = el('lh-abs lh-cube');
+  [['translateZ(10px)', '#f6efe6', 1], ['rotateY(180deg) translateZ(10px)', '#c9baa9'], ['rotateY(90deg) translateZ(10px)', '#e4d8cb'], ['rotateY(-90deg) translateZ(10px)', '#d6c8b9'], ['rotateX(90deg) translateZ(10px)', '#ebe0d4'], ['rotateX(-90deg) translateZ(10px)', '#d1c2b2']].forEach(function (f) {
+    var q = document.createElement('i'); q.className = 'lh-cf' + (f[2] ? ' lh-cp' : ''); q.style.transform = f[0]; q.style.background = f[1]; cube.appendChild(q);
+  });
   var ballSh = el('lh-fl', null, 'width:40px;height:16px;margin:-8px 0 0 -20px');
+  var ballSh2 = el('lh-fl', null, 'width:34px;height:14px;margin:-7px 0 0 -17px');
 
   /* the trail: ONE soft stripe, laid on the floor under the sheets. The dot draws it as it rolls. */
 
@@ -128,75 +136,112 @@
     return d;
   }
 
-  var TRAIL_C = '#D3C4B6';
   var WP = [[-370, -165], [-300, -100], [-200, -55], [-90, -15], [20, 55], [130, 85], [210, 72], [400, 102], [570, 124], [604, 128],
             [657, 174], [711, 274], [765, 374], [818, 420], [884, 440], [948, 455], [1000, 462]];
   var OX = 700, OY = 400;
-  var trailExtra = [];
   var trailEl = el('lh-trail'), trailSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'), trailPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  var TRAIL_LEN = 1600;
   trailSvg.setAttribute('width', '1800'); trailSvg.setAttribute('height', '1100'); trailSvg.setAttribute('viewBox', '0 0 1800 1100');
   (function () {
-    var d = monoPath(WP.map(function (w) { return [w[0] + OX, w[1] + OY]; }), false);
-    trailPath.setAttribute('d', d); trailPath.setAttribute('pathLength', '1');
-    trailPath.setAttribute('fill', 'none'); trailPath.setAttribute('stroke', TRAIL_C); trailPath.setAttribute('stroke-width', '4'); trailPath.setAttribute('stroke-linecap', 'round');
-    trailPath.style.strokeDasharray = '1 2'; trailPath.style.strokeDashoffset = '1';
+    /* a flat, tiled road (a level in a game): the reveal mask is the path itself, drawn by the traveller */
     var ns = 'http://www.w3.org/2000/svg';
-    var defs = document.createElementNS(ns, 'defs'), flt = document.createElementNS(ns, 'filter');
-    flt.setAttribute('id', 'lhBlur'); flt.setAttribute('x', '-20%'); flt.setAttribute('y', '-20%'); flt.setAttribute('width', '140%'); flt.setAttribute('height', '140%');
-    var gb = document.createElementNS(ns, 'feGaussianBlur'); gb.setAttribute('stdDeviation', '3'); flt.appendChild(gb); defs.appendChild(flt); trailSvg.appendChild(defs);
-    [['shadow', 9, 'rgba(37,31,28,.20)', '3.5px', 'url(#lhBlur)'], ['hi', 1.6, 'rgba(255,255,255,.7)', '-1.2px', null]].forEach(function (c) {
+    var d = monoPath(WP.map(function (w) { return [w[0] + OX, w[1] + OY]; }), false);
+    trailPath.setAttribute('d', d); trailPath.setAttribute('pathLength', '1'); trailPath.setAttribute('fill', 'none');
+    trailPath.setAttribute('stroke', '#fff'); trailPath.setAttribute('stroke-width', '80'); trailPath.setAttribute('stroke-linecap', 'butt');
+    trailPath.style.strokeDasharray = '1 2'; trailPath.style.strokeDashoffset = '1';
+    var defs = document.createElementNS(ns, 'defs'), mk = document.createElementNS(ns, 'mask');
+    mk.setAttribute('id', 'lhRoad'); mk.setAttribute('maskUnits', 'userSpaceOnUse'); mk.setAttribute('x', '0'); mk.setAttribute('y', '0'); mk.setAttribute('width', '1800'); mk.setAttribute('height', '1100');
+    mk.appendChild(trailPath); defs.appendChild(mk); trailSvg.appendChild(defs);
+    TRAIL_LEN = trailPath.getTotalLength();
+    var tile = 25 / TRAIL_LEN, gap = 3 / TRAIL_LEN, g = document.createElementNS(ns, 'g'); g.setAttribute('mask', 'url(#lhRoad)');
+    [['#cfc1b0', 34, 'butt'], ['#efe6da', 27, 'butt']].forEach(function (c) {
       var q = document.createElementNS(ns, 'path'); q.setAttribute('d', d); q.setAttribute('pathLength', '1'); q.setAttribute('fill', 'none');
-      q.setAttribute('stroke', c[2]); q.setAttribute('stroke-width', c[1]); q.setAttribute('stroke-linecap', 'round');
-      q.style.strokeDasharray = '1 2'; q.style.strokeDashoffset = '1'; q.style.transform = 'translate(0,' + c[3] + ')'; if (c[4]) q.setAttribute('filter', c[4]);
-      trailSvg.appendChild(q); trailExtra.push(q);
+      q.setAttribute('stroke', c[0]); q.setAttribute('stroke-width', c[1]); q.setAttribute('stroke-linecap', c[2]);
+      q.style.strokeDasharray = (tile).toFixed(5) + ' ' + (gap).toFixed(5);
+      g.appendChild(q);
     });
-    trailSvg.appendChild(trailPath); trailEl.appendChild(trailSvg);
+    trailSvg.appendChild(g); trailEl.appendChild(trailSvg);
   })();
-  var TRAIL_LEN = trailPath.getTotalLength();
 
-  /* wireframe strokes draw themselves */
-  var wfShapes = Array.prototype.slice.call(wf.querySelectorAll('path, rect'));
-  wfShapes.forEach(function (s) { s.setAttribute('pathLength', '1'); s.style.strokeDasharray = '1'; s.dataset.fo = s.getAttribute('fill-opacity') || '0'; });
-  var uiBits = [imgbox, btn].concat(skl);
-  /* every layer is BUILT from the bottom up, like a printer: a lavender head line rises through the layer and the content appears under it */
+  /* every sheet is PRINTED like the portrait: a head runs back and forth over it, row by row from the bottom, first as coarse pixels, then a fine pass,
+     then it settles into the real sharp content */
+  var PN2 = 12, PASS = [[0, .46], [.52, .96]], BH2 = PH / PN2;
+  var SP = [null, null, null, null], uiEls = [imgbox, btn].concat(skl);
   function mkHead(L) { var h = document.createElement('i'); h.className = 'lh-bh'; L.appendChild(h); return h; }
-  var bhS = mkHead(layers[1]), bhW = mkHead(layers[2]), bhU = mkHead(layers[3]);
-  var wfOrd = [], wfTop = [];
-  (function () {
-    var a = wfShapes.map(function (e) { var b; try { b = e.getBBox(); } catch (x) { b = { y: 0, height: 0 }; } return { e: e, top: b.y, bot: b.y + b.height }; });
-    a.sort(function (p, q) { return q.bot - p.bot; });
-    a.forEach(function (o, i) { o.e._ord = i; });
-    wfTop = a.map(function (o) { return o.top; });
-  })();
-  var uiTop = [];
-  (function () {
-    uiBits.sort(function (p, q) { return (q.offsetTop + q.offsetHeight) - (p.offsetTop + p.offsetHeight); });
-    uiTop = uiBits.map(function (e) { return { y: e.offsetTop, h: e.offsetHeight }; });
-  })();
+  var BHD = [null, mkHead(layers[1]), mkHead(layers[2]), mkHead(layers[3])];
+  var realEl = [null, sketch, wf, layers[3].querySelector('.lh-ui')];
+  function mkSP(i) {
+    var cv = document.createElement('canvas'); cv.className = 'lh-sp'; cv.width = PW * PDPR; cv.height = PH * PDPR;
+    layers[i].insertBefore(cv, BHD[i]);
+    SP[i] = { cv: cv, ctx: cv.getContext('2d'), lod: [], last: -1, ready: false };
+  }
+  function setLods(i, drawSrc) {
+    var o = SP[i]; o.lod = [];
+    [[26, 33], [95, 119]].forEach(function (r) { var c = document.createElement('canvas'); c.width = r[0]; c.height = r[1]; var x = c.getContext('2d'); x.imageSmoothingQuality = 'high'; drawSrc(x, r[0], r[1]); o.lod.push(c); });
+    o.ready = true; o.last = -1; if (typeof kick === 'function') kick();
+  }
+  function svgImage(str, cb) { var im = new Image(); im.onload = function () { cb(im); }; im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(str); }
+  function loadSketch() {
+    var m = /url\(["']?([^"')]+)["']?\)/.exec(getComputedStyle(sketch).backgroundImage || ''); if (!m) return;
+    var im = new Image();
+    im.onload = function () {
+      var sc = Math.max(PW / im.width, PH / im.height), sw = PW / sc, sh = PH / sc, sx = (im.width - sw) / 2, sy = (im.height - sh) / 2;
+      setLods(1, function (x, w, h) { x.drawImage(im, sx, sy, sw, sh, 0, 0, w, h); });
+    };
+    im.src = m[1];
+  }
+  function loadWf() {
+    var c = wf.cloneNode(true); c.removeAttribute('class'); c.removeAttribute('style');
+    c.setAttribute('xmlns', 'http://www.w3.org/2000/svg'); c.setAttribute('width', PW); c.setAttribute('height', PH);
+    Array.prototype.forEach.call(c.querySelectorAll('*'), function (e) { e.removeAttribute('style'); e.removeAttribute('pathLength'); });
+    svgImage(new XMLSerializer().serializeToString(c), function (im) { setLods(2, function (x, w, h) { x.drawImage(im, 0, 0, w, h); }); });
+  }
+  function loadUi() {
+    var parts = ['<svg xmlns="http://www.w3.org/2000/svg" width="' + PW + '" height="' + PH + '" viewBox="0 0 ' + PW + ' ' + PH + '">'];
+    uiEls.forEach(function (e) {
+      var cs = getComputedStyle(e), bw = parseFloat(cs.borderTopWidth) || 0, r = Math.max(0, (parseFloat(cs.borderTopLeftRadius) || 0) - bw / 2);
+      parts.push('<rect x="' + (e.offsetLeft + bw / 2) + '" y="' + (e.offsetTop + bw / 2) + '" width="' + (e.offsetWidth - bw) + '" height="' + (e.offsetHeight - bw) + '" rx="' + r + '" fill="' + cs.backgroundColor + '" stroke="' + (bw ? cs.borderTopColor : 'none') + '" stroke-width="' + bw + '"/>');
+    });
+    parts.push('</svg>');
+    svgImage(parts.join(''), function (im) { setLods(3, function (x, w, h) { x.drawImage(im, 0, 0, w, h); }); });
+  }
+  [1, 2, 3].forEach(mkSP);
+  function loadSheets() { try { loadSketch(); loadWf(); loadUi(); } catch (e) {} }
+  loadSheets();
+  function bandAt(q) {
+    var bands = q * PN2, fl = Math.min(PN2 - 1, Math.floor(bands)), part = q >= 1 ? 1 : bands - Math.floor(bands), rtl = fl % 2 === 1, w = PW * part;
+    return { x: rtl ? PW - w : w, y: PH - (fl + .5) * BH2, top: PH - (fl + 1) * BH2 };
+  }
+  /* where the head is for a print progress pp (0..1): pure function */
+  function headAtPP(pp) {
+    if (pp <= 0 || pp >= 1) return null;
+    var q0 = seg(pp, PASS[0][0], PASS[0][1]), q1 = seg(pp, PASS[1][0], PASS[1][1]);
+    if (q1 > 0) return bandAt(q1);
+    if (q0 < 1) return bandAt(q0);
+    var g = ease(seg(pp, PASS[0][1], PASS[1][0])), A = bandAt(1), B = { x: 0, y: PH - .5 * BH2, top: PH - BH2 };
+    return { x: lerp(A.x, B.x, g), y: lerp(A.y, B.y, g), top: lerp(A.top, B.top, g) };
+  }
+  function drawSP(i, pp) {
+    var o = SP[i]; if (!o || !o.ready) return;
+    pp = Math.round(pp * 600) / 600; if (pp === o.last) return; o.last = pp;
+    var x = o.ctx; x.setTransform(PDPR, 0, 0, PDPR, 0, 0); x.clearRect(0, 0, PW, PH);
+    for (var k = 0; k < 2; k++) {
+      var q = seg(pp, PASS[k][0], PASS[k][1]); if (q <= 0) continue;
+      var bands = q * PN2, fl = q >= 1 ? PN2 : Math.floor(bands), part = q >= 1 ? 0 : bands - fl, src = o.lod[k];
+      x.imageSmoothingEnabled = k === 1; x.save(); x.beginPath(); x.rect(0, PH - fl * BH2, PW, fl * BH2);
+      if (fl < PN2 && part > 0) { var rtl = fl % 2 === 1, w = PW * part; x.rect(rtl ? PW - w : 0, PH - (fl + 1) * BH2, w, BH2); }
+      x.clip(); x.drawImage(src, 0, 0, src.width, src.height, 0, 0, PW, PH); x.restore();
+    }
+  }
   function headAt(h, yPx, on) { h.style.bottom = (100 - yPx / 475 * 100).toFixed(2) + '%'; h.style.opacity = on ? 1 : 0; }
 
   /* ---------- ball path ---------- */
-  /* the dot rolls to a sheet, stays and BUILDS it (climbing up the sheet as the print head, zig-zagging), slides down, rolls on to the next */
+  /* the traveller tumbles along the road to a sheet, becomes the print head and PRINTS it row by row, then goes on as a cube again */
   var WF0 = 7.4, UI0 = 10.9, SK0 = 3.5;
   var T_ROLL0 = 2.3, T_FLY0 = 12.4, T_FLY1 = 14.5, T_PRINT0 = 15.9, T_PRINT1 = 18.5, T_BACK = 19.7;
   var APPEAR = [14.4, 3.2, 6.9, 10.4];
-  var TB = [null, [SK0, 5.6], [WF0, WF0 + 12 * .085 + .55], [UI0, UI0 + 3 * .22 + .7]];
+  var TB = [null, [SK0, 5.7], [WF0, 9.2], [UI0, 12.3]];
   var IN_ = .3, OUT_ = .4;
-  var wfBot = 0, wfTop1 = 475, uiBot = 0, uiTop1 = 475;
-  (function () {
-    wfBot = 0; wfTop1 = 475;
-    wfShapes.forEach(function (e) { var b; try { b = e.getBBox(); } catch (x) { return; } wfBot = Math.max(wfBot, b.y + b.height); wfTop1 = Math.min(wfTop1, b.y); });
-    uiBot = 0; uiTop1 = 475;
-    uiBits.forEach(function (e) { uiBot = Math.max(uiBot, e.offsetTop + e.offsetHeight); uiTop1 = Math.min(uiTop1, e.offsetTop); });
-  })();
-  /* where (px from the sheet's top) the print head is, per sheet, as a pure function of time; null before/after the build */
-  function headY(i, t) {
-    var a = TB[i][0], b = TB[i][1];
-    if (t <= a || t >= b) return null;
-    if (i === 1) { var sr = ease(seg(t, SK0, 5.6)) * 110; return 475 * (1 - Math.min(1, sr / 100)); }
-    var p = seg(t, a, b);
-    return i === 2 ? lerp(wfBot, wfTop1, p) : lerp(uiBot, uiTop1, p);
-  }
   var TRAIL_PT = function (u) { var P = trailPath.getPointAtLength(u * TRAIL_LEN); return [P.x - OX, P.y - OY]; };
   function nearestU(wx, wy) {
     var best = 0, bd = 1e12;
@@ -209,8 +254,8 @@
     return [SH[i].x + X * c - Y * sn, SH[i].y + X * sn + Y * c, dz + h * sc + 8];
   }
   var UA = [0, 0, 0, 1];
-  (function () { UA[1] = nearestU(SH[1].x, SH[1].y + 15); UA[2] = nearestU(SH[2].x, SH[2].y + 15); UA[3] = 1; })();
-  /* progress along the trail (0..1): rolls between the sheets, waits while a sheet is being built */
+  (function () { UA[1] = nearestU(SH[1].x, SH[1].y + 26); UA[2] = nearestU(SH[2].x, SH[2].y + 26); UA[3] = 1; })();
+  /* progress along the road (0..1): moves between the sheets, waits while a sheet is being printed */
   function uOf(t) {
     if (t < T_ROLL0) return 0;
     if (t < TB[1][0] - IN_) return UA[1] * sm(seg(t, T_ROLL0, TB[1][0] - IN_));
@@ -218,24 +263,37 @@
     return lerp(UA[2], UA[3], sm(seg(t, TB[2][1] + OUT_, TB[3][0] - IN_)));
   }
   function trailU(t) { return uOf(t); }
-  function ballPos(t) {
+  /* a cube rolling without slipping: whole quarter-turns per stretch, so it always rests flat where it stops */
+  var SEGU = [[0, 0], [0, 0], [0, 0]], SEGN = [0, 0, 0], SEGC = [0, 0, 0];
+  (function () {
+    var us = [0, UA[1], UA[2], UA[3]], cum = 0;
+    for (var i = 0; i < 3; i++) { SEGU[i] = [us[i], us[i + 1]]; SEGN[i] = Math.max(1, Math.round((us[i + 1] - us[i]) * TRAIL_LEN / CS)); SEGC[i] = cum; cum += SEGN[i]; }
+  })();
+  function cubeAt(u) {
+    var i = u >= SEGU[2][0] ? 2 : (u >= SEGU[1][0] ? 1 : 0), a = SEGU[i][0], b = SEGU[i][1], n = SEGN[i], len = (b - a) * TRAIL_LEN, s = len / n;
+    var L = clamp(u - a, 0, b - a) * TRAIL_LEN, k = Math.min(n - 1, Math.floor(L / s + 1e-6)), r = L - k * s, lo = 0, hi = Math.PI / 2, ph = 0;
+    if (L >= len - 1e-6) { k = n - 1; r = s; }
+    for (var q = 0; q < 14; q++) { ph = (lo + hi) / 2; var xr = s / 2 * (1 - Math.cos(ph) + Math.sin(ph)); if (xr < r) lo = ph; else hi = ph; }
+    var P0 = TRAIL_PT(clamp(u - .004, 0, 1)), P1 = TRAIL_PT(clamp(u + .004, 0, 1));
+    return { roll: (SEGC[i] + k + ph / (Math.PI / 2)) * 90, h: s / 2 * (Math.sin(ph) + Math.cos(ph)) * (CS / s), head: Math.atan2(P1[1] - P0[1], P1[0] - P0[0]) * 180 / Math.PI };
+  }
+  function ballState(t) {
     if (t < T_HAND) return null;
-    var u = uOf(t), P = TRAIL_PT(u), d = seg(t, T_HAND, 2.3);
-    var pos = [P[0], P[1], 15 + 58 * (1 - d * d)];
+    var u = uOf(t), P = TRAIL_PT(u), d = seg(t, T_HAND, 2.3), cs = cubeAt(u);
+    var st = { cx: P[0], cy: P[1], cz: cs.h + 58 * (1 - d * d), roll: cs.roll, head: cs.head, cv: 1, tile: null, tv: 0 };
     for (var i = 1; i <= 3; i++) {
       var a = TB[i][0], b = TB[i][1];
       if (t < a - IN_ || (i < 3 && t > b + OUT_)) continue;
-      var kin = sm(seg(t, a - IN_, a)), kout = sm(seg(t, b, b + OUT_));
-      var pr = seg(t, a, b), hy = headY(i, t), h0 = i === 1 ? 0 : 475 - (i === 2 ? wfBot : uiBot);
-      var h = hy == null ? (t >= b ? 475 - (i === 1 ? 0 : (i === 2 ? wfTop1 : uiTop1)) : h0) : 475 - hy;
-      if (i === 1 && hy == null && t >= b) h = 475;
-      var ap = i === 3 ? 1 : (1 - kout);
-      var lx = Math.sin(pr * Math.PI * 2 * (i === 1 ? 3.5 : 3)) * 150 * (.2 + .8 * Math.sin(Math.PI * clamp(pr * 1.15, 0, 1))) * ap;
-      var Q = sheetPt(i, lx, h * ap, t), w = kin;
-      pos = [lerp(pos[0], Q[0], w), lerp(pos[1], Q[1], w), lerp(pos[2], Q[2], w)];
+      var kin = sm(seg(t, a - IN_, a)), kout = i === 3 ? 0 : sm(seg(t, b, b + OUT_));
+      var hd = headAtPP(seg(t, a, b));
+      var fin = t >= b;                                    /* printed: the head rests at the top */
+      var lx = hd ? hd.x - PW / 2 : (fin ? PW / 2 : -PW / 2 + 20), h = hd ? PH - hd.y : (fin ? PH : 10);
+      lx *= (1 - kout); h *= (1 - kout);
+      st.tile = sheetPt(i, lx, h, t); st.tv = kin * (1 - kout * .9);
+      st.cv = clamp(1 - kin + (i < 3 ? sm(seg(t, b + OUT_ * .5, b + OUT_)) : 0), 0, 1);
       break;
     }
-    return pos;
+    return st;
   }
   function camAt(t) {
     if (t >= CAM[CAM.length - 1][0]) return CAM[CAM.length - 1].slice(1);
@@ -304,14 +362,19 @@
     floor.style.opacity = props * vis;
 
     /* the dot rolls and draws its trail */
-    var bp = ballPos(t), bs = ease(seg(t, T_HAND - .05, T_HAND + .05)) * (1 - ease(seg(t, T_FLY0, T_FLY0 + .25)));
-    if (bp) {
-      B(ball, bp[0], bp[1], bp[2], 1, '', b, a);
-      ball.style.opacity = bs;
-      ballSh.style.opacity = bs * Math.max(0, 1 - bp[2] / 170) * .9; F(ballSh, bp[0], bp[1], .5, 0, 1 + bp[2] / 260);
-    } else { ball.style.opacity = 0; ballSh.style.opacity = 0; }
+    var bst = ballState(t), bs = ease(seg(t, T_HAND - .05, T_HAND + .05)) * (1 - ease(seg(t, T_FLY0, T_FLY0 + .25)));
+    if (bst) {
+      var cvs = bst.cv * bs;
+      cube.style.opacity = cvs > .01 ? 1 : 0;
+      cube.style.transform = 'translate3d(' + bst.cx.toFixed(1) + 'px,' + bst.cy.toFixed(1) + 'px,' + bst.cz.toFixed(1) + 'px) rotateZ(' + bst.head.toFixed(1) + 'deg) rotateY(' + bst.roll.toFixed(1) + 'deg) scale3d(' + (cvs || .001).toFixed(3) + ',' + (cvs || .001).toFixed(3) + ',' + (cvs || .001).toFixed(3) + ')';
+      ballSh.style.opacity = cvs * Math.max(0, 1 - (bst.cz - 10) / 150) * .85; F(ballSh, bst.cx, bst.cy, .5, 0, 1 + bst.cz / 300);
+      if (bst.tile && bst.tv > .01) {
+        B(ball, bst.tile[0], bst.tile[1], bst.tile[2], bst.tv * .85, '', b, a); ball.style.opacity = bs;
+        ballSh2.style.opacity = bs * Math.min(1, bst.tv) * .35; F(ballSh2, bst.tile[0], bst.tile[1], .5, 0, 1 + bst.tile[2] / 200);
+      } else { ball.style.opacity = 0; ballSh2.style.opacity = 0; }
+    } else { cube.style.opacity = 0; ball.style.opacity = 0; ballSh.style.opacity = 0; ballSh2.style.opacity = 0; }
     var tu = t >= T_ROLL0 ? trailU(t) : 0;
-    trailPath.style.strokeDashoffset = (1 - tu).toFixed(4); trailExtra.forEach(function (q) { q.style.strokeDashoffset = (1 - tu).toFixed(4); });
+    trailPath.style.strokeDashoffset = (1 - tu).toFixed(4);
     trailEl.style.opacity = props * vis * (tu > 0 ? 1 : 0);
 
     /* sheets */
@@ -335,22 +398,16 @@
       if (i > 0) { papers[i].style.opacity = 1; if (pr * (1 - o) > .62) L.style.opacity = 0; }
     });
     pic.style.filter = 'grayscale(45%) contrast(1.06) brightness(1.03)';
-    var sp0 = ease(seg(t, SK0, 5.6)), sr = sp0 * 110;
-    sketch.style.webkitMaskImage = sketch.style.maskImage = 'linear-gradient(to top,#000 ' + sr + '%,transparent ' + (sr + 7) + '%)';
-    sketch.style.opacity = 1;
-    headAt(bhS, 475 * (1 - Math.min(1, sr / 100)), sp0 > 0 && sp0 < .985);
-    wfShapes.forEach(function (e) {
-      var i = e._ord || 0, k = ease(seg(t, WF0 + i * .085, WF0 + i * .085 + .55));
-      e.style.strokeDashoffset = 1 - k; e.setAttribute('fill-opacity', (+e.dataset.fo) * k);
-    });
-    (function () { var y = headY(2, t); headAt(bhW, y == null ? 0 : y, y != null); })();
-    wf.style.opacity = 1;
-    uiBits.forEach(function (e, i) {
-      var kk = ease(seg(t, UI0 + i * .22, UI0 + i * .22 + .7));
-      e.style.opacity = kk > 0 ? 1 : 0; e.style.transform = '';
-      e.style.clipPath = kk >= 1 ? 'none' : 'inset(' + ((1 - kk) * 100).toFixed(1) + '% 0 0 0)';
-    });
-    (function () { var y = headY(3, t); headAt(bhU, y == null ? 0 : y, y != null); })();
+    for (var si = 1; si <= 3; si++) {
+      var spp = seg(t, TB[si][0], TB[si][1]), real = realEl[si], so = SP[si], hd = headAtPP(spp);
+      var fadeIn = ease(seg(spp, .94, 1));
+      if (so && so.ready) {
+        drawSP(si, spp);
+        so.cv.style.opacity = spp > 0 ? 1 - fadeIn : 0;
+        real.style.opacity = fadeIn;
+      } else { real.style.opacity = ease(seg(spp, .3, 1)); }
+      headAt(BHD[si], hd ? hd.top : 0, !!hd);
+    }
 
     /* headline plane floats above the UI layer; the role line and headline arrive last */
     var hs = ease(seg(t, 18.6, 19.9)), ro = ease(seg(t, 18.0, 19.0));
@@ -360,7 +417,7 @@
     drawPrint(Math.round(Yp * 600) / 600);
     pcv.style.opacity = Yp > 0 ? Math.min(1, (1 - seg(Yp, .86, 1))) : 0;
     shade.style.opacity = pee;
-    skl.forEach(function (e) { e.style.opacity = Math.min(+e.style.opacity, 1 - hs); });
+    skl.forEach(function (e) { e.style.opacity = 1 - hs; });
     var headEm = head.querySelector('em') || head;
     var cc = Math.round(37 + (253 - 37) * pee), c2 = Math.round(31 + (252 - 31) * pee), c3 = Math.round(28 + (248 - 28) * pee);
     var col = 'rgb(' + cc + ',' + c2 + ',' + c3 + ')';
@@ -443,7 +500,7 @@
     return t >= T_END && !dragging && Math.abs(ud.x - ut.x) < .02 && Math.abs(ud.y - ut.y) < .02 && Math.abs(px.x - tg.x) < .02 && Math.abs(px.y - tg.y) < .02;
   }
   /* real time -> story time: slower while the dot rolls between sheets and while it builds one, so every sheet is seen being made */
-  var WARP = [[0, 2.3, 1], [2.3, SK0, .68], [SK0, 5.6, .85], [5.6, WF0, .68], [WF0, TB[2][1], .85], [TB[2][1], UI0, .68], [UI0, TB[3][1], .85], [TB[3][1], 1e9, 1]];
+  var WARP = [[0, 2.3, 1], [2.3, SK0, .8], [SK0, TB[1][1], .7], [TB[1][1], WF0, .8], [WF0, TB[2][1], .7], [TB[2][1], UI0, .8], [UI0, TB[3][1], .7], [TB[3][1], 1e9, 1]];
   function warp(r) {
     var acc = 0;
     for (var i = 0; i < WARP.length; i++) {
