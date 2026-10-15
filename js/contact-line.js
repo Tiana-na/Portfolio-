@@ -81,7 +81,7 @@
       splitS = yT;
       var rd = Math.min(R, (yB - yT) / 2);
       extra += '<path class="rs" pathLength="1" d="M' + f1(cx) + ',' + f1(yT) + 'H' + f1(xr - rd) + 'Q' + f1(xr) + ',' + f1(yT) + ' ' + f1(xr) + ',' + f1(yT + rd) + 'V' + f1(yB - rd) + 'Q' + f1(xr) + ',' + f1(yB) + ' ' + f1(xr - rd) + ',' + f1(yB) + 'H' + f1(mx) + '"/>';
-      extra += '<g class="pb" data-cl="b"><circle cx="' + f1(cx) + '" cy="' + f1(yT) + '" r="10.5"/><text x="' + f1(cx) + '" y="' + f1(yT + .5) + '">06</text></g>';
+      extra += '<g class="pb" data-cl="b"><circle cx="' + f1(cx) + '" cy="' + f1(yT) + '" r="5.5"/></g>';
     } else {
       var gx = rtl ? W - 8 : 8, ry = rr ? (rr.t + rr.b) / 2 : B;
       pts = [[gx, 0], [gx, ry]];
