@@ -1965,11 +1965,11 @@ html.dot-away .logo-dot{ opacity: 0; }
 .lh-cam > .lh-layer{ left: -190px; top: -237px; }
 
 /* the dot: the logo's own detail (one rounded corner), made 3D */
-.lh-ball{
-  width: 22px; height: 22px; margin: -11px 0 0 -11px;
-  filter: drop-shadow(0 6px 5px rgba(37,31,28,.16)) drop-shadow(0 0 10px rgba(190,175,230,.85));
-}
-.lh-ball b{ position: absolute; inset: 0; border-radius: 0 33% 0 0; background: #E1D5CA; }
+.lh-ball{ width: 28px; height: 28px; margin: -14px 0 0 -14px; transform-style: preserve-3d; }
+.lh-bbody{ position: absolute; inset: 0; display: block; transform-style: preserve-3d; transform: rotateX(-20deg) rotateY(-30deg); }
+.lh-bs{ position: absolute; inset: 0; display: block; border-radius: 0 33% 0 0; backface-visibility: hidden; }
+.lh-bf{ background: radial-gradient(circle at 30% 24%, #fbf5ee 0, #e9ded3 38%, #d9ccbf 100%);
+  box-shadow: inset 1.5px 2px 1.5px rgba(255,255,255,.85), inset -2px -3px 4px rgba(120,98,78,.34), 0 0 12px 3px rgba(190,175,230,.55); }
 
 /* the printed portrait: a light bar sweeps down the stack; what it passes becomes the photo */
 .lh-print{ position: absolute; left: 0; top: 0; width: 380px; height: 475px; border-radius: 14px; opacity: 0; pointer-events: none; filter: grayscale(45%) contrast(1.06) brightness(1.03); }
@@ -1995,7 +1995,8 @@ html.dot-away .logo-dot{ opacity: 0; }
 }
 .flow-dot-core b{
   position: absolute; inset: 0; border-radius: var(--r-tl, 0) var(--r-tr, 33%) var(--r-br, 0) var(--r-bl, 0); transform: rotate(var(--rot, 0rad));
-  background: #E1D5CA;
+  background: radial-gradient(circle at 30% 24%, #fbf5ee 0, #eadfd4 38%, #d6c8ba 100%);
+  box-shadow: inset 1.5px 2px 1px rgba(255,255,255,.85), inset -2px -3px 4px rgba(120,98,78,.32);
 }
 /* at the very end the dot turns into the closing key: purple face + inner bevel fade in as it grows */
 .flow-dot-core b::before{ content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(180deg, #8678AA, #6D5F8E); opacity: var(--km); }

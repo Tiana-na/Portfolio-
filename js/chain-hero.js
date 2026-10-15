@@ -39,8 +39,8 @@
   var SPEED = 1.45;
   var T_HAND = 1.9;          /* the dot lands on the first key */
   var T_PRESS = 1.9;
-  var T_END = 19.6, T_ASSEMBLED = 17.8;
-  var CAM = [[0, -330, -130, 1.5], [2.8, -300, -100, 1.5], [4.1, -120, -25, 1.4], [6.9, 190, 30, 1.2], [8.0, 470, 150, 1.2], [9.4, 720, 320, 1.2], [11.0, 1010, 470, 1.2], [12.2, 1010, 470, 1.1]];
+  var T_END = 20.6, T_ASSEMBLED = 18.8;
+  var CAM = [[0, -330, -130, 1.5], [2.8, -300, -100, 1.5], [3.5, -205, -55, 1.4], [5.8, -195, -52, 1.4], [7.1, 350, 78, 1.3], [9.0, 370, 90, 1.3], [10.6, 985, 455, 1.2], [12.4, 1010, 470, 1.2], [13.0, 1010, 470, 1.1]];
   var TILT = 58, TURN = -32;
 
   /* ---------- world ---------- */
@@ -94,7 +94,16 @@
   var SH = [{ x: 0, y: 0, yaw: 0 }, { x: -215, y: -50, yaw: -7 }, { x: 400, y: 70, yaw: 5 }, { x: 1010, y: 470, yaw: -4 }];
   var KA = [-370, -165];
 
-  var ball = el('lh-abs lh-ball'); ball.innerHTML = '<b></b>'; var ballFace = ball.firstChild;
+  var ball = el('lh-abs lh-ball'); var ballBody = document.createElement('span'); ballBody.className = 'lh-bbody'; ball.appendChild(ballBody);
+  (function () { /* a small extruded tile: the logo's own detail with real depth (stacked slices), lit from the top-left */
+    var N = 8;
+    for (var k = N; k >= 0; k--) {
+      var sl = document.createElement('i'); sl.className = k === 0 ? 'lh-bs lh-bf' : 'lh-bs';
+      sl.style.transform = 'translateZ(' + (-k * 1.15).toFixed(2) + 'px)';
+      if (k) { var m = k / N; sl.style.background = 'rgb(' + Math.round(222 - 62 * m) + ',' + Math.round(210 - 66 * m) + ',' + Math.round(198 - 72 * m) + ')'; }
+      ballBody.appendChild(sl);
+    }
+  })();
   var ballSh = el('lh-fl', null, 'width:40px;height:16px;margin:-8px 0 0 -20px');
 
   /* the trail: ONE soft stripe, laid on the floor under the sheets. The dot draws it as it rolls. */
@@ -123,6 +132,7 @@
   var WP = [[-370, -165], [-300, -100], [-200, -55], [-90, -15], [20, 55], [130, 85], [210, 72], [400, 102], [570, 124], [604, 128],
             [657, 174], [711, 274], [765, 374], [818, 420], [884, 440], [948, 455], [1000, 462]];
   var OX = 700, OY = 400;
+  var trailExtra = [];
   var trailEl = el('lh-trail'), trailSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'), trailPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
   trailSvg.setAttribute('width', '1800'); trailSvg.setAttribute('height', '1100'); trailSvg.setAttribute('viewBox', '0 0 1800 1100');
   (function () {
@@ -130,6 +140,16 @@
     trailPath.setAttribute('d', d); trailPath.setAttribute('pathLength', '1');
     trailPath.setAttribute('fill', 'none'); trailPath.setAttribute('stroke', TRAIL_C); trailPath.setAttribute('stroke-width', '4'); trailPath.setAttribute('stroke-linecap', 'round');
     trailPath.style.strokeDasharray = '1 2'; trailPath.style.strokeDashoffset = '1';
+    var ns = 'http://www.w3.org/2000/svg';
+    var defs = document.createElementNS(ns, 'defs'), flt = document.createElementNS(ns, 'filter');
+    flt.setAttribute('id', 'lhBlur'); flt.setAttribute('x', '-20%'); flt.setAttribute('y', '-20%'); flt.setAttribute('width', '140%'); flt.setAttribute('height', '140%');
+    var gb = document.createElementNS(ns, 'feGaussianBlur'); gb.setAttribute('stdDeviation', '3'); flt.appendChild(gb); defs.appendChild(flt); trailSvg.appendChild(defs);
+    [['shadow', 9, 'rgba(37,31,28,.20)', '3.5px', 'url(#lhBlur)'], ['hi', 1.6, 'rgba(255,255,255,.7)', '-1.2px', null]].forEach(function (c) {
+      var q = document.createElementNS(ns, 'path'); q.setAttribute('d', d); q.setAttribute('pathLength', '1'); q.setAttribute('fill', 'none');
+      q.setAttribute('stroke', c[2]); q.setAttribute('stroke-width', c[1]); q.setAttribute('stroke-linecap', 'round');
+      q.style.strokeDasharray = '1 2'; q.style.strokeDashoffset = '1'; q.style.transform = 'translate(0,' + c[3] + ')'; if (c[4]) q.setAttribute('filter', c[4]);
+      trailSvg.appendChild(q); trailExtra.push(q);
+    });
     trailSvg.appendChild(trailPath); trailEl.appendChild(trailSvg);
   })();
   var TRAIL_LEN = trailPath.getTotalLength();
@@ -156,16 +176,67 @@
   function headAt(h, yPx, on) { h.style.bottom = (100 - yPx / 475 * 100).toFixed(2) + '%'; h.style.opacity = on ? 1 : 0; }
 
   /* ---------- ball path ---------- */
-  var T_ROLL0 = 2.3, T_ROLL1 = 9.9, T_FLY0 = 11.2, T_FLY1 = 12.7, T_PRINT0 = 14.9, T_PRINT1 = 17.5, T_BACK = 18.7;
-  function trailU(t) { var v = clamp((t - T_ROLL0) / (T_ROLL1 - T_ROLL0), 0, 1); return .5 * v + .5 * sm(v); }
+  /* the dot rolls to a sheet, stays and BUILDS it (climbing up the sheet as the print head, zig-zagging), slides down, rolls on to the next */
+  var WF0 = 7.4, UI0 = 10.9, SK0 = 3.5;
+  var T_ROLL0 = 2.3, T_FLY0 = 12.4, T_FLY1 = 14.5, T_PRINT0 = 15.9, T_PRINT1 = 18.5, T_BACK = 19.7;
+  var APPEAR = [14.4, 3.2, 6.9, 10.4];
+  var TB = [null, [SK0, 5.6], [WF0, WF0 + 12 * .085 + .55], [UI0, UI0 + 3 * .22 + .7]];
+  var IN_ = .3, OUT_ = .4;
+  var wfBot = 0, wfTop1 = 475, uiBot = 0, uiTop1 = 475;
+  (function () {
+    wfBot = 0; wfTop1 = 475;
+    wfShapes.forEach(function (e) { var b; try { b = e.getBBox(); } catch (x) { return; } wfBot = Math.max(wfBot, b.y + b.height); wfTop1 = Math.min(wfTop1, b.y); });
+    uiBot = 0; uiTop1 = 475;
+    uiBits.forEach(function (e) { uiBot = Math.max(uiBot, e.offsetTop + e.offsetHeight); uiTop1 = Math.min(uiTop1, e.offsetTop); });
+  })();
+  /* where (px from the sheet's top) the print head is, per sheet, as a pure function of time; null before/after the build */
+  function headY(i, t) {
+    var a = TB[i][0], b = TB[i][1];
+    if (t <= a || t >= b) return null;
+    if (i === 1) { var sr = ease(seg(t, SK0, 5.6)) * 110; return 475 * (1 - Math.min(1, sr / 100)); }
+    var p = seg(t, a, b);
+    return i === 2 ? lerp(wfBot, wfTop1, p) : lerp(uiBot, uiTop1, p);
+  }
+  var TRAIL_PT = function (u) { var P = trailPath.getPointAtLength(u * TRAIL_LEN); return [P.x - OX, P.y - OY]; };
+  function nearestU(wx, wy) {
+    var best = 0, bd = 1e12;
+    for (var k = 0; k <= 400; k++) { var P = trailPath.getPointAtLength(k / 400 * TRAIL_LEN), dx = P.x - OX - wx, dy = P.y - OY - wy, d = dx * dx + dy * dy; if (d < bd) { bd = d; best = k / 400; } }
+    return best;
+  }
+  function sheetPt(i, lx, h, t) {
+    var ap = ease(seg(t, APPEAR[i], APPEAR[i] + .5)), sc = .55 * (.5 + .5 * ap), dz = (1 - ap) * 90;
+    var yw = SH[i].yaw * Math.PI / 180, c = Math.cos(yw), sn = Math.sin(yw), X = lx * sc, Y = 26;
+    return [SH[i].x + X * c - Y * sn, SH[i].y + X * sn + Y * c, dz + h * sc + 8];
+  }
+  var UA = [0, 0, 0, 1];
+  (function () { UA[1] = nearestU(SH[1].x, SH[1].y + 15); UA[2] = nearestU(SH[2].x, SH[2].y + 15); UA[3] = 1; })();
+  /* progress along the trail (0..1): rolls between the sheets, waits while a sheet is being built */
+  function uOf(t) {
+    if (t < T_ROLL0) return 0;
+    if (t < TB[1][0] - IN_) return UA[1] * sm(seg(t, T_ROLL0, TB[1][0] - IN_));
+    if (t < TB[2][0] - IN_) return lerp(UA[1], UA[2], sm(seg(t, TB[1][1] + OUT_, TB[2][0] - IN_)));
+    return lerp(UA[2], UA[3], sm(seg(t, TB[2][1] + OUT_, TB[3][0] - IN_)));
+  }
+  function trailU(t) { return uOf(t); }
   function ballPos(t) {
     if (t < T_HAND) return null;
-    var u = trailU(t), P = trailPath.getPointAtLength(u * TRAIL_LEN);
-    var d = seg(t, T_HAND, 2.3), hop = Math.abs(Math.sin(u * TRAIL_LEN / 55)) * 0;
-    var z = 15 + 58 * (1 - d * d);
-    return [P.x - OX, P.y - OY, z + hop];
+    var u = uOf(t), P = TRAIL_PT(u), d = seg(t, T_HAND, 2.3);
+    var pos = [P[0], P[1], 15 + 58 * (1 - d * d)];
+    for (var i = 1; i <= 3; i++) {
+      var a = TB[i][0], b = TB[i][1];
+      if (t < a - IN_ || (i < 3 && t > b + OUT_)) continue;
+      var kin = sm(seg(t, a - IN_, a)), kout = sm(seg(t, b, b + OUT_));
+      var pr = seg(t, a, b), hy = headY(i, t), h0 = i === 1 ? 0 : 475 - (i === 2 ? wfBot : uiBot);
+      var h = hy == null ? (t >= b ? 475 - (i === 1 ? 0 : (i === 2 ? wfTop1 : uiTop1)) : h0) : 475 - hy;
+      if (i === 1 && hy == null && t >= b) h = 475;
+      var ap = i === 3 ? 1 : (1 - kout);
+      var lx = Math.sin(pr * Math.PI * 2 * (i === 1 ? 3.5 : 3)) * 150 * (.2 + .8 * Math.sin(Math.PI * clamp(pr * 1.15, 0, 1))) * ap;
+      var Q = sheetPt(i, lx, h * ap, t), w = kin;
+      pos = [lerp(pos[0], Q[0], w), lerp(pos[1], Q[1], w), lerp(pos[2], Q[2], w)];
+      break;
+    }
+    return pos;
   }
-  function rollDeg(t) { return 720 + trailU(t) * TRAIL_LEN / 15 * 180 / Math.PI; }
   function camAt(t) {
     if (t >= CAM[CAM.length - 1][0]) return CAM[CAM.length - 1].slice(1);
     for (var i = 0; i < CAM.length - 1; i++) {
@@ -193,7 +264,7 @@
   var ud = { x: 0, y: 0 }, ut = { x: 0, y: 0 };
   var dragging = false, idleTimer = null;
   var t0 = null, started = false, assembledFired = false, released = false, speedMul = 1, tNow = 0, tPrev = 0;
-  var target = { x: 0, y: 0, d: 30 };
+  var target = { x: 0, y: 0, d: 30 }, fin = null;
 
   function dotShow(x, y, size, sh, rot, o, halo) {
     dot.style.opacity = o;
@@ -216,12 +287,12 @@
     tNow = t;
     var c = camAt(t), cx = c[0], cy = c[1], s = c[2], a = TILT, b = TURN;
     var vis = ease(seg(t, 0, .6));
-    var pc = ease(seg(t, 11.8, 14.8));
+    var pc = ease(seg(t, 12.8, 15.8));
     cy -= STAND_CY; s *= 1 - STAND_S * (1 - pc); cx *= 1 - pc; cy *= 1 - pc; a *= 1 - pc; b *= 1 - pc; s = lerp(s, 1, pc) * (1 - .4 * Math.sin(Math.PI * pc));
     var pr = seg(t, T_PRINT0, T_PRINT1);                 /* the print: 0 = nothing printed, 1 = portrait complete */
     var pe = ease(seg(pr, .7, 1));               /* (used for the light/shadow changes that follow the print) */
     var o = ease(clamp(Math.abs(ud.y) / 46, 0, 1)) * pc;
-    var props = 1 - ease(seg(t, 11.6, 12.6));
+    var props = 1 - ease(seg(t, 12.6, 13.6));
 
     var base = lerp(uE, uF, pc);
     base = base * (1 - o) + uE * o;
@@ -240,15 +311,15 @@
       ballSh.style.opacity = bs * Math.max(0, 1 - bp[2] / 170) * .9; F(ballSh, bp[0], bp[1], .5, 0, 1 + bp[2] / 260);
     } else { ball.style.opacity = 0; ballSh.style.opacity = 0; }
     var tu = t >= T_ROLL0 ? trailU(t) : 0;
-    trailPath.style.strokeDashoffset = (1 - tu).toFixed(4);
+    trailPath.style.strokeDashoffset = (1 - tu).toFixed(4); trailExtra.forEach(function (q) { q.style.strokeDashoffset = (1 - tu).toFixed(4); });
     trailEl.style.opacity = props * vis * (tu > 0 ? 1 : 0);
 
     /* sheets */
-    var appear = [13.4, 3.2, 6.2, 9.4], glowAt = [0, appear[1] + .05, appear[2] + .05, 9.8];
-    var spread = lerp(70, 1.5, ease(seg(t, 11.8, 14.4)));
+    var appear = APPEAR;
+    var spread = lerp(70, 1.5, ease(seg(t, 12.8, 15.4)));
     var sp = lerp(spread, 200 * (nar ? .62 : 1), o);
     layers.forEach(function (L, i) {
-      var ap = i === 0 ? ease(seg(t, 13.4, 14.6)) : ease(seg(t, appear[i], appear[i] + .5));
+      var ap = i === 0 ? ease(seg(t, 14.4, 15.6)) : ease(seg(t, appear[i], appear[i] + .5));
       var zi = (i - 1.5) * sp * pc;
       var dz = (1 - ap) * (i ? 90 : 0);
       var x = SH[i].x * (1 - pc), y = SH[i].y * (1 - pc), yaw = SH[i].yaw * (1 - pc);
@@ -258,37 +329,31 @@
       var sd = i ? (1 - pc) * STAND : 0;
       L.style.transform = 'translate3d(' + x + 'px,' + y + 'px,' + (zi + dz) + 'px) rotateZ(' + yaw + 'deg) scale(' + sc + ') translateY(' + (237 * (1 - sd)).toFixed(1) + 'px) rotateX(' + (STAND_DIR * 90 * sd).toFixed(2) + 'deg) translateY(-237px)';
       var shd = 1 - pe;
-      var gl = i === 0 ? 0 : seg(t, glowAt[i], glowAt[i] + .25) * (1 - seg(t, glowAt[i] + .25, glowAt[i] + 1.15));
+      var gl = 0;
+      if (i > 0) { var ga = TB[i][0], gb = TB[i][1]; gl = .55 * seg(t, ga - .1, ga + .3) * (1 - seg(t, gb, gb + .8)) + .55 * seg(t, gb - .15, gb + .15) * (1 - seg(t, gb + .15, gb + 1.1)); }
       L.style.boxShadow = '0 ' + (14 * shd) + 'px ' + (26 * shd) + 'px rgba(37,31,28,' + (.18 * shd * ap) + '),0 0 0 ' + (o ? 1 : 0) + 'px rgba(37,31,28,' + (.1 * o) + ')' + (gl > 0.01 ? ',0 0 ' + (30 * gl) + 'px ' + (6 * gl) + 'px rgba(183,166,226,' + (.85 * gl) + ')' : '');
       if (i > 0) { papers[i].style.opacity = 1; if (pr * (1 - o) > .62) L.style.opacity = 0; }
     });
     pic.style.filter = 'grayscale(45%) contrast(1.06) brightness(1.03)';
-    var sp0 = ease(seg(t, 3.5, 5.6)), sr = sp0 * 110;
+    var sp0 = ease(seg(t, SK0, 5.6)), sr = sp0 * 110;
     sketch.style.webkitMaskImage = sketch.style.maskImage = 'linear-gradient(to top,#000 ' + sr + '%,transparent ' + (sr + 7) + '%)';
     sketch.style.opacity = 1;
     headAt(bhS, 475 * (1 - Math.min(1, sr / 100)), sp0 > 0 && sp0 < .985);
     wfShapes.forEach(function (e) {
-      var i = e._ord || 0, k = ease(seg(t, 7.0 + i * .085, 7.0 + i * .085 + .55));
+      var i = e._ord || 0, k = ease(seg(t, WF0 + i * .085, WF0 + i * .085 + .55));
       e.style.strokeDashoffset = 1 - k; e.setAttribute('fill-opacity', (+e.dataset.fo) * k);
     });
-    (function () {
-      var n = wfTop.length; if (!n) return;
-      var pw = clamp((t - 7.0) / ((n - 1) * .085 + .55), 0, 1), j = pw * (n - 1), j0 = Math.floor(j), j1 = Math.min(n - 1, j0 + 1);
-      var y = lerp(wfTop[j0], wfTop[j1], j - j0);
-      headAt(bhW, y, pw > 0 && pw < .985);
-    })();
+    (function () { var y = headY(2, t); headAt(bhW, y == null ? 0 : y, y != null); })();
     wf.style.opacity = 1;
-    var uiHead = null;
     uiBits.forEach(function (e, i) {
-      var kk = ease(seg(t, 10.45 + i * .16, 10.45 + i * .16 + .55));
+      var kk = ease(seg(t, UI0 + i * .22, UI0 + i * .22 + .7));
       e.style.opacity = kk > 0 ? 1 : 0; e.style.transform = '';
       e.style.clipPath = kk >= 1 ? 'none' : 'inset(' + ((1 - kk) * 100).toFixed(1) + '% 0 0 0)';
-      if (kk > 0 && kk < 1) uiHead = uiTop[i].y + uiTop[i].h * (1 - kk);
     });
-    headAt(bhU, uiHead == null ? 0 : uiHead, uiHead != null);
+    (function () { var y = headY(3, t); headAt(bhU, y == null ? 0 : y, y != null); })();
 
     /* headline plane floats above the UI layer; the role line and headline arrive last */
-    var hs = ease(seg(t, 17.6, 18.9)), ro = ease(seg(t, 17.0, 18.0));
+    var hs = ease(seg(t, 18.6, 19.9)), ro = ease(seg(t, 18.0, 19.0));
     var pee = pe * (1 - o);
     scrim.style.opacity = 0; tscrim.style.opacity = 0;
     var Yp = pr * (1 - o);
@@ -323,13 +388,17 @@
       } else if (t < T_FLY0) { dot.style.opacity = 0; }
       else {
         /* the dot flies to where the portrait will be, waits there, becomes the print head, then goes home */
-        var br = ball.getBoundingClientRect(), E = headerDot(), cr = pcv.getBoundingClientRect(), csc = (cr.width / PW) || 1;
-        var bx = br.left + br.width / 2, by = br.top + br.height / 2, dsz = clamp(24 * csc, 13, 40);
-        var hx = cr.left + 6 * csc, hy = cr.top - 24 * csc + Math.sin(t * 3.2) * 3, active = pr > 0 && printHead;
-        if (active) { hx = cr.left + printHead.x * csc; hy = cr.top + printHead.y * csc; }
+        var br = ball.getBoundingClientRect(), E = headerDot(), sr = stage.getBoundingClientRect();
+        var bx = br.left + br.width / 2, by = br.top + br.height / 2;
+        var live = pr > 0 && printHead, cr = pcv.getBoundingClientRect(), csc = (cr.width / PW) || 1;
+        /* it flies to where the portrait will END UP (not to the moving stack), hovers there, then becomes the print head */
+        var fx = fin ? sr.left + fin.x : cr.left, fy = fin ? sr.top + fin.y : cr.top; if (fin) csc = fin.w / PW || 1;
+        var dsz = clamp(24 * csc, 13, 40);
+        var hx = fx + 6 * csc, hy = fy - 24 * csc + Math.sin(t * 3.2) * 3;
+        if (live) { var kk = ease(seg(pr, 0, .05)); hx = lerp(hx, cr.left + printHead.x * csc, kk); hy = lerp(hy, cr.top + printHead.y * csc, kk); }
         if (t < T_FLY1) {
-          var uf = ease(seg(t, T_FLY0, T_FLY1));
-          dotShow(lerp(bx, hx, uf), lerp(by, hy, uf) - 80 * Math.sin(Math.PI * uf), lerp(Math.max(13, br.width * .9), dsz, uf), 1, 0, 1, 1);
+          var uf = ease(seg(t, T_FLY0, T_FLY1)), ar = Math.sin(Math.PI * uf);
+          dotShow(lerp(bx, hx, uf), lerp(by, hy, uf) - 90 * ar, lerp(Math.max(13, br.width * .9), dsz, uf) * (1 + .2 * ar), 1 + 1.4 * ar, -.35 * ar, 1, 1);
           dot.style.opacity = 1;
         } else if (t < T_PRINT1 + .05) {
           dotShow(hx, hy, dsz, 1, 0, 1, 1);
@@ -358,8 +427,14 @@
     render(T_HAND + .001);
     var r = ball.getBoundingClientRect();
     target.x = r.left + r.width / 2; target.y = r.top + r.height / 2; target.d = Math.max(10, r.width);
-    ud.x = keep.x; ud.y = keep.y; px.x = keep.px; px.y = keep.py;
     target.s = headerDot();
+    /* where the finished portrait sits (relative to the stage), so the dot can fly straight there */
+    render(T_PRINT0);
+    var cr0 = pcv.getBoundingClientRect(), sr0 = stage.getBoundingClientRect();
+    fin = { x: cr0.left - sr0.left, y: cr0.top - sr0.top, w: cr0.width };
+    lastHead = null; lastPP = -1;
+    render(T_HAND + .001);
+    ud.x = keep.x; ud.y = keep.y; px.x = keep.px; px.y = keep.py;
   }
 
   /* ---------- loop ---------- */
@@ -367,11 +442,23 @@
   function settled(t) {
     return t >= T_END && !dragging && Math.abs(ud.x - ut.x) < .02 && Math.abs(ud.y - ut.y) < .02 && Math.abs(px.x - tg.x) < .02 && Math.abs(px.y - tg.y) < .02;
   }
+  /* real time -> story time: slower while the dot rolls between sheets and while it builds one, so every sheet is seen being made */
+  var WARP = [[0, 2.3, 1], [2.3, SK0, .68], [SK0, 5.6, .85], [5.6, WF0, .68], [WF0, TB[2][1], .85], [TB[2][1], UI0, .68], [UI0, TB[3][1], .85], [TB[3][1], 1e9, 1]];
+  function warp(r) {
+    var acc = 0;
+    for (var i = 0; i < WARP.length; i++) {
+      var a = WARP[i][0], b = WARP[i][1], k = WARP[i][2], len = (b - a) / k;
+      if (r < acc + len) return a + (r - acc) * k;
+      acc += len;
+    }
+    return T_END;
+  }
+  var T_ENDR = (function () { var acc = 0; for (var i = 0; i < WARP.length - 1; i++) acc += (WARP[i][1] - WARP[i][0]) / WARP[i][2]; return acc + (T_END - WARP[WARP.length - 1][0]); })();
   var tReal = 0, lastNow = 0;
   function frame(now) {
     var dt = lastNow ? Math.min(.05, (now - lastNow) / 1000) : 0; lastNow = now;
-    if (started) tReal = Math.min(T_END, tReal + dt * SPEED * speedMul);
-    var t = window.__fixed !== undefined ? window.__fixed : tReal;
+    if (started) tReal = Math.min(T_ENDR, tReal + dt * SPEED * speedMul);
+    var t = window.__fixed !== undefined ? window.__fixed : Math.min(T_END, warp(tReal));
     px.x += (tg.x - px.x) * .08; px.y += (tg.y - px.y) * .08;
     var f = dragging ? .28 : .06;
     ud.x += (ut.x - ud.x) * f; ud.y += (ut.y - ud.y) * f;
@@ -399,7 +486,7 @@
   lh.classList.add('lh-ready');
 
   if (reduce) {
-    started = true; tReal = T_END; stage.classList.add('lh-done');
+    started = true; tReal = T_ENDR; stage.classList.add('lh-done');
     render(T_END);
     revealBodyNow();
   } else {
@@ -407,7 +494,7 @@
     var seenBefore = false;
     try { seenBefore = sessionStorage.getItem('tf-hero-seen') === '1' && !/[?&]hero=1/.test(location.search) && window.__fixed === undefined; } catch (e) {}
     if (scrolledPast || seenBefore) {
-      started = true; tReal = T_END; stage.classList.add('lh-done'); render(T_END); revealBodyNow();
+      started = true; tReal = T_ENDR; stage.classList.add('lh-done'); render(T_END); revealBodyNow();
     } else {
       render(0);
       if ('IntersectionObserver' in window) {

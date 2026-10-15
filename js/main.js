@@ -219,7 +219,7 @@ document.addEventListener('DOMContentLoaded', function () {
           { text: 'A rocket scientist', correct: true },
           { text: 'The founder’s 8-year-old kid', correct: false }
         ],
-        feedbackCorrect: 'Nailed it! Jack Ryan, a former missile engineer, designed the wheel axles. Proof that great design and UX sometimes really do take rocket science!',
+        feedbackCorrect: 'Nailed it! Jack Ryan, a former missile engineer, helped engineer the original Hot Wheels. Proof that great toys sometimes really do take rocket science!',
         feedbackWrong: 'Sounds logical, but no! It was an actual rocket scientist. Because when you want to build a frictionless product - you call in the pros.'
       },
       {
