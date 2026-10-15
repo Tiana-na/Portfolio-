@@ -90,6 +90,7 @@
     if (head && pp < .9) { pctx.save(); pctx.fillStyle = 'rgba(255,253,248,.6)'; pctx.fillRect(0, head.y - .5, PW, 1); pctx.restore(); }
   }
 
+  var STAND = 1, STAND_DIR = -1, STAND_CY = 190, STAND_S = .3;
   var SH = [{ x: 0, y: 0, yaw: 0 }, { x: -215, y: -50, yaw: -7 }, { x: 400, y: 70, yaw: 5 }, { x: 1010, y: 470, yaw: -4 }];
   var KA = [-370, -165];
 
@@ -216,7 +217,7 @@
     var c = camAt(t), cx = c[0], cy = c[1], s = c[2], a = TILT, b = TURN;
     var vis = ease(seg(t, 0, .6));
     var pc = ease(seg(t, 11.8, 14.8));
-    cx *= 1 - pc; cy *= 1 - pc; a *= 1 - pc; b *= 1 - pc; s = lerp(s, 1, pc) * (1 - .4 * Math.sin(Math.PI * pc));
+    cy -= STAND_CY; s *= 1 - STAND_S * (1 - pc); cx *= 1 - pc; cy *= 1 - pc; a *= 1 - pc; b *= 1 - pc; s = lerp(s, 1, pc) * (1 - .4 * Math.sin(Math.PI * pc));
     var pr = seg(t, T_PRINT0, T_PRINT1);                 /* the print: 0 = nothing printed, 1 = portrait complete */
     var pe = ease(seg(pr, .7, 1));               /* (used for the light/shadow changes that follow the print) */
     var o = ease(clamp(Math.abs(ud.y) / 46, 0, 1)) * pc;
@@ -253,7 +254,9 @@
       var x = SH[i].x * (1 - pc), y = SH[i].y * (1 - pc), yaw = SH[i].yaw * (1 - pc);
       var sc = lerp(.55, 1, pc) * (.5 + .5 * ap);
       L.style.opacity = ap;
-      L.style.transform = 'translate3d(' + x + 'px,' + y + 'px,' + (zi + dz) + 'px) rotateZ(' + yaw + 'deg) scale(' + sc + ')';
+      /* the sheets STAND (hinged on their bottom edge) while they are built, and tip back to face the viewer when the stack forms */
+      var sd = i ? (1 - pc) * STAND : 0;
+      L.style.transform = 'translate3d(' + x + 'px,' + y + 'px,' + (zi + dz) + 'px) rotateZ(' + yaw + 'deg) scale(' + sc + ') translateY(' + (237 * (1 - sd)).toFixed(1) + 'px) rotateX(' + (STAND_DIR * 90 * sd).toFixed(2) + 'deg) translateY(-237px)';
       var shd = 1 - pe;
       var gl = i === 0 ? 0 : seg(t, glowAt[i], glowAt[i] + .25) * (1 - seg(t, glowAt[i] + .25, glowAt[i] + 1.15));
       L.style.boxShadow = '0 ' + (14 * shd) + 'px ' + (26 * shd) + 'px rgba(37,31,28,' + (.18 * shd * ap) + '),0 0 0 ' + (o ? 1 : 0) + 'px rgba(37,31,28,' + (.1 * o) + ')' + (gl > 0.01 ? ',0 0 ' + (30 * gl) + 'px ' + (6 * gl) + 'px rgba(183,166,226,' + (.85 * gl) + ')' : '');
