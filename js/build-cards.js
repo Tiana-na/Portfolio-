@@ -1,6 +1,6 @@
-/* The info cards on About are BUILT by the line's dot. The dot arrives at a station, draws the card as a wireframe
-   (a dashed block where every line of text and every chip will be) and then runs down the card's height like a print head:
-   the blocks wipe away under it and the real content is printed from top to bottom. Plays once per card.
+/* The info cards on About are BUILT by the line's dot. The dot arrives at a station and the card is drawn as a wireframe
+   (a dashed block where every line of text and every chip will be); then a print head runs down from the top edge, the way the dot came:
+   the blocks wipe away under it and the real content is printed top to bottom. Plays once per card.
    The text stays in the DOM the whole time; with reduced motion (or if the line engine is missing) nothing is hidden for long. */
 (function () {
   'use strict';
@@ -41,7 +41,7 @@
     if (card.__bld) return card.__bld;
     var ov = doc.createElement('div'); ov.className = 'bld-ov'; ov.setAttribute('aria-hidden', 'true');
     card.appendChild(ov);
-    var st = { card: card, ov: ov, bars: [], head: null, done: false, h: 0 };
+    var st = { card: card, ov: ov, bars: [], head: null, done: false, planned: false, printing: false, h: 0 };
     card.__bld = st; return st;
   }
   function arm(st) {
@@ -56,39 +56,42 @@
     card.classList.add('bld-hide');
   }
 
-  function play(st) {
-    if (st.done) return; st.done = true;
+  /* 1. PLAN: the dot arrives at the station and the card appears as a wireframe (every block drawn, top first).
+     2. PRINT: right behind the dot, a print head runs down the card from its top edge (where the dot came from) and the content
+     is printed under it, top to bottom. */
+  function plan(st) {
+    if (st.planned) return; st.planned = true; st.done = true;
     arm(st);
-    var n = st.bars.length, H = st.h, D = Math.max(850, Math.min(1500, H * 2.6));
-    /* 1. the plan: every block appears, top to bottom, quickly */
-    st.bars.forEach(function (d, i) { setTimeout(function () { d.classList.add('in'); }, 40 + (d._y / H) * 320); });
-    var T0 = 520;
-    /* 2. the print head runs down the card; whatever it passes is revealed */
-    setTimeout(function () {
-      st.card.classList.remove('bld-hide');
-      st.head.classList.add('go');
-      var t0 = performance.now(), next = 0;
-      (function tick(now) {
-        var t = Math.min(1, (now - t0) / D), y = t * (H + 8);
-        st.head.style.transform = 'translateY(' + y.toFixed(1) + 'px)';
-        while (next < n && st.bars[next]._y <= y) { st.bars[next].classList.add('out'); next++; }
-        if (t < 1) requestAnimationFrame(tick);
-        else {
-          while (next < n) { st.bars[next].classList.add('out'); next++; }
-          st.head.classList.add('off');
-          setTimeout(function () { st.ov.remove(); st.card.classList.remove('bld-hide'); }, 700);
-        }
-      })(t0);
-    }, T0);
+    var H = st.h;
+    st.bars.forEach(function (d) { setTimeout(function () { d.classList.add('in'); }, 40 + (d._y / H) * 320); });
+    st.planAt = performance.now();
+    setTimeout(function () { print(st); }, 560);
   }
-
+  function print(st) {
+    if (st.printing) return; st.printing = true;
+    var n = st.bars.length, H = st.h, D = Math.max(850, Math.min(1500, H * 2.6)), next = 0;
+    st.card.classList.remove('bld-hide');
+    st.head.classList.add('go');
+    var t0 = performance.now();
+    (function tick(now) {
+      var t = Math.min(1, (now - t0) / D), y = t * (H + 8) - 4;
+      st.head.style.transform = 'translateY(' + y.toFixed(1) + 'px)';
+      while (next < n && st.bars[next]._y <= y) { st.bars[next].classList.add('out'); next++; }
+      if (t < 1) requestAnimationFrame(tick);
+      else {
+        while (next < n) { st.bars[next].classList.add('out'); next++; }
+        st.head.classList.add('off');
+        setTimeout(function () { st.ov.remove(); st.card.classList.remove('bld-hide'); }, 700);
+      }
+    })(t0);
+  }
+  function stationCards(s) {
+    if (s.kind === 'stack') { var f = s.el.querySelector('.stk-card'); return f ? [f] : []; }
+    if (s.kind === 'pair') return Array.prototype.slice.call(s.el.querySelectorAll('.card'));
+    return [];
+  }
   /* the line engine calls this when its dot reaches a station */
-  TF.onStation = function (s) {
-    var els = [];
-    if (s.kind === 'stack') { var f = s.el.querySelector('.stk-card'); if (f) els.push(f); }
-    else if (s.kind === 'pair') els = Array.prototype.slice.call(s.el.querySelectorAll('.card'));
-    els.forEach(function (c, i) { var st = c.__bld; if (st) setTimeout(function () { play(st); }, i * 260); });
-  };
+  TF.onStation = function (s) { stationCards(s).forEach(function (c, i) { var st = c.__bld; if (st) setTimeout(function () { plan(st); }, i * 200); }); };
 
   function start() {
     cards.forEach(function (c) { arm(prep(c)); });
@@ -97,7 +100,7 @@
       es.forEach(function (e) {
         if (!e.isIntersecting) return;
         var st = e.target.__bld; io.unobserve(e.target);
-        setTimeout(function () { if (st && !st.done) play(st); }, 2600);
+        setTimeout(function () { if (st && !st.planned) { plan(st); } }, 2600);
       });
     }, { threshold: .5 });
     cards.forEach(function (c) { io.observe(c); });

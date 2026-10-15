@@ -82,12 +82,12 @@
       var bands = q * PN, full = Math.floor(bands), part = bands - full;
       pctx.imageSmoothingEnabled = k === 1;
       var src = lod[k];
-      pctx.save(); pctx.beginPath(); pctx.rect(0, 0, PW, Math.min(PH, full * bh)); 
-      if (full < PN && part > 0) { var rtl = full % 2 === 1, w = PW * part; pctx.rect(rtl ? PW - w : 0, full * bh, w, bh); head = { x: rtl ? PW - w : w, y: full * bh }; }
+      pctx.save(); pctx.beginPath(); pctx.rect(0, PH - Math.min(PH, full * bh), PW, Math.min(PH, full * bh)); 
+      if (full < PN && part > 0) { var rtl = full % 2 === 1, w = PW * part; pctx.rect(rtl ? PW - w : 0, PH - (full + 1) * bh, w, bh); head = { x: rtl ? PW - w : w, y: PH - (full + 1) * bh }; }
       pctx.clip(); pctx.drawImage(src, 0, 0, src.width, src.height, 0, 0, PW, PH); pctx.restore();
     }
     printHead = head ? { x: head.x, y: head.y + bh / 2 } : (printHead && pp > 0 && pp < .99 ? printHead : null);
-    if (head && pp < .9) { pctx.save(); pctx.fillStyle = 'rgba(255,253,248,.6)'; pctx.fillRect(0, head.y + bh - .5, PW, 1); pctx.restore(); }
+    if (head && pp < .9) { pctx.save(); pctx.fillStyle = 'rgba(255,253,248,.6)'; pctx.fillRect(0, head.y - .5, PW, 1); pctx.restore(); }
   }
 
   var SH = [{ x: 0, y: 0, yaw: 0 }, { x: -215, y: -50, yaw: -7 }, { x: 400, y: 70, yaw: 5 }, { x: 1010, y: 470, yaw: -4 }];
@@ -137,6 +137,22 @@
   var wfShapes = Array.prototype.slice.call(wf.querySelectorAll('path, rect'));
   wfShapes.forEach(function (s) { s.setAttribute('pathLength', '1'); s.style.strokeDasharray = '1'; s.dataset.fo = s.getAttribute('fill-opacity') || '0'; });
   var uiBits = [imgbox, btn].concat(skl);
+  /* every layer is BUILT from the bottom up, like a printer: a lavender head line rises through the layer and the content appears under it */
+  function mkHead(L) { var h = document.createElement('i'); h.className = 'lh-bh'; L.appendChild(h); return h; }
+  var bhS = mkHead(layers[1]), bhW = mkHead(layers[2]), bhU = mkHead(layers[3]);
+  var wfOrd = [], wfTop = [];
+  (function () {
+    var a = wfShapes.map(function (e) { var b; try { b = e.getBBox(); } catch (x) { b = { y: 0, height: 0 }; } return { e: e, top: b.y, bot: b.y + b.height }; });
+    a.sort(function (p, q) { return q.bot - p.bot; });
+    a.forEach(function (o, i) { o.e._ord = i; });
+    wfTop = a.map(function (o) { return o.top; });
+  })();
+  var uiTop = [];
+  (function () {
+    uiBits.sort(function (p, q) { return (q.offsetTop + q.offsetHeight) - (p.offsetTop + p.offsetHeight); });
+    uiTop = uiBits.map(function (e) { return { y: e.offsetTop, h: e.offsetHeight }; });
+  })();
+  function headAt(h, yPx, on) { h.style.bottom = (100 - yPx / 475 * 100).toFixed(2) + '%'; h.style.opacity = on ? 1 : 0; }
 
   /* ---------- ball path ---------- */
   var T_ROLL0 = 2.3, T_ROLL1 = 9.9, T_FLY0 = 11.2, T_FLY1 = 12.7, T_PRINT0 = 14.9, T_PRINT1 = 17.5, T_BACK = 18.7;
@@ -244,19 +260,29 @@
       if (i > 0) { papers[i].style.opacity = 1; if (pr * (1 - o) > .62) L.style.opacity = 0; }
     });
     pic.style.filter = 'grayscale(45%) contrast(1.06) brightness(1.03)';
-    var sr = ease(seg(t, 3.5, 5.4)) * 160;
-    sketch.style.webkitMaskImage = sketch.style.maskImage = 'radial-gradient(circle at 50% 56%,#000 ' + sr + '%,transparent ' + (sr + 16) + '%)';
+    var sp0 = ease(seg(t, 3.5, 5.6)), sr = sp0 * 110;
+    sketch.style.webkitMaskImage = sketch.style.maskImage = 'linear-gradient(to top,#000 ' + sr + '%,transparent ' + (sr + 7) + '%)';
     sketch.style.opacity = 1;
-    wfShapes.forEach(function (e, i) {
-      var k = ease(seg(t, 7.0 + i * .085, 7.0 + i * .085 + .55));
+    headAt(bhS, 475 * (1 - Math.min(1, sr / 100)), sp0 > 0 && sp0 < .985);
+    wfShapes.forEach(function (e) {
+      var i = e._ord || 0, k = ease(seg(t, 7.0 + i * .085, 7.0 + i * .085 + .55));
       e.style.strokeDashoffset = 1 - k; e.setAttribute('fill-opacity', (+e.dataset.fo) * k);
     });
+    (function () {
+      var n = wfTop.length; if (!n) return;
+      var pw = clamp((t - 7.0) / ((n - 1) * .085 + .55), 0, 1), j = pw * (n - 1), j0 = Math.floor(j), j1 = Math.min(n - 1, j0 + 1);
+      var y = lerp(wfTop[j0], wfTop[j1], j - j0);
+      headAt(bhW, y, pw > 0 && pw < .985);
+    })();
     wf.style.opacity = 1;
+    var uiHead = null;
     uiBits.forEach(function (e, i) {
-      var q = back(seg(t, 10.45 + i * .16, 10.45 + i * .16 + .5)), kk = ease(seg(t, 10.45 + i * .16, 10.45 + i * .16 + .3));
-      var fade = 1;
-      e.style.opacity = kk * fade; e.style.transform = 'scale(' + (.8 + .2 * q) + ')';
+      var kk = ease(seg(t, 10.45 + i * .16, 10.45 + i * .16 + .55));
+      e.style.opacity = kk > 0 ? 1 : 0; e.style.transform = '';
+      e.style.clipPath = kk >= 1 ? 'none' : 'inset(' + ((1 - kk) * 100).toFixed(1) + '% 0 0 0)';
+      if (kk > 0 && kk < 1) uiHead = uiTop[i].y + uiTop[i].h * (1 - kk);
     });
+    headAt(bhU, uiHead == null ? 0 : uiHead, uiHead != null);
 
     /* headline plane floats above the UI layer; the role line and headline arrive last */
     var hs = ease(seg(t, 17.6, 18.9)), ro = ease(seg(t, 17.0, 18.0));

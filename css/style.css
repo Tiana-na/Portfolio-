@@ -2396,10 +2396,13 @@ html.lh-peek .lh-T .lh-head em{ transform: none !important; }
 .cl-rail.cl-after .rs{ transition: stroke .5s ease, opacity .2s ease; }
 .cl-dot{ transition: opacity .3s ease !important; }
 /* print head: a thin lavender line that runs down the card */
-.bld-head{ position: absolute; left: -2px; right: -2px; top: -2px; height: 3px; border-radius: 2px; background: linear-gradient(90deg, rgba(183,166,226,0), #B7A6E2 12%, #7A6A9E 50%, #B7A6E2 88%, rgba(183,166,226,0)); box-shadow: 0 0 10px 2px rgba(183,166,226,.75); opacity: 0; transition: opacity .25s ease; }
+.bld-head{ position: absolute; left: -2px; right: -2px; top: 0; height: 3px; border-radius: 2px; background: linear-gradient(90deg, rgba(183,166,226,0), #B7A6E2 12%, #7A6A9E 50%, #B7A6E2 88%, rgba(183,166,226,0)); box-shadow: 0 0 10px 2px rgba(183,166,226,.75); opacity: 0; transition: opacity .25s ease; }
 .bld-head.go{ opacity: 1; }
 .bld-head.off{ opacity: 0; transition: opacity .5s ease; }
 .bld-bar.out{ transition-duration: .38s, .5s; }
+/* hero layers: the print-head line that rises through a layer while it is built */
+.lh-bh{ position: absolute; left: -1px; right: -1px; bottom: 0; height: 3px; border-radius: 2px; z-index: 5; pointer-events: none; opacity: 0;
+  background: linear-gradient(90deg, rgba(183,166,226,0), #B7A6E2 10%, #7A6A9E 50%, #B7A6E2 90%, rgba(183,166,226,0)); box-shadow: 0 0 12px 3px rgba(183,166,226,.8); }
 
 /* =====================================================================
    One key language across the site: cream keys (secondary / icons), purple keys (primary)
