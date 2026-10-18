@@ -2654,14 +2654,3 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
 
 /* the two closing keys of every case study: same width, whatever the label */
 .case-bottom-buttons .btn.keycap{ box-sizing: border-box; width: min(100%, 340px); text-align: center; }
-
-/* secondary key: outline only, no fill (the primary one stays the filled purple key) */
-.btn.keycap.keycap--ghost{
-  background: transparent; color: #5A4D7E;
-  border: 2px solid #6D5F8E;
-  box-shadow: none; transform: none;
-  padding: 15px 38px 16px; margin-bottom: 8px;
-}
-.btn.keycap.keycap--ghost::before{ display: none; }
-.btn.keycap.keycap--ghost:hover{ background: rgba(109,95,142,.10); transform: none; }
-.btn.keycap.keycap--ghost:active{ background: rgba(109,95,142,.18); transform: translateY(2px); box-shadow: none; }
