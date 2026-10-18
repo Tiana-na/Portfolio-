@@ -404,74 +404,85 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  /* ---------- custom cursor (whole site, desktop pointer only) ---------- */
-  var supportsFinePointer = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
+  /* No custom cursor: the native pointer everywhere. The pointer changes shape in one place only -
+     over the assembled portrait on About, where it becomes the dot-shaped window onto the sketch (chain-hero.js). */
 
-  if (!prefersNoMotion && hasHover && supportsFinePointer) {
-    /* the pointer is a soft purple ring - the logo's dot is the page's character and must never be duplicated by the cursor */
-    var cursorEl = document.createElement('div');
-    cursorEl.className = 'custom-cursor';
-    document.body.appendChild(cursorEl);
+  /* ---------- discovery hints (desktop mouse only) ----------
+     A small label beside the native pointer, ONLY on secondary things worth discovering (the quiz).
+     Buttons and project covers already say what they do - no hint there. */
+  var finePointer = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var HINT_NEAR = '.quiz-block', HINT_FAR = '.mag-body';
+  if (finePointer && document.querySelector(HINT_NEAR + ', ' + HINT_FAR)) {
+    var hintEl = document.createElement('div');
+    hintEl.className = 'cursor-hint';
+    hintEl.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(hintEl);
 
-    var cursorHintEl = document.createElement('div');
-    cursorHintEl.className = 'custom-cursor-hint';
-    document.body.appendChild(cursorHintEl);
-
-    document.documentElement.classList.add('custom-cursor-active');
-
-    document.addEventListener('mousemove', function (e) {
-      cursorEl.classList.add('is-on');
-      cursorEl.style.left = e.clientX + 'px';
-      cursorEl.style.top = e.clientY + 'px';
-      cursorHintEl.style.left = e.clientX + 'px';
-      cursorHintEl.style.top = e.clientY + 'px';
-    });
-
-    /* The cursor dot itself never changes shape/color - only a small text
-       hint appears next to it on certain elements (view / click / play). */
-    var VIEW_SELECTOR = '.work-image';
-    var CLICK_SELECTOR = '.btn, .work-btn, .quiz-start-btn, .quiz-icon-btn, .whatsapp-fab, .nav-cv-btn, .trivia-teaser-link, .quiz-option, button:not(.menu-toggle):not(.trivia-teaser-close)';
-    var HINT_FAR_SELECTOR = '.mag-body';
-    var HINT_NEAR_SELECTOR = '.quiz-block';
-    var HINT_SELECTOR = HINT_FAR_SELECTOR + ', ' + HINT_NEAR_SELECTOR;
-    var ALL_HOVERABLE = VIEW_SELECTOR + ', ' + CLICK_SELECTOR + ', ' + HINT_SELECTOR;
-
-    document.addEventListener('mouseover', function (e) {
-      var clickTarget = e.target.closest(CLICK_SELECTOR);
-      var viewTarget = e.target.closest(VIEW_SELECTOR);
-      var hintNearTarget = e.target.closest(HINT_NEAR_SELECTOR);
-      var hintFarTarget = e.target.closest(HINT_FAR_SELECTOR);
-
-      var cursorIsEnglish = document.documentElement.lang === 'en';
-      cursorEl.classList.toggle('is-hover', !!(clickTarget || viewTarget));
+    function hintText(target) {
+      var en = document.documentElement.lang === 'en';
+      var near = target.closest(HINT_NEAR);
       /* "Let's play" only invites before the quiz has started */
-      if (hintNearTarget && quizStartBtn && quizStartBtn.hidden) hintNearTarget = null;
+      if (near && !(quizStartBtn && quizStartBtn.hidden)) return en ? 'Let’s play' : 'שנשחק';
+      if (!near && target.closest(HINT_FAR)) return en ? 'Scroll me down, let’s play' : 'גללו אותי למטה ונשחק';
+      return '';
+    }
+    document.addEventListener('mousemove', function (e) {
+      hintEl.style.left = e.clientX + 'px';
+      hintEl.style.top = e.clientY + 'px';
+      var t = e.target.closest ? hintText(e.target) : '';
+      if (t) { if (hintEl.textContent !== t) hintEl.textContent = t; hintEl.classList.add('is-visible'); }
+      else hintEl.classList.remove('is-visible');
+    }, { passive: true });
+    document.addEventListener('mouseleave', function () { hintEl.classList.remove('is-visible'); });
+  }
 
-      if (clickTarget) {
-        cursorHintEl.textContent = cursorIsEnglish ? 'Click' : 'לחיצה';
-        cursorHintEl.classList.add('is-visible');
-      } else if (viewTarget) {
-        cursorHintEl.textContent = cursorIsEnglish ? 'View' : 'צפייה';
-        cursorHintEl.classList.add('is-visible');
-      } else if (hintNearTarget) {
-        cursorHintEl.textContent = cursorIsEnglish ? 'Let’s play' : 'שנשחק';
-        cursorHintEl.classList.add('is-visible');
-      } else if (hintFarTarget) {
-        cursorHintEl.textContent = cursorIsEnglish ? 'Scroll me down, let’s play' : 'גללו אותי למטה ונשחק';
-        cursorHintEl.classList.add('is-visible');
-      }
+  /* ---------- the same hint on touch screens: no hover there, so it sits in the page instead of beside a pointer.
+     It rises once, just before the quiz; a tap scrolls to the quiz; it fades when the quiz is reached or started.
+     Its space is always reserved, so nothing jumps when it appears or leaves. ---------- */
+  var touchOnly = window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches;
+  var nudgeAfter = document.querySelector('.about-editorial');
+  var quizEl = document.getElementById('trivia');
+  if (touchOnly && nudgeAfter && quizEl) {
+    var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var nudgeWrap = document.createElement('div');
+    nudgeWrap.className = 'quiz-nudge-wrap';
+    var nudge = document.createElement('button');
+    nudge.type = 'button';
+    nudge.className = 'quiz-nudge';
+    nudgeWrap.appendChild(nudge);
+    nudgeAfter.parentNode.insertBefore(nudgeWrap, quizEl);
+
+    var nudgeText = function () {
+      nudge.textContent = document.documentElement.lang === 'en' ? 'Scroll down, let’s play ↓' : 'גללו למטה ונשחק ↓';
+    };
+    nudgeText();
+    document.addEventListener('sitelangchange', nudgeText);
+
+    var nudgeDone = false;
+    var retire = function () {
+      if (nudgeDone) return;
+      nudgeDone = true;
+      nudge.classList.remove('is-in');
+      nudge.classList.add('is-done');
+      nudge.setAttribute('tabindex', '-1');
+    };
+    nudge.addEventListener('click', function () {
+      quizEl.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'start' });
+      retire();
     });
+    if (quizStartBtn) quizStartBtn.addEventListener('click', retire);
 
-    document.addEventListener('mouseout', function (e) {
-      var stillOver = e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest(ALL_HOVERABLE);
-      if (stillOver) return;
-      var leavingHoverable = e.target.closest(ALL_HOVERABLE);
-      if (!leavingHoverable) return;
-      cursorEl.classList.remove('is-hover');
-      cursorHintEl.classList.remove('is-visible');
-      cursorHintEl.textContent = '';
-    });
-
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es, obs) {
+        if (es[0].isIntersecting && !nudgeDone) { nudge.classList.add('is-in'); obs.disconnect(); }
+      }, { threshold: 1 }).observe(nudgeWrap);
+      /* once the quiz fills most of the screen, the hint has done its job */
+      new IntersectionObserver(function (es, obs) {
+        if (es[0].isIntersecting) { retire(); obs.disconnect(); }
+      }, { rootMargin: '0px 0px -55% 0px' }).observe(quizEl);
+    } else {
+      nudge.classList.add('is-in');
+    }
   }
 
 });

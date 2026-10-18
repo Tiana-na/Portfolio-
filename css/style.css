@@ -1774,54 +1774,46 @@ a.contact-hero-accent--yellow:focus-visible{
   .trivia-teaser-text strong{ display:inline; margin-top:0; margin-inline-start:4px; }
 }
 
-/* ===== Custom cursor (desktop only, replaces default pointer) ===== */
-html.custom-cursor-active,
-html.custom-cursor-active *{
-  cursor: none !important;
-}
-
-.custom-cursor{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 16px;
-  height: 17px;
-  background-image: url('../assets/logo-tf-dot.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-  will-change: left, top;
-}
-
-.custom-cursor-hint{
-  position: fixed;
-  top: 0;
-  left: 0;
-  transform: translate(14px, 14px) scale(.85);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 9998;
-  background: #1E1B16;
-  color: #F2EDE4;
-  font-size: 11px;
-  font-weight: 600;
-  white-space: nowrap;
-  padding: 5px 11px;
-  border-radius: 20px;
+/* ===== Discovery hint: a small label beside the native pointer, only on secondary things worth finding (the quiz) ===== */
+.cursor-hint{
+  position: fixed; top: 0; left: 0; z-index: 9998; pointer-events: none;
+  transform: translate(16px, 18px) scale(.9); opacity: 0;
+  background: #1E1B16; color: #F2EDE4;
+  font-size: 11px; font-weight: 600; white-space: nowrap;
+  padding: 5px 11px; border-radius: 20px;
   transition: opacity .15s ease, transform .15s ease;
-  will-change: left, top;
 }
-.custom-cursor-hint.is-visible{
-  opacity: 1;
-  transform: translate(14px, 14px) scale(1);
-}
+.cursor-hint.is-visible{ opacity: 1; transform: translate(16px, 18px) scale(1); }
+[dir="rtl"] .cursor-hint{ transform: translate(calc(-100% - 12px), 18px) scale(.9); }
+[dir="rtl"] .cursor-hint.is-visible{ transform: translate(calc(-100% - 12px), 18px) scale(1); }
+@media (hover: none), (pointer: coarse){ .cursor-hint{ display: none !important; } }
+@media (prefers-reduced-motion: reduce){ .cursor-hint{ transition: none; } }
 
-@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce){
-  .custom-cursor{ display: none !important; }
-  .custom-cursor-hint{ display: none !important; }
+/* the quiz hint on touch screens: the same black pill, placed in the page (desktop shows it beside the pointer instead) */
+.quiz-nudge-wrap{ display: none; }
+@media (hover: none), (pointer: coarse){
+  .quiz-nudge-wrap{ display: flex; justify-content: center; min-height: 44px; margin: 8px 0 4px; }
+}
+.quiz-nudge{
+  font: inherit; font-size: 12px; font-weight: 600; white-space: nowrap;
+  background: #1E1B16; color: #F2EDE4; border: 0; border-radius: 20px;
+  padding: 8px 16px; min-height: 36px; cursor: pointer;
+  opacity: 0; transform: translateY(8px); visibility: hidden;
+  transition: opacity .35s ease, transform .35s cubic-bezier(.3,.7,.3,1), visibility 0s linear .35s;
+}
+.quiz-nudge.is-in{ opacity: 1; transform: translateY(0); visibility: visible; transition-delay: 0s; }
+.quiz-nudge.is-done{ opacity: 0; transform: translateY(-4px); visibility: hidden; }
+.quiz-nudge:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce){ .quiz-nudge{ transform: none !important; transition: opacity .2s ease, visibility 0s linear .2s; } }
+
+/* design notes on the sketch layer (seen only through the portrait window): the logo tile as pin, lavender ink, a paper label */
+.lh-notes{ position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.lh-note-pin{ position: absolute; width: 7px; height: 7.5px; margin: -3.75px 0 0 -3.5px; background: #7A6A9E; border-radius: 0 34% 0 0; box-shadow: 0 0 0 2px rgba(244,236,216,.9); }
+.lh-note{
+  position: absolute; display: block; max-width: 96px;
+  font-family: inherit; font-size: 10.5px; font-weight: 600; line-height: 1.25; letter-spacing: .01em; color: #251f1c;
+  background: rgba(244,236,216,.92); padding: 4px 6px; border-radius: 4px;
+  border-inline-start: 2px solid #7A6A9E; white-space: nowrap;
 }
 
 /* ===== Footer ===== */
@@ -2218,17 +2210,16 @@ footer .footer-credit{ margin-top: 6px; font-size: .78rem; opacity: .8; letter-s
 .lh-rv-clip{
   position: absolute; inset: 0; border-radius: 14px; overflow: hidden;
   background: #f4ecd8 url(../assets/tiana-sketch.webp) center / cover no-repeat;
-  -webkit-mask-image: radial-gradient(circle at var(--vx) var(--vy), #000 calc(var(--vr) - .6px), transparent calc(var(--vr) + .6px));
-  mask-image: radial-gradient(circle at var(--vx) var(--vy), #000 calc(var(--vr) - .6px), transparent calc(var(--vr) + .6px));
+  /* the window has the dot's shape: a square tile with one rounded corner */
+  clip-path: inset(calc(var(--vy) - var(--vr)) calc(100% - var(--vx) - var(--vr)) calc(100% - var(--vy) - var(--vr)) calc(var(--vx) - var(--vr)) round 0 calc(var(--vr) * .68) 0 0);
 }
 .lh-rv-clip .lh-role{ opacity: 1; color: #251f1c; }
 .lh-rv-clip .lh-head{ opacity: 1; transform: none; text-shadow: none; color: #251f1c; }
 .lh-rv-ring{
   position: absolute; left: var(--vx); top: var(--vy); width: calc(var(--vr) * 2); height: calc(var(--vr) * 2);
-  margin: calc(var(--vr) * -1) 0 0 calc(var(--vr) * -1); border-radius: 50%;
+  margin: calc(var(--vr) * -1) 0 0 calc(var(--vr) * -1); border-radius: 0 34% 0 0;
   border: 2px solid rgba(122,106,158,.8); box-shadow: 0 0 0 1px rgba(255,253,248,.35), 0 4px 18px rgba(37,31,28,.22);
 }
-html.lh-peek .custom-cursor, html.lh-peek .custom-cursor-hint{ opacity: 0 !important; }
 html.lh-peek .lh-stage, html.lh-peek .lh-stage.is-dragging{ cursor: none; }
 /* paper wash behind the headline and the role line, so the ink text stays readable on top of the sketch */
 .lh-rv-clip::before{ content: ""; position: absolute; inset: 0; z-index: 0;
@@ -2539,23 +2530,6 @@ html.lh-peek .lh-T .lh-head em{ transform: none !important; }
   .quiz-icon-btn, .work-btn, .nav-links .nav-cv-btn{ transition: none; }
 }
 
-/* ===== The pointer: a soft purple ring (never the logo's dot) ===== */
-.custom-cursor{
-  width: 22px; height: 22px;
-  background: rgba(122,106,158,.08);
-  background-image: none;
-  border: 2px solid #7A6A9E;
-  border-radius: 50%;
-  box-shadow: 0 0 0 1.5px rgba(255,253,248,.9), 0 2px 8px rgba(37,31,28,.14);
-  transition: width .18s ease, height .18s ease, background-color .18s ease, border-color .18s ease;
-}
-.custom-cursor.is-hover{
-  width: 40px; height: 40px;
-  background: rgba(122,106,158,.16);
-  border-color: #6D5F8E;
-}
-.custom-cursor-hint{ transform: translate(22px, 22px) scale(.85); }
-.custom-cursor-hint.is-visible{ transform: translate(22px, 22px) scale(1); }
 
 /* ===== More keys: language switch, quiz buttons, "back to projects" ===== */
 .lang-toggle{
@@ -2608,8 +2582,6 @@ html.lh-peek .lh-T .lh-head em{ transform: none !important; }
   [data-page="about"] .wrap, [data-page="about"] .about-hero-wrap{ padding-inline: 26px; }
 }
 
-.custom-cursor{ opacity: 0; }
-.custom-cursor.is-on{ opacity: 1; }
 
 /* no ruled-paper stripes on the lavender sheets - plain paper only */
 .stk--story .stk-card:nth-child(2), .stk--skills .stk-card:nth-child(1),
@@ -2634,14 +2606,6 @@ html.lh-peek .lh-T .lh-head em{ transform: none !important; }
 @keyframes dlPeek{ 0%,100%{ translate: 0 0; } 40%{ translate: calc(var(--dir, 1) * -18px) -5px; } }
 @media (prefers-reduced-motion: reduce){ .dl-ping, .stk-card.dl-peek, .logo-dot.dl-hop, .logo-dot.dl-flip, .flow-dot-core.dl-hop, .flow-dot-core.dl-flip, .flow-dot-core.dl-nudge{ animation: none; } }
 
-/* ===== The pointer: the outlined twin of the dot (same tile, one rounded corner), never a filled copy of it ===== */
-.custom-cursor{
-  width: 17px; height: 17px; border-radius: 0 34% 0 0;
-  background: rgba(122,106,158,.07); border: 2px solid #7A6A9E;
-  box-shadow: 0 0 0 1.5px rgba(255,253,248,.9), 0 2px 7px rgba(37,31,28,.14);
-  transition: width .18s ease, height .18s ease, background-color .18s ease, border-color .18s ease, border-radius .18s ease;
-}
-.custom-cursor.is-hover{ width: 30px; height: 30px; border-radius: 0 34% 0 0; background: rgba(122,106,158,.16); border-color: #6D5F8E; }
 
 /* the logo is a link home; the project cover is a link to its case study */
 a.logo-lockup{ color: inherit; text-decoration: none; cursor: pointer; }

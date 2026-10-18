@@ -631,7 +631,7 @@
     });
   }
 
-  /* ---- the inner layer: once the portrait is assembled, the pointer becomes a circle that shows the sketch layer beneath it
+  /* ---- the inner layer: once the portrait is assembled, the pointer becomes a dot-shaped window (the logo tile) that shows the sketch layer beneath it
      (same framing as the photo, the headline set in ink on paper). Mouse only; off while dragging, and with reduced motion. ---- */
   if (fine && !reduce) (function () {
     var rv = document.createElement('div'); rv.className = 'lh-rv'; rv.setAttribute('aria-hidden', 'true');
@@ -644,8 +644,27 @@
       return d;
     }
     clip.appendChild(twin(role, 'lh-role')); clip.appendChild(twin(head, 'lh-head'));
+    /* design notes on the sketch: found only through the window. Short enough to sit whole inside it (window ~116 units).
+       English only, on purpose. a = anchor on the feature, l = label box (plane units, 380 x 475). */
+    var NOTES = [
+      { a: [212, 110], l: [120, 96],  t: 'User research<br>mode: on' },
+      { a: [204, 152], l: [128, 146], t: 'Extrovert' },      /* the side you see */
+      { a: [286, 94],  l: [298, 70],  t: 'Introvert' },      /* the side you don't */
+      { a: [304, 166], l: [300, 186], t: 'Do not<br>disturb' },
+      { a: [134, 333], l: [64, 350],  t: 'Coffee: just<br>out of frame' },
+      { a: [200, 238], l: [146, 250], t: 'Hidden potential.<br>You found it.' }   /* dead centre: where the window first opens */
+    ];
+    var notes = document.createElement('div'); notes.className = 'lh-notes'; notes.setAttribute('dir', 'ltr');
+    NOTES.forEach(function (n) {
+      var lab = document.createElement('span'); lab.className = 'lh-note';
+      lab.style.left = n.l[0] + 'px'; lab.style.top = n.l[1] + 'px'; lab.innerHTML = n.t;
+      var pin = document.createElement('i'); pin.className = 'lh-note-pin';
+      pin.style.left = n.a[0] + 'px'; pin.style.top = n.a[1] + 'px';
+      notes.appendChild(pin); notes.appendChild(lab);
+    });
+    clip.appendChild(notes);
     rv.appendChild(clip); rv.appendChild(ring); T.appendChild(rv);
-    var R = 58, cur = { x: 190, y: 237, r: 0 }, tg2 = { x: 190, y: 237, r: 0 }, loop = 0, inside = false;
+    var R = 68, cur = { x: 190, y: 237, r: 0 }, tg2 = { x: 190, y: 237, r: 0 }, loop = 0, inside = false;
     function ready() { return stage.classList.contains('lh-done') && !dragging && Math.abs(ud.x) < 1.5 && Math.abs(ud.y) < 1.5; }
     function paint() {
       rv.style.setProperty('--vx', cur.x.toFixed(1) + 'px'); rv.style.setProperty('--vy', cur.y.toFixed(1) + 'px'); rv.style.setProperty('--vr', Math.max(0, cur.r).toFixed(1) + 'px');
