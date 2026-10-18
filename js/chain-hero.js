@@ -413,7 +413,7 @@
       var dz = (1 - ap) * (i ? 90 : 0);
       var x = SH[i].x * (1 - pc), y = SH[i].y * (1 - pc), yaw = (SH[i].yaw + YAWADD) * (1 - pc);
       var sc = lerp(.55, 1, pc) * (.5 + .5 * ap);
-      var gone = (i > 0 && i < 3) ? .88 * seg(t, TB[i][1] + .1, TB[i][1] + .9) * (1 - seg(t, 12.8, 14.2)) : 0;     /* a sheet the dot has left recedes, so it never looms over the next one */
+      var gone = (i > 0 && i < 3) ? .5 * seg(t, TB[i][1] + .1, TB[i][1] + .9) * (1 - seg(t, 12.8, 14.2)) : 0;     /* a sheet the dot has left recedes, so it never looms over the next one */
       L.style.opacity = ap * (1 - gone) * (i > 0 ? 1 - ease(seg(pr, .03, .2)) : 1);   /* the old sheets give way as the new stack is printed over them */
       /* the sheets STAND (hinged on their bottom edge) while they are built, and tip back to face the viewer when the stack forms */
       var sd = i ? (1 - pc) * STAND : 0;
@@ -422,7 +422,7 @@
       var gl = 0;
       if (i > 0) { var ga = TB[i][0], gb = TB[i][1]; gl = .55 * seg(t, ga - .1, ga + .3) * (1 - seg(t, gb, gb + .8)) + .55 * seg(t, gb - .15, gb + .15) * (1 - seg(t, gb + .15, gb + 1.1)); }
       L.style.boxShadow = '0 ' + (14 * shd) + 'px ' + (26 * shd) + 'px rgba(37,31,28,' + (.18 * shd * ap) + '),0 0 0 ' + (o ? 1 : 0) + 'px rgba(37,31,28,' + (.1 * o) + ')' + (gl > 0.01 ? ',0 0 ' + (30 * gl) + 'px ' + (6 * gl) + 'px rgba(183,166,226,' + (.85 * gl) + ')' : '');
-      if (i > 0) { papers[i].style.opacity = 1; if (pr * (1 - o) > .97) L.style.opacity = 0; }
+      if (i > 0) { papers[i].style.opacity = 1; if (pr * (1 - o) > .97) L.style.opacity = 0; }   /* at rest only the portrait; the sheets show again as the stack opens when it is turned */
     });
     pic.style.filter = 'grayscale(45%) contrast(1.06) brightness(1.03)';
     for (var si = 1; si <= 3; si++) {

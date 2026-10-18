@@ -783,7 +783,7 @@ html[dir="ltr"] .hero-detail-mark{
   border-radius: 50%; background: radial-gradient(ellipse, rgba(37,31,28,.24), transparent 70%);
   filter: blur(7px); opacity: 0; pointer-events: none;
 }
-.lh-rig{ position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d; }
+.lh-rig{ position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d; opacity: 0; }
 .lh-layer{
   position: absolute; width: 380px; height: 475px; left: -190px; top: -237px;
   border-radius: 14px; overflow: hidden; transform-style: flat;
@@ -816,8 +816,8 @@ html[dir="ltr"] .hero-detail-mark{
 }
 .lh-T .lh-head em{ display: inline-block; font-style: italic; font-weight: 600; color: #7A6A9E; }
 
-/* before JS runs: just the photo, no stack */
-.lh:not(.lh-ready) .lh-rig{ opacity: 1; }
+/* before JS runs the stage stays empty (the portrait must not flash at the start of the animation); about.html's <noscript> shows it when there is no JS */
+.lh:not(.lh-ready) .lh-rig{ opacity: 0; }
 .lh:not(.lh-ready) .lh-T{ display: none; }
 
 /* ===== About: body content (quote + fact cards) ===== */
@@ -857,8 +857,9 @@ html[dir="ltr"] .hero-detail-mark{
   transform-origin: 50% 100%;
 }
 .mag-fact{ position: relative; padding: 18px 18px 16px; text-align: start; }
-.stk--story .stk-card:nth-child(1){ --paper: #f4ecd8; }
-.stk--story .stk-card:nth-child(2){ --paper: #e9e4f3; background-image: repeating-linear-gradient(90deg, rgba(122,106,158,.10) 0 1px, transparent 1px 63px); }
+.stk--story .stk-card:nth-child(1){ --paper: #fffdf8; }
+.stk--story .stk-card:nth-child(2){ --paper: #f4ecd8; }
+.stk--story .stk-card:nth-child(3){ --paper: #e9e4f3; background-image: repeating-linear-gradient(90deg, rgba(122,106,158,.10) 0 1px, transparent 1px 63px); }
 .mag-fact-inner{ position: relative; }
 .mag-fact-label{
   font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #6D5F8E;
@@ -2025,7 +2026,7 @@ html.dot-away .logo-dot{ opacity: 0; }
 
 /* ---- stacks: a small library, seen from the side ---- */
 .stk{
-  --gap: 52px; --lz: -200px; --tilt: 24deg; --reach: 110px; --dir: 1; --open: 1;
+  --gap: 96px; --lz: -250px; --tilt: 24deg; --reach: 168px; --dir: 1; --open: 1;
   position: relative; max-width: min(780px, calc(100% - 32px)); margin: 0 auto 28px;
   padding-inline-start: calc((var(--n) - 1) * var(--reach));
   perspective: 1350px; perspective-origin: 62% 30%;
@@ -2111,7 +2112,7 @@ html.dot-away .logo-dot{ opacity: 0; }
 @keyframes keyLand{ 0%{ transform: translateY(0); } 30%{ transform: translateY(5px); } 100%{ transform: translateY(0); } }
 
 @media (max-width: 760px){
-  .stk{ --gap: 26px; --lz: -130px; --tilt: 20deg; --reach: 58px; }
+  .stk{ --gap: 28px; --lz: -140px; --tilt: 20deg; --reach: 46px; }
   .stk--skills{ margin-top: 28px; }
   .stk-spine{ font-size: .86rem; padding-top: 12px; }
   .flow-dot{ --ds: 16px; }
@@ -2584,7 +2585,7 @@ html.lh-peek .lh-T .lh-head em{ transform: none !important; }
 
 
 /* no ruled-paper stripes on the lavender sheets - plain paper only */
-.stk--story .stk-card:nth-child(2), .stk--skills .stk-card:nth-child(1),
+.stk--story .stk-card:nth-child(3), .stk--skills .stk-card:nth-child(1),
 .card-grid .card:nth-child(1), .card-grid .card:nth-child(4), .card-pair .card{ background-image: none !important; }
 .contact-callme-wrap::before{ background: #e9e4f3 !important; }
 
@@ -2680,3 +2681,45 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
   #lhBg{ display: none; }
 }
 @media (prefers-reduced-motion: reduce){ .lh-bgm{ display: none; } }
+
+
+/* ---- story stack: the quote card (first), wider steps, and writing you can see on the cards behind ---- */
+.stk-spine{ width: 34px; }
+.stk-spine--mark{ font-size: 2.1rem; padding-top: 10px; color: #7A6A9E; font-style: normal; }
+.stk .stk-card:not(.is-front) > *:not(.stk-spine){ opacity: .5; filter: none; }
+.stk .stk-card:not(.is-front) .mag-fact-inner > *{ opacity: 1; }
+.stk .stk-card:not(.is-front) .mag-fact-label{ opacity: 0; }
+.stk--story .mag-fact, .stk--skills .stk-card{ padding-inline-start: 46px; }
+.mag-fact--quote .mag-fact-inner{ display: flex; flex-direction: column; gap: 10px; }
+.mag-fact--quote .mag-fact-label{ margin-bottom: 0; }
+.mag-fact-lead{ margin: 0; font-size: .88rem; line-height: 1.65; color: var(--text-muted); text-align: start; }
+.mag-fact-quote{
+  margin: 0; font-family: 'Bodoni Moda', 'Rubik', serif; font-style: italic; font-weight: 500;
+  font-size: clamp(1.1rem, 2.1vw, 1.38rem); line-height: 1.4; color: var(--text); text-align: start;
+}
+.mag-fact-quote strong{ color: #7A6A9E; font-weight: 700; font-style: normal; }
+@media (max-width: 760px){
+  .stk-spine--mark{ font-size: 1.8rem; }
+  .stk-spine{ width: 24px; }
+  .stk--story .mag-fact, .stk--skills .stk-card{ padding-inline-start: 28px; }
+  .mag-fact-lead{ font-size: .8rem; line-height: 1.55; }
+}
+
+.stk--story, .stk--skills{ max-width: min(940px, calc(100% - 32px)); }
+@media (max-width: 760px){
+  .stk-spine{ width: 26px; }
+  .stk--story .mag-fact, .stk--skills .stk-card{ padding-inline-start: 33px; }
+}
+
+@media (min-width: 761px){
+  /* the story stack is wider than the hero column, so the front card keeps a comfortable measure while the others fan out behind it */
+  .stk--story{ --w: min(900px, calc(100vw - 48px)); width: var(--w); max-width: none; margin-inline-start: calc(50% - var(--w) / 2); margin-inline-end: 0; }
+}
+
+/* the page rail, light version: no resting grey line, branches or nodes - the dot travels with a short glowing trail that fades once it stops */
+.flow-rail path:not(.rg):not(.rs), .flow-rail .rs{ opacity: 0 !important; }
+.flow-rail .pb, .flow-rail .px, .flow-rail .rp{ display: none; }
+@media (max-width: 760px){
+  .stk--story .mag-fact, .stk--skills .stk-card{ padding-inline-start: 18px; }
+  .stk--story .stk-card:not(.is-front), .stk--skills .stk-card:not(.is-front){ padding-inline-start: 40px; }
+}

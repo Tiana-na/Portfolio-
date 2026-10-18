@@ -27,12 +27,13 @@
     var count = stk.querySelector('.stk-count b');
     var open = !stk.classList.contains('is-armed');
 
-    function titleOf(c) { var h = c.querySelector('h2'); return h ? h.textContent.replace(/\s+/g, ' ').trim() : ''; }
+    function titleOf(c) { var h = c.querySelector('h2') || c.querySelector('.mag-fact-quote'); return h ? h.textContent.replace(/\s+/g, ' ').trim() : ''; }
+    function spineOf(c) { return c.getAttribute('data-spine') || titleOf(c); }
     var spines = cards.map(function (c) {
       var sp = doc.createElement('span'); sp.className = 'stk-spine'; sp.setAttribute('aria-hidden', 'true'); c.appendChild(sp); return sp;
     });
     function apply() {
-      cards.forEach(function (c, i) { spines[i].textContent = titleOf(c); });
+      cards.forEach(function (c, i) { spines[i].textContent = spineOf(c); spines[i].classList.toggle('stk-spine--mark', !!c.getAttribute('data-spine')); });
       order.forEach(function (ci, d) {
         var c = cards[ci];
         c.style.setProperty('--d', d);
@@ -95,6 +96,9 @@
   function stackOf(el) { for (var i = 0; i < stacks.length; i++) if (stacks[i].el === el) return stacks[i]; }
 
   Array.prototype.forEach.call(doc.querySelectorAll('.lang-toggle'), function (b) { b.addEventListener('click', function () { setTimeout(function () { stacks.forEach(function (s) { s.refresh(); }); }, 80); }); });
+  /* the spines read their titles from the cards, so they follow the language the page opened in as well */
+  function refreshSpines() { stacks.forEach(function (s) { s.refresh(); }); }
+  window.addEventListener('load', function () { refreshSpines(); setTimeout(refreshSpines, 400); });
 
   if (reduce || !dot || !logoDot || !main) { TF.dock = function () {}; return; }
 
