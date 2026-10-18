@@ -713,12 +713,12 @@
        English only, on purpose. a = anchor on the feature, l = label box (plane units, 380 x 475). */
     var NOTES = [
       /* each label sits right against its own point (centred on it, or tucked beside it) and never over the face - so when the window is over the point the whole note is inside it */
-      { a: [205, 88],  l: [139, 30],  t: 'User research<br>mode: on' },
-      { a: [178, 152], l: [130, 164], t: 'Extrovert' },      /* the side you see */
-      { a: [276, 106], l: [270, 118], t: 'Introvert' },      /* the side you don't */
-      { a: [304, 166], l: [290, 180], t: 'Do not<br>disturb' },
-      { a: [134, 333], l: [64, 350],  t: 'Coffee: just<br>out of frame' },
-      { a: [200, 238], l: [130, 250], t: 'Hidden potential.<br>You found it.' }   /* dead centre: where the window first opens */
+      { a: [205, 90],  l: [144, 34],  t: 'User research<br>mode: on' },
+      { a: [178, 152], l: [134, 164], t: 'Extrovert' },      /* the side you see */
+      { a: [276, 106], l: [256, 118], t: 'Introvert' },      /* the side you don't */
+      { a: [304, 166], l: [296, 180], t: 'Do not<br>disturb' },
+      { a: [134, 333], l: [80, 348],  t: 'Coffee: just<br>out of frame' },
+      { a: [200, 238], l: [144, 238], t: 'Hidden<br>potential.<br>You found it.' }   /* dead centre: where the window first opens */
     ];
     var notes = document.createElement('div'); notes.className = 'lh-notes'; notes.setAttribute('dir', 'ltr');
     NOTES.forEach(function (n) {
@@ -730,7 +730,7 @@
     });
     clip.appendChild(notes);
     rv.appendChild(clip); rv.appendChild(ring); T.appendChild(rv);
-    var R = 92, cur = { x: 190, y: 237, r: 0 }, tg2 = { x: 190, y: 237, r: 0 }, loop = 0, inside = false;
+    var R = 70, cur = { x: 190, y: 237, r: 0 }, tg2 = { x: 190, y: 237, r: 0 }, loop = 0, inside = false;
     function ready() { return stage.classList.contains('lh-done') && !dragging && Math.abs(ud.x) < 1.5 && Math.abs(ud.y) < 1.5; }
     function paint() {
       rv.style.setProperty('--vx', cur.x.toFixed(1) + 'px'); rv.style.setProperty('--vy', cur.y.toFixed(1) + 'px'); rv.style.setProperty('--vr', Math.max(0, cur.r).toFixed(1) + 'px');
