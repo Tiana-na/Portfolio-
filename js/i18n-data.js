@@ -58,6 +58,9 @@ window.I18N = {
   about: {
     "ed-portrait-alt": "טיאנה פולקנפולק",
     "ed-masthead-left": "עליי",
+    "lh-skip": "דלג",
+    "lh-cap1-t": "עליי",
+    "lh-cap1-b": "UX/UI&nbsp;· <span style=\"white-space:nowrap\">Digital Creative Designer</span>",
     "ed-masthead-right": "UX/UI&nbsp;· <span style=\"white-space:nowrap\">Digital Creative Designer</span>",
     "ed-h1": "במקום חנות ומסלול תנועה, <em>מסך</em> וזרימת משתמש.",
     "ed-quote-lead": "עבדתי עם מותגים בינלאומיים כמו H&amp;M ו-IKEA, שם עיצבתי חוויות קנייה, חלונות ראווה ותקשורת חזותית, תמיד מתוך אותה שאלה:",

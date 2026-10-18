@@ -2025,7 +2025,7 @@ html.dot-away .logo-dot{ opacity: 0; }
 
 /* ---- stacks: a small library, seen from the side ---- */
 .stk{
-  --gap: 30px; --lz: -200px; --tilt: 24deg; --reach: 110px; --dir: 1; --open: 1;
+  --gap: 52px; --lz: -200px; --tilt: 24deg; --reach: 110px; --dir: 1; --open: 1;
   position: relative; max-width: min(780px, calc(100% - 32px)); margin: 0 auto 28px;
   padding-inline-start: calc((var(--n) - 1) * var(--reach));
   perspective: 1350px; perspective-origin: 62% 30%;
@@ -2111,7 +2111,7 @@ html.dot-away .logo-dot{ opacity: 0; }
 @keyframes keyLand{ 0%{ transform: translateY(0); } 30%{ transform: translateY(5px); } 100%{ transform: translateY(0); } }
 
 @media (max-width: 760px){
-  .stk{ --gap: 14px; --lz: -130px; --tilt: 20deg; --reach: 58px; }
+  .stk{ --gap: 26px; --lz: -130px; --tilt: 20deg; --reach: 58px; }
   .stk--skills{ margin-top: 28px; }
   .stk-spine{ font-size: .86rem; padding-top: 12px; }
   .flow-dot{ --ds: 16px; }
@@ -2618,3 +2618,65 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
 
 /* the two closing keys of every case study: same width, whatever the label */
 .case-bottom-buttons .btn.keycap{ box-sizing: border-box; width: min(100%, 340px); text-align: center; }
+
+/* ======== About hero v2: captions on a dashed timeline + skip ======== */
+.lh-skip{
+  position: absolute; top: -6px; inset-inline-end: 4px; z-index: 6;
+  min-height: 36px; padding: 0 16px; border-radius: 999px; cursor: pointer;
+  font-family: inherit; font-size: .78rem; font-weight: 600; line-height: 1; letter-spacing: .06em; text-transform: uppercase;
+  color: #5b4d7e; background: rgba(255,253,248,.92); border: 1.5px solid rgba(122,106,158,.55);
+  box-shadow: 0 3px 0 rgba(122,106,158,.28);
+  opacity: 0; pointer-events: none; transform: translateY(-4px); transition: opacity .35s ease, transform .35s ease;
+}
+.lh-skip::after{ content: " ›"; }
+[dir="rtl"] .lh-skip::after{ content: " ‹"; }
+.lh-skip.is-show{ opacity: 1; pointer-events: auto; transform: none; }
+.lh-skip:hover{ background: #e9e4f3; }
+.lh-skip:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 3px; }
+
+/* the quote and cards are readable straight away (the dot only lights them up) */
+.pw-armed .pw{ filter: saturate(.7) opacity(.9); }
+
+/* the photo's slabs: slices that fly in out of the depth */
+.lh-slabs{ position: absolute; left: -190px; top: -237px; width: 380px; height: 475px; transform-style: preserve-3d; pointer-events: none; display: none; }
+.lh-pl{ position: absolute; left: 0; top: 0; width: 380px; height: 475px; background-size: cover; background-position: center; background-repeat: no-repeat; backface-visibility: visible; will-change: transform, clip-path; opacity: 0; }
+.lh-pl--wall{ background-image: url(../assets/tiana-L-wall.webp); border-radius: 14px; filter: grayscale(45%) contrast(1.06) brightness(1.03); box-shadow: 0 18px 30px -14px rgba(60,44,90,.35); }
+.lh-pl--lines{ background-image: url(../assets/tiana-sketch.webp); outline: 1px dashed rgba(122,106,158,.45); outline-offset: -1px; }
+.lh-pl--tones{ background-image: url(../assets/tiana-L-tones.webp); outline: 1px dashed rgba(122,106,158,.45); outline-offset: -1px; }
+.lh-pl--colour{ background-image: url(../assets/tiana-L-colour.webp); filter: grayscale(45%) contrast(1.06) brightness(1.03); outline: 1px dashed rgba(122,106,158,.45); outline-offset: -1px; }
+.lh-hm{ position: absolute; width: 2px; height: 2px; margin: -1px 0 0 -1px; pointer-events: none; }
+
+/* text beside the layer that is being printed (written with it, then it settles into the cards below) */
+.lh-bgtext{ position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+.lh-bgb{ position: absolute; left: 0; top: 0; width: clamp(140px, 42vw, 230px); opacity: 0; will-change: transform, opacity, clip-path; text-align: start; }
+.lh-bgb-t{ font-family: 'Bodoni Moda', 'Rubik', serif; font-weight: 500; font-size: clamp(28px, 7.6vw, 40px); line-height: 1.05; letter-spacing: -.01em; color: #4b3f6b; margin-bottom: 6px; padding-top: 2px; }
+.lh-bgb-b{ font-size: .9rem; line-height: 1.5; color: #251f1c; font-weight: 500; }
+.lh-bgb-b--big{ font-size: .88rem; }
+.lh-bgb-b strong{ color: #6D5F8E; font-weight: 700; }
+.lh-bgb--1 .lh-bgb-t, .lh-bgb--2 .lh-bgb-t, .lh-bgb--3 .lh-bgb-t{ border-top: 3px solid; padding-top: 8px; border-color: #d9c9a0; }
+.lh-bgb--2 .lh-bgb-t{ border-color: #b7a6e2; }
+.lh-bgb--3 .lh-bgb-t{ border-color: #c9c2dc; }
+@media (min-width: 761px){
+  .lh-bgb{ width: 250px; }
+  .lh-bgb-t{ font-size: 44px; } .lh-bgb-b{ font-size: .98rem; }
+}
+@media (prefers-reduced-motion: reduce){ .lh-bgtext{ display: none; } }
+
+/* the last text (already on the page) is written under the photo as it is printed */
+.lh-under{ position: relative; margin-top: 6px; }
+.lh-final{ width: min(100%, 780px); margin: 0 auto; padding: 0 4px; text-align: center; }
+.lh-final .ed-statement{ max-width: none; margin: 0; padding: 0; }
+.lh-final .ed-statement p{ font-size: 1rem; line-height: 1.6; }
+.lh-final .ed-statement p + p{ margin-top: 12px; }
+.lang-en .lh-final .ed-statement{ max-width: none; }
+@media (min-width: 761px){ .lh-final .ed-statement p{ font-size: 1.12rem; } }
+/* on a phone the text of each layer is written in the same slot under the stage */
+.lh-bgm{ display: none; }
+@media (max-width: 760px){
+  .lh-bgm{ display: block; position: absolute; inset: 0 0 auto 0; pointer-events: none; }
+  .lh-final{ min-height: 230px; }
+  .lh-bgm .lh-bgb{ position: absolute; left: 0; right: 0; top: 0; width: auto; padding: 0 6px; }
+  .lh-bgm .lh-bgb-b{ font-size: .95rem; }
+  #lhBg{ display: none; }
+}
+@media (prefers-reduced-motion: reduce){ .lh-bgm{ display: none; } }

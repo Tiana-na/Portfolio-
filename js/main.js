@@ -440,9 +440,8 @@ document.addEventListener('DOMContentLoaded', function () {
      It rises once, just before the quiz; a tap scrolls to the quiz; it fades when the quiz is reached or started.
      Its space is always reserved, so nothing jumps when it appears or leaves. ---------- */
   var touchOnly = window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches;
-  var nudgeAfter = document.querySelector('.about-editorial');
   var quizEl = document.getElementById('trivia');
-  if (touchOnly && nudgeAfter && quizEl) {
+  if (touchOnly && quizEl) {
     var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var nudgeWrap = document.createElement('div');
     nudgeWrap.className = 'quiz-nudge-wrap';
@@ -450,7 +449,7 @@ document.addEventListener('DOMContentLoaded', function () {
     nudge.type = 'button';
     nudge.className = 'quiz-nudge';
     nudgeWrap.appendChild(nudge);
-    nudgeAfter.parentNode.insertBefore(nudgeWrap, quizEl);
+    quizEl.parentNode.insertBefore(nudgeWrap, quizEl);
 
     var nudgeText = function () {
       nudge.textContent = document.documentElement.lang === 'en' ? 'Scroll down, let’s play ↓' : 'גללו למטה ונשחק ↓';

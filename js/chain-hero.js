@@ -1,7 +1,6 @@
-/* About hero: the logo's dot drops into the page and sets off a chain reaction:
-   key press -> rail -> sketch -> falling cards -> wireframe -> rail -> UI -> photo (last),
-   then the layers converge into one portrait. Drag to rotate; the stack opens as it turns.
-   Shapes are the site's own: the logo dot (a flat tile that energizes what it touches), paper layers, one soft trail. */
+/* About hero: the logo's dot drops into the page and travels from station to station along one soft road: it PRINTS the sketch, the wireframe, the UI and, last,
+   the photo. With every layer a short caption joins the list under the stage, so by the time the portrait is printed the information is already there.
+   Then the layers converge into one portrait. Drag to rotate; the stack opens as it turns. ~9 seconds, skippable. */
 (function () {
   'use strict';
   var stage = document.getElementById('lhStage');
@@ -21,6 +20,9 @@
   var wf = rig.querySelector('.lh-wf'), sketch = rig.querySelector('.lh-sketch'), pic = rig.querySelector('.lh-pic');
   var papers = layers.map(function (L) { return L.querySelector('.lh-paper'); });
   var body = document.getElementById('magBody');
+  var finalEl = document.getElementById('lhFinal'), mBlocks = Array.prototype.slice.call(document.querySelectorAll('#lhBgm .lh-bgb'));
+  var skipBtn = document.getElementById('lhSkip'), skipped = false;
+  var bgBlocks = Array.prototype.slice.call(document.querySelectorAll('#lhBg .lh-bgb'));
   var dot = document.getElementById('flowDot');
   var logoDot = document.getElementById('logoDot');
 
@@ -36,12 +38,12 @@
   function back(t) { var c = 1.7; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); }
 
   /* ---------- timeline (tpl units; real seconds = units / SPEED) ---------- */
-  var SPEED = 1.45;
+  var SPEED = 2.9;
   var T_HAND = 1.9;          /* the dot lands on the first key */
   var T_PRESS = 1.9;
   var T_END = 20.6, T_ASSEMBLED = 18.8;
   var CAM = [[0, -330, -130, 1.5], [2.8, -300, -100, 1.5], [3.5, -205, -55, 1.4], [5.8, -195, -52, 1.4], [7.1, 350, 78, 1.3], [9.0, 370, 90, 1.3], [10.6, 985, 455, 1.2], [12.4, 1010, 470, 1.2], [13.0, 1010, 470, 1.1]];
-  var TILT = 58, TURN = -32;
+  var TILT = 64, TURN = -112, YAWADD = -32 - TURN;   /* the world is turned so the road runs INTO the screen; the sheets are turned back by YAWADD so they still face the viewer */
 
   /* ---------- world ---------- */
   var cam = document.createElement('div'); cam.className = 'lh-cam'; rig.appendChild(cam);
@@ -53,41 +55,57 @@
   /* the final step is PRINTED: a print head runs back and forth over the stack, row band by row band, first as coarse pixels,
      then a finer pass, and the portrait comes together (drawn on a canvas, fading to the sharp photo at the end) */
   var PW = 380, PH = 475, PN = 17, PDPR = 2;
-  var pcv = document.createElement('canvas'); pcv.className = 'lh-print'; pcv.width = PW * PDPR; pcv.height = PH * PDPR; T.insertBefore(pcv, T.firstChild);
-  var pctx = pcv.getContext('2d');
+  var pcv = document.createElement('canvas'); pcv.className = 'lh-print'; pcv.width = 4; pcv.height = 4; T.insertBefore(pcv, T.firstChild);   /* only marks where the portrait sits; the picture itself is built from slabs */
   var shade = document.createElement('div'); shade.className = 'lh-shade'; T.insertBefore(shade, pcv.nextSibling);
-  var lod = [], imgReady = false;
+  var printHead = null, lastHead = null;
+  /* the photo is BUILT, not faded in: a stack of four planes (the wall, the pencil sketch, flat tones, then the colour) that open up in depth.
+     The print head goes over each plane top to bottom, row by row; when the last one is done the planes slide together into the picture. */
+  var NR = 18, RH = PH / NR;
+  var PL = [], plReady = false, PSTART = [0, .17, .36, .58], PEND4 = [.15, .34, .55, .80], PCOLL = [.80, .95];
+  var plBox = document.createElement('div'); plBox.className = 'lh-slabs'; plBox.style.cssText = 'left:0;top:0'; T.insertBefore(plBox, T.firstChild);
+  ['wall', 'lines', 'tones', 'colour'].forEach(function (n, i) {
+    var d = document.createElement('div'); d.className = 'lh-pl lh-pl--' + n;
+    var bar = document.createElement('div'); bar.className = 'lh-bh'; bar.style.opacity = 0; d.appendChild(bar);
+    var mk = document.createElement('i'); mk.className = 'lh-hm'; d.appendChild(mk);
+    plBox.appendChild(d); PL.push({ el: d, bar: bar, mk: mk, last: '' });
+  });
   (function () {
-    var m = /url\(["']?([^"')]+)["']?\)/.exec(getComputedStyle(pic).backgroundImage || '');
-    if (!m) return;
-    var im = new Image();
-    im.onload = function () {
-      var sc = Math.max(PW / im.width, PH / im.height), sw = PW / sc, sh = PH / sc, sx = (im.width - sw) / 2, sy = (im.height - sh) / 2;
-      [[26, 33], [95, 119]].forEach(function (r) {
-        var c = document.createElement('canvas'); c.width = r[0]; c.height = r[1];
-        var x = c.getContext('2d'); x.imageSmoothingQuality = 'high'; x.drawImage(im, sx, sy, sw, sh, 0, 0, r[0], r[1]);
-        lod.push(c);
-      });
-      imgReady = true; if (typeof kick === 'function') kick();
-    };
-    im.src = m[1];
+    var n = 0, srcs = ['tiana-L-wall.webp', 'tiana-sketch.webp', 'tiana-L-tones.webp', 'tiana-L-colour.webp'];
+    srcs.forEach(function (f) { var im = new Image(); im.onload = im.onerror = function () { if (++n === srcs.length) { plReady = true; if (typeof kick === 'function') kick(); } }; im.src = 'assets/' + f; });
   })();
-  var lastPP = -1, printHead = null, lastHead = null;
-  function drawPrint(pp) {
-    if (pp === lastPP || !imgReady) return; lastPP = pp;
-    pctx.setTransform(PDPR, 0, 0, PDPR, 0, 0); pctx.clearRect(0, 0, PW, PH);
-    var bh = PH / PN, passes = [[0, .5], [.34, .84]], head = null;
-    for (var k = 0; k < 2; k++) {
-      var q = seg(pp, passes[k][0], passes[k][1]); if (q <= 0) continue;
-      var bands = q * PN, full = Math.floor(bands), part = bands - full;
-      pctx.imageSmoothingEnabled = k === 1;
-      var src = lod[k];
-      pctx.save(); pctx.beginPath(); pctx.rect(0, PH - Math.min(PH, full * bh), PW, Math.min(PH, full * bh)); 
-      if (full < PN && part > 0) { var rtl = full % 2 === 1, w = PW * part; pctx.rect(rtl ? PW - w : 0, PH - (full + 1) * bh, w, bh); head = { x: rtl ? PW - w : w, y: PH - (full + 1) * bh }; }
-      pctx.clip(); pctx.drawImage(src, 0, 0, src.width, src.height, 0, 0, PW, PH); pctx.restore();
+  var plActive = -1;
+  function plRevealed(i, loc) {                             /* clip-path for "rows 0..loc are printed", the unfinished row is a zigzag band */
+    if (loc <= 0) return 'inset(0 0 100% 0)'; if (loc >= 1) return 'inset(0)';
+    var rows = loc * NR, fl = Math.floor(rows), part = rows - fl, yF = fl / NR * 100, yB = (fl + 1) / NR * 100, w = part * 100;
+    return (fl % 2 === 1)
+      ? 'polygon(0 0,100% 0,100% ' + yB.toFixed(2) + '%,' + (100 - w).toFixed(2) + '% ' + yB.toFixed(2) + '%,' + (100 - w).toFixed(2) + '% ' + yF.toFixed(2) + '%,0 ' + yF.toFixed(2) + '%)'
+      : 'polygon(0 0,100% 0,100% ' + yF.toFixed(2) + '%,' + w.toFixed(2) + '% ' + yF.toFixed(2) + '%,' + w.toFixed(2) + '% ' + yB.toFixed(2) + '%,0 ' + yB.toFixed(2) + '%)';
+  }
+  function updatePlanes(pp, show, narrow, uf) {
+    plBox.style.display = show ? 'block' : 'none';
+    if (!show || !plReady) { plActive = -1; return; }
+    var c = ease(seg(pp, PCOLL[0], PCOLL[1])), open = ease(seg(pp, 0, .07)) * (1 - c);
+    var G = 46 * uf, ry = (narrow ? 17 : 25) * open, rx = (narrow ? 5 : 8) * open;
+    plBox.style.transform = 'rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + (-ry).toFixed(2) + 'deg)';
+    plActive = -1;
+    for (var i = 0; i < 4; i++) {
+      var loc = seg(pp, PSTART[i], PEND4[i]), o = PL[i];
+      var z = (14 + i * G) * open;
+      var tf = 'translate3d(0,0,' + z.toFixed(1) + 'px)';
+      var cp = plRevealed(i, loc), key = tf + cp;
+      if (key !== o.last) { o.last = key; o.el.style.transform = tf; o.el.style.clipPath = cp; o.el.style.webkitClipPath = cp; }
+      o.el.style.opacity = loc > 0 ? 1 : 0;
+      var sweeping = loc > 0 && loc < 1;
+      if (sweeping) {
+        plActive = i;
+        var q = seg(loc, 0, .985), rows = q * NR, fl = Math.min(NR - 1, Math.floor(rows)), part = q >= 1 ? 1 : rows - Math.floor(rows), rtl = fl % 2 === 1;
+        var hx = (rtl ? 1 - part : part) * PW, hy = (fl + .5) * RH;
+        o.mk.style.left = hx.toFixed(1) + 'px'; o.mk.style.top = hy.toFixed(1) + 'px';
+        o.bar.style.bottom = (100 - (fl + 1) * RH / PH * 100).toFixed(2) + '%'; o.bar.style.opacity = 1;
+        printHead = { x: hx, y: hy, el: o.mk };
+      } else if (o.bar.style.opacity !== '0') o.bar.style.opacity = 0;
     }
-    printHead = head ? { x: head.x, y: head.y + bh / 2 } : (printHead && pp > 0 && pp < .99 ? printHead : null);
-    if (head && pp < .9) { pctx.save(); pctx.fillStyle = 'rgba(255,253,248,.6)'; pctx.fillRect(0, head.y - .5, PW, 1); pctx.restore(); }
+    if (plActive < 0) { if (pp > PEND4[3]) printHead = null; }
   }
 
   var STAND = 1, STAND_DIR = -1, STAND_CY = 190, STAND_S = .3;
@@ -136,16 +154,31 @@
     return d;
   }
 
-  var WP = [[-370, -165], [-300, -100], [-200, -55], [-90, -15], [20, 55], [130, 85], [210, 72], [400, 102], [570, 124], [604, 128],
-            [657, 174], [711, 274], [765, 374], [818, 420], [884, 440], [948, 455], [1000, 462]];
+  var WP0 = [[-370, -165], [-300, -100], [-200, -55], [-90, -15], [20, 55], [130, 85], [210, 72], [400, 102], [570, 124], [604, 128],
+             [657, 174], [711, 274], [765, 374], [818, 420], [884, 440], [948, 455], [1000, 462]];
+  /* the road winds: S-curves between the stations (the road passes exactly through each station), seen from behind so it leads away into the depth */
+  var WP = (function () {
+    function y0(x) { for (var i = 0; i < WP0.length - 1; i++) { var A = WP0[i], B = WP0[i + 1]; if (x >= A[0] && x <= B[0]) return A[1] + (B[1] - A[1]) * (x - A[0]) / (B[0] - A[0]); } return WP0[WP0.length - 1][1]; }
+    var ST = [-370, -215, 400, 1000], out = [], amps = [60, 175, 190], px = -.416, py = .909;
+    for (var x = -370; x <= 1000; x += 40) {
+      var j = x < -215 ? 0 : (x < 400 ? 1 : 2), f = (x - ST[j]) / (ST[j + 1] - ST[j]), l = amps[j] * Math.sin(2 * Math.PI * f) * (j === 0 ? .5 : 1);
+      out.push([x + px * l, y0(x) + py * l]);
+    }
+    out.push([1000, 462]);
+    return out;
+  })();
   var OX = 700, OY = 400;
   var trailEl = el('lh-trail'), trailSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'), trailPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  var TRAIL_LEN = 1600;
+  var TRAIL_LEN = 1600, glowPath = null;
   trailSvg.setAttribute('width', '1800'); trailSvg.setAttribute('height', '1100'); trailSvg.setAttribute('viewBox', '0 0 1800 1100');
   (function () {
-    /* a flat, tiled road (a level in a game): the reveal mask is the path itself, drawn by the traveller */
+    /* one continuous soft road: the reveal mask is the path itself, drawn by the traveller */
     var ns = 'http://www.w3.org/2000/svg';
-    var d = monoPath(WP.map(function (w) { return [w[0] + OX, w[1] + OY]; }), false);
+    var Q = WP.map(function (w) { return [w[0] + OX, w[1] + OY]; }), d = 'M' + Q[0][0].toFixed(1) + ',' + Q[0][1].toFixed(1);
+    for (var qi = 0; qi < Q.length - 1; qi++) {                      /* Catmull-Rom -> Bezier: a smooth, winding line (not angular) */
+      var P0 = Q[Math.max(0, qi - 1)], P1 = Q[qi], P2 = Q[qi + 1], P3 = Q[Math.min(Q.length - 1, qi + 2)];
+      d += 'C' + (P1[0] + (P2[0] - P0[0]) / 6).toFixed(1) + ',' + (P1[1] + (P2[1] - P0[1]) / 6).toFixed(1) + ' ' + (P2[0] - (P3[0] - P1[0]) / 6).toFixed(1) + ',' + (P2[1] - (P3[1] - P1[1]) / 6).toFixed(1) + ' ' + P2[0].toFixed(1) + ',' + P2[1].toFixed(1);
+    }
     trailPath.setAttribute('d', d); trailPath.setAttribute('pathLength', '1'); trailPath.setAttribute('fill', 'none');
     trailPath.setAttribute('stroke', '#fff'); trailPath.setAttribute('stroke-width', '80'); trailPath.setAttribute('stroke-linecap', 'butt');
     trailPath.style.strokeDasharray = '1 2'; trailPath.style.strokeDashoffset = '1';
@@ -153,19 +186,21 @@
     mk.setAttribute('id', 'lhRoad'); mk.setAttribute('maskUnits', 'userSpaceOnUse'); mk.setAttribute('x', '0'); mk.setAttribute('y', '0'); mk.setAttribute('width', '1800'); mk.setAttribute('height', '1100');
     mk.appendChild(trailPath); defs.appendChild(mk); trailSvg.appendChild(defs);
     TRAIL_LEN = trailPath.getTotalLength();
-    var tile = 25 / TRAIL_LEN, gap = 3 / TRAIL_LEN, g = document.createElementNS(ns, 'g'); g.setAttribute('mask', 'url(#lhRoad)');
-    [['#cfc1b0', 34, 'butt'], ['#efe6da', 27, 'butt']].forEach(function (c) {
+    var gh = document.createElementNS(ns, 'path'); gh.setAttribute('d', d); gh.setAttribute('fill', 'none'); gh.setAttribute('stroke', '#C9BFB2'); gh.setAttribute('stroke-width', '2'); gh.setAttribute('stroke-linecap', 'round'); gh.setAttribute('stroke-dasharray', '1 8'); gh.setAttribute('opacity', '.4');
+    trailSvg.appendChild(gh);                                        /* the road ahead: a faint dotted line that the dot lights up as it passes */
+    var g = document.createElementNS(ns, 'g'); g.setAttribute('mask', 'url(#lhRoad)');
+    [['#D8CBBE', 3, 'round', null], ['#B7A6E2', 3.4, 'round', 'drop-shadow(0 0 5px rgba(183,166,226,.95))']].forEach(function (c, ci) {
       var q = document.createElementNS(ns, 'path'); q.setAttribute('d', d); q.setAttribute('pathLength', '1'); q.setAttribute('fill', 'none');
       q.setAttribute('stroke', c[0]); q.setAttribute('stroke-width', c[1]); q.setAttribute('stroke-linecap', c[2]);
-      q.style.strokeDasharray = (tile).toFixed(5) + ' ' + (gap).toFixed(5);
+      if (c[3]) q.style.filter = c[3];
+      if (ci) glowPath = q;
       g.appendChild(q);
     });
     trailSvg.appendChild(g); trailEl.appendChild(trailSvg);
   })();
 
-  /* every sheet is PRINTED like the portrait: a head runs back and forth over it, row by row from the bottom, first as coarse pixels, then a fine pass,
-     then it settles into the real sharp content */
-  var PN2 = 12, PASS = [[0, .46], [.52, .96]], BH2 = PH / PN2;
+  /* every layer is PRINTED: the dot runs back and forth over it, row by row from the bottom, and the real content appears behind it */
+  var PN2 = 28, PEND = .96, BH2 = PH / PN2;          /* many thin rows, like a real print: the head sweeps across, the paper advances */
   var SP = [null, null, null, null], uiEls = [imgbox, btn].concat(skl);
   function mkHead(L) { var h = document.createElement('i'); h.className = 'lh-bh'; L.appendChild(h); return h; }
   var BHD = [null, mkHead(layers[1]), mkHead(layers[2]), mkHead(layers[3])];
@@ -173,12 +208,12 @@
   function mkSP(i) {
     var cv = document.createElement('canvas'); cv.className = 'lh-sp'; cv.width = PW * PDPR; cv.height = PH * PDPR;
     layers[i].insertBefore(cv, BHD[i]);
-    SP[i] = { cv: cv, ctx: cv.getContext('2d'), lod: [], last: -1, ready: false };
+    SP[i] = { cv: cv, ctx: cv.getContext('2d'), src: null, last: -1, ready: false };
   }
-  function setLods(i, drawSrc) {
-    var o = SP[i]; o.lod = [];
-    [[26, 33], [95, 119]].forEach(function (r) { var c = document.createElement('canvas'); c.width = r[0]; c.height = r[1]; var x = c.getContext('2d'); x.imageSmoothingQuality = 'high'; drawSrc(x, r[0], r[1]); o.lod.push(c); });
-    o.ready = true; o.last = -1; if (typeof kick === 'function') kick();
+  function setSrc(i, drawSrc) {
+    var o = SP[i], c = document.createElement('canvas'); c.width = PW * PDPR; c.height = PH * PDPR;
+    var x = c.getContext('2d'); x.imageSmoothingQuality = 'high'; drawSrc(x, c.width, c.height);
+    o.src = c; o.ready = true; o.last = -1; if (typeof kick === 'function') kick();
   }
   function svgImage(str, cb) { var im = new Image(); im.onload = function () { cb(im); }; im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(str); }
   function loadSketch() {
@@ -186,55 +221,45 @@
     var im = new Image();
     im.onload = function () {
       var sc = Math.max(PW / im.width, PH / im.height), sw = PW / sc, sh = PH / sc, sx = (im.width - sw) / 2, sy = (im.height - sh) / 2;
-      setLods(1, function (x, w, h) { x.drawImage(im, sx, sy, sw, sh, 0, 0, w, h); });
+      setSrc(1, function (x, w, h) { x.drawImage(im, sx, sy, sw, sh, 0, 0, w, h); });
     };
     im.src = m[1];
   }
   function loadWf() {
     var c = wf.cloneNode(true); c.removeAttribute('class'); c.removeAttribute('style');
-    c.setAttribute('xmlns', 'http://www.w3.org/2000/svg'); c.setAttribute('width', PW); c.setAttribute('height', PH);
+    c.setAttribute('xmlns', 'http://www.w3.org/2000/svg'); c.setAttribute('width', PW * PDPR); c.setAttribute('height', PH * PDPR);
     Array.prototype.forEach.call(c.querySelectorAll('*'), function (e) { e.removeAttribute('style'); e.removeAttribute('pathLength'); });
-    svgImage(new XMLSerializer().serializeToString(c), function (im) { setLods(2, function (x, w, h) { x.drawImage(im, 0, 0, w, h); }); });
+    svgImage(new XMLSerializer().serializeToString(c), function (im) { setSrc(2, function (x, w, h) { x.drawImage(im, 0, 0, w, h); }); });
   }
   function loadUi() {
-    var parts = ['<svg xmlns="http://www.w3.org/2000/svg" width="' + PW + '" height="' + PH + '" viewBox="0 0 ' + PW + ' ' + PH + '">'];
+    var parts = ['<svg xmlns="http://www.w3.org/2000/svg" width="' + PW * PDPR + '" height="' + PH * PDPR + '" viewBox="0 0 ' + PW + ' ' + PH + '">'];
     uiEls.forEach(function (e) {
       var cs = getComputedStyle(e), bw = parseFloat(cs.borderTopWidth) || 0, r = Math.max(0, (parseFloat(cs.borderTopLeftRadius) || 0) - bw / 2);
       parts.push('<rect x="' + (e.offsetLeft + bw / 2) + '" y="' + (e.offsetTop + bw / 2) + '" width="' + (e.offsetWidth - bw) + '" height="' + (e.offsetHeight - bw) + '" rx="' + r + '" fill="' + cs.backgroundColor + '" stroke="' + (bw ? cs.borderTopColor : 'none') + '" stroke-width="' + bw + '"/>');
     });
     parts.push('</svg>');
-    svgImage(parts.join(''), function (im) { setLods(3, function (x, w, h) { x.drawImage(im, 0, 0, w, h); }); });
+    svgImage(parts.join(''), function (im) { setSrc(3, function (x, w, h) { x.drawImage(im, 0, 0, w, h); }); });
   }
   [1, 2, 3].forEach(mkSP);
-  function loadSheets() { try { loadSketch(); loadWf(); loadUi(); } catch (e) {} }
-  loadSheets();
+  try { loadSketch(); loadWf(); loadUi(); } catch (e) {}
+
   function bandAt(q) {
     var bands = q * PN2, fl = Math.min(PN2 - 1, Math.floor(bands)), part = q >= 1 ? 1 : bands - Math.floor(bands), rtl = fl % 2 === 1, w = PW * part;
-    return { x: rtl ? PW - w : w, y: PH - (fl + .5) * BH2, top: PH - (fl + 1) * BH2 };
+    return { x: rtl ? PW - w : w, y: (fl + .5) * BH2, top: fl * BH2 };
   }
-  /* where the head is for a print progress pp (0..1): pure function */
-  function headAtPP(pp) {
-    if (pp <= 0 || pp >= 1) return null;
-    var q0 = seg(pp, PASS[0][0], PASS[0][1]), q1 = seg(pp, PASS[1][0], PASS[1][1]);
-    if (q1 > 0) return bandAt(q1);
-    if (q0 < 1) return bandAt(q0);
-    var g = ease(seg(pp, PASS[0][1], PASS[1][0])), A = bandAt(1), B = { x: 0, y: PH - .5 * BH2, top: PH - BH2 };
-    return { x: lerp(A.x, B.x, g), y: lerp(A.y, B.y, g), top: lerp(A.top, B.top, g) };
-  }
+  /* where the head is for a print progress pp (0..1) */
+  function headAtPP(pp) { return pp <= 0 || pp >= 1 ? null : bandAt(seg(pp, 0, PEND)); }
   function drawSP(i, pp) {
     var o = SP[i]; if (!o || !o.ready) return;
-    pp = Math.round(pp * 600) / 600; if (pp === o.last) return; o.last = pp;
+    pp = Math.round(pp * 400) / 400; if (pp === o.last) return; o.last = pp;
     var x = o.ctx; x.setTransform(PDPR, 0, 0, PDPR, 0, 0); x.clearRect(0, 0, PW, PH);
-    for (var k = 0; k < 2; k++) {
-      var q = seg(pp, PASS[k][0], PASS[k][1]); if (q <= 0) continue;
-      var bands = q * PN2, fl = q >= 1 ? PN2 : Math.floor(bands), part = q >= 1 ? 0 : bands - fl, src = o.lod[k];
-      x.imageSmoothingEnabled = k === 1; x.save(); x.beginPath(); x.rect(0, PH - fl * BH2, PW, fl * BH2);
-      if (fl < PN2 && part > 0) { var rtl = fl % 2 === 1, w = PW * part; x.rect(rtl ? PW - w : 0, PH - (fl + 1) * BH2, w, BH2); }
-      x.clip(); x.drawImage(src, 0, 0, src.width, src.height, 0, 0, PW, PH); x.restore();
-    }
+    var q = seg(pp, 0, PEND); if (q <= 0) return;
+    var bands = q * PN2, fl = q >= 1 ? PN2 : Math.floor(bands), part = q >= 1 ? 0 : bands - fl;
+    x.imageSmoothingEnabled = true; x.save(); x.beginPath(); x.rect(0, 0, PW, fl * BH2);
+    if (fl < PN2 && part > 0) { var rtl = fl % 2 === 1, w = PW * part; x.rect(rtl ? PW - w : 0, fl * BH2, w, BH2); }
+    x.clip(); x.drawImage(o.src, 0, 0, o.src.width, o.src.height, 0, 0, PW, PH); x.restore();
   }
   function headAt(h, yPx, on) { h.style.bottom = (100 - yPx / 475 * 100).toFixed(2) + '%'; h.style.opacity = on ? 1 : 0; }
-
   /* ---------- ball path ---------- */
   /* the traveller tumbles along the road to a sheet, becomes the print head and PRINTS it row by row, then goes on as a cube again */
   var WF0 = 7.4, UI0 = 10.9, SK0 = 3.5;
@@ -250,17 +275,18 @@
   }
   function sheetPt(i, lx, h, t) {
     var ap = ease(seg(t, APPEAR[i], APPEAR[i] + .5)), sc = .55 * (.5 + .5 * ap), dz = (1 - ap) * 90;
-    var yw = SH[i].yaw * Math.PI / 180, c = Math.cos(yw), sn = Math.sin(yw), X = lx * sc, Y = 26;
+    var yw = (SH[i].yaw + YAWADD) * Math.PI / 180, c = Math.cos(yw), sn = Math.sin(yw), X = lx * sc, Y = 26;
     return [SH[i].x + X * c - Y * sn, SH[i].y + X * sn + Y * c, dz + h * sc + 8];
   }
   var UA = [0, 0, 0, 1];
   (function () { UA[1] = nearestU(SH[1].x, SH[1].y + 26); UA[2] = nearestU(SH[2].x, SH[2].y + 26); UA[3] = 1; })();
   /* progress along the road (0..1): moves between the sheets, waits while a sheet is being printed */
+  function gb(x) { return .45 * sm(x) + .55 * (1 - Math.pow(1 - x, 3)); }   /* quick on the gas, long soft brake into the sheet */
   function uOf(t) {
     if (t < T_ROLL0) return 0;
-    if (t < TB[1][0] - IN_) return UA[1] * sm(seg(t, T_ROLL0, TB[1][0] - IN_));
-    if (t < TB[2][0] - IN_) return lerp(UA[1], UA[2], sm(seg(t, TB[1][1] + OUT_, TB[2][0] - IN_)));
-    return lerp(UA[2], UA[3], sm(seg(t, TB[2][1] + OUT_, TB[3][0] - IN_)));
+    if (t < TB[1][0] - IN_) return UA[1] * gb(seg(t, T_ROLL0, TB[1][0] - IN_));
+    if (t < TB[2][0] - IN_) return lerp(UA[1], UA[2], gb(seg(t, TB[1][1] + OUT_, TB[2][0] - IN_)));
+    return lerp(UA[2], UA[3], gb(seg(t, TB[2][1] + OUT_, TB[3][0] - IN_)));
   }
   function trailU(t) { return uOf(t); }
   /* a cube rolling without slipping: whole quarter-turns per stretch, so it always rests flat where it stops */
@@ -309,10 +335,10 @@
   function measure() {
     var Wc = lh.clientWidth || 360, vw = window.innerWidth, vh = window.innerHeight;
     var desk = vw > 760; nar = !desk;
-    var pw = Math.max(220, Math.min(Wc * .96, (vh - 235) * .8, 560));
+    var pw = Math.max(220, Math.min(Wc * .96, (vh - (desk ? 385 : 235)) * .8, 560));   /* on a laptop the captions row has to fit under the portrait */
     var ph = pw * 1.25;
     uF = pw / 380;
-    uE = desk ? clamp((vh - 170) / 720, .62, 1) : clamp(vw / 650, .5, .7);
+    uE = desk ? clamp((vh - 170) / 720 * .8, .5, .85) : clamp(vw / 650, .5, .7);   /* a little smaller on a laptop so the captions row fits under the stage */
     stageH = Math.round(Math.max(ph + 24, (desk ? 680 : 620) * uE));
     stage.style.height = stageH + 'px';
   }
@@ -343,10 +369,10 @@
 
   function render(t) {
     tNow = t;
-    var c = camAt(t), cx = c[0], cy = c[1], s = c[2], a = TILT, b = TURN;
+    var c = camAt(t), cx = c[0], cy = c[1], s = c[2] * (nar ? .8 : 1), a = TILT, b = TURN;   /* the camera moves only while the dot travels; it rests while a sheet prints */
     var vis = ease(seg(t, 0, .6));
     var pc = ease(seg(t, 12.8, 15.8));
-    cy -= STAND_CY; s *= 1 - STAND_S * (1 - pc); cx *= 1 - pc; cy *= 1 - pc; a *= 1 - pc; b *= 1 - pc; s = lerp(s, 1, pc) * (1 - .4 * Math.sin(Math.PI * pc));
+    cx += STAND_CY * Math.sin(-TURN * Math.PI / 180); cy -= STAND_CY * Math.cos(-TURN * Math.PI / 180); s *= 1 - STAND_S * (1 - pc);   /* aim at the middle of the standing sheet (screen-up, whichever way the world is turned) */ cx *= 1 - pc; cy *= 1 - pc; a *= 1 - pc; b *= 1 - pc; s = lerp(s, 1, pc) * (1 - .4 * Math.sin(Math.PI * pc));
     var pr = seg(t, T_PRINT0, T_PRINT1);                 /* the print: 0 = nothing printed, 1 = portrait complete */
     var pe = ease(seg(pr, .7, 1));               /* (used for the light/shadow changes that follow the print) */
     var o = ease(clamp(Math.abs(ud.y) / 46, 0, 1)) * pc;
@@ -361,21 +387,21 @@
     cam.style.transform = 'scale(' + s + ') rotateX(' + a + 'deg) rotateZ(' + b + 'deg) translate3d(' + (-cx) + 'px,' + (-cy) + 'px,0)';
     floor.style.opacity = props * vis;
 
-    /* the dot rolls and draws its trail */
+    /* the dot: the logo's own tile glides along the line (no tumbling), lighting it as it goes, and becomes the print head on each sheet */
     var bst = ballState(t), bs = ease(seg(t, T_HAND - .05, T_HAND + .05)) * (1 - ease(seg(t, T_FLY0, T_FLY0 + .25)));
+    cube.style.opacity = 0; ballSh.style.opacity = 0;
     if (bst) {
-      var cvs = bst.cv * bs;
-      cube.style.opacity = cvs > .01 ? 1 : 0;
-      cube.style.transform = 'translate3d(' + bst.cx.toFixed(1) + 'px,' + bst.cy.toFixed(1) + 'px,' + bst.cz.toFixed(1) + 'px) rotateZ(' + bst.head.toFixed(1) + 'deg) rotateY(' + bst.roll.toFixed(1) + 'deg) scale3d(' + (cvs || .001).toFixed(3) + ',' + (cvs || .001).toFixed(3) + ',' + (cvs || .001).toFixed(3) + ')';
-      ballSh.style.opacity = cvs * Math.max(0, 1 - (bst.cz - 10) / 150) * .85; F(ballSh, bst.cx, bst.cy, .5, 0, 1 + bst.cz / 300);
-      if (bst.tile && bst.tv > .01) {
-        B(ball, bst.tile[0], bst.tile[1], bst.tile[2], bst.tv * .85, '', b, a); ball.style.opacity = bs;
-        ballSh2.style.opacity = bs * Math.min(1, bst.tv) * .35; F(ballSh2, bst.tile[0], bst.tile[1], .5, 0, 1 + bst.tile[2] / 200);
-      } else { ball.style.opacity = 0; ballSh2.style.opacity = 0; }
-    } else { cube.style.opacity = 0; ball.style.opacity = 0; ballSh.style.opacity = 0; ballSh2.style.opacity = 0; }
+      var dd = seg(t, T_HAND, 2.3), wgt = bst.tile && bst.tv > .01 ? clamp(bst.tv, 0, 1) : 0;
+      var gx = bst.cx, gy = bst.cy, gz = 12 + 58 * (1 - dd * dd);
+      if (wgt) { gx = lerp(gx, bst.tile[0], wgt); gy = lerp(gy, bst.tile[1], wgt); gz = lerp(gz, bst.tile[2], wgt); }
+      B(ball, gx, gy, gz, 1.55, '', b, a); ball.style.opacity = bs;
+      ballSh2.style.opacity = bs * .35; F(ballSh2, gx, gy, .5, 0, 1 + gz / 200);
+    } else { ball.style.opacity = 0; ballSh2.style.opacity = 0; }
     var tu = t >= T_ROLL0 ? trailU(t) : 0;
     trailPath.style.strokeDashoffset = (1 - tu).toFixed(4);
-    trailEl.style.opacity = props * vis * (tu > 0 ? 1 : 0);
+    var gst = Math.max(0, tu - .16);                                 /* the stretch the dot has just passed glows, then settles to the calm colour */
+    glowPath.style.strokeDasharray = (tu - gst).toFixed(4) + ' 2'; glowPath.style.strokeDashoffset = (-gst).toFixed(4);
+    trailEl.style.opacity = props * vis * ease(seg(t, T_HAND - .3, T_HAND + .3));
 
     /* sheets */
     var appear = APPEAR;
@@ -385,9 +411,10 @@
       var ap = i === 0 ? ease(seg(t, 14.4, 15.6)) : ease(seg(t, appear[i], appear[i] + .5));
       var zi = (i - 1.5) * sp * pc;
       var dz = (1 - ap) * (i ? 90 : 0);
-      var x = SH[i].x * (1 - pc), y = SH[i].y * (1 - pc), yaw = SH[i].yaw * (1 - pc);
+      var x = SH[i].x * (1 - pc), y = SH[i].y * (1 - pc), yaw = (SH[i].yaw + YAWADD) * (1 - pc);
       var sc = lerp(.55, 1, pc) * (.5 + .5 * ap);
-      L.style.opacity = ap;
+      var gone = (i > 0 && i < 3) ? .88 * seg(t, TB[i][1] + .1, TB[i][1] + .9) * (1 - seg(t, 12.8, 14.2)) : 0;     /* a sheet the dot has left recedes, so it never looms over the next one */
+      L.style.opacity = ap * (1 - gone) * (i > 0 ? 1 - ease(seg(pr, .03, .2)) : 1);   /* the old sheets give way as the new stack is printed over them */
       /* the sheets STAND (hinged on their bottom edge) while they are built, and tip back to face the viewer when the stack forms */
       var sd = i ? (1 - pc) * STAND : 0;
       L.style.transform = 'translate3d(' + x + 'px,' + y + 'px,' + (zi + dz) + 'px) rotateZ(' + yaw + 'deg) scale(' + sc + ') translateY(' + (237 * (1 - sd)).toFixed(1) + 'px) rotateX(' + (STAND_DIR * 90 * sd).toFixed(2) + 'deg) translateY(-237px)';
@@ -395,7 +422,7 @@
       var gl = 0;
       if (i > 0) { var ga = TB[i][0], gb = TB[i][1]; gl = .55 * seg(t, ga - .1, ga + .3) * (1 - seg(t, gb, gb + .8)) + .55 * seg(t, gb - .15, gb + .15) * (1 - seg(t, gb + .15, gb + 1.1)); }
       L.style.boxShadow = '0 ' + (14 * shd) + 'px ' + (26 * shd) + 'px rgba(37,31,28,' + (.18 * shd * ap) + '),0 0 0 ' + (o ? 1 : 0) + 'px rgba(37,31,28,' + (.1 * o) + ')' + (gl > 0.01 ? ',0 0 ' + (30 * gl) + 'px ' + (6 * gl) + 'px rgba(183,166,226,' + (.85 * gl) + ')' : '');
-      if (i > 0) { papers[i].style.opacity = 1; if (pr * (1 - o) > .62) L.style.opacity = 0; }
+      if (i > 0) { papers[i].style.opacity = 1; if (pr * (1 - o) > .97) L.style.opacity = 0; }
     });
     pic.style.filter = 'grayscale(45%) contrast(1.06) brightness(1.03)';
     for (var si = 1; si <= 3; si++) {
@@ -406,16 +433,47 @@
         so.cv.style.opacity = spp > 0 ? 1 - fadeIn : 0;
         real.style.opacity = fadeIn;
       } else { real.style.opacity = ease(seg(spp, .3, 1)); }
-      headAt(BHD[si], hd ? hd.top : 0, !!hd);
+      headAt(BHD[si], hd ? hd.top + BH2 + 3 : 0, !!hd);
     }
+
+    /* the text of each layer is written beside it while it is printed (only text that is already on the page): one block at a time, revealed in step with
+       the print and gone before the next layer starts. On a phone it is written under the stage. The last text is written under the photo as it is printed. */
+    var srect = stage.getBoundingClientRect();
+    var blocks = nar ? mBlocks : bgBlocks;
+    for (var bi = 0; bi < blocks.length; bi++) {
+      var be = blocks[bi], t0b = TB[bi + 1][0], t1b = TB[bi + 1][1], tin = t0b - .15, tout = bi < 2 ? TB[bi + 2][0] - .3 : T_FLY0 - .2;
+      var vis2 = ease(seg(t, tin, tin + .45)) * (1 - ease(seg(t, tout, tout + .5)));
+      if (vis2 <= .001) { if (be.style.opacity !== '0') be.style.opacity = 0; be._side = null; continue; }
+      var rv2 = ease(seg(seg(t, t0b, t1b), 0, .7));
+      be.style.opacity = vis2.toFixed(3);
+      be.style.clipPath = 'inset(0 0 ' + ((1 - rv2) * 100).toFixed(1) + '% 0)';
+      if (nar) continue;
+      /* beside the layer it belongs to, on the side with more room */
+      var anchor = layers[bi + 1], ar = anchor.getBoundingClientRect(), bw = be.offsetWidth, bh = be.offsetHeight;
+      if (!be._side && t >= t0b - .05) be._side = (ar.left - srect.left) > (srect.right - ar.right) ? 'l' : 'r';
+      var side = be._side || ((ar.left - srect.left) > (srect.right - ar.right) ? 'l' : 'r');
+      var bx = side === 'l' ? ar.left - srect.left - bw - 36 : ar.right - srect.left + 36;
+      var vwHi = Math.min(srect.width, window.innerWidth - srect.left) - bw - 6, vwLo = Math.max(6, 6 - srect.left);
+      bx = clamp(bx, vwLo, Math.max(vwLo, vwHi));
+      var by = clamp(ar.top - srect.top + 14, 6, Math.max(6, srect.height - bh - 6));
+      be.style.transform = 'translate3d(' + bx.toFixed(1) + 'px,' + by.toFixed(1) + 'px,0)';
+    }
+    if (finalEl && !finalEl._on) {
+      var fr = ease(seg(pr, .06, .9));
+      finalEl.style.opacity = fr < .01 ? 0 : 1;
+      finalEl.style.clipPath = fr >= .999 ? 'none' : 'inset(0 0 ' + ((1 - fr) * 100).toFixed(1) + '% 0)';
+    }
+
+    if (skipBtn) skipBtn.classList.toggle('is-show', started && t > 2.2 && t < T_BACK && !skipped);
 
     /* headline plane floats above the UI layer; the role line and headline arrive last */
     var hs = ease(seg(t, 18.6, 19.9)), ro = ease(seg(t, 18.0, 19.0));
     var pee = pe * (1 - o);
     scrim.style.opacity = 0; tscrim.style.opacity = 0;
     var Yp = pr * (1 - o);
-    drawPrint(Math.round(Yp * 600) / 600);
-    pcv.style.opacity = Yp > 0 ? Math.min(1, (1 - seg(Yp, .86, 1))) : 0;
+    pcv.style.opacity = 0;
+    updatePlanes(pr, pr > 0 && pr < .985 && o < .02, nar, uF);
+    pic.style.opacity = plReady ? ease(seg(pr, .93, .985)) : ease(seg(pr, .3, 1));
     shade.style.opacity = pee;
     skl.forEach(function (e) { e.style.opacity = 1 - hs; });
     var headEm = head.querySelector('em') || head;
@@ -452,7 +510,7 @@
         var fx = fin ? sr.left + fin.x : cr.left, fy = fin ? sr.top + fin.y : cr.top; if (fin) csc = fin.w / PW || 1;
         var dsz = clamp(24 * csc, 13, 40);
         var hx = fx + 6 * csc, hy = fy - 24 * csc + Math.sin(t * 3.2) * 3;
-        if (live) { var kk = ease(seg(pr, 0, .05)); hx = lerp(hx, cr.left + printHead.x * csc, kk); hy = lerp(hy, cr.top + printHead.y * csc, kk); }
+        if (live) { var kk = ease(seg(pr, 0, .05)), mr = printHead.el.getBoundingClientRect(); hx = lerp(hx, mr.left + mr.width / 2, kk); hy = lerp(hy, mr.top + mr.height / 2, kk); }
         if (t < T_FLY1) {
           var uf = ease(seg(t, T_FLY0, T_FLY1)), ar = Math.sin(Math.PI * uf);
           dotShow(lerp(bx, hx, uf), lerp(by, hy, uf) - 90 * ar, lerp(Math.max(13, br.width * .9), dsz, uf) * (1 + .2 * ar), 1 + 1.4 * ar, -.35 * ar, 1, 1);
@@ -489,7 +547,7 @@
     render(T_PRINT0);
     var cr0 = pcv.getBoundingClientRect(), sr0 = stage.getBoundingClientRect();
     fin = { x: cr0.left - sr0.left, y: cr0.top - sr0.top, w: cr0.width };
-    lastHead = null; lastPP = -1;
+    lastHead = null;
     render(T_HAND + .001);
     ud.x = keep.x; ud.y = keep.y; px.x = keep.px; px.y = keep.py;
   }
@@ -500,7 +558,8 @@
     return t >= T_END && !dragging && Math.abs(ud.x - ut.x) < .02 && Math.abs(ud.y - ut.y) < .02 && Math.abs(px.x - tg.x) < .02 && Math.abs(px.y - tg.y) < .02;
   }
   /* real time -> story time: slower while the dot rolls between sheets and while it builds one, so every sheet is seen being made */
-  var WARP = [[0, 2.3, 1], [2.3, SK0, .8], [SK0, TB[1][1], .7], [TB[1][1], WF0, .8], [WF0, TB[2][1], .7], [TB[2][1], UI0, .8], [UI0, TB[3][1], .7], [TB[3][1], 1e9, 1]];
+  /* two speeds: the journey between sheets is slow and calm (about 1.5 s each); only the printing itself runs fast */
+  var WARP = [[0, 2.3, .95], [2.3, SK0, .36], [SK0, TB[1][1], .76], [TB[1][1], WF0, .4], [WF0, TB[2][1], .69], [TB[2][1], UI0, .4], [UI0, TB[3][1], .64], [TB[3][1], T_PRINT0, .95], [T_PRINT0, T_PRINT1, .5], [T_PRINT1, 1e9, 1.5]];
   function warp(r) {
     var acc = 0;
     for (var i = 0; i < WARP.length; i++) {
@@ -533,25 +592,28 @@
     TF.heroOwns = true;
     document.documentElement.classList.add('dot-away');
     stage.classList.add('is-playing');
+    revealBodyNow();
     measureTarget();
     kick();
   }
-  function skip() { speedMul = 5; kick(); }
+  function skip() { if (!started || skipped || tNow >= T_END) return; skipped = true; speedMul = 6; kick(); }
+  if (skipBtn) skipBtn.addEventListener('click', function (e) { e.preventDefault(); skip(); });
+  function showAllSteps() { if (finalEl) { finalEl._on = true; finalEl.style.opacity = 1; finalEl.style.clipPath = 'none'; } }
 
   measure();
-  rig.style.opacity = 0;
+  rig.style.opacity = 0; if (finalEl) finalEl.style.opacity = 0;
   lh.classList.add('lh-ready');
 
   if (reduce) {
     started = true; tReal = T_ENDR; stage.classList.add('lh-done');
-    render(T_END);
+    showAllSteps(); render(T_END);
     revealBodyNow();
   } else {
     var scrolledPast = stage.getBoundingClientRect().bottom < 0;
     var seenBefore = false;
     try { seenBefore = sessionStorage.getItem('tf-hero-seen') === '1' && !/[?&]hero=1/.test(location.search) && window.__fixed === undefined; } catch (e) {}
     if (scrolledPast || seenBefore) {
-      started = true; tReal = T_ENDR; stage.classList.add('lh-done'); render(T_END); revealBodyNow();
+      started = true; tReal = T_ENDR; stage.classList.add('lh-done'); showAllSteps(); render(T_END); revealBodyNow();
     } else {
       render(0);
       if ('IntersectionObserver' in window) {
@@ -571,6 +633,7 @@
     var lx = 0, ly = 0;
     stage.addEventListener('pointerdown', function (e) {
       if (!started) return;
+      if (tNow < T_END) { skip(); return; }      /* while it is still printing, a tap on the stage skips */
       dragging = true; lx = e.clientX; ly = e.clientY; clearTimeout(idleTimer);
       try { stage.setPointerCapture(e.pointerId); } catch (err) {}
       stage.classList.add('is-dragging'); kick();
