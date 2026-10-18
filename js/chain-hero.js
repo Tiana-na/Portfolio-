@@ -711,8 +711,8 @@
     /* design notes on the sketch: found only through the window. Short enough to sit whole inside it (window ~116 units).
        English only, on purpose. a = anchor on the feature, l = label box (plane units, 380 x 475). */
     var NOTES = [
-      { a: [212, 110], l: [120, 96],  t: 'User research<br>mode: on' },
-      { a: [204, 152], l: [128, 146], t: 'Extrovert' },      /* the side you see */
+      { a: [190, 112], l: [34, 90],   t: 'User research<br>mode: on' },
+      { a: [186, 158], l: [66, 150],  t: 'Extrovert' },      /* the side you see */
       { a: [286, 94],  l: [298, 70],  t: 'Introvert' },      /* the side you don't */
       { a: [304, 166], l: [300, 186], t: 'Do not<br>disturb' },
       { a: [134, 333], l: [64, 350],  t: 'Coffee: just<br>out of frame' },
