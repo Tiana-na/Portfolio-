@@ -2723,3 +2723,11 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
   .stk--story .mag-fact, .stk--skills .stk-card{ padding-inline-start: 18px; }
   .stk--story .stk-card:not(.is-front), .stk--skills .stk-card:not(.is-front){ padding-inline-start: 40px; }
 }
+
+/* the spine's own writing mode turned inset-inline-start into 'top' - pin it to the card's edge so the title never sits over the text */
+.stk-spine{ inset-inline-start: auto; left: 4px; }
+[dir="rtl"] .stk-spine{ left: auto; right: 4px; }
+@media (max-width: 760px){ .stk-spine{ left: 2px; } [dir="rtl"] .stk-spine{ left: auto; right: 2px; } }
+
+/* no travelling trail either: the dot alone moves, and each element lights up when it arrives */
+.flow-rail path.rg{ display: none; }

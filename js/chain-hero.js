@@ -60,7 +60,7 @@
   var printHead = null, lastHead = null;
   /* the photo is BUILT, not faded in: a stack of four planes (the wall, the pencil sketch, flat tones, then the colour) that open up in depth.
      The print head goes over each plane top to bottom, row by row; when the last one is done the planes slide together into the picture. */
-  var NR = 18, RH = PH / NR;
+  var NR = 28, RH = PH / NR;      /* the same fine rows as the other sheets */
   var PL = [], plReady = false, PSTART = [0, .17, .36, .58], PEND4 = [.15, .34, .55, .80], PCOLL = [.80, .95];
   var plBox = document.createElement('div'); plBox.className = 'lh-slabs'; plBox.style.cssText = 'left:0;top:0'; T.insertBefore(plBox, T.firstChild);
   ['wall', 'lines', 'tones', 'colour'].forEach(function (n, i) {
@@ -84,13 +84,12 @@
   function updatePlanes(pp, show, narrow, uf) {
     plBox.style.display = show ? 'block' : 'none';
     if (!show || !plReady) { plActive = -1; return; }
-    var c = ease(seg(pp, PCOLL[0], PCOLL[1])), open = ease(seg(pp, 0, .07)) * (1 - c);
-    var G = 46 * uf, ry = (narrow ? 17 : 25) * open, rx = (narrow ? 5 : 8) * open;
+    var open = 0, ry = 0, rx = 0;   /* one flat sheet printed in passes (wall, lines, tones, colour), each over the last - like the other sheets, no depth tilt */
     plBox.style.transform = 'rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + (-ry).toFixed(2) + 'deg)';
     plActive = -1;
     for (var i = 0; i < 4; i++) {
       var loc = seg(pp, PSTART[i], PEND4[i]), o = PL[i];
-      var z = (14 + i * G) * open;
+      var z = i * .6;
       var tf = 'translate3d(0,0,' + z.toFixed(1) + 'px)';
       var cp = plRevealed(i, loc), key = tf + cp;
       if (key !== o.last) { o.last = key; o.el.style.transform = tf; o.el.style.clipPath = cp; o.el.style.webkitClipPath = cp; }
@@ -101,7 +100,7 @@
         var q = seg(loc, 0, .985), rows = q * NR, fl = Math.min(NR - 1, Math.floor(rows)), part = q >= 1 ? 1 : rows - Math.floor(rows), rtl = fl % 2 === 1;
         var hx = (rtl ? 1 - part : part) * PW, hy = (fl + .5) * RH;
         o.mk.style.left = hx.toFixed(1) + 'px'; o.mk.style.top = hy.toFixed(1) + 'px';
-        o.bar.style.bottom = (100 - (fl + 1) * RH / PH * 100).toFixed(2) + '%'; o.bar.style.opacity = 1;
+        o.bar.style.bottom = (100 - ((fl + 1) * RH + 3) / PH * 100).toFixed(2) + '%'; o.bar.style.opacity = 1;
         printHead = { x: hx, y: hy, el: o.mk };
       } else if (o.bar.style.opacity !== '0') o.bar.style.opacity = 0;
     }
@@ -414,11 +413,11 @@
       var x = SH[i].x * (1 - pc), y = SH[i].y * (1 - pc), yaw = (SH[i].yaw + YAWADD) * (1 - pc);
       var sc = lerp(.55, 1, pc) * (.5 + .5 * ap);
       var gone = (i > 0 && i < 3) ? .5 * seg(t, TB[i][1] + .1, TB[i][1] + .9) * (1 - seg(t, 12.8, 14.2)) : 0;     /* a sheet the dot has left recedes, so it never looms over the next one */
-      L.style.opacity = ap * (1 - gone) * (i > 0 ? 1 - ease(seg(pr, .03, .2)) : 1);   /* the old sheets give way as the new stack is printed over them */
+      L.style.opacity = ap * (1 - gone) * (i > 0 ? Math.max(1 - ease(seg(pr, .03, .2)), o) : 1);   /* turning the finished portrait opens the stack: all four layers come back, one behind the other */   /* the old sheets give way as the new stack is printed over them */
       /* the sheets STAND (hinged on their bottom edge) while they are built, and tip back to face the viewer when the stack forms */
       var sd = i ? (1 - pc) * STAND : 0;
       L.style.transform = 'translate3d(' + x + 'px,' + y + 'px,' + (zi + dz) + 'px) rotateZ(' + yaw + 'deg) scale(' + sc + ') translateY(' + (237 * (1 - sd)).toFixed(1) + 'px) rotateX(' + (STAND_DIR * 90 * sd).toFixed(2) + 'deg) translateY(-237px)';
-      var shd = 1 - pe;
+      var shd = i > 0 ? Math.max(1 - pe, o * .8) : 1 - pe;
       var gl = 0;
       if (i > 0) { var ga = TB[i][0], gb = TB[i][1]; gl = .55 * seg(t, ga - .1, ga + .3) * (1 - seg(t, gb, gb + .8)) + .55 * seg(t, gb - .15, gb + .15) * (1 - seg(t, gb + .15, gb + 1.1)); }
       L.style.boxShadow = '0 ' + (14 * shd) + 'px ' + (26 * shd) + 'px rgba(37,31,28,' + (.18 * shd * ap) + '),0 0 0 ' + (o ? 1 : 0) + 'px rgba(37,31,28,' + (.1 * o) + ')' + (gl > 0.01 ? ',0 0 ' + (30 * gl) + 'px ' + (6 * gl) + 'px rgba(183,166,226,' + (.85 * gl) + ')' : '');
