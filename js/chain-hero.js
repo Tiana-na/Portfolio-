@@ -466,14 +466,16 @@
     if (skipBtn) skipBtn.classList.toggle('is-show', started && t > 2.2 && t < T_BACK && !skipped);
 
     /* headline plane floats above the UI layer; the role line and headline arrive last */
-    var hs = ease(seg(t, 18.6, 19.9)), ro = ease(seg(t, 18.0, 19.0));
+    var hs = ease(seg(t, 18.55, 20.2)), ro = ease(seg(t, 18.1, 19.6));
     var pee = pe * (1 - o);
     scrim.style.opacity = 0; tscrim.style.opacity = 0;
     var Yp = pr * (1 - o);
     pcv.style.opacity = 0;
-    updatePlanes(pr, pr > 0 && pr < .985 && o < .02, nar, uF);
-    pic.style.opacity = plReady ? ease(seg(pr, .93, .985)) : ease(seg(pr, .3, 1));
-    shade.style.opacity = pee;
+    var plF = ease(seg(t, T_PRINT1 - .3, T_PRINT1 + 1.0));   /* the printed sheet dissolves into the finished photo underneath it, slowly, instead of being swapped for it */
+    plBox.style.opacity = (1 - plF).toFixed(3);
+    updatePlanes(pr, pr > 0 && plF < .999 && o < .02, nar, uF);
+    pic.style.opacity = plReady ? ease(seg(pr, .78, .84)) : ease(seg(pr, .3, 1));
+    shade.style.opacity = 0;   /* the soft dark foot under the caption arrives together with the caption, not as a slow darkening of the finished photo */
     skl.forEach(function (e) { e.style.opacity = 1 - hs; });
     var headEm = head.querySelector('em') || head;
     var cc = Math.round(37 + (253 - 37) * pee), c2 = Math.round(31 + (252 - 31) * pee), c3 = Math.round(28 + (248 - 28) * pee);
@@ -558,7 +560,7 @@
   }
   /* real time -> story time: slower while the dot rolls between sheets and while it builds one, so every sheet is seen being made */
   /* two speeds: the journey between sheets is slow and calm (about 1.5 s each); only the printing itself runs fast */
-  var WARP = [[0, 2.3, .95], [2.3, SK0, .36], [SK0, TB[1][1], .76], [TB[1][1], WF0, .4], [WF0, TB[2][1], .69], [TB[2][1], UI0, .4], [UI0, TB[3][1], .64], [TB[3][1], T_PRINT0, .95], [T_PRINT0, T_PRINT1, .5], [T_PRINT1, 1e9, 1.5]];
+  var WARP = [[0, 2.3, .95], [2.3, SK0, .36], [SK0, TB[1][1], .76], [TB[1][1], WF0, .4], [WF0, TB[2][1], .69], [TB[2][1], UI0, .4], [UI0, TB[3][1], .64], [TB[3][1], T_PRINT0, .95], [T_PRINT0, T_PRINT1, .4], [T_PRINT1, 1e9, .9]];
   function warp(r) {
     var acc = 0;
     for (var i = 0; i < WARP.length; i++) {
@@ -705,7 +707,7 @@
       Array.prototype.forEach.call(d.querySelectorAll('[style]'), function (n) { n.removeAttribute('style'); });   /* the original's animated colours must not follow it here */
       return d;
     }
-    clip.appendChild(twin(role, 'lh-role')); clip.appendChild(twin(head, 'lh-head'));
+    clip.appendChild(twin(role, 'lh-role'));   /* the headline is no longer on the photo, so it is not on the window's layer either */
     /* design notes on the sketch: found only through the window. Short enough to sit whole inside it (window ~116 units).
        English only, on purpose. a = anchor on the feature, l = label box (plane units, 380 x 475). */
     var NOTES = [
@@ -726,7 +728,7 @@
     });
     clip.appendChild(notes);
     rv.appendChild(clip); rv.appendChild(ring); T.appendChild(rv);
-    var R = 76, cur = { x: 190, y: 237, r: 0 }, tg2 = { x: 190, y: 237, r: 0 }, loop = 0, inside = false;
+    var R = 88, cur = { x: 190, y: 237, r: 0 }, tg2 = { x: 190, y: 237, r: 0 }, loop = 0, inside = false;
     function ready() { return stage.classList.contains('lh-done') && !dragging && Math.abs(ud.x) < 1.5 && Math.abs(ud.y) < 1.5; }
     function paint() {
       rv.style.setProperty('--vx', cur.x.toFixed(1) + 'px'); rv.style.setProperty('--vy', cur.y.toFixed(1) + 'px'); rv.style.setProperty('--vr', Math.max(0, cur.r).toFixed(1) + 'px');

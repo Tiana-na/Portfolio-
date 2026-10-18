@@ -2738,3 +2738,38 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
 .flow-rail.is-active.is-moving path.rg3{ opacity: .32; }
 .flow-rail.is-active.is-moving path.rg2{ opacity: .52; }
 .flow-rail.is-active.is-moving path.rg1{ opacity: .85; }
+
+/* ---- About: one even rhythm between the blocks (the rail that used to need extra room is gone) ---- */
+@media (min-width: 761px){
+  .stk--story{ margin-top: 45px; margin-bottom: 0; }
+  .ed-intro{ padding-bottom: 0; }
+  .quiz-block{ margin-top: 89px; }
+  .stk--skills{ margin-top: 77px; }
+  .card-pair{ margin-top: 86px; }
+  .about-closing{ margin-top: 72px; }
+}
+@media (max-width: 760px){
+  .stk--story{ margin-top: 48px; margin-bottom: 0; }
+  .ed-intro{ padding-bottom: 0; }
+  .quiz-nudge-wrap{ min-height: 36px; margin: 0; }
+  .quiz-block{ margin-top: 20px; }
+  .stk--skills{ margin-top: 48px; }
+  .card-pair{ margin-top: 48px; }
+  .about-closing{ margin-top: 44px; }
+}
+
+/* the headline lives under the portrait now (not on the photo), written in with the text below it */
+.lh-T .lh-head{ display: none; }
+.page-hero h1.lh-title, .lh-title{
+  margin: 6px auto 16px; max-width: 22em; text-align: center;
+  font-family: 'Bodoni Moda', 'Rubik', serif; font-weight: 500; font-size: clamp(1.55rem, 3.1vw, 2.15rem); line-height: 1.22; letter-spacing: -.01em; color: #251f1c;
+}
+.lh-title em{ font-style: italic; font-weight: 600; color: #7A6A9E; }
+.lh-final .lh-title + .ed-statement{ margin-top: 0; }
+@media (max-width: 760px){
+  .lh-final{ min-height: 330px; }
+  .page-hero h1.lh-title, .lh-title{ margin-bottom: 12px; font-size: clamp(1.45rem, 6.4vw, 1.8rem); }
+}
+/* the design notes seen through the window: bigger, so they read at a glance */
+.lh-note{ font-size: 14.5px; padding: 6px 10px; }
+.lh-note-pin{ width: 9px; height: 9.5px; margin: -4.75px 0 0 -4.5px; }
