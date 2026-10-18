@@ -2778,8 +2778,10 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
    Cards wait, out of sight, until the line brings them in (after the hero); the line goes round each card of a stack in turn and lights it.
    Titles live in ONE place: along the card's side, large - never again as a second title on top.
    ===================================================================== */
-.pw-armed .stk.is-armed:not(.is-open), .pw-armed .card-pair:not(.is-lit){ opacity: 0; pointer-events: none; }
-.card-pair{ transition: opacity .7s ease; }
+/* the cards stay in view (so a fast scroll never lands on an empty page) but dim, un-powered, until the line brings them to life; only while the hero is still playing are they kept out of sight */
+.hero-wait .stk, .hero-wait .card-pair{ opacity: 0 !important; pointer-events: none; }
+.pw-armed .stk.pw:not(.is-lit), .pw-armed .card-pair.pw:not(.is-lit){ filter: saturate(.35) opacity(.66); }
+.pw-armed .stk.pw, .pw-armed .card-pair.pw{ transition: filter .9s ease, opacity .7s cubic-bezier(.2,.7,.3,1), transform .7s cubic-bezier(.2,.7,.3,1); transition-delay: 0s, var(--reveal-delay, 0ms), var(--reveal-delay, 0ms); }
 
 /* a card the line has been round: a lavender edge that stays, with a quick glow as the line passes */
 .stk .stk-card.is-on{

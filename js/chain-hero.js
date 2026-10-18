@@ -533,6 +533,7 @@
     if (released) return; released = true;
     try { sessionStorage.setItem('tf-hero-seen', '1'); } catch (e) {}
     TF.heroOwns = false;
+    document.documentElement.classList.remove('hero-wait');
     if (TF.dock) TF.dock(false);
   }
 
@@ -591,7 +592,7 @@
     if (started) return;
     started = true; tReal = 0;
     TF.heroOwns = true;
-    document.documentElement.classList.add('dot-away');
+    document.documentElement.classList.add('dot-away', 'hero-wait');
     stage.classList.add('is-playing');
     revealBodyNow();
     measureTarget();
@@ -711,10 +712,11 @@
     /* design notes on the sketch: found only through the window. Short enough to sit whole inside it (window ~116 units).
        English only, on purpose. a = anchor on the feature, l = label box (plane units, 380 x 475). */
     var NOTES = [
-      { a: [190, 112], l: [34, 90],   t: 'User research<br>mode: on' },
-      { a: [186, 158], l: [66, 150],  t: 'Extrovert' },      /* the side you see */
-      { a: [286, 94],  l: [298, 70],  t: 'Introvert' },      /* the side you don't */
-      { a: [304, 166], l: [300, 186], t: 'Do not<br>disturb' },
+      /* each label sits right against its own point (centred on it, or tucked beside it) and never over the face - so when the window is over the point the whole note is inside it */
+      { a: [205, 88],  l: [139, 30],  t: 'User research<br>mode: on' },
+      { a: [178, 152], l: [130, 164], t: 'Extrovert' },      /* the side you see */
+      { a: [276, 106], l: [270, 118], t: 'Introvert' },      /* the side you don't */
+      { a: [304, 166], l: [290, 180], t: 'Do not<br>disturb' },
       { a: [134, 333], l: [64, 350],  t: 'Coffee: just<br>out of frame' },
       { a: [200, 238], l: [130, 250], t: 'Hidden potential.<br>You found it.' }   /* dead centre: where the window first opens */
     ];
@@ -728,7 +730,7 @@
     });
     clip.appendChild(notes);
     rv.appendChild(clip); rv.appendChild(ring); T.appendChild(rv);
-    var R = 88, cur = { x: 190, y: 237, r: 0 }, tg2 = { x: 190, y: 237, r: 0 }, loop = 0, inside = false;
+    var R = 92, cur = { x: 190, y: 237, r: 0 }, tg2 = { x: 190, y: 237, r: 0 }, loop = 0, inside = false;
     function ready() { return stage.classList.contains('lh-done') && !dragging && Math.abs(ud.x) < 1.5 && Math.abs(ud.y) < 1.5; }
     function paint() {
       rv.style.setProperty('--vx', cur.x.toFixed(1) + 'px'); rv.style.setProperty('--vy', cur.y.toFixed(1) + 'px'); rv.style.setProperty('--vr', Math.max(0, cur.r).toFixed(1) + 'px');

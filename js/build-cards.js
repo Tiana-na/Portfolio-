@@ -1,7 +1,6 @@
-/* The info cards on About are BUILT by the line's dot. The dot arrives at a station and the card is drawn as a wireframe
-   (a dashed block where every line of text and every chip will be); then a print head runs down from the top edge, the way the dot came:
-   the blocks wipe away under it and the real content is printed top to bottom. Plays once per card.
-   The text stays in the DOM the whole time; with reduced motion (or if the line engine is missing) nothing is hidden for long. */
+/* The info cards on About are LIT by the line's dot. The cards sit in view the whole time (dimmed, never empty); when the dot arrives at a
+   station a print head - a thin lavender line - runs down the card from its top edge, the way the dot came, and the card comes alive under it.
+   Plays once per card. Nothing is ever hidden: the text stays visible and in the DOM throughout. */
 (function () {
   'use strict';
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -45,32 +44,21 @@
     card.__bld = st; return st;
   }
   function arm(st) {
-    var card = st.card, rtl = doc.documentElement.dir === 'rtl', b = boxes(card);
+    var card = st.card, b = boxes(card);
     st.ov.innerHTML = ''; st.bars = []; st.h = b.h;
-    b.list.forEach(function (o) {
-      var d = doc.createElement('i'); d.className = 'bld-bar';
-      d.style.cssText = 'left:' + o.x + 'px;top:' + o.y + 'px;width:' + o.w + 'px;height:' + o.h + 'px;transform-origin:' + (rtl ? 'left' : 'right') + ' center';
-      d._y = o.y + o.h * .5; st.ov.appendChild(d); st.bars.push(d);
-    });
     st.head = doc.createElement('i'); st.head.className = 'bld-head'; st.ov.appendChild(st.head);
-    card.classList.add('bld-hide');
   }
 
-  /* 1. PLAN: the dot arrives at the station and the card appears as a wireframe (every block drawn, top first).
-     2. PRINT: right behind the dot, a print head runs down the card from its top edge (where the dot came from) and the content
-     is printed under it, top to bottom. */
+  /* the dot arrives at the station: right behind it, a print head runs down the card from its top edge (where the dot came from) */
   function plan(st) {
     if (st.planned) return; st.planned = true; st.done = true;
     arm(st);
-    var H = st.h;
-    st.bars.forEach(function (d) { setTimeout(function () { d.classList.add('in'); }, 40 + (d._y / H) * 320); });
     st.planAt = performance.now();
-    setTimeout(function () { print(st); }, 560);
+    print(st);
   }
   function print(st) {
     if (st.printing) return; st.printing = true;
     var n = st.bars.length, H = st.h, D = Math.max(850, Math.min(1500, H * 2.6)), next = 0;
-    st.card.classList.remove('bld-hide');
     st.head.classList.add('go');
     var t0 = performance.now();
     (function tick(now) {
@@ -79,9 +67,8 @@
       while (next < n && st.bars[next]._y <= y) { st.bars[next].classList.add('out'); next++; }
       if (t < 1) requestAnimationFrame(tick);
       else {
-        while (next < n) { st.bars[next].classList.add('out'); next++; }
         st.head.classList.add('off');
-        setTimeout(function () { st.ov.remove(); st.card.classList.remove('bld-hide'); }, 700);
+        setTimeout(function () { st.ov.remove(); }, 700);
       }
     })(t0);
   }
@@ -94,7 +81,7 @@
   TF.onStation = function (s) { stationCards(s).forEach(function (c, i) { var st = c.__bld; if (st) setTimeout(function () { plan(st); }, i * 200); }); };
 
   function start() {
-    cards.forEach(function (c) { arm(prep(c)); });
+    cards.forEach(function (c) { prep(c); });
     /* when the line engine is running, the dot decides when a card is built - no timer of its own */
     if (doc.documentElement.classList.contains('pw-armed')) return;
     /* fallback: if the dot never gets there (no line engine, odd layout) the card still builds once it has been on screen a while */

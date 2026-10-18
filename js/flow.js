@@ -497,9 +497,7 @@
     for (var i = 0; i < stations.length; i++) {
       var s = stations[i];
       if (!s.opened) {
-        /* cards wait out of sight until the dot gets to them; on a tall screen the first one is already in view when the hero ends, so it comes in then */
-        var seen = s.kind !== 'end' && sy < 40 && s.top - sy < vh * .86;
-        if (s.kind === 'end' ? keyOn : (sCur >= s.sOpen - 1.5 || seen)) openStation(s);
+        if (s.kind === 'end' ? keyOn : sCur >= s.sOpen - 1.5) openStation(s);
       }
       if (s.opened && s.cardS) {
         var slots = null;
