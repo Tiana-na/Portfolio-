@@ -2730,5 +2730,11 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
 [dir="rtl"] .stk-spine{ left: auto; right: 4px; }
 @media (max-width: 760px){ .stk-spine{ left: 2px; } [dir="rtl"] .stk-spine{ left: auto; right: 2px; } }
 
-/* no travelling trail either: the dot alone moves, and each element lights up when it arrives */
-.flow-rail path.rg{ display: none; }
+/* the trail behind the dot: a soft lavender tail that fades with distance, a touch stronger while the dot moves and calmer when it rests */
+.flow-rail path.rg{ display: block; filter: none; transition: opacity .6s ease; opacity: 0; stroke-width: 2.2px; }
+.flow-rail.is-active path.rg3{ opacity: .2; }
+.flow-rail.is-active path.rg2{ opacity: .34; }
+.flow-rail.is-active path.rg1{ opacity: .55; filter: drop-shadow(0 0 3px rgba(183,166,226,.6)); }
+.flow-rail.is-active.is-moving path.rg3{ opacity: .32; }
+.flow-rail.is-active.is-moving path.rg2{ opacity: .52; }
+.flow-rail.is-active.is-moving path.rg1{ opacity: .85; }

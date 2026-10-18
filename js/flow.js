@@ -114,7 +114,7 @@
   var ds = 22, vw = 0, vh = 0, xg = 0, mainTop = 0, mainLeft = 0, mainH = 0, mainW = 0;
   var stations = [], built = false, rtl = false, glow = [], pathLen = 0, baseEl = null;
   var map = [], yStart = 0, yEnd = 0, sCur = null, lastT = 0, chaseRaf = false, stubs = [], rings = [], narrowMode = false;
-  var TAILS = [210, 110, 46];
+  var TAILS = [360, 170, 64];
   var SVGNS = 'http://www.w3.org/2000/svg';
 
   /* page-space box that ignores transforms (the .reveal elements start shifted) */
