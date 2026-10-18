@@ -2651,3 +2651,6 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
 
 /* "Projects" in the menu lands on the section with the sticky header clear of its title */
 .works-section{ scroll-margin-top: 64px; }
+
+/* the two closing keys of every case study: same width, whatever the label */
+.case-bottom-buttons .btn.keycap{ box-sizing: border-box; width: min(100%, 340px); text-align: center; }
