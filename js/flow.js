@@ -30,7 +30,10 @@
     function titleOf(c) { var h = c.querySelector('h2') || c.querySelector('.mag-fact-quote'); return h ? h.textContent.replace(/\s+/g, ' ').trim() : ''; }
     function spineOf(c) { return c.getAttribute('data-spine') || titleOf(c); }
     var spines = cards.map(function (c) {
-      var sp = doc.createElement('span'); sp.className = 'stk-spine'; sp.setAttribute('aria-hidden', 'true'); c.appendChild(sp); return sp;
+      var sp = doc.createElement('span'); sp.className = 'stk-spine'; sp.setAttribute('aria-hidden', 'true'); c.appendChild(sp);
+      /* four invisible points on the card's corners: where the browser puts them tells us the card's exact outline once it is tilted */
+      ['tl', 'tr', 'bl', 'br'].forEach(function (k) { var pt = doc.createElement('i'); pt.className = 'stk-pt stk-pt--' + k; pt.setAttribute('aria-hidden', 'true'); c.appendChild(pt); });
+      return sp;
     });
     function apply() {
       cards.forEach(function (c, i) { spines[i].textContent = spineOf(c); spines[i].classList.toggle('stk-spine--mark', !!c.getAttribute('data-spine')); });
@@ -85,7 +88,7 @@
     if (prev) prev.addEventListener('click', function () { step(-1); });
     if (next) next.addEventListener('click', function () { step(1); });
     apply();
-    return { el: stk, open: function () { stk.classList.add('is-open'); stk.classList.remove('is-spark'); void stk.offsetWidth; stk.classList.add('is-spark'); setTimeout(function () { stk.classList.remove('is-spark'); }, 1800); }, step: step, refresh: apply };
+    return { el: stk, open: function () { stk.classList.add('is-open'); }, step: step, refresh: apply };
   }
 
   var stackEls = Array.prototype.slice.call(doc.querySelectorAll('.stk'));
@@ -129,15 +132,19 @@
     var sx = window.scrollX, wasOpen = s.classList.contains('is-open'), e = rtl ? -1e9 : 1e9, fl = 0, fr = 0;
     s.classList.add('stk-measuring'); if (!wasOpen) s.classList.add('is-open');
     void s.offsetWidth;
+    var quads = [], sR = s.getBoundingClientRect(), sTop = box(s).top;
+    function pt(c, k) { var r = c.querySelector('.stk-pt--' + k).getBoundingClientRect(); return { x: r.left + sx, y: sTop + (r.top - sR.top) }; }
     Array.prototype.forEach.call(s.querySelectorAll('.stk-card'), function (c) {
       var r = c.getBoundingClientRect();
       e = rtl ? Math.max(e, r.right) : Math.min(e, r.left);
       if (c.classList.contains('is-front')) { fl = r.left + sx; fr = r.right + sx; }
+      quads.push({ d: parseFloat(c.style.getPropertyValue('--d')) || 0, tl: pt(c, 'tl'), tr: pt(c, 'tr'), bl: pt(c, 'bl'), br: pt(c, 'br') });
     });
+    quads.sort(function (a, b) { return a.d - b.d; });
     if (!wasOpen) s.classList.remove('is-open');
     void s.offsetWidth; s.classList.remove('stk-measuring');
     var st = box(s.querySelector('.stk-stage'));
-    return { top: st.top, bottom: st.bottom, l: fl, r: fr, edge: e + sx };
+    return { top: st.top, bottom: st.bottom, l: fl, r: fr, edge: e + sx, quads: quads };
   }
 
   function measure() {
@@ -161,7 +168,7 @@
 
     function stackSt(el) {
       var i = stackInfo(el), ex = clamp(xs, i.l + 36, i.r - 36);
-      return { kind: 'stack', el: el, top: i.top, bottom: i.bottom, ex: ex, y: i.top + TOPOFF, bl: Math.min(i.l, i.edge), br: Math.max(i.r, i.edge) };
+      return { kind: 'stack', el: el, top: i.top, bottom: i.bottom, ex: ex, y: i.top + TOPOFF, bl: Math.min(i.l, i.edge), br: Math.max(i.r, i.edge), quads: i.quads };
     }
     if (sStory) list.push(stackSt(sStory));
     if (strip && qb) {
@@ -259,11 +266,42 @@
           /* the line never crosses an element: it splits above it, runs round both outer sides and meets again underneath */
           var yT = s.top - BM, yB = s.bottom + BM;
           var xl = Math.max(s.bl - 34, mainLeft + 12), xr = Math.min(s.br + 34, mainLeft + mainW - 12);
+          if (s.kind === 'stack' && s.quads && s.quads.length > 1) {
+            /* a stack: the line hugs the outline of every card in turn - over the front card's top, down past the card behind it,
+               and the one behind that, round the back, and up the other way - lighting each card as it goes by */
+            var Q = s.quads, nq = Q.length, ox = rtl ? 1 : -1, MINW = 26, xo = [], yTq = [], yBq = [], q;
+            for (q = 0; q < nq; q++) {
+              var ed = rtl ? Math.max(Q[q].tr.x, Q[q].br.x) : Math.min(Q[q].tl.x, Q[q].bl.x);
+              xo[q] = ed + ox * BM;
+              if (q > 0 && (xo[q] - xo[q - 1]) * ox < MINW) xo[q] = xo[q - 1] + ox * MINW;
+              yTq[q] = Math.min(Q[q].tl.y, Q[q].tr.y) - BM;
+              if (q > 0 && yTq[q] < yTq[q - 1]) yTq[q] = yTq[q - 1];
+            }
+            yTq[0] = Math.min(yTq[0], yT);
+            for (q = nq - 1; q >= 0; q--) {
+              yBq[q] = Math.max(Q[q].bl.y, Q[q].br.y) + BM;
+              if (q < nq - 1 && yBq[q] < yBq[q + 1]) yBq[q] = yBq[q + 1];
+            }
+            yBq[0] = Math.max(yBq[0], yB);
+            xl = xo[nq - 1];
+            s.loop = { xl: xl, xr: xr, yT: yTq[0], yB: yBq[0] };
+            var ie0s = push(s.ex, yTq[0]); s.vi = ie0s; pins.push({ i: ie0s, P: s.top - 30 });
+            s.cardVi = [];
+            for (q = 0; q < nq; q++) {
+              if (q > 0) push(xo[q - 1], yTq[q]);
+              var vq = push(xo[q], yTq[q]); s.cardVi.push(vq);
+              if (q === 0) pins.push({ i: vq, P: s.top + 10 });
+            }
+            var aLast = push(xo[nq - 1], yBq[nq - 1]); pins.push({ i: aLast, P: s.bottom - 10 });
+            for (q = nq - 2; q >= 0; q--) { push(xo[q], yBq[q + 1]); push(xo[q], yBq[q]); }
+            var a3s = push(s.ex, yBq[0]); s.vx = a3s; pins.push({ i: a3s, P: s.bottom + 30 });
+          } else {
           s.loop = { xl: xl, xr: xr, yT: yT, yB: yB };
           var ie0 = push(s.ex, yT); s.vi = ie0; pins.push({ i: ie0, P: s.top - 30 });
           var a1 = push(xl, yT); pins.push({ i: a1, P: s.top + 10 });
           var a2 = push(xl, yB); pins.push({ i: a2, P: s.bottom - 10 });
           var a3 = push(s.ex, yB); s.vx = a3; pins.push({ i: a3, P: s.bottom + 30 });
+          }
         } else {
         var ie = push(s.ex, s.top); s.vi = ie; pins.push({ i: ie, P: s.top });
         if (s.kind !== 'end') { var ix = push(s.ex, s.bottom); s.vx = ix; pins.push({ i: ix, P: s.bottom }); }
@@ -284,7 +322,7 @@
     var R = narrowMode ? 12 : 18;
     var mp = makePath(pts, R);
     buildMap(mp.pieces, pins, mp.total);
-    stations.forEach(function (st) { st.sOpen = st.vi != null ? mp.sAt[st.vi] : 0; st.sExit = st.vx != null ? mp.sAt[st.vx] : null; });
+    stations.forEach(function (st) { st.sOpen = st.vi != null ? mp.sAt[st.vi] : 0; st.sExit = st.vx != null ? mp.sAt[st.vx] : null; st.cardS = st.cardVi ? st.cardVi.map(function (i) { return mp.sAt[i]; }) : null; });
 
     /* a gap in the line behind the closing sentence (the line passes behind it, like a label on a wire) */
     var maskRect = '';
@@ -324,7 +362,7 @@
     });
     pathLen = baseEl.getTotalLength();
     var k = mp.total > 0 ? pathLen / mp.total : 1;      /* the browser's own length for the same line */
-    if (Math.abs(k - 1) > .0005) { map.forEach(function (e) { e.s0 *= k; e.s1 *= k; }); stations.forEach(function (st) { st.sOpen *= k; }); }
+    if (Math.abs(k - 1) > .0005) { map.forEach(function (e) { e.s0 *= k; e.s1 *= k; }); stations.forEach(function (st) { st.sOpen *= k; if (st.cardS) st.cardS = st.cardS.map(function (v) { return v * k; }); }); }
     baseEl.style.strokeWidth = narrowMode ? '2px' : '2.2px';
     baseEl.style.opacity = 0;   /* stays hidden until the dot has left the hero and starts to ride */
     stations.forEach(function (st, si) { if (st.opened) setLit(st); });
@@ -351,15 +389,30 @@
     if (narrowMode && s.kind !== 'end') { var ix = stations.indexOf(s); if (rings[ix]) rings[ix].classList.add('on'); }
     if (s.badge) s.badge.classList.add('on');
   }
+  function stackSlots(el) {
+    return Array.prototype.slice.call(el.querySelectorAll('.stk-card')).sort(function (a, b) { return (parseFloat(a.style.getPropertyValue('--d')) || 0) - (parseFloat(b.style.getPropertyValue('--d')) || 0); });
+  }
+  function lightCard(c) {
+    if (c.classList.contains('is-on')) return;
+    c.classList.add('is-on'); c.classList.remove('is-flash'); void c.offsetWidth; c.classList.add('is-flash');
+    setTimeout(function () { c.classList.remove('is-flash'); }, 1500);
+  }
   function openStation(s) {
     s.opened = true; if (s.el) s.el.__stOpened = true;
     land(); setLit(s);
     if (s.pw) {
-      s.pw.classList.add('is-lit'); s.pw.classList.remove('is-spark'); void s.pw.offsetWidth; s.pw.classList.add('is-spark');
-      var pwEl = s.pw; setTimeout(function () { pwEl.classList.remove('is-spark'); }, 1500);
+      s.pw.classList.add('is-lit');
+      if (s.kind !== 'stack') {
+        s.pw.classList.remove('is-spark'); void s.pw.offsetWidth; s.pw.classList.add('is-spark');
+        var pwEl = s.pw; setTimeout(function () { pwEl.classList.remove('is-spark'); }, 1500);
+      }
     }
     if (window.TF && TF.onStation) { try { TF.onStation(s); } catch (e) { /* decorative */ } }
-    if (s.kind === 'stack') { var o = stackOf(s.el); if (o) o.open(); }
+    if (s.kind === 'stack') {
+      var o = stackOf(s.el); if (o) o.open();
+      /* a phone's line only touches the margin: its cards light one after the other instead of as the dot goes round them */
+      if (!s.cardS) stackSlots(s.el).forEach(function (c, i) { setTimeout(function () { lightCard(c); }, 260 + i * 320); });
+    }
     else if (s.kind === 'quiz') { s.el.classList.remove('is-hit'); void s.el.offsetWidth; s.el.classList.add('is-hit'); }
     else if (s.kind === 'end') { s.el.classList.remove('is-landed'); void s.el.offsetWidth; s.el.classList.add('is-landed'); }
   }
@@ -443,8 +496,17 @@
     /* each element lights when the dot gets there */
     for (var i = 0; i < stations.length; i++) {
       var s = stations[i];
-      if (s.opened) continue;
-      if (s.kind === 'end' ? keyOn : sCur >= s.sOpen - 1.5) openStation(s);
+      if (!s.opened) {
+        /* cards wait out of sight until the dot gets to them; on a tall screen the first one is already in view when the hero ends, so it comes in then */
+        var seen = s.kind !== 'end' && sy < 40 && s.top - sy < vh * .86;
+        if (s.kind === 'end' ? keyOn : (sCur >= s.sOpen - 1.5 || seen)) openStation(s);
+      }
+      if (s.opened && s.cardS) {
+        var slots = null;
+        for (var q = 0; q < s.cardS.length; q++) {
+          if (sCur >= s.cardS[q] - 1.5) { if (!slots) slots = stackSlots(s.el); if (slots[q]) lightCard(slots[q]); }
+        }
+      }
     }
   }
 

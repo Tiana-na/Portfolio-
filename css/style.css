@@ -2773,3 +2773,43 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
 /* the design notes seen through the window: bigger, so they read at a glance */
 .lh-note{ font-size: 14.5px; padding: 6px 10px; }
 .lh-note-pin{ width: 9px; height: 9.5px; margin: -4.75px 0 0 -4.5px; }
+
+/* =====================================================================
+   Cards wait, out of sight, until the line brings them in (after the hero); the line goes round each card of a stack in turn and lights it.
+   Titles live in ONE place: along the card's side, large - never again as a second title on top.
+   ===================================================================== */
+.pw-armed .stk.is-armed:not(.is-open), .pw-armed .card-pair:not(.is-lit){ opacity: 0; pointer-events: none; }
+.card-pair{ transition: opacity .7s ease; }
+
+/* a card the line has been round: a lavender edge that stays, with a quick glow as the line passes */
+.stk .stk-card.is-on{
+  border-color: rgba(138,118,190,.7);
+  box-shadow: 0 0 0 1px rgba(183,166,226,.45), 0 0 14px -2px rgba(183,166,226,.5), 0 1px 0 rgba(255,255,255,.7) inset, 0 20px 36px -22px rgba(37,31,28,.34), 0 3px 8px -4px rgba(37,31,28,.12);
+}
+.stk .stk-card.is-on .stk-spine{ color: #6a58a0; }
+.stk .stk-card.is-flash::after{ animation: cardLit 1.3s ease-out; }
+.stk-pt{ position: absolute; width: 0; height: 0; visibility: hidden; pointer-events: none; }
+.stk-pt--tl{ left: 0; top: 0; } .stk-pt--tr{ left: 100%; top: 0; } .stk-pt--bl{ left: 0; top: 100%; } .stk-pt--br{ left: 100%; top: 100%; }
+
+/* the one title: written up the card's side, big enough to read, the same on every card whether it is in front or behind */
+.stk .stk-card .stk-spine{
+  opacity: 1 !important; transform: none; writing-mode: vertical-rl;
+  width: 40px; padding-top: 16px; justify-content: flex-start; align-items: center;
+  font-size: 1.28rem; font-weight: 500; letter-spacing: .01em; color: #4b3f6b; left: 4px; background: none;
+}
+[dir="rtl"] .stk .stk-card .stk-spine{ left: auto; right: 4px; transform: none; }
+.stk .stk-card .stk-spine{ top: 1px; }
+/* the heading inside the front card is that same title - hidden here (still there for screen readers) so it is not said twice */
+.stk .stk-card .mag-fact-label, .stk .stk-card > h2{
+  position: absolute !important; width: 1px; height: 1px; margin: 0 !important; padding: 0 !important; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; opacity: 1 !important;
+}
+.stk--story .mag-fact, .stk--skills .stk-card{ padding-inline-start: 62px; }
+.stk--skills .stk-card{ min-height: 236px; }
+.stk--story .stk-card{ min-height: 190px; }
+@media (max-width: 760px){
+  .stk .stk-card .stk-spine{ width: 30px; padding-top: 12px; font-size: 1.02rem; left: 3px; }
+  [dir="rtl"] .stk .stk-card .stk-spine{ left: auto; right: 3px; }
+  .stk--story .mag-fact, .stk--skills .stk-card{ padding-inline-start: 44px; }
+  .stk--story .stk-card:not(.is-front), .stk--skills .stk-card:not(.is-front){ padding-inline-start: 44px; }
+  .stk--skills .stk-card{ min-height: 218px; }
+}

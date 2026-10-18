@@ -95,6 +95,8 @@
 
   function start() {
     cards.forEach(function (c) { arm(prep(c)); });
+    /* when the line engine is running, the dot decides when a card is built - no timer of its own */
+    if (doc.documentElement.classList.contains('pw-armed')) return;
     /* fallback: if the dot never gets there (no line engine, odd layout) the card still builds once it has been on screen a while */
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) {

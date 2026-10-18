@@ -570,7 +570,7 @@
     }
     return T_END;
   }
-  var T_ENDR = (function () { var acc = 0; for (var i = 0; i < WARP.length - 1; i++) acc += (WARP[i][1] - WARP[i][0]) / WARP[i][2]; return acc + (T_END - WARP[WARP.length - 1][0]); })();
+  var T_ENDR = (function () { var acc = 0; for (var i = 0; i < WARP.length - 1; i++) acc += (WARP[i][1] - WARP[i][0]) / WARP[i][2]; var L = WARP[WARP.length - 1]; return acc + (T_END - L[0]) / L[2]; })();
   var tReal = 0, lastNow = 0;
   function frame(now) {
     var dt = lastNow ? Math.min(.05, (now - lastNow) / 1000) : 0; lastNow = now;
