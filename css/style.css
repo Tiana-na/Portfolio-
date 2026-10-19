@@ -2861,3 +2861,9 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
 
 /* DOgether: note that the product was designed in Hebrew (RTL) */
 .case-page-header .case-rtl-note{ font-size: 12px; color: #020202; margin-top: 12px; }
+
+/* Projects: the results line as a tidy list. The label sits on the first line and every result lines up in one column
+   under it, starting where the tool names start (no uneven gaps, and a wrapped item never falls back under the label) */
+.work-row .work-meta--results{ display: grid; grid-template-columns: 59px 1fr; align-items: baseline; line-height: 1.6; }
+.work-row .work-meta--results .rb-label{ grid-column: 1; margin-inline-end: 0; }
+.work-row .work-meta--results .rb-chip{ grid-column: 2; display: block; margin: 0 0 3px; }
