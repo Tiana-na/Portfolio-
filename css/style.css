@@ -300,20 +300,18 @@ section{ padding: 90px 0; }
 .hero-lede-block{
   display: flex;
   align-items: flex-start;
-  gap: 8px;
+  gap: 12px;
   max-width: 680px;
   margin-inline: 0 auto;
 }
 
+/* the paragraph mark is drawn from the logo's own geometry (bar, stem, stub; same radii),
+   same orientation as the logo in both languages */
 .hero-detail-mark{
-  width: 22px;
+  width: 28.7px;
   height: auto;
   flex: 0 0 auto;
   margin-top: 2px;
-}
-
-html[dir="ltr"] .hero-detail-mark{
-  transform: scaleX(-1);
 }
 
 @media (max-width: 600px){
@@ -321,7 +319,7 @@ html[dir="ltr"] .hero-detail-mark{
   .hero p.hero-lede,
   .hero .hero-closing{ font-size: 1.02rem; }
   .hero-lede-block{ gap: 6px; }
-  .hero-detail-mark{ width: 19px; margin-top: 2px; }
+  .hero-detail-mark{ width: 25px; margin-top: 2px; }
 }
 
 .footnote-ref{
