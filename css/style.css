@@ -2839,3 +2839,27 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
 @media (prefers-reduced-motion: reduce){
   .is-ringing .contact-callme-img, .is-ringing .cl-disp, .is-ringing .cl-recv i{ animation: none; }
 }
+
+/* ======== Contact: email as visible text, one-tap copy ======== */
+.contact-mail-copy{
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-top: 26px; padding: 11px 16px 11px 18px; border-radius: 999px;
+  border: 1.5px solid rgba(122,106,158,.38); background: rgba(122,106,158,.07);
+  color: var(--text); font: inherit; font-size: 1.02rem; letter-spacing: .01em;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transition: background .18s ease, border-color .18s ease, transform .12s ease;
+}
+.contact-mail-copy:hover{ background: rgba(122,106,158,.14); border-color: #7A6A9E; }
+.contact-mail-copy:active{ transform: scale(.97); }
+.contact-mail-copy:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 4px; }
+.contact-mail-copy .mc-ico{ width: 18px; height: 18px; fill: #7A6A9E; flex: none; }
+.contact-mail-copy .mc-ok{ display: none; }
+.contact-mail-copy.is-copied{ background: #7A6A9E; border-color: #7A6A9E; color: #fff; }
+.contact-mail-copy.is-copied .mc-copy{ display: none; }
+.contact-mail-copy.is-copied .mc-ok{ display: block; fill: #fff; animation: mcPop .28s ease-out; }
+@keyframes mcPop{ from{ transform: scale(.4); opacity: 0; } to{ transform: scale(1); opacity: 1; } }
+.contact-hero .contact-mail-copy{ margin-top: 26px; }
+@media (max-width: 760px){ .contact-mail-copy{ margin-top: 22px; font-size: .98rem; } }
+
+/* DOgether: note that the product was designed in Hebrew (RTL) */
+.case-page-header .case-rtl-note{ font-size: 12px; color: #020202; margin-top: 12px; }
