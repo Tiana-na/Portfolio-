@@ -2867,3 +2867,15 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
 .work-row .work-meta--results{ display: grid; grid-template-columns: 59px 1fr; align-items: baseline; line-height: 1.6; }
 .work-row .work-meta--results .rb-label{ grid-column: 1; margin-inline-end: 0; }
 .work-row .work-meta--results .rb-chip{ grid-column: 2; display: block; margin: 0 0 3px; }
+
+/* Header keys: Resume and the language switch share one height, type size and line-height (they only differ in colour) */
+@media (min-width: 761px){
+  .nav-links .lang-toggle{
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 54px; padding: 6px 16px 7px;
+    font-size: .88rem; line-height: 1.65;
+  }
+}
+
+/* Home: no divider before the closing line: just air, so the closing line is its own beat without any added mark */
+.hero .hero-closing{ border-top: 0; padding-top: 0; margin-top: 34px; }
