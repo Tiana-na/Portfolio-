@@ -2815,3 +2815,27 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
   .stk--story .stk-card:not(.is-front), .stk--skills .stk-card:not(.is-front){ padding-inline-start: 44px; }
   .stk--skills .stk-card{ min-height: 218px; }
 }
+
+/* =====================================================================
+   Contact: the line is the telephone cord. It runs in to the payphone, follows the photo's own cord to the receiver, and the phone rings.
+   ===================================================================== */
+.cl-rail{ z-index: 3; }
+.contact-callme-wrap.cl-tap{ cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.cl-fx{ position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+/* the payphone's little display lights while it rings */
+.cl-disp{ position: absolute; left: 20%; top: 8.6%; width: 13.4%; height: 4.2%; border-radius: 3px; opacity: 0; background: rgba(183,166,226,.85); box-shadow: 0 0 14px 3px rgba(183,166,226,.8); mix-blend-mode: screen; }
+.is-ringing .cl-disp{ animation: clDisp .62s ease-in-out 4; }
+@keyframes clDisp{ 0%,100%{ opacity: 0; } 45%{ opacity: .95; } }
+/* sound rings spreading from the receiver */
+.cl-recv{ position: absolute; left: 59.5%; top: 33%; width: 18%; aspect-ratio: 1; }
+.cl-recv i{ position: absolute; inset: 0; border-radius: 50%; border: 2px solid #c8b9f0; opacity: 0; transform: scale(.35); }
+.is-ringing .cl-recv i{ animation: clWave 1.15s ease-out 2; }
+.is-ringing .cl-recv i:nth-child(2){ animation-delay: .22s; }
+.is-ringing .cl-recv i:nth-child(3){ animation-delay: .44s; }
+@keyframes clWave{ 0%{ opacity: .9; transform: scale(.35); } 100%{ opacity: 0; transform: scale(1.7); } }
+/* the whole photo jangles a little */
+.is-ringing .contact-callme-img{ animation: clShake .5s ease-in-out 3; transform-origin: 50% 8%; }
+@keyframes clShake{ 0%,100%{ transform: rotate(0); } 16%{ transform: rotate(-1.5deg); } 33%{ transform: rotate(1.5deg); } 50%{ transform: rotate(-1deg); } 66%{ transform: rotate(1deg); } 83%{ transform: rotate(-.4deg); } }
+@media (prefers-reduced-motion: reduce){
+  .is-ringing .contact-callme-img, .is-ringing .cl-disp, .is-ringing .cl-recv i{ animation: none; }
+}

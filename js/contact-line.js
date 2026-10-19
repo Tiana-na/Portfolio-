@@ -1,7 +1,8 @@
-/* The line arrives on the Contact page: it comes down from the top, goes round the whole contact block (the same
-   rule as on About: the line never crosses content, it splits, wraps both sides and meets again underneath) and the
-   dot lands under the three buttons. On a phone it runs down the margin and lands beside the buttons.
-   Decorative only: aria-hidden, no pointer events, and no motion when the visitor prefers reduced motion. */
+/* The line arrives on the Contact page and becomes the telephone cord: it comes down from the top, runs in to the payphone in the photo,
+   follows the photo's own cord (drawn in lavender over it) to the receiver in Tiana's hand - and the phone rings: the photo gives a little
+   shake, sound rings spread from the receiver, the payphone's display lights and the
+   phone key below rings too. Clicking the photo rings it again.
+   Decorative only: aria-hidden, no pointer events on the line, and no motion when the visitor prefers reduced motion. */
 (function () {
   'use strict';
   var doc = document, main = doc.querySelector('main'), hero = doc.querySelector('.contact-hero');
@@ -19,6 +20,8 @@
   main.appendChild(dot);
 
   var TAILS = [210, 110, 46];
+  /* where the photo's cord runs, as fractions of the picture (start at the payphone, two curves, end at the receiver) */
+  var CORD = { s: [.135, .445], a: [.19, .51, .25, .572], m: [.33, .574], b: [.45, .57, .55, .5], e: [.685, .405] };
   var base, glow = [], rbr = null, badge = null, port = null, ring = null, L = 0, splitS = 0;
   var played = false, running = false, curS = 0, raf = 0, narrow = false, started = false;
   var buttons = Array.prototype.slice.call(doc.querySelectorAll('.contact-icon-row .quiz-icon-btn'));
@@ -55,40 +58,26 @@
       var tw = Math.min(o.r - o.l, rg.getBoundingClientRect().width || (o.r - o.l)), c = (o.l + o.r) / 2;
       return { l: c - tw / 2, r: c + tw / 2, t: o.t, b: o.b };
     }
-    var wrap = hero.querySelector('.contact-callme-wrap'), row = hero.querySelector('.contact-icon-row');
-    var parts = [];
-    if (wrap) { var w = rel(off(wrap)); parts.push({ l: w.l - 34, t: w.t - 6, r: w.r + 34, b: w.b + 16 }); }
-    Array.prototype.forEach.call(hero.querySelectorAll('h1, p'), function (el) { parts.push(textBox(el)); });
-    var rr = null;
-    if (row) {
-      Array.prototype.forEach.call(row.children, function (k) { var o = rel(off(k)); rr = rr ? { l: Math.min(rr.l, o.l), t: Math.min(rr.t, o.t), r: Math.max(rr.r, o.r), b: Math.max(rr.b, o.b) } : o; });
-      if (rr) parts.push(rr);
-    }
-    var T = Infinity, B = -Infinity, Lx = Infinity, Rx = -Infinity;
-    parts.forEach(function (p) { T = Math.min(T, p.t); B = Math.max(B, p.b); Lx = Math.min(Lx, p.l); Rx = Math.max(Rx, p.r); });
-
+    var wrap = hero.querySelector('.contact-callme-wrap'), img = hero.querySelector('.contact-callme-img');
     var pts, extra = '', R = narrow ? 12 : 26, cx = W / 2;
     svg.setAttribute('width', W); svg.setAttribute('height', H);
     dot.style.setProperty('--ds', narrow ? '14px' : '22px');
     rbr = badge = port = ring = null;
+    /* the photo's own cord, as fractions of the picture (it leaves the payphone's underside, sags, and rises to the receiver) */
+    var io = img ? rel(off(img)) : { l: cx - 100, t: 60, r: cx + 100, b: 310 }, iw = io.r - io.l, ih = io.b - io.t;
+    function P(u, v) { return [io.l + u * iw, io.t + v * ih]; }
+    var S = P(CORD.s[0], CORD.s[1]), c1 = P(CORD.a[0], CORD.a[1]), c2 = P(CORD.a[2], CORD.a[3]), m = P(CORD.m[0], CORD.m[1]), c3 = P(CORD.b[0], CORD.b[1]), c4 = P(CORD.b[2], CORD.b[3]), E = P(CORD.e[0], CORD.e[1]);
     if (!narrow) {
-      var yT = Math.max(30, T - 48), yB = B + 42;
-      var xl = Math.max(Lx - 76, 12), xr = Math.min(Rx + 76, W - 12);
-      /* the line plugs into the e-mail key: both branches meet under it, then a short stub rises to the key */
-      var mx = cx, yEnd = yB - 28;
-      if (mail) { var mb = rel(off(mail)); mx = (mb.l + mb.r) / 2; yEnd = Math.min(yB - 14, mb.b + 11); }
-      pts = [[cx, 0], [cx, yT], [xl, yT], [xl, yB], [mx, yB], [mx, yEnd]];
-      splitS = yT;
-      var rd = Math.min(R, (yB - yT) / 2);
-      extra += '<path class="rs" pathLength="1" d="M' + f1(cx) + ',' + f1(yT) + 'H' + f1(xr - rd) + 'Q' + f1(xr) + ',' + f1(yT) + ' ' + f1(xr) + ',' + f1(yT + rd) + 'V' + f1(yB - rd) + 'Q' + f1(xr) + ',' + f1(yB) + ' ' + f1(xr - rd) + ',' + f1(yB) + 'H' + f1(mx) + '"/>';
-      extra += '<g class="pb" data-cl="b"><circle cx="' + f1(cx) + '" cy="' + f1(yT) + '" r="5.5"/></g>';
+      var yT = Math.max(24, io.t - 34), xl = Math.max(io.l - 66, 12);
+      pts = [[cx, 0], [cx, yT], [xl, yT], [xl, S[1]], [S[0], S[1]]];
     } else {
-      var gx = rtl ? W - 8 : 8, ry = rr ? (rr.t + rr.b) / 2 : B;
-      pts = [[gx, 0], [gx, ry]];
-      splitS = 0;
-      extra += '<circle class="rp" data-cl="r" cx="' + f1(gx) + '" cy="' + f1(ry) + '" r="5"/>';
+      var gx = rtl ? W - 8 : 8;
+      pts = [[gx, 0], [gx, S[1]], [S[0], S[1]]];
     }
-    var d = roundedPath(pts, R);
+    splitS = 0;
+    var cord = ' C' + f1(c1[0]) + ',' + f1(c1[1]) + ' ' + f1(c2[0]) + ',' + f1(c2[1]) + ' ' + f1(m[0]) + ',' + f1(m[1]) +
+               ' C' + f1(c3[0]) + ',' + f1(c3[1]) + ' ' + f1(c4[0]) + ',' + f1(c4[1]) + ' ' + f1(E[0]) + ',' + f1(E[1]);
+    var d = roundedPath(pts, R) + cord;
     svg.innerHTML = '<path d="' + d + '"/><path class="rg rg3" d="' + d + '"/><path class="rg rg2" d="' + d + '"/><path class="rg rg1" d="' + d + '"/>' + extra;
     base = svg.querySelector('path');
     glow = [svg.querySelector('.rg3'), svg.querySelector('.rg2'), svg.querySelector('.rg1')];
@@ -118,12 +107,26 @@
   }
 
   function ease(t) { return t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+  /* ---- the phone in the photo: ringing, the display ---- */
+  var wrapEl = hero.querySelector('.contact-callme-wrap'), ringT = 0;
+  function makeFx() {
+    if (!wrapEl || wrapEl.querySelector('.cl-fx')) return;
+    var fx = doc.createElement('div'); fx.className = 'cl-fx'; fx.setAttribute('aria-hidden', 'true');
+    fx.innerHTML = '<i class="cl-disp"></i><span class="cl-recv"><i></i><i></i><i></i></span>';
+    wrapEl.appendChild(fx); wrapEl.classList.add('cl-tap');
+    wrapEl.addEventListener('click', function () { if (played || reduce) ringNow(); });
+  }
+  function ringNow() {
+    if (!wrapEl || reduce) return;
+    wrapEl.classList.remove('is-ringing'); void wrapEl.offsetWidth; wrapEl.classList.add('is-ringing');
+    clearTimeout(ringT); ringT = setTimeout(function () { wrapEl.classList.remove('is-ringing'); }, 2600);
+  }
   function land() {
     dot.classList.remove('is-land'); void dot.offsetWidth; dot.classList.add('is-land');
-    /* the key is pressed, then the line "connects" and the phone key rings */
-    if (mail) { mail.classList.add('is-pressed'); setTimeout(function () { mail.classList.remove('is-pressed'); }, 230); }
+    /* the cord reaches the receiver: the line "connects", the phone in the photo rings, then the phone key below rings too */
     svg.classList.add('is-connect', 'cl-after'); setTimeout(function () { svg.classList.remove('is-connect'); }, 1500);
-    if (phone) { setTimeout(function () { phone.classList.add('is-ring'); setTimeout(function () { phone.classList.remove('is-ring'); }, 2000); }, 260); }
+    ringNow();
+    if (phone) { setTimeout(function () { phone.classList.add('is-ring'); setTimeout(function () { phone.classList.remove('is-ring'); }, 2000); }, 1500); }
   }
   function play() {
     if (started) return; started = true;
@@ -145,6 +148,7 @@
   try { new MutationObserver(function () { clearTimeout(rt); rt = setTimeout(relayout, 60); }).observe(doc.documentElement, { attributes: true, attributeFilter: ['lang', 'dir'] }); } catch (e) { /* ignore */ }
 
   function init() {
+    makeFx();
     build();
     var go = function () { build(); setTimeout(play, 450); };
     if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(go); else go();
