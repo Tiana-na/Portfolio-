@@ -2762,7 +2762,10 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
   margin: 6px auto 16px; max-width: 22em; text-align: center;
   font-family: 'Bodoni Moda', 'Rubik', serif; font-weight: 500; font-size: clamp(1.55rem, 3.1vw, 2.15rem); line-height: 1.22; letter-spacing: -.01em; color: #251f1c;
 }
-.lh-title em{ font-style: italic; font-weight: 600; color: #7A6A9E; }
+.lh-title em{ font-style: normal; font-weight: inherit; color: #7A6A9E; }   /* the new pair is picked out by colour only, no italic */
+/* the headline is always two lines, the break after the comma; each line stays on one line and the type scales down to fit */
+.lh-title{ max-width: none; white-space: nowrap; }
+.lh-title .amp{ font-size: .74em; font-weight: 400; margin-inline: .04em; }
 .lh-final .lh-title + .ed-statement{ margin-top: 0; }
 @media (max-width: 760px){
   .lh-final{ min-height: 330px; }
@@ -2879,3 +2882,7 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
 
 /* Home: no divider before the closing line: just air, so the closing line is its own beat without any added mark */
 .hero .hero-closing{ border-top: 0; padding-top: 0; margin-top: 34px; }
+
+/* about headline: always two lines; the type scales down on narrow screens so the first line never wraps */
+.page-hero h1.lh-title, .lh-title{ font-size: min(clamp(1.55rem, 3.1vw, 2.15rem), calc((100vw - 40px) / 15.5)); }
+@media (max-width: 760px){ .page-hero h1.lh-title, .lh-title{ font-size: min(1.8rem, calc((100vw - 40px) / 15.5)); } }
