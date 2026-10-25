@@ -2886,26 +2886,3 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
 /* about headline: always two lines; the type scales down on narrow screens so the first line never wraps */
 .page-hero h1.lh-title, .lh-title{ font-size: min(clamp(1.55rem, 3.1vw, 2.15rem), calc((100vw - 40px) / 15.5)); }
 @media (max-width: 760px){ .page-hero h1.lh-title, .lh-title{ font-size: min(1.8rem, calc((100vw - 40px) / 15.5)); } }
-
-/* ===== Home hero: clearer hierarchy =====
-   - body copy in regular weight (long text reads better light)
-   - purple belongs to the personal lines + links; the role line steps back to grey
-   - less air above the hero, and "Projects" becomes a real section heading, so the first project shows on the first screen */
-.hero{ padding-top: 64px; }
-.hero p.hero-lede, .hero .hero-closing{ font-weight: 400; }
-.hero .tag-pill{ color: var(--text-muted, #6b6560); }
-.works-section > .wrap > .eyebrow{ font-size: 1.75rem; font-weight: 700; color: var(--text); margin-bottom: 10px; }
-@media (max-width: 600px){
-  .hero{ padding-top: 40px; }
-  .works-section > .wrap > .eyebrow{ font-size: 1.4rem; }
-}
-.hero{ padding-top: 52px; padding-bottom: 0; }
-.works-section{ padding-top: 44px; }
-.works-section > .wrap > p{ margin-bottom: 28px; }
-
-/* the paragraph mark hangs in the margin on wider screens, so every line of the hero starts on one edge;
-   on narrow screens there is no margin to hang into, so it stays inline */
-@media (min-width: 900px){
-  .hero-lede-block{ position: relative; display: block; }
-  .hero-detail-mark{ position: absolute; inset-inline-start: calc(-28.7px - 14px); top: 0; margin-top: 4px; }
-}

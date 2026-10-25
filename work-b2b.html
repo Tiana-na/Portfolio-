@@ -36,7 +36,9 @@
 <style>
 .b2b-case{ background:#fff; color:#475569; font-family:'Inter',sans-serif; }
 .b2b-wrap{ max-width:627px; margin:0 auto; padding:0 24px; }
-.b2b-wrap.mid{ max-width:840px; }
+.b2b-wrap.mid{ max-width:627px; }   /* one text column for the whole case: every paragraph starts at the same edge */
+/* only the visual blocks (before/after screens, flows) step out wider than the text column, centred on it */
+.b2b-wrap.mid .b2b-compare, .b2b-wrap.mid .b2b-flow-card{ margin-inline: calc((100% - min(840px, 100vw - 48px)) / 2); }
 .b2b-wrap.wide{ max-width:1180px; }
 .b2b-section{ padding:56px 0; }
 
@@ -94,7 +96,7 @@ img.b2b-img-slot{ width:100%; height:100%; object-fit:contain; padding:0; displa
   .b2b-summary-badge{ max-width:44%; font-size:9.5px; padding:4px 7px; }
 }
 
-.b2b-sol-tags{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
+.b2b-sol-tags{ display:flex; flex-direction:column; align-items:flex-start; gap:10px; margin-bottom:14px; }   /* status pill above the title, so every title starts at the same edge */
 .b2b-status-pill{ background:#F8FAFC; color:#4F9E78; font-size:12px; font-weight:600; padding:6px 12px; border-radius:6px; }
 .b2b-status-pill.proposed{ color:#B5730D; }
 .b2b-h2-sol{ font-weight:600; font-size:clamp(18px,2.2vw,22px); line-height:1.25; color:#1E293B; margin:0; }
