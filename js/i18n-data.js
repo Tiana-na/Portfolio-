@@ -23,9 +23,9 @@ window.I18N = {
     "linkedin-aria": "מעבר לפרופיל הלינקדאין",
     "email-aria": "שליחת מייל",
     "case-back": "חזרה לפרויקטים",
-    "case-figma-btn": "פתיחת קובץ הפרויקט בפיגמה",
-    "case-back-all": "חזרה לכל הפרויקטים",
-    "case-full-project": "לצפייה בקובץ המלא בפיגמה"
+    "case-figma-btn": "צפייה בפיגמה",
+    "case-back-all": "חזרה לפרויקטים",
+    "case-full-project": "צפייה בפיגמה"
   },
 
   index: {
