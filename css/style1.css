@@ -2272,12 +2272,12 @@ html.lh-peek .lh-T .lh-head em{ transform: none !important; }
 .work-num{
   position: absolute; z-index: 2; inset-inline-start: 22px; top: 18px; width: 36px; height: 36px; border-radius: 50%;
   display: grid; place-items: center; background: var(--pi); color: #fff;
-  font-family: 'Bodoni Moda','Rubik',serif; font-size: 1.05rem; font-weight: 500; letter-spacing: .02em;
+  font-family: 'Rubik', sans-serif; font-size: 1.05rem; font-weight: 500; letter-spacing: .02em;
 }
 .work-content{ padding: 28px 4px 0 !important; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.1fr); column-gap: 56px; }
 .work-content > .work-tags{ grid-column: 1 / -1; margin-bottom: 14px; gap: 0; position: relative; }
 .work-content > .work-tags::before{ content: ""; display: block; flex: 0 0 100%; width: 34px; height: 3px; border-radius: 2px; background: var(--pc); margin-bottom: 14px; }
-.work-content h3{ grid-column: 1; font-family: 'Bodoni Moda','Rubik',serif; font-weight: 500; font-size: 1.9rem; line-height: 1.2; letter-spacing: -.01em; margin: 0 0 16px; color: #251f1c; }
+.work-content h3{ grid-column: 1; font-family: 'Rubik', sans-serif; font-weight: 500; font-size: 1.9rem; line-height: 1.2; letter-spacing: -.01em; margin: 0 0 16px; color: #251f1c; }
 .work-content > .work-desc{ grid-column: 2; grid-row: 2 / span 4; margin: 0; max-width: 60ch; }
 .work-content > .work-tools, .work-content > .work-meta--results, .work-content > .work-btn{ grid-column: 1; align-self: start; }
 .work-content > .work-btn{ justify-self: start; margin-top: 6px; }
