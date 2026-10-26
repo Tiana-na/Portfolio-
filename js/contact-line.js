@@ -22,7 +22,7 @@
   var TAILS = [210, 110, 46];
   /* where the photo's cord runs, as fractions of the picture (start at the payphone, two curves, end at the receiver) */
   var CORD = { s: [.135, .445], a: [.19, .51, .25, .572], m: [.33, .574], b: [.45, .57, .55, .5], e: [.685, .405] };
-  var base, glow = [], rbr = null, badge = null, port = null, ring = null, L = 0, splitS = 0;
+  var rung = false, base, glow = [], rbr = null, badge = null, port = null, ring = null, L = 0, splitS = 0;
   var played = false, running = false, curS = 0, raf = 0, narrow = false, started = false;
   var buttons = Array.prototype.slice.call(doc.querySelectorAll('.contact-icon-row .quiz-icon-btn'));
   var mail = doc.querySelector('.contact-icon-row a[href^="mailto"]'), phone = doc.querySelector('.contact-icon-row a[href^="tel"]');
@@ -74,10 +74,23 @@
       var gx = rtl ? W - 8 : 8;
       pts = [[gx, 0], [gx, S[1]], [S[0], S[1]]];
     }
-    splitS = 0;
     var cord = ' C' + f1(c1[0]) + ',' + f1(c1[1]) + ' ' + f1(c2[0]) + ',' + f1(c2[1]) + ' ' + f1(m[0]) + ',' + f1(m[1]) +
                ' C' + f1(c3[0]) + ',' + f1(c3[1]) + ' ' + f1(c4[0]) + ',' + f1(c4[1]) + ' ' + f1(E[0]) + ',' + f1(E[1]);
     var d = roundedPath(pts, R) + cord;
+    /* desktop: the cord does not stop at the receiver - it leaves the photo on its far side, runs down past the text and plugs into the nearest key */
+    splitS = 0;
+    if (!narrow) {
+      var keys = buttons.filter(function (b) { return b.offsetWidth; }), kb = null, kx = -1, bi;
+      for (bi = 0; bi < keys.length; bi++) { var ko = rel(off(keys[bi])), kc = (ko.l + ko.r) / 2; if (kc > kx) { kx = kc; kb = ko; } }
+      if (kb) {
+        var tr = cx, ti, tEls = hero.querySelectorAll('h1, .contact-looking, .contact-voice');
+        for (ti = 0; ti < tEls.length; ti++) tr = Math.max(tr, textBox(tEls[ti]).r);
+        var xr = Math.max(io.r + 44, tr + 30), yk = kb.t - 26, kcx = (kb.l + kb.r) / 2;
+        var tmp = doc.createElementNS(NS, 'path'); tmp.setAttribute('d', d); svg.appendChild(tmp); splitS = tmp.getTotalLength(); svg.removeChild(tmp);
+        var tail = roundedPath([E, [xr, E[1]], [xr, yk], [kcx, yk], [kcx, kb.t + 4]], R);
+        d += tail.replace(/^M[^L]*/, '');
+      }
+    }
     svg.innerHTML = '<path d="' + d + '"/><path class="rg rg3" d="' + d + '"/><path class="rg rg2" d="' + d + '"/><path class="rg rg1" d="' + d + '"/>' + extra;
     base = svg.querySelector('path');
     glow = [svg.querySelector('.rg3'), svg.querySelector('.rg2'), svg.querySelector('.rg1')];
@@ -98,6 +111,7 @@
     var p = base.getPointAtLength(s);
     dot.style.transform = 'translate3d(' + f1(p.x) + 'px,' + f1(p.y) + 'px,0)';
     dot.style.opacity = (s >= L - 0.5 && (played || !moving)) ? 0 : (s > 0.5 || played ? 1 : 0);
+    if (moving && splitS > 0 && !rung && s >= splitS - 1) { rung = true; svg.classList.add('is-connect', 'cl-after'); setTimeout(function () { svg.classList.remove('is-connect'); }, 1500); ringNow(); }
     var reachedSplit = s >= splitS - 1 && s > 1;
     if (rbr) rbr.classList.toggle('on', reachedSplit);
     if (badge) { badge.classList.toggle('on', reachedSplit); badge.classList.toggle('seen', reachedSplit); }
@@ -124,8 +138,7 @@
   function land() {
     dot.classList.remove('is-land'); void dot.offsetWidth; dot.classList.add('is-land');
     /* the cord reaches the receiver: the line "connects", the phone in the photo rings, (the phone key below stays still - one ringing phone is enough) */
-    svg.classList.add('is-connect', 'cl-after'); setTimeout(function () { svg.classList.remove('is-connect'); }, 1500);
-    ringNow();
+    if (!splitS) { svg.classList.add('is-connect', 'cl-after'); setTimeout(function () { svg.classList.remove('is-connect'); }, 1500); ringNow(); } else svg.classList.add('cl-after');
   }
   function play() {
     if (started) return; started = true;

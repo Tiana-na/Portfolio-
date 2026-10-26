@@ -3030,3 +3030,64 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
 [dir="rtl"] .contact-photo{ border-radius: 12.5% 0 0 0 / 10% 0 0 0; }
 .contact-callme-wrap::before{ border-radius: 0 12.5% 0 0 / 0 10% 0 0; transform: translate(-14px, 14px) !important; }
 [dir="rtl"] .contact-callme-wrap::before{ border-radius: 12.5% 0 0 0 / 10% 0 0 0; transform: translate(14px, 14px) !important; }
+
+/* contact: the photo carries the page - bigger, with the lavender sheet pushed further out behind it */
+.contact-callme-wrap{ width: 316px; max-width: 78vw; margin-bottom: 46px; }
+.contact-callme-wrap::before{ transform: translate(-24px, 22px) !important; box-shadow: 0 1px 0 rgba(255,255,255,.7) inset, 0 26px 34px -14px rgba(37,31,28,.34); }
+[dir="rtl"] .contact-callme-wrap::before{ transform: translate(24px, 22px) !important; }
+.contact-photo{ box-shadow: 0 22px 34px -18px rgba(37,31,28,.4); }
+@media (max-width: 760px){
+  .contact-callme-wrap{ width: 270px; max-width: 74vw; margin-bottom: 46px; }
+  .contact-callme-wrap::before{ transform: translate(-18px, 18px) !important; }
+  [dir="rtl"] .contact-callme-wrap::before{ transform: translate(18px, 18px) !important; }
+}
+
+/* contact: layers - a sketch sheet (wireframe marks, dashed edge) peeks out behind the photo on the far side, the lavender sheet on the near side; they drift a little against the photo as the pointer moves */
+.contact-sketch{
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  border: 1.5px dashed rgba(122,106,158,.6); border-radius: 0 12.5% 0 0 / 0 10% 0 0; background: rgba(250,246,236,.7);
+  transform: translate(calc(40px + var(--sx, 0px)), calc(-38px + var(--sy, 0px))); transition: transform .4s cubic-bezier(.2,.8,.25,1);
+}
+[dir="rtl"] .contact-sketch{ border-radius: 12.5% 0 0 0 / 10% 0 0 0; }
+.contact-sketch svg{ position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; }
+.contact-sketch .sk-x{ fill: none; stroke: #7A6A9E; stroke-width: 1.2px; vector-effect: non-scaling-stroke; opacity: .6; }
+.contact-sketch .sk-bar{ fill: rgba(122,106,158,.38); }
+.contact-callme-wrap::before{ transform: translate(calc(-24px + var(--lx, 0px)), calc(22px + var(--ly, 0px))) !important; transition: transform .4s cubic-bezier(.2,.8,.25,1); }
+[dir="rtl"] .contact-callme-wrap::before{ transform: translate(calc(24px + var(--lx, 0px)), calc(22px + var(--ly, 0px))) !important; }
+@media (max-width: 760px){
+  .contact-sketch{ transform: translate(calc(26px + var(--sx, 0px)), calc(-24px + var(--sy, 0px))); }
+  .contact-callme-wrap::before{ transform: translate(calc(-18px + var(--lx, 0px)), calc(18px + var(--ly, 0px))) !important; }
+  [dir="rtl"] .contact-callme-wrap::before{ transform: translate(calc(18px + var(--lx, 0px)), calc(18px + var(--ly, 0px))) !important; }
+}
+[dir="rtl"] .contact-sketch{ transform: translate(calc(-40px + var(--sx, 0px)), calc(-38px + var(--sy, 0px))); }
+[dir="rtl"] .contact-sketch svg{ transform: scaleX(-1); }
+@media (max-width: 760px){ [dir="rtl"] .contact-sketch{ transform: translate(calc(-26px + var(--sx, 0px)), calc(-24px + var(--sy, 0px))); } }
+
+/* contact: real depth - the layers sit at different distances (perspective), the light comes from the top right so every sheet throws a shadow down-left onto the one behind it, and a thin frame floats in front of the photo */
+.contact-callme-wrap{ perspective: 900px; perspective-origin: calc(50% + var(--ox, 0px)) calc(50% + var(--oy, 0px)); transition: perspective-origin .45s cubic-bezier(.2,.8,.25,1); }
+.contact-sketch{
+  background: #fbf8ef; border-color: rgba(122,106,158,.7);
+  box-shadow: -10px 14px 22px -12px rgba(37,31,28,.26);
+  transform: translate3d(88px, -78px, -150px) !important;
+}
+.contact-sketch .sk-x{ opacity: .85; } .contact-sketch .sk-bar{ fill: rgba(122,106,158,.5); }
+.contact-callme-wrap::before{
+  transform: translate3d(-46px, 42px, -70px) !important;
+  box-shadow: 0 1px 0 rgba(255,255,255,.7) inset, -12px 18px 26px -10px rgba(37,31,28,.34) !important;
+}
+.contact-photo{ box-shadow: -14px 20px 30px -12px rgba(37,31,28,.5); }
+.contact-callme-wrap::after{
+  content: ""; position: absolute; inset: -11px; z-index: 5; pointer-events: none;
+  border: 1.5px dashed rgba(122,106,158,.75); border-radius: 0 12.5% 0 0 / 0 10% 0 0;
+  transform: translate3d(0, 0, 70px);
+}
+[dir="rtl"] .contact-sketch{ transform: translate3d(-88px, -78px, -150px) !important; }
+[dir="rtl"] .contact-callme-wrap::before{ transform: translate3d(46px, 42px, -70px) !important; }
+[dir="rtl"] .contact-callme-wrap::after{ border-radius: 12.5% 0 0 0 / 10% 0 0 0; }
+@media (max-width: 760px){
+  .contact-sketch{ transform: translate3d(56px, -50px, -120px) !important; }
+  .contact-callme-wrap::before{ transform: translate3d(-32px, 30px, -50px) !important; }
+  [dir="rtl"] .contact-sketch{ transform: translate3d(-56px, -50px, -120px) !important; }
+  [dir="rtl"] .contact-callme-wrap::before{ transform: translate3d(32px, 30px, -50px) !important; }
+}
+@media (prefers-reduced-motion: reduce){ .contact-callme-wrap{ transition: none; } }

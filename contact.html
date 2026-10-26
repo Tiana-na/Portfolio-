@@ -63,6 +63,13 @@
   <section class="contact-hero">
     <div class="wrap">
       <div class="contact-callme-wrap reveal">
+        <div class="contact-sketch" aria-hidden="true"><svg viewBox="0 0 100 125" preserveAspectRatio="none" focusable="false">
+          <rect class="sk-x" x="83" y="14" width="10" height="8"/><path class="sk-x" d="M83 14L93 22M93 14L83 22"/>
+          <rect class="sk-bar" x="84" y="30" width="9" height="1.6" rx=".8"/><rect class="sk-bar" x="84" y="35" width="6" height="1.6" rx=".8"/>
+          <circle class="sk-x" cx="88.5" cy="52" r="3.6"/>
+          <rect class="sk-bar" x="12" y="2.6" width="22" height="1.8" rx=".9"/><rect class="sk-bar" x="38" y="2.6" width="12" height="1.8" rx=".9"/>
+          <rect class="sk-x" x="84" y="72" width="9" height="9" rx="1.5"/>
+        </svg></div>
         <img class="contact-callme-img contact-photo" src="assets/contact-phone.webp" width="800" height="1000" alt="Tiana holding the receiver of an orange payphone, smiling" data-i18n-alt="contact-photo-alt">
       </div>
 
@@ -119,6 +126,18 @@
   b.addEventListener('click',function(){
     if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(addr).then(done,fallback); } else fallback();
   });
+})();
+</script>
+<script>
+(function(){
+  var h=document.querySelector('.contact-hero'), w=document.querySelector('.contact-callme-wrap');
+  if(!h||!w||!window.matchMedia('(hover:hover)').matches||window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  h.addEventListener('pointermove',function(e){
+    var r=w.getBoundingClientRect(), x=(e.clientX-(r.left+r.width/2))/window.innerWidth, y=(e.clientY-(r.top+r.height/2))/window.innerHeight;
+    x=Math.max(-.5,Math.min(.5,x)); y=Math.max(-.5,Math.min(.5,y));
+    w.style.setProperty('--ox',(x*-200).toFixed(1)+'px'); w.style.setProperty('--oy',(y*-150).toFixed(1)+'px');
+  });
+  h.addEventListener('pointerleave',function(){ ['--ox','--oy'].forEach(function(k){ w.style.removeProperty(k); }); });
 })();
 </script>
 </body>
