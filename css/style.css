@@ -2272,12 +2272,12 @@ html.lh-peek .lh-T .lh-head em{ transform: none !important; }
 .work-num{
   position: absolute; z-index: 2; inset-inline-start: 22px; top: 18px; width: 36px; height: 36px; border-radius: 50%;
   display: grid; place-items: center; background: var(--pi); color: #fff;
-  font-family: 'Bodoni Moda','Rubik',serif; font-size: 1.05rem; font-weight: 500; letter-spacing: .02em;
+  font-family: 'Rubik', sans-serif; font-size: 1.05rem; font-weight: 500; letter-spacing: .02em;
 }
 .work-content{ padding: 28px 4px 0 !important; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.1fr); column-gap: 56px; }
 .work-content > .work-tags{ grid-column: 1 / -1; margin-bottom: 14px; gap: 0; position: relative; }
 .work-content > .work-tags::before{ content: ""; display: block; flex: 0 0 100%; width: 34px; height: 3px; border-radius: 2px; background: var(--pc); margin-bottom: 14px; }
-.work-content h3{ grid-column: 1; font-family: 'Bodoni Moda','Rubik',serif; font-weight: 500; font-size: 1.9rem; line-height: 1.2; letter-spacing: -.01em; margin: 0 0 16px; color: #251f1c; }
+.work-content h3{ grid-column: 1; font-family: 'Rubik', sans-serif; font-weight: 500; font-size: 1.9rem; line-height: 1.2; letter-spacing: -.01em; margin: 0 0 16px; color: #251f1c; }
 .work-content > .work-desc{ grid-column: 2; grid-row: 2 / span 4; margin: 0; max-width: 60ch; }
 .work-content > .work-tools, .work-content > .work-meta--results, .work-content > .work-btn{ grid-column: 1; align-self: start; }
 .work-content > .work-btn{ justify-self: start; margin-top: 6px; }
@@ -2622,16 +2622,15 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
 /* ======== About hero v2: captions on a dashed timeline + skip ======== */
 .lh-skip{
   position: absolute; top: -6px; inset-inline-end: 4px; z-index: 6;
-  min-height: 36px; padding: 0 16px; border-radius: 999px; cursor: pointer;
-  font-family: inherit; font-size: .78rem; font-weight: 600; line-height: 1; letter-spacing: .06em; text-transform: uppercase;
-  color: #5b4d7e; background: rgba(255,253,248,.92); border: 1.5px solid rgba(122,106,158,.55);
-  box-shadow: 0 3px 0 rgba(122,106,158,.28);
-  opacity: 0; pointer-events: none; transform: translateY(-4px); transition: opacity .35s ease, transform .35s ease;
+  /* a quiet text link, not a button: skipping is not the main action */
+  padding: 10px 8px; border: 0; background: none; box-shadow: none; cursor: pointer;
+  font-family: inherit; font-size: .85rem; font-weight: 500; line-height: 1.2; letter-spacing: .01em; color: var(--text-muted);
+  opacity: 0; pointer-events: none; transform: translateY(-4px); transition: opacity .35s ease, transform .35s ease, color .15s ease;
 }
 .lh-skip::after{ content: " ›"; }
 [dir="rtl"] .lh-skip::after{ content: " ‹"; }
 .lh-skip.is-show{ opacity: 1; pointer-events: auto; transform: none; }
-.lh-skip:hover{ background: #e9e4f3; }
+.lh-skip.is-show:hover{ color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
 .lh-skip:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 3px; }
 
 /* the quote and cards are readable straight away (the dot only lights them up) */
@@ -2841,26 +2840,17 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
   .is-ringing .contact-callme-img, .is-ringing .cl-disp, .is-ringing .cl-recv i{ animation: none; }
 }
 
-/* ======== Contact: email as visible text, one-tap copy ======== */
-.contact-mail-copy{
-  display: inline-flex; align-items: center; gap: 10px;
-  margin-top: 26px; padding: 11px 16px 11px 18px; border-radius: 999px;
-  border: 1.5px solid rgba(122,106,158,.38); background: rgba(122,106,158,.07);
-  color: var(--text); font: inherit; font-size: 1.02rem; letter-spacing: .01em;
-  cursor: pointer; -webkit-tap-highlight-color: transparent;
-  transition: background .18s ease, border-color .18s ease, transform .12s ease;
-}
-.contact-mail-copy:hover{ background: rgba(122,106,158,.14); border-color: #7A6A9E; }
-.contact-mail-copy:active{ transform: scale(.97); }
-.contact-mail-copy:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 4px; }
-.contact-mail-copy .mc-ico{ width: 18px; height: 18px; fill: #7A6A9E; flex: none; }
+/* ======== Contact: the email is plain text with a small copy icon (the keys above are the actions); one tap copies it ======== */
+.contact-mail-copy{ display: inline-flex; align-items: center; gap: 8px; margin-top: 26px; padding: 8px 6px; border: 0; background: none; color: var(--text); font: inherit; font-size: 1.02rem; letter-spacing: .01em; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.contact-mail-copy .contact-mail-copy-addr{ text-decoration: underline; text-decoration-color: rgba(122,106,158,.45); text-underline-offset: 4px; transition: text-decoration-color .15s ease; }
+.contact-mail-copy:hover .contact-mail-copy-addr{ text-decoration-color: #7A6A9E; }
+.contact-mail-copy:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 4px; border-radius: 6px; }
+.contact-mail-copy .mc-ico{ width: 17px; height: 17px; fill: #7A6A9E; flex: none; }
 .contact-mail-copy .mc-ok{ display: none; }
-.contact-mail-copy.is-copied{ background: #7A6A9E; border-color: #7A6A9E; color: #fff; }
 .contact-mail-copy.is-copied .mc-copy{ display: none; }
-.contact-mail-copy.is-copied .mc-ok{ display: block; fill: #fff; animation: mcPop .28s ease-out; }
+.contact-mail-copy.is-copied .mc-ok{ display: block; animation: mcPop .28s ease-out; }
 @keyframes mcPop{ from{ transform: scale(.4); opacity: 0; } to{ transform: scale(1); opacity: 1; } }
-.contact-hero .contact-mail-copy{ margin-top: 26px; }
-@media (max-width: 760px){ .contact-mail-copy{ margin-top: 22px; font-size: .98rem; } }
+@media (max-width: 760px){ .contact-mail-copy{ margin-top: 20px; font-size: .96rem; } }
 
 /* DOgether: note that the product was designed in Hebrew (RTL) */
 .case-page-header .case-rtl-note{ font-size: 12px; color: #020202; margin-top: 12px; }
@@ -2917,3 +2907,139 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
 .btn.keycap.case-back{ margin-bottom: 0; }
 .btn.keycap.case-figma-btn{ margin-top: 0; margin-bottom: 0; }
 .case-page-header .case-rtl-note{ flex-basis: 100%; margin: 0; }
+
+/* ===== About hero: the portrait is one more piece of the logo's language - a single rounded corner (top right), the same shape and size as the lens window ===== */
+.lh-layer, .lh-print, .lh-shade, .lh-rv-clip{ border-radius: 0 47.6px 0 0; }
+/* the match: window corner on portrait corner -> the logo's dot lands, a note appears (seen only through the window) */
+.lh-match-dot{ position: absolute; left: 346px; top: 16px; width: 17px; height: 17px; background: #7A6A9E; border-radius: 0 34% 0 0; opacity: 0; transform: translateY(-18px) scale(1.5); transition: opacity .12s ease, transform .38s cubic-bezier(.3,1.7,.5,1); }
+.lh-rv.is-match .lh-match-dot{ opacity: 1; transform: none; }
+.lh-note.lh-match-note{ left: 252px; top: 48px; opacity: 0; transform: translateY(5px); transition: opacity .2s ease .14s, transform .2s ease .14s; }
+.lh-rv.is-match .lh-note.lh-match-note{ opacity: 1; transform: none; }
+.lh-rv.is-match .lh-rv-ring{ border-color: #7A6A9E; animation: lhMatchPulse .55s ease-out; }
+@keyframes lhMatchPulse{ 0%{ box-shadow: 0 0 0 0 rgba(122,106,158,.55), 0 4px 18px rgba(37,31,28,.22); } 100%{ box-shadow: 0 0 0 16px rgba(122,106,158,0), 0 4px 18px rgba(37,31,28,.22); } }
+@media (prefers-reduced-motion: reduce){ .lh-rv.is-match .lh-rv-ring{ animation: none; } }
+/* while it matches, the other notes step back so the one note reads cleanly */
+.lh-note{ transition: opacity .2s ease; }
+.lh-rv.is-match .lh-note:not(.lh-match-note){ opacity: 0; }
+.lh-rv-ring{ box-sizing: border-box; }
+
+/* =====================================================================
+   About stacks: the cards fan out to the side in depth (tilt, gaps, frosted glass), each with its title written normally at the top of its edge.
+   Bigger cards, bigger type. On a phone there is no room beside the card, so the cards behind peek out above it, like folder tabs.
+   ===================================================================== */
+.stk .stk-card .stk-spine, [dir="rtl"] .stk .stk-card .stk-spine{
+  position: absolute; top: 0 !important; bottom: auto !important; left: 0 !important; right: auto !important;
+  writing-mode: horizontal-tb; transform: none; text-align: start; border-radius: 0;
+  font-size: 1.3rem; line-height: 1.12;
+}
+[dir="rtl"] .stk .stk-card .stk-spine{ left: auto !important; right: 0 !important; }
+.stk--story .stk-card{ min-height: 270px; }
+.stk--skills .stk-card{ min-height: 236px; }
+.mag-fact-text{ font-size: 1.08rem; line-height: 1.75; }
+.mag-fact-lead{ font-size: 1.05rem; line-height: 1.7; }
+.mag-fact-quote{ font-size: clamp(1.3rem, 2.4vw, 1.7rem); }
+.stk .tag-list{ gap: 9px; }
+.stk .tag{ font-size: .98rem; padding: 7px 15px; }
+@media (min-width: 761px){
+  /* the title sits in the strip of the card that peeks out at the side (2-3 lines if it must), and across the top of the front card */
+  .stk .stk-card .stk-spine{ display: block; width: calc(var(--reach) - 26px) !important; height: auto; padding: 22px 0 0 24px !important; white-space: normal; }
+  [dir="rtl"] .stk .stk-card .stk-spine{ padding: 22px 24px 0 0 !important; }
+  .stk .stk-card.is-front .stk-spine{ width: auto !important; white-space: nowrap; }
+  .stk .stk-card, .stk--story .mag-fact, .stk--skills .stk-card, .stk--story .stk-card:not(.is-front), .stk--skills .stk-card:not(.is-front){ padding: 66px 34px 30px !important; }
+}
+@media (max-width: 760px){
+  .stk{ --tab: 44px; --lz: 0px; --tilt: 0deg; --gap: 0px; padding-inline-start: 0; padding-top: calc((var(--n) - 1) * var(--tab)); perspective: none; }
+  [dir="rtl"] .stk{ perspective-origin: 50% 50%; }
+  .stk-stage{ transform: none; }
+  .stk .stk-card{
+    transform-origin: 50% 0;
+    transform: translate3d(var(--dx), calc((var(--d, 0) * var(--tab) * var(--open) + var(--lift)) * -1), 0) scale(calc(1 - var(--d, 0) * .035 * var(--open))) rotate(var(--dr));
+  }
+  .stk.is-open .stk-card:not(.is-front):hover, .stk.is-open .stk-card:not(.is-front):focus-visible{ --lx: 0px; --lz2: 0px; --lift: 6px; }
+  .stk .stk-card .stk-spine, [dir="rtl"] .stk .stk-card .stk-spine{
+    display: flex; align-items: center; justify-content: flex-start; left: 0 !important; right: 0 !important; width: auto !important; height: var(--tab);
+    padding: 0 20px !important; font-size: 1.2rem; line-height: 1; white-space: nowrap;
+  }
+  .stk .stk-card, .stk--story .mag-fact, .stk--skills .stk-card, .stk--story .stk-card:not(.is-front), .stk--skills .stk-card:not(.is-front){ padding: calc(var(--tab) + 2px) 20px 24px !important; }
+  .stk--story .stk-card{ min-height: 230px; }
+  .stk--skills .stk-card{ min-height: 0; }
+  .mag-fact-text{ font-size: 1rem; line-height: 1.65; }
+  .mag-fact-lead{ font-size: .98rem; }
+  .mag-fact-quote{ font-size: clamp(1.15rem, 5vw, 1.4rem); }
+  .stk .tag{ font-size: .88rem; padding: 6px 12px; }
+}
+/* a card behind shows only its tab: its contents wait until it comes forward (nothing peeks over the front card's edge) */
+.stk .stk-card:not(.is-front) > *:not(.stk-spine){ opacity: 0 !important; }
+/* the notes in the lens are square: the window's corner is the one rounded thing on that layer */
+.lh-note{ border-radius: 0 !important; }
+
+/* ---- stacks, desktop: glass slabs seen at an angle (depth = tilt + real gaps + frosted layers that fade away) ---- */
+@media (min-width: 761px){
+  .stk{ --tilt: 30deg; --gap: 70px; --lz: -190px; --reach: 188px; perspective: 1500px; perspective-origin: 70% 22%; }
+  [dir="rtl"] .stk{ perspective-origin: 30% 22%; }
+  .stk .stk-card{
+    border-radius: 0 34px 0 0;
+    border: 1px solid rgba(255,255,255,.85);
+    background-image: linear-gradient(165deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 38%, rgba(122,106,158,.10) 100%);
+    box-shadow:
+      inset 0 0 0 1px rgba(122,106,158,.22),
+      inset 0 1px 0 rgba(255,255,255,.9),
+      -3px 0 0 -1px rgba(122,106,158,.18),
+      0 28px 40px -26px rgba(37,31,28,.38);
+  }
+  [dir="rtl"] .stk .stk-card{ border-radius: 34px 0 0 0; box-shadow: inset 0 0 0 1px rgba(122,106,158,.22), inset 0 1px 0 rgba(255,255,255,.9), 3px 0 0 -1px rgba(122,106,158,.18), 0 28px 40px -26px rgba(37,31,28,.38); }
+  .stk .stk-card:not(.is-front){
+    background-color: color-mix(in srgb, var(--paper) calc(70% - var(--d, 0) * 10%), transparent);
+    -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px);
+    opacity: calc(1 - var(--d, 0) * .12);
+  }
+  .stk .stk-card:not(.is-front) .stk-spine{ opacity: calc(1 - var(--d, 0) * .1); }
+  .stk .stk-card .stk-spine{ font-size: 1.22rem; }
+  .stk .stk-card.is-front{ box-shadow: inset 0 0 0 1px rgba(122,106,158,.22), inset 0 1px 0 rgba(255,255,255,.9), 0 36px 54px -30px rgba(37,31,28,.45), 0 4px 10px -4px rgba(37,31,28,.14); }
+}
+@media (min-width: 761px){
+  .stk .stk-card:not(.is-front){
+    background-image: linear-gradient(160deg, rgba(255,255,255,.7) 0%, rgba(255,255,255,0) 30%, rgba(183,166,226,.32) 100%);
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,.75),
+      inset 0 0 0 2px rgba(122,106,158,.18),
+      -4px 0 0 -1px rgba(183,166,226,.55),
+      0 30px 40px -26px rgba(37,31,28,.34);
+  }
+  [dir="rtl"] .stk .stk-card:not(.is-front){ box-shadow: inset 0 0 0 1px rgba(255,255,255,.75), inset 0 0 0 2px rgba(122,106,158,.18), 4px 0 0 -1px rgba(183,166,226,.55), 0 30px 40px -26px rgba(37,31,28,.34); }
+}
+@media (min-width: 761px){
+  .stk{ --gap: 92px; }
+  .stk .stk-card:not(.is-front){
+    background-image: linear-gradient(158deg, rgba(255,255,255,.8) 0%, rgba(255,255,255,0) 26%, rgba(183,166,226,.55) 100%);
+    background-color: color-mix(in srgb, var(--paper) calc(58% - var(--d, 0) * 8%), transparent);
+  }
+}
+@media (max-width: 760px){
+  .stk .stk-card{
+    background-image: linear-gradient(170deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 40%, rgba(183,166,226,.22) 100%);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.8), inset 0 0 0 2px rgba(122,106,158,.16), 0 -6px 14px -8px rgba(37,31,28,.22), 0 24px 34px -24px rgba(37,31,28,.34);
+  }
+  .stk .stk-card:not(.is-front){ background-color: color-mix(in srgb, var(--paper) 74%, transparent); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+}
+
+/* contact: all three actions are the same keycap; the email one copies, and a small square note says so (no text on the page) */
+.contact-mail-btn{ cursor: pointer; font: inherit; padding: 0; }
+.contact-tip{
+  position: absolute; left: 50%; top: calc(100% + 18px); transform: translate(-50%, -6px); z-index: 5;
+  display: flex; flex-direction: column; align-items: center; gap: 3px; width: max-content; max-width: 92vw;
+  padding: 7px 12px; background: #fffdf8; color: #4b3f6b; border: 1px solid rgba(122,106,158,.45); border-radius: 0;
+  box-shadow: 0 10px 18px -12px rgba(37,31,28,.4);
+  font-family: 'Rubik', sans-serif; font-size: .86rem; line-height: 1.25; letter-spacing: .01em; font-weight: 400;
+  opacity: 0; pointer-events: none; transition: opacity .18s ease, transform .18s ease;
+}
+.contact-tip::after{ content: ""; position: absolute; left: 50%; bottom: 100%; width: 8px; height: 8px; background: #fffdf8; border: 1px solid rgba(122,106,158,.45); border-bottom: 0; border-right: 0; transform: translate(-50%, 4px) rotate(45deg); }
+.contact-tip-ok{ display: none; align-items: center; gap: 5px; font-weight: 500; color: #6a58a0; }
+.contact-tip-ok svg{ width: 15px; height: 15px; fill: #7A6A9E; }
+.contact-tip-addr{ font-size: .8rem; color: #7b6f8f; }
+.contact-mail-btn.is-copied .contact-tip-ok{ display: inline-flex; }
+.contact-mail-btn.is-copied .contact-tip-addr{ font-size: .76rem; }
+.contact-mail-btn.is-copied .contact-tip{ opacity: 1; transform: translate(-50%, 0); }
+@media (hover: hover){
+  .contact-mail-btn:hover .contact-tip, .contact-mail-btn:focus-visible .contact-tip{ opacity: 1; transform: translate(-50%, 0); }
+}

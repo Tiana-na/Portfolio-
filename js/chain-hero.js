@@ -724,13 +724,17 @@
     NOTES.forEach(function (n) {
       var lab = document.createElement('span'); lab.className = 'lh-note';
       lab.style.left = n.l[0] + 'px'; lab.style.top = n.l[1] + 'px'; lab.innerHTML = n.t;
-      var pin = document.createElement('i'); pin.className = 'lh-note-pin';
-      pin.style.left = n.a[0] + 'px'; pin.style.top = n.a[1] + 'px';
-      notes.appendChild(pin); notes.appendChild(lab);
+      notes.appendChild(lab);   /* labels only: no purple pin dots */
     });
+    /* the match: the window's rounded corner and the portrait's rounded corner are the same shape; put one on the other and they lock,
+       the logo's dot lands in the corner and the note appears. English only, like the other notes. */
+    var mdot = document.createElement('i'); mdot.className = 'lh-match-dot';
+    var mlab = document.createElement('span'); mlab.className = 'lh-note lh-match-note'; mlab.textContent = 'It fits.';
+    notes.appendChild(mdot); notes.appendChild(mlab);
     clip.appendChild(notes);
     rv.appendChild(clip); rv.appendChild(ring); T.appendChild(rv);
-    var R = 70, cur = { x: 190, y: 237, r: 0 }, tg2 = { x: 190, y: 237, r: 0 }, loop = 0, inside = false;
+    var R = 70, cur = { x: 190, y: 237, r: 0 }, tg2 = { x: 190, y: 237, r: 0 }, loop = 0, inside = false, matched = false;
+    var MX = PW - R, MY = R;   /* window centre at which its top-right corner sits exactly on the portrait's top-right corner */
     function ready() { return stage.classList.contains('lh-done') && !dragging && Math.abs(ud.x) < 1.5 && Math.abs(ud.y) < 1.5; }
     function paint() {
       rv.style.setProperty('--vx', cur.x.toFixed(1) + 'px'); rv.style.setProperty('--vy', cur.y.toFixed(1) + 'px'); rv.style.setProperty('--vr', Math.max(0, cur.r).toFixed(1) + 'px');
@@ -744,13 +748,16 @@
     }
     function go() { if (!loop) loop = requestAnimationFrame(tick); }
     function setPeek(on) { document.documentElement.classList.toggle('lh-peek', on); }
-    function off() { if (inside) { inside = false; setPeek(false); } tg2.r = 0; go(); }
+    function setMatch(on) { if (on === matched) return; matched = on; rv.classList.toggle('is-match', on); }
+    function off() { if (inside) { inside = false; setPeek(false); } setMatch(false); tg2.r = 0; go(); }
     stage.addEventListener('pointermove', function (e) {
       if (e.pointerType !== 'mouse' || !ready()) { if (inside) off(); return; }
       var b = rv.getBoundingClientRect();   /* the plane the circle lives on, so the circle stays under the pointer */
       if (!b.width) return;
       var x = (e.clientX - b.left) / b.width * PW, y = (e.clientY - b.top) / b.height * PH;
       if (x < 0 || y < 0 || x > PW || y > PH) { off(); return; }
+      var dm = Math.sqrt((x - MX) * (x - MX) + (y - MY) * (y - MY));
+      if (dm < (matched ? 40 : 20)) { x = MX; y = MY; setMatch(true); } else setMatch(false);   /* lock in close to the corner, let go only when clearly away */
       if (!inside) { inside = true; cur.x = tg2.x = x; cur.y = tg2.y = y; setPeek(true); }
       tg2.x = x; tg2.y = y; tg2.r = R; go();
     });

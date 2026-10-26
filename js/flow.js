@@ -144,7 +144,9 @@
     if (!wasOpen) s.classList.remove('is-open');
     void s.offsetWidth; s.classList.remove('stk-measuring');
     var st = box(s.querySelector('.stk-stage'));
-    return { top: st.top, bottom: st.bottom, l: fl, r: fr, edge: e + sx, quads: quads };
+    /* the cards behind peek out ABOVE the front card (folder tabs): the stack starts at the highest tab */
+    var topY = st.top; quads.forEach(function (q) { topY = Math.min(topY, q.tl.y, q.tr.y); });
+    return { top: narrowMode ? topY : st.top, bottom: st.bottom, l: fl, r: fr, edge: e + sx, quads: quads };
   }
 
   function measure() {
@@ -168,7 +170,7 @@
 
     function stackSt(el) {
       var i = stackInfo(el), ex = clamp(xs, i.l + 36, i.r - 36);
-      return { kind: 'stack', el: el, top: i.top, bottom: i.bottom, ex: ex, y: i.top + TOPOFF, bl: Math.min(i.l, i.edge), br: Math.max(i.r, i.edge), quads: i.quads };
+      return { kind: 'stack', el: el, top: i.top, bottom: i.bottom, ex: ex, y: i.top + TOPOFF, bl: Math.min(i.l, i.edge), br: Math.max(i.r, i.edge), quads: narrowMode ? null : i.quads };   /* on a phone the cards are tabs, not a fan: the line goes round the stack as one block */
     }
     if (sStory) list.push(stackSt(sStory));
     if (strip && qb) {
