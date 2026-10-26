@@ -480,7 +480,7 @@
     var headEm = head.querySelector('em') || head;
     var cc = Math.round(37 + (253 - 37) * pee), c2 = Math.round(31 + (252 - 31) * pee), c3 = Math.round(28 + (248 - 28) * pee);
     var col = 'rgb(' + cc + ',' + c2 + ',' + c3 + ')';
-    head.style.color = col; role.style.color = col;
+    head.style.color = col; role.style.color = '#251f1c';   /* the role line stays dark: the top of the photo is light grey, cream text on it does not read */
     headEm.style.color = 'rgb(' + Math.round(122 + (231 - 122) * pee) + ',' + Math.round(106 + (224 - 106) * pee) + ',' + Math.round(158 + (243 - 158) * pee) + ')';
     head.style.opacity = hs; head.style.transform = 'translateY(' + (12 * (1 - hs)) + 'px)';
     role.style.opacity = ro;
