@@ -366,43 +366,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  /* ---------- cursor trail (decoration zones only, never over text) ---------- */
+  /* ---------- no cursor trail: the one zone that used to draw faint dots behind the pointer sits right on text (the quiz intro) ---------- */
   var prefersNoMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var hasHover = window.matchMedia && window.matchMedia('(hover: hover)').matches;
-
-  if (!prefersNoMotion && hasHover) {
-    var trailColors = ['#F0D98C', '#EBBE9C', '#D9D2EA'];
-    var pastelZones = document.querySelectorAll('.pastel-zone');
-
-    pastelZones.forEach(function (zone) {
-      var lastSpawn = 0;
-      var minGap = 45; /* ms between dots, keeps DOM light */
-
-      zone.addEventListener('mousemove', function (e) {
-        var now = Date.now();
-        if (now - lastSpawn < minGap) return;
-        lastSpawn = now;
-
-        var rect = zone.getBoundingClientRect();
-        var dot = document.createElement('span');
-        dot.className = 'trail-dot';
-        dot.style.left = (e.clientX - rect.left) + 'px';
-        dot.style.top = (e.clientY - rect.top) + 'px';
-        dot.style.background = trailColors[Math.floor(Math.random() * trailColors.length)];
-        zone.appendChild(dot);
-
-        requestAnimationFrame(function () {
-          requestAnimationFrame(function () {
-            dot.classList.add('fade');
-          });
-        });
-
-        setTimeout(function () {
-          if (dot.parentNode) dot.parentNode.removeChild(dot);
-        }, 650);
-      });
-    });
-  }
 
   /* No custom cursor: the native pointer everywhere. The pointer changes shape in one place only -
      over the assembled portrait on About, where it becomes the dot-shaped window onto the sketch (chain-hero.js). */

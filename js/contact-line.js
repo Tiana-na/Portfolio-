@@ -1,7 +1,7 @@
 /* The line arrives on the Contact page and becomes the telephone cord: it comes down from the top, runs in to the payphone in the photo,
    follows the photo's own cord (drawn in lavender over it) to the receiver in Tiana's hand - and the phone rings: the photo gives a little
-   shake, sound rings spread from the receiver, the payphone's display lights and the
-   phone key below rings too. Clicking the photo rings it again.
+   shake, sound rings spread from the receiver and the payphone's display lights. The phone key below stays still:
+   one ringing phone is enough. Clicking the photo rings it again.
    Decorative only: aria-hidden, no pointer events on the line, and no motion when the visitor prefers reduced motion. */
 (function () {
   'use strict';
@@ -123,10 +123,9 @@
   }
   function land() {
     dot.classList.remove('is-land'); void dot.offsetWidth; dot.classList.add('is-land');
-    /* the cord reaches the receiver: the line "connects", the phone in the photo rings, then the phone key below rings too */
+    /* the cord reaches the receiver: the line "connects", the phone in the photo rings, (the phone key below stays still - one ringing phone is enough) */
     svg.classList.add('is-connect', 'cl-after'); setTimeout(function () { svg.classList.remove('is-connect'); }, 1500);
     ringNow();
-    if (phone) { setTimeout(function () { phone.classList.add('is-ring'); setTimeout(function () { phone.classList.remove('is-ring'); }, 2000); }, 1500); }
   }
   function play() {
     if (started) return; started = true;
