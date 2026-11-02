@@ -3195,3 +3195,44 @@ html{ -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   font-size: .9rem; font-weight: 500; color: var(--text-muted);
 }
 .mobile-menu .lang-toggle--mobile:hover, .mobile-menu .lang-toggle--mobile:active{ background: none; box-shadow: none; transform: none; color: var(--accent); }
+
+/* the opening paragraph: the role line stands on its own, then the story */
+.hero .subline{ margin-bottom: 32px; }
+.hero-lede .lede-lead{ display: block; font-size: 1.7rem; font-weight: 700; line-height: 1.2; color: var(--text); margin-bottom: 12px; }
+.hero-lede-block .hero-detail-mark{ margin-top: 0; }
+@media (max-width: 600px){ .hero-lede .lede-lead{ font-size: 1.4rem; } }
+
+/* with the small role line gone from above the title, the hero starts closer to the menu */
+.hero{ padding-top: 44px; }
+@media (max-width: 760px){ .hero{ padding-top: 24px; } }
+
+/* ===== Menu hierarchy: one key only, "Let's Talk". Resume, About, Projects and the language switch are plain text. ===== */
+@media (min-width:761px){
+  .nav-links{ align-items:center; gap:34px; }
+  /* one key only: Let's Talk. Everything else is plain text. */
+  .nav-links li:nth-child(3) a{
+    position:relative; display:inline-flex; align-items:center; padding:6px 16px 7px; border-radius:12px;
+    background:linear-gradient(180deg,#8678AA,#6D5F8E); color:#fffdf8 !important; font-size:.88rem; font-weight:600;
+    box-shadow:0 1px 0 rgba(255,255,255,.35) inset,0 -1px 3px rgba(30,20,60,.25) inset,0 3px 0 #5A4D7E,0 5px 0 #483D66,0 9px 12px -6px rgba(37,31,28,.35);
+    transform:translateY(-2px);
+  }
+  .nav-links li:nth-child(3) a::after{ display:none; }
+  .nav-links .nav-cv-btn{
+    background:none !important; box-shadow:none !important; transform:none !important; border:0 !important;
+    padding:4px 0 !important; color:var(--text-muted) !important; font-weight:400; font-size:.95rem; border-radius:0;
+  }
+  .nav-links .nav-cv-btn::after{ display:block !important; }
+  .nav-links .nav-cv-btn:hover{ color:var(--accent) !important; transform:none !important; }
+  .nav-links .lang-toggle{
+    background:none !important; box-shadow:none !important; transform:none !important; border:0 !important; border-radius:0;
+    min-width:0; padding:4px 0 !important; font-size:.88rem; font-weight:500; color:var(--text-muted); line-height:1.4; margin-inline-start:4px;
+  }
+  .nav-links .lang-toggle:hover{ color:var(--accent); transform:none !important; }
+}
+
+/* phone menu: the same single key, at the end of the list */
+.mobile-menu a[href="contact.html"]{
+  align-self: flex-start; margin: 14px 0 6px; padding: 10px 22px 11px; border: 0; border-radius: 12px;
+  background: linear-gradient(180deg, #8678AA, #6D5F8E); color: #fffdf8 !important; font-weight: 600;
+  box-shadow: 0 1px 0 rgba(255,255,255,.35) inset, 0 -1px 3px rgba(30,20,60,.25) inset, 0 3px 0 #5A4D7E, 0 5px 0 #483D66, 0 9px 12px -6px rgba(37,31,28,.35);
+}
