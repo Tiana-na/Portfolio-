@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/ig",
+      "destination": "/?utm_source=instagram&utm_medium=social",
+      "permanent": false
+    },
+    {
+      "source": "/li",
+      "destination": "/?utm_source=linkedin&utm_medium=social",
+      "permanent": false
+    }
+  ]
+}

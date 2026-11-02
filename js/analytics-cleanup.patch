@@ -1,0 +1,346 @@
+From 54cf1194a76cd1727b64c4ad447fb80d1bf62cb3 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Mon, 2 Nov 2026 22:29:57 +0000
+Subject: [PATCH 1/2] Analytics: production-only GA4, internal-traffic flag,
+ click and quiz events
+
+- Move the GA4 snippet from every page into js/analytics.js.
+- Run GA4 only on tianaf-portfolio.vercel.app (no preview/local/old hosts).
+- Add ?internal=1 / ?internal=0 to mark own visits as traffic_type=internal.
+- Send whatsapp_click, email_click, phone_click, linkedin_click (with
+  button_location) and quiz_start / quiz_complete / quiz_skip events.
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_0192CyRprtY8qGTFceYePUVJ
+---
+ about.html         | 11 ++-----
+ contact.html       | 11 ++-----
+ index.html         | 11 ++-----
+ js/analytics.js    | 74 ++++++++++++++++++++++++++++++++++++++++++++++
+ js/main.js         |  6 ++--
+ work-b2b.html      | 11 ++-----
+ work-dogether.html | 11 ++-----
+ work-mixmatch.html | 11 ++-----
+ 8 files changed, 90 insertions(+), 56 deletions(-)
+ create mode 100644 js/analytics.js
+
+diff --git a/about.html b/about.html
+index c2246d2..7b49c6e 100644
+--- a/about.html
++++ b/about.html
+@@ -2,15 +2,8 @@
+ <html lang="en" dir="ltr" class="lang-en">
+ <head>
+ <script>(function(){try{if(localStorage.getItem('site-lang-v2')==='he'){var d=document.documentElement;d.lang='he';d.dir='rtl';d.classList.remove('lang-en');}}catch(e){}})();</script>
+-<!-- Google tag (gtag.js) -->
+-<script async src="https://www.googletagmanager.com/gtag/js?id=G-1SDQXED43L"></script>
+-<script>
+-  window.dataLayer = window.dataLayer || [];
+-  function gtag(){dataLayer.push(arguments);}
+-  gtag('js', new Date());
+-
+-  gtag('config', 'G-1SDQXED43L');
+-</script>
++<!-- Analytics (GA4): production only, see js/analytics.js -->
++<script src="js/analytics.js"></script>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>About | Tiana Folkenfolk</title>
+diff --git a/contact.html b/contact.html
+index 99d99b3..55b1a98 100644
+--- a/contact.html
++++ b/contact.html
+@@ -2,15 +2,8 @@
+ <html lang="en" dir="ltr" class="lang-en">
+ <head>
+ <script>(function(){try{if(localStorage.getItem('site-lang-v2')==='he'){var d=document.documentElement;d.lang='he';d.dir='rtl';d.classList.remove('lang-en');}}catch(e){}})();</script>
+-<!-- Google tag (gtag.js) -->
+-<script async src="https://www.googletagmanager.com/gtag/js?id=G-1SDQXED43L"></script>
+-<script>
+-  window.dataLayer = window.dataLayer || [];
+-  function gtag(){dataLayer.push(arguments);}
+-  gtag('js', new Date());
+-
+-  gtag('config', 'G-1SDQXED43L');
+-</script>
++<!-- Analytics (GA4): production only, see js/analytics.js -->
++<script src="js/analytics.js"></script>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Let's Talk | Tiana Folkenfolk</title>
+diff --git a/index.html b/index.html
+index be4a63c..b7139ce 100644
+--- a/index.html
++++ b/index.html
+@@ -2,15 +2,8 @@
+ <html lang="en" dir="ltr" class="lang-en">
+ <head>
+ <script>(function(){try{if(localStorage.getItem('site-lang-v2')==='he'){var d=document.documentElement;d.lang='he';d.dir='rtl';d.classList.remove('lang-en');}}catch(e){}})();</script>
+-<!-- Google tag (gtag.js) -->
+-<script async src="https://www.googletagmanager.com/gtag/js?id=G-1SDQXED43L"></script>
+-<script>
+-  window.dataLayer = window.dataLayer || [];
+-  function gtag(){dataLayer.push(arguments);}
+-  gtag('js', new Date());
+-
+-  gtag('config', 'G-1SDQXED43L');
+-</script>
++<!-- Analytics (GA4): production only, see js/analytics.js -->
++<script src="js/analytics.js"></script>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Tiana Folkenfolk | UX/UI &amp; Digital Creative Designer</title>
+diff --git a/js/analytics.js b/js/analytics.js
+new file mode 100644
+index 0000000..e82ac47
+--- /dev/null
++++ b/js/analytics.js
+@@ -0,0 +1,74 @@
++/* ------------------------------------------------------------------
++   Analytics (GA4) – one shared file for all pages.
++
++   1. Runs only on the real site, so preview deployments, local files
++      and old hosts never reach the analytics data.
++   2. Marks your own visits as internal traffic. To switch it on in a
++      browser, open the live site once with  ?internal=1  at the end of
++      the address. To switch it off, open it with  ?internal=0.
++      (A data filter for traffic_type = internal must be active in GA4.)
++   3. Sends a few clear events: WhatsApp, email, phone and LinkedIn
++      clicks (with the button location) and the quiz start / finish.
++------------------------------------------------------------------- */
++(function () {
++  var MEASUREMENT_ID = 'G-1SDQXED43L';
++  var PRODUCTION_HOSTS = ['tianaf-portfolio.vercel.app'];   /* add a custom domain here if one is connected later */
++  var INTERNAL_KEY = 'ga-internal';
++
++  /* Always define the helper so other scripts can call it safely. */
++  window.trackEvent = function () {};
++
++  /* Switch the internal flag on or off from the address bar. */
++  try {
++    var flag = location.search.match(/[?&]internal=(0|1)(&|$)/);
++    if (flag) {
++      if (flag[1] === '1') localStorage.setItem(INTERNAL_KEY, '1');
++      else localStorage.removeItem(INTERNAL_KEY);
++    }
++  } catch (e) {}
++
++  if (PRODUCTION_HOSTS.indexOf(location.hostname) === -1) return;
++
++  var isInternal = false;
++  try { isInternal = localStorage.getItem(INTERNAL_KEY) === '1'; } catch (e) {}
++
++  window.dataLayer = window.dataLayer || [];
++  function gtag() { window.dataLayer.push(arguments); }
++  window.gtag = gtag;
++
++  gtag('js', new Date());
++  gtag('config', MEASUREMENT_ID, isInternal ? { traffic_type: 'internal' } : {});
++
++  var tag = document.createElement('script');
++  tag.async = true;
++  tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(MEASUREMENT_ID);
++  document.head.appendChild(tag);
++
++  function pageName() {
++    return document.body && document.body.getAttribute('data-page') || location.pathname;
++  }
++
++  window.trackEvent = function (name, params) {
++    var p = params || {};
++    p.page = pageName();
++    p.transport_type = 'beacon';
++    gtag('event', name, p);
++  };
++
++  /* Link clicks, handled once for the whole page (also works for links
++     that are rewritten when the language is switched). */
++  document.addEventListener('click', function (e) {
++    var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
++    if (!a) return;
++    var href = (a.getAttribute('href') || '').toLowerCase();
++    var name = null;
++    if (href.indexOf('https://wa.me/') === 0) name = 'whatsapp_click';
++    else if (href.indexOf('mailto:') === 0) name = 'email_click';
++    else if (href.indexOf('tel:') === 0) name = 'phone_click';
++    else if (href.indexOf('linkedin.com/') !== -1) name = 'linkedin_click';
++    if (!name) return;
++    var place = a.closest('.whatsapp-fab') ? 'floating' :
++                a.closest('nav, header') ? 'menu' : 'content';
++    window.trackEvent(name, { button_location: place });
++  }, true);
++})();
+diff --git a/js/main.js b/js/main.js
+index eecf57b..85df0ba 100644
+--- a/js/main.js
++++ b/js/main.js
+@@ -331,7 +331,8 @@ document.addEventListener('DOMContentLoaded', function () {
+       }, QUIZ_EXIT_MS);
+     }
+ 
+-    function showQuizResults() {
++    function showQuizResults(how) {
++      if (window.trackEvent) window.trackEvent(how === 'skip' ? 'quiz_skip' : 'quiz_complete');
+       quizQuestionBlock.hidden = true;
+       quizNav.hidden = true;
+       quizProgressTrack.hidden = true;
+@@ -344,6 +345,7 @@ document.addEventListener('DOMContentLoaded', function () {
+     });
+ 
+     quizStartBtn.addEventListener('click', function () {
++      if (window.trackEvent) window.trackEvent('quiz_start');
+       quizStartBtn.hidden = true;
+       quizCard.hidden = false;
+       renderQuizQuestion();
+@@ -355,7 +357,7 @@ document.addEventListener('DOMContentLoaded', function () {
+ 
+     if (quizSkipBtn) {
+       quizSkipBtn.addEventListener('click', function () {
+-        showQuizResults();
++        showQuizResults('skip');
+       });
+     }
+ 
+diff --git a/work-b2b.html b/work-b2b.html
+index 6f982fa..2eee3e6 100644
+--- a/work-b2b.html
++++ b/work-b2b.html
+@@ -2,15 +2,8 @@
+ <html lang="en" dir="ltr" class="lang-en">
+ <head>
+ <script>(function(){try{if(localStorage.getItem('site-lang-v2')==='he'){var d=document.documentElement;d.lang='he';d.dir='rtl';d.classList.remove('lang-en');}}catch(e){}})();</script>
+-<!-- Google tag (gtag.js) -->
+-<script async src="https://www.googletagmanager.com/gtag/js?id=G-1SDQXED43L"></script>
+-<script>
+-  window.dataLayer = window.dataLayer || [];
+-  function gtag(){dataLayer.push(arguments);}
+-  gtag('js', new Date());
+-
+-  gtag('config', 'G-1SDQXED43L');
+-</script>
++<!-- Analytics (GA4): production only, see js/analytics.js -->
++<script src="js/analytics.js"></script>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>B2B SaaS Case Study | Tiana Folkenfolk</title>
+diff --git a/work-dogether.html b/work-dogether.html
+index d638a89..3461a86 100644
+--- a/work-dogether.html
++++ b/work-dogether.html
+@@ -2,15 +2,8 @@
+ <html lang="en" dir="ltr" class="lang-en">
+ <head>
+ <script>(function(){try{if(localStorage.getItem('site-lang-v2')==='he'){var d=document.documentElement;d.lang='he';d.dir='rtl';d.classList.remove('lang-en');}}catch(e){}})();</script>
+-<!-- Google tag (gtag.js) -->
+-<script async src="https://www.googletagmanager.com/gtag/js?id=G-1SDQXED43L"></script>
+-<script>
+-  window.dataLayer = window.dataLayer || [];
+-  function gtag(){dataLayer.push(arguments);}
+-  gtag('js', new Date());
+-
+-  gtag('config', 'G-1SDQXED43L');
+-</script>
++<!-- Analytics (GA4): production only, see js/analytics.js -->
++<script src="js/analytics.js"></script>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>DOgether Case Study | Tiana Folkenfolk</title>
+diff --git a/work-mixmatch.html b/work-mixmatch.html
+index 82d3039..fc60493 100644
+--- a/work-mixmatch.html
++++ b/work-mixmatch.html
+@@ -2,15 +2,8 @@
+ <html lang="en" dir="ltr" class="lang-en">
+ <head>
+ <script>(function(){try{if(localStorage.getItem('site-lang-v2')==='he'){var d=document.documentElement;d.lang='he';d.dir='rtl';d.classList.remove('lang-en');}}catch(e){}})();</script>
+-<!-- Google tag (gtag.js) -->
+-<script async src="https://www.googletagmanager.com/gtag/js?id=G-1SDQXED43L"></script>
+-<script>
+-  window.dataLayer = window.dataLayer || [];
+-  function gtag(){dataLayer.push(arguments);}
+-  gtag('js', new Date());
+-
+-  gtag('config', 'G-1SDQXED43L');
+-</script>
++<!-- Analytics (GA4): production only, see js/analytics.js -->
++<script src="js/analytics.js"></script>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Mix.Match Brand Book | Tiana Folkenfolk</title>
+-- 
+2.43.0
+
+
+From fce5aef7ff346f148dc2f32d94719c1b31125d52 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Mon, 2 Nov 2026 22:37:48 +0000
+Subject: [PATCH 2/2] Add optional Microsoft Clarity and short UTM redirects
+
+- analytics.js: load Clarity only on production, never for internal visits,
+  and only when CLARITY_ID is filled in. No consent signal is sent, so for
+  EEA/UK/CH visitors Clarity stays off.
+- vercel.json: /ig and /li redirect to the home page with UTM parameters,
+  so the Instagram bio link stays short.
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_0192CyRprtY8qGTFceYePUVJ
+---
+ js/analytics.js | 13 +++++++++++++
+ vercel.json     | 14 ++++++++++++++
+ 2 files changed, 27 insertions(+)
+ create mode 100644 vercel.json
+
+diff --git a/js/analytics.js b/js/analytics.js
+index e82ac47..6621958 100644
+--- a/js/analytics.js
++++ b/js/analytics.js
+@@ -14,6 +14,7 @@
+   var MEASUREMENT_ID = 'G-1SDQXED43L';
+   var PRODUCTION_HOSTS = ['tianaf-portfolio.vercel.app'];   /* add a custom domain here if one is connected later */
+   var INTERNAL_KEY = 'ga-internal';
++  var CLARITY_ID = '';   /* heat maps + recordings: paste the Project ID from clarity.microsoft.com between the quotes; empty = off */
+ 
+   /* Always define the helper so other scripts can call it safely. */
+   window.trackEvent = function () {};
+@@ -44,6 +45,18 @@
+   tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(MEASUREMENT_ID);
+   document.head.appendChild(tag);
+ 
++  /* Microsoft Clarity (heat maps, scroll maps, session recordings).
++     Not loaded for your own visits. For visitors in the EEA, UK and
++     Switzerland Clarity needs a consent signal; none is sent here, so
++     for them it stays off and collects nothing. */
++  if (CLARITY_ID && !isInternal) {
++    (function (c, l, a, r, i, t, y) {
++      c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
++      t = l.createElement(r); t.async = 1; t.src = 'https://www.clarity.ms/tag/' + i;
++      y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
++    })(window, document, 'clarity', 'script', CLARITY_ID);
++  }
++
+   function pageName() {
+     return document.body && document.body.getAttribute('data-page') || location.pathname;
+   }
+diff --git a/vercel.json b/vercel.json
+new file mode 100644
+index 0000000..d61d639
+--- /dev/null
++++ b/vercel.json
+@@ -0,0 +1,14 @@
++{
++  "redirects": [
++    {
++      "source": "/ig",
++      "destination": "/?utm_source=instagram&utm_medium=social",
++      "permanent": false
++    },
++    {
++      "source": "/li",
++      "destination": "/?utm_source=linkedin&utm_medium=social",
++      "permanent": false
++    }
++  ]
++}
+-- 
+2.43.0
+
