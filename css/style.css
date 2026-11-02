@@ -2875,7 +2875,7 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
 
 /* about headline: always two lines; the type scales down on narrow screens so the first line never wraps */
 .page-hero h1.lh-title, .lh-title{ font-size: min(clamp(1.55rem, 3.1vw, 2.15rem), calc((100vw - 40px) / 15.5)); }
-@media (max-width: 760px){ .page-hero h1.lh-title, .lh-title{ font-size: min(1.8rem, calc((100vw - 40px) / 15.5)); } }
+@media (max-width: 760px){ .page-hero h1.lh-title, .lh-title{ font-size: min(1.8rem, calc((100vw - 40px) / 15.5)); white-space: normal; text-wrap: balance; overflow-wrap: anywhere; } }
 
 /* Side titles: bigger, read bottom-to-top on the left edge (and top-to-bottom on the right edge in Hebrew), and a long title wraps to a second line
    inside the card's height instead of running off the bottom */
@@ -3091,3 +3091,107 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
   [dir="rtl"] .contact-callme-wrap::before{ transform: translate3d(32px, 30px, -50px) !important; }
 }
 @media (prefers-reduced-motion: reduce){ .contact-callme-wrap{ transition: none; } }
+
+/* about stacks, desktop: every title fits on two lines at most, and each card behind lets a blurred glimpse of its own content show below the title (it never competes with the front card) */
+@media (min-width: 761px){
+  .stk{ --reach: 214px; --gap: 104px; }
+  .stk .stk-card .stk-spine{ font-size: 1.08rem; line-height: 1.14; width: calc(var(--reach) - 52px) !important; max-width: none !important; text-wrap: balance; padding: 22px 0 0 22px !important; }
+  [dir="rtl"] .stk .stk-card .stk-spine{ padding: 22px 22px 0 0 !important; width: calc(var(--reach) - 30px) !important; font-size: 1.02rem; }
+  .stk .stk-card.is-front .stk-spine{ width: auto !important; }
+  .stk .stk-card:not(.is-front) > *:not(.stk-spine):not(h2):not(h3):not(h4):not(.mag-fact-label){ opacity: .34 !important; filter: blur(2.4px); }
+  .stk .stk-card:not(.is-front) .mag-fact-label, .stk .stk-card:not(.is-front) > :is(h2, h3, h4){ opacity: 0 !important; }
+}
+
+/* ======== Projects (home), desktop: the About card look + the dot ride ========
+   Each case is one card (same paper, radius and shadow as the About cards). The cover is a "window" with the site's one big corner,
+   tilted a little to the side in perspective, with one plane behind it. The dot comes down the margin and lights each card when it arrives. */
+.work-row .work-tag, .work-row .work-tags--b2b .work-tag, .work-row .work-tags--dogether .work-tag, .work-row .work-tags--mixmatch .work-tag{
+  text-transform: none; letter-spacing: 0; font-size: .86rem; font-weight: 500; color: var(--text-muted) !important;
+}
+.work-row .work-tag--category, .work-row .work-tags .work-tag--category{ color: var(--pi) !important; font-weight: 600; }
+.work-content > .work-tags::before{ content: none !important; display: none; }
+.work-content > .work-tags{ margin-bottom: 12px; }
+
+@media (min-width: 901px){
+  .works-section .work-list{ gap: 40px; position: relative; }
+  .work-row{
+    --paper: #fffdf8; --tilt: -15deg;
+    display: grid !important; grid-template-columns: minmax(0, 46fr) minmax(0, 54fr); column-gap: 48px; align-items: center;
+    padding: 30px 34px 30px 30px;
+    background: var(--paper) !important; border: 1px solid rgba(122,106,158,.16) !important; border-radius: 14px !important;
+    box-shadow: 0 1px 0 rgba(255,255,255,.7) inset, 0 20px 36px -22px rgba(37,31,28,.34), 0 3px 8px -4px rgba(37,31,28,.12) !important;
+    transition: filter .9s ease;
+  }
+  [dir="rtl"] .work-row{ --tilt: 15deg; padding: 30px 30px 30px 34px; }
+  .work-row--dogether{ --paper: #f4ecd8; }
+  .work-row--mixmatch{ --paper: #e9e4f3; }
+
+  .work-row .work-image{
+    --cr: 4px 72px 4px 4px; perspective: 1100px; perspective-origin: 50% 50%; overflow: visible; isolation: isolate;
+    background: transparent !important; box-shadow: none; border-radius: var(--cr); aspect-ratio: 4 / 3.2;
+  }
+  [dir="rtl"] .work-row .work-image{ --cr: 72px 4px 4px 4px; }
+  .work-row .work-image img, .work-row--b2b .work-image img{
+    border-radius: var(--cr); transform: rotateY(var(--tilt)); transform-origin: 50% 50%;
+    box-shadow: none !important; filter: none !important; transition: transform .6s cubic-bezier(.2,.85,.25,1);
+  }
+  .work-row--b2b .work-image img{ background: #ecf0f8; }
+  .work-row .work-image::before{
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; border-radius: var(--cr);
+    background: color-mix(in srgb, var(--pc) 16%, var(--paper)); background-image: none; -webkit-mask: none; mask: none;
+    border: 1px solid rgba(122,106,158,.22);
+    transform: translate3d(-34px, 20px, -90px) rotateY(var(--tilt)); transition: transform .6s cubic-bezier(.2,.85,.25,1);
+  }
+  [dir="rtl"] .work-row .work-image::before{ transform: translate3d(34px, 20px, -90px) rotateY(var(--tilt)); }
+  .work-row .work-image::after{ content: none !important; }
+  .work-row:hover .work-image img{ transform: rotateY(calc(var(--tilt) * .45)) !important; }
+  .work-row:hover .work-image::before{ transform: translate3d(-44px, 26px, -90px) rotateY(calc(var(--tilt) * .45)); }
+  [dir="rtl"] .work-row:hover .work-image::before{ transform: translate3d(44px, 26px, -90px) rotateY(calc(var(--tilt) * .45)); }
+
+  .work-content{ padding: 4px 0 0 !important; display: flex !important; flex-direction: column; align-items: flex-start; }
+  .work-content h3{ font-size: 1.85rem; line-height: 1.18; margin: 0 0 16px; }
+  .work-content > .work-desc{ margin: 0 0 18px; font-size: .92rem; line-height: 1.7; max-width: none; }
+  .work-content > .work-tools{ margin-bottom: 10px !important; }
+  .work-row .work-meta--results{ margin: 0 0 18px !important; }
+  .work-content > .work-btn{ margin-top: 4px; }
+}
+@media (min-width: 901px) and (prefers-reduced-motion: reduce){ .work-row .work-image img, .work-row .work-image::before{ transition: none; } }
+
+/* the ride: a rail in the margin, one node per card, the dot between them */
+.wf-rail{ position: absolute; top: 0; bottom: 0; width: 0; pointer-events: none; }
+.wf-line, .wf-glow{ position: absolute; left: -1px; width: 2px; border-radius: 2px; }
+.wf-line{ background: #D8CBBE; }
+.wf-glow{ background: #B7A6E2; box-shadow: 0 0 6px rgba(183,166,226,.9); opacity: 0; transition: opacity 1s ease; }
+.wf-rail.is-moving .wf-glow{ opacity: 1; transition-duration: .1s; }
+.wf-node{ position: absolute; left: -6px; width: 12px; height: 12px; margin-top: -6px; border-radius: 50%; background: var(--bg, #faf6e9); border: 2px solid #C9BFE0; transition: background .45s ease, border-color .45s ease; }
+.wf-node::after{ content: ""; position: absolute; left: 100%; top: 50%; width: 34px; height: 2px; margin-top: -1px; background: #D8CBBE; transition: background .45s ease; }
+.wf-node.on{ background: #B7A6E2; border-color: #B7A6E2; }
+.wf-node.on::after{ background: #B7A6E2; }
+[dir="rtl"] .wf-node::after{ left: auto; right: 100%; }
+.wf-armed .work-row:not(.is-lit){ filter: saturate(.35) brightness(.99); }
+.work-row.is-spark{ animation: wfSpark 1.2s ease-out; }
+@keyframes wfSpark{ 0%{ box-shadow: 0 0 0 0 rgba(183,166,226,.9), 0 20px 36px -22px rgba(37,31,28,.34); } 30%{ box-shadow: 0 0 26px 4px rgba(183,166,226,.8), 0 20px 36px -22px rgba(37,31,28,.34); } 100%{ box-shadow: 0 0 0 0 rgba(183,166,226,0), 0 20px 36px -22px rgba(37,31,28,.34); } }
+.wf-dot{ transition: opacity .35s ease; }
+@media (max-width: 1099px){ .wf-rail, .wf-dot{ display: none; } }
+@media (prefers-reduced-motion: reduce){ .wf-armed .work-row:not(.is-lit){ filter: none; } }
+
+/* the guide: the key words of the opening paragraph light up, and the trace round a card's frame */
+.wf-armed .hero-lede .hl{ color: inherit; transition: color .7s ease, text-shadow .7s ease; }
+.wf-armed .hero-lede .hl.on{ color: #7A6A9E; text-shadow: 0 0 14px rgba(183,166,226,.45); }
+.wf-frame{ position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; z-index: 2; }
+[dir="rtl"] .wf-frame{ transform: scaleX(-1); }
+.wf-frame path{ fill: none; stroke: #B7A6E2; stroke-width: 2px; stroke-linecap: round; filter: drop-shadow(0 0 4px rgba(183,166,226,.85)); }
+.wf-frame{ opacity: 0; transition: opacity 1.2s ease; }
+.wf-frame.show{ opacity: 1; transition-duration: .1s; }
+.work-row.is-spark{ animation: none; }
+
+/* phones: keep the browser from inflating text on its own (it made the About headline run off the screen), and never let it clip */
+html{ -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+/* phone menu: the language switch is a small quiet word, not a full-width key; it must not compete with the real links */
+.mobile-menu .lang-toggle--mobile{
+  align-self: flex-start; width: auto; margin: 4px 0 6px; padding: 10px 0 8px;
+  background: none; box-shadow: none; border-radius: 0; transform: none;
+  font-size: .9rem; font-weight: 500; color: var(--text-muted);
+}
+.mobile-menu .lang-toggle--mobile:hover, .mobile-menu .lang-toggle--mobile:active{ background: none; box-shadow: none; transform: none; color: var(--accent); }

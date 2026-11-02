@@ -157,7 +157,7 @@
     dot.style.setProperty('--ds', ds + 'px');
     var mr = main.getBoundingClientRect();
     mainTop = mr.top + sy; mainLeft = mr.left + window.scrollX; mainH = main.offsetHeight; mainW = main.offsetWidth;
-    var gut = narrowMode ? 8 : Math.max(14, vw / 2 - 512);
+    var gut = narrowMode ? 13 : Math.max(14, vw / 2 - 512);
     xg = rtl ? vw - gut : gut;
     var xs = vw / 2;
     yStart = Math.round(vh * .28 + vh * .5);
