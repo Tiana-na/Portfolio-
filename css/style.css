@@ -3236,3 +3236,7 @@ html{ -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   background: linear-gradient(180deg, #8678AA, #6D5F8E); color: #fffdf8 !important; font-weight: 600;
   box-shadow: 0 1px 0 rgba(255,255,255,.35) inset, 0 -1px 3px rgba(30,20,60,.25) inset, 0 3px 0 #5A4D7E, 0 5px 0 #483D66, 0 9px 12px -6px rgba(37,31,28,.35);
 }
+
+/* the closing line: the thought runs on one line, "Bye, heels." stands alone on the next */
+.hero .hero-closing{ max-width: none; }
+.hero-closing .bye{ display: block; }

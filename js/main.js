@@ -331,8 +331,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }, QUIZ_EXIT_MS);
     }
 
-    function showQuizResults(how) {
-      if (window.trackEvent) window.trackEvent(how === 'skip' ? 'quiz_skip' : 'quiz_complete');
+    function showQuizResults() {
       quizQuestionBlock.hidden = true;
       quizNav.hidden = true;
       quizProgressTrack.hidden = true;
@@ -345,7 +344,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     quizStartBtn.addEventListener('click', function () {
-      if (window.trackEvent) window.trackEvent('quiz_start');
       quizStartBtn.hidden = true;
       quizCard.hidden = false;
       renderQuizQuestion();
@@ -357,7 +355,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (quizSkipBtn) {
       quizSkipBtn.addEventListener('click', function () {
-        showQuizResults('skip');
+        showQuizResults();
       });
     }
 
