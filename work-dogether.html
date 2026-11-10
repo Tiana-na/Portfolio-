@@ -7,13 +7,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DOgether Case Study | Tiana Folkenfolk</title>
-<meta name="description" content="A household task app for complex families, including two-home sync and a kid mode.">
+<meta name="description" content="Case study: a household app that keeps the whole family in sync, with separate parent and kid experiences and two-home support.">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Tiana Folkenfolk">
 <meta property="og:url" content="https://tianaf-portfolio.vercel.app/work-dogether.html">
 <meta property="og:title" content="DOgether Case Study | Tiana Folkenfolk">
-<meta property="og:description" content="A household task app for complex families, including two-home sync and a kid mode.">
+<meta property="og:description" content="Case study: a household app that keeps the whole family in sync, with separate parent and kid experiences and two-home support.">
 <meta property="og:image" content="https://tianaf-portfolio.vercel.app/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -21,136 +21,244 @@
 <meta property="og:locale:alternate" content="he_IL">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="DOgether Case Study | Tiana Folkenfolk">
-<meta name="twitter:description" content="A household task app for complex families, including two-home sync and a kid mode.">
+<meta name="twitter:description" content="Case study: a household app that keeps the whole family in sync, with separate parent and kid experiences and two-home support.">
 <meta name="twitter:image" content="https://tianaf-portfolio.vercel.app/assets/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <style>
-.dg-case{ background:#032030; font-family:'Rubik',sans-serif; }
-.dg-case .dg-wrap{ max-width:976px; margin:0 auto; padding:0 24px; }
-.dg-hero{ background:#003554; padding:56px 24px; text-align:center; }
-.dg-hero .dg-label{ color:#fff; font-weight:500; font-size:15px; margin-bottom:14px; }
-.dg-hero h1{ color:#fff; font-weight:400; font-size:clamp(28px,4vw,44px); line-height:1.3; margin-bottom:22px; }
-.dg-section{ padding:40px 0; }
-.dg-title{ color:#fff; font-weight:600; font-size:22px; margin-bottom:20px; }
-.dg-card{ background:#022B42; border-radius:12px; padding:32px; margin-bottom:20px; }
-.dg-card h3{ color:#fff; font-weight:600; font-size:22px; margin-bottom:10px; }
-.dg-bar{ width:60px; height:2px; background:#F26D0E; margin-bottom:16px; }
-.dg-card p{ color:#fff; font-size:15px; line-height:1.6; margin-bottom:10px; }
-.dg-card p:last-child{ margin-bottom:0; }
-.dg-research-flex{ display:flex; gap:24px; align-items:center; flex-wrap:wrap; overflow:visible; }
-.dg-research-flex .txt{ flex:1 1 320px; }
-.dg-research-flex img{ width:180px; flex:0 0 auto; }
+.dg-case{ background:#032030; font-family:'Rubik',sans-serif; color:#fff; direction:ltr; text-align:left; padding-bottom:72px; }
+.dg-case *{ box-sizing:border-box; }
+.dg-case p, .dg-case h1, .dg-case h2, .dg-case h3, .dg-case h4, .dg-case ul{ margin:0; padding:0; }
+.dg-case img{ display:block; max-width:100%; height:auto; }
+.dg-wrap{ max-width:1024px; margin:0 auto; padding:0 24px; }
 
-/* robot: floats in large above the card, then shrinks + settles into place on scroll */
-.dg-research-flex img.reveal{
-  opacity:0;
-  transform: translateY(-60px) scale(1.7);
-  transition: transform 1.1s cubic-bezier(.22,1.4,.36,1), opacity .6s ease;
+/* hero */
+.dg-hero{ background:#003554; overflow:hidden; }
+.dg-hero-inner{ position:relative; min-height:600px; padding:105px 0 72px; }
+.dg-hero-text{ max-width:560px; }
+.dg-hero-label{ font-weight:600; font-size:16px; margin-bottom:24px; }
+.dg-hero h1{ font-weight:400; font-size:44px; line-height:1.18; margin-bottom:24px; }
+.dg-hero-intro{ font-size:20px; line-height:1.2; margin-bottom:24px; }
+.dg-hero-context{ font-size:16px; line-height:1.2; opacity:.7; margin-bottom:24px; }
+.dg-figma-btn{ display:inline-flex; gap:6px; align-items:center; background:#022b42; color:#f26d0e; font-weight:600; font-size:14px; padding:12px 24px; border-radius:8px; text-decoration:none; transition:background .2s ease; }
+.dg-figma-btn:hover, .dg-figma-btn:focus-visible{ background:#032030; }
+.dg-hero-mockups{ position:absolute; left:594px; top:30px; width:540px; max-width:none !important; }
+
+/* section marker */
+.dg-marker{ display:flex; align-items:center; gap:14px; padding:88px 0 24px; font-size:13px; line-height:1.2; }
+.dg-marker .num{ color:#f26d0e; font-weight:600; }
+.dg-marker .name{ color:rgba(242,250,255,.72); font-weight:500; letter-spacing:1.2px; text-transform:uppercase; }
+.dg-marker .line{ flex:1 1 0; height:1px; min-width:1px; background:rgba(242,109,14,.5); }
+
+/* cards */
+.dg-card{ background:#022b42; border-radius:12px; padding:40px; }
+.dg-card + .dg-card{ margin-top:24px; }
+.dg-card--blue{ background:#1a476b; }
+.dg-h2{ font-weight:600; font-size:24px; line-height:1.2; color:#fff; }
+.dg-h3{ font-weight:600; font-size:20px; line-height:1.2; color:#f26d0e; margin-top:48px; }
+.dg-bar{ width:60px; height:2px; background:#f26d0e; margin:20px 0; }
+.dg-body{ font-size:16px; line-height:1.2; color:#fff; }
+.dg-body + .dg-body{ margin-top:20px; }
+.dg-lede{ font-size:16px; line-height:1.2; color:rgba(255,255,255,.72); margin-top:10px; margin-bottom:32px; }
+.dg-tldr{ padding-top:56px; }
+.dg-tldr p{ font-size:16px; line-height:1.2; }
+.dg-tldr p + p{ margin-top:16px; }
+.dg-tldr strong{ color:#f26d0e; font-weight:600; }
+
+.dg-research{ display:flex; gap:32px; align-items:center; }
+.dg-research .txt{ flex:1 1 0; max-width:543px; }
+.dg-research img{ width:220px; flex:0 0 auto; margin-left:auto; }
+
+.dg-persona-row{ display:flex; gap:20px; align-items:flex-start; background:#003554; border-radius:10px; padding:24px; margin-top:28px; }
+.dg-persona-row h3{ font-weight:500; font-size:16px; line-height:1.2; margin-bottom:10px; }
+.dg-persona-row p{ font-size:16px; line-height:1.2; max-width:700px; }
+.dg-persona-row p + p{ margin-top:10px; }
+.dg-persona-row .txt{ flex:1 1 0; min-width:0; }
+.dg-persona-row img{ width:90px; height:90px; flex:0 0 auto; margin:13px 6px 0; }
+
+.dg-grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+.dg-grid-2 .dg-card{ margin-top:0; padding:32px; }
+.dg-grid-2 .dg-bar{ width:100%; margin:16px 0; }
+.dg-bullets{ list-style:none; }
+.dg-bullets li{ display:flex; align-items:center; gap:10px; font-size:16px; line-height:1.2; }
+.dg-bullets li + li{ margin-top:14px; }
+.dg-bullets li::before{ content:''; width:6px; height:6px; border-radius:3px; background:#f26d0e; flex:none; }
+
+/* IA diagram */
+.dg-ia-title{ margin-bottom:24px; }
+.dg-ia-canvas{ background:#022b42; border-radius:12px; overflow:hidden; }
+.dg-ia{ position:relative; width:976px; height:560px; transform-origin:top left; }
+.dg-ia .b{ position:absolute; display:flex; align-items:center; justify-content:center; text-align:center; border-radius:8px; color:#fff; padding:0 10px; }
+.dg-ia .b.top{ font-weight:600; font-size:14px; line-height:1.2; }
+.dg-ia .b.nav{ font-weight:600; font-size:14px; line-height:1.2; border:1.5px solid; }
+.dg-ia .b.nav.dashed{ border-style:dashed; }
+.dg-ia .b.sub{ font-weight:400; font-size:12px; line-height:15px; border:1px solid #2e5064; }
+.dg-ia .c{ position:absolute; }
+.dg-ia .lbl{ position:absolute; left:32px; top:28px; font-size:12px; font-weight:600; color:#41758d; }
+.dg-ia .legend{ position:absolute; left:32px; top:513px; font-size:12px; color:rgba(242,250,255,.6); }
+
+/* process */
+.dg-process{ background:#022b42; padding:14px 0 24px; }
+.dg-process .dg-sub{ font-weight:600; font-size:32px; line-height:1.2; color:#f26d0e; margin:20px 0 46px; }
+.dg-process .dg-body{ max-width:875px; font-size:20px; }
+.dg-duo{ display:flex; justify-content:center; gap:185px; margin-top:49px; }
+.dg-duo-col{ width:255px; }
+.dg-duo-col h3{ font-weight:600; font-size:16px; line-height:1.2; color:#f26d0e; margin-bottom:6px; }
+.dg-duo-col .desc{ font-size:15px; line-height:1.2; color:rgba(255,255,255,.85); min-height:36px; margin-bottom:33px; }
+.dg-phone{ position:relative; width:255px; }
+.dg-phone img{ width:255px; }
+.dg-anno{ list-style:none; }
+.dg-anno li{ position:absolute; width:150px; font-size:12px; line-height:15px; color:rgba(255,255,255,.85); transform:translateY(-50%); }
+.dg-anno li::after{ content:''; position:absolute; top:50%; width:36px; height:1px; background:rgba(242,250,255,.55); }
+.dg-anno--left li{ right:calc(100% + 44px); text-align:right; }
+.dg-anno--left li::after{ left:calc(100% + 4px); }
+.dg-anno--right li{ left:calc(100% + 44px); }
+.dg-anno--right li::after{ right:calc(100% + 4px); }
+.dg-duo-col--child{ margin-top:-12px; }
+.dg-flow-title{ font-weight:600; font-size:20px; line-height:1.2; color:#f26d0e; margin:120px 0 12px; }
+.dg-flow{ display:flex; align-items:flex-start; gap:12px; }
+.dg-flow .step{ width:180px; flex:0 0 auto; text-align:center; font-size:13px; line-height:1.2; color:rgba(255,255,255,.72); }
+.dg-flow .step img{ width:180px; margin-bottom:8px; }
+.dg-flow .step b{ display:block; font-weight:400; margin-bottom:8px; }
+.dg-flow .arrow{ align-self:flex-start; margin-top:183px; width:20px; font-size:20px; line-height:24px; color:rgba(255,255,255,.72); }
+.dg-flow-note{ font-size:16px; line-height:1.2; color:rgba(255,255,255,.85); margin-top:12px; }
+
+/* decision cards */
+.dg-decisions{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+.dg-decision{ background:#003554; border-radius:16px; padding:24px; }
+.dg-decision h4{ font-weight:600; font-size:18px; line-height:1.2; color:#f26d0e; margin-bottom:10px; }
+.dg-decision p{ font-size:14px; line-height:1.2; color:rgba(242,250,255,.85); }
+.dg-decision p + p{ margin-top:10px; }
+.dg-decision strong{ font-weight:600; }
+
+/* screen rows */
+.dg-shots{ display:flex; flex-wrap:wrap; gap:24px; }
+.dg-shots figure{ margin:0; }
+.dg-shots--3{ justify-content:space-between; gap:20px; margin-top:20px; }
+.dg-shots--3 figure{ width:285px; text-align:center; }
+.dg-shots--3 img{ width:160px; margin:43px auto 12px; border-radius:20px; }
+.dg-shots--3 figcaption, .dg-pair figcaption{ font-size:14px; line-height:1.2; color:rgba(255,255,255,.72); text-align:center; }
+.dg-pair{ display:flex; justify-content:center; align-items:flex-start; gap:40px; }
+.dg-pair figure{ margin:0; width:160px; }
+.dg-pair img{ width:160px; margin-bottom:10px; }
+.dg-pair .arrow{ width:20px; margin-top:174px; font-size:20px; line-height:24px; color:rgba(255,255,255,.72); }
+.dg-shots--w200 figure{ width:200px; }
+.dg-shots--w160 figure{ width:160px; }
+.dg-shots--cap img{ width:100%; margin-bottom:8px; }
+.dg-shots--cap figcaption b{ display:block; font-weight:600; font-size:15px; line-height:1.2; color:#f26d0e; margin-bottom:8px; }
+.dg-shots--cap figcaption{ font-size:13px; line-height:15px; color:rgba(255,255,255,.85); }
+
+/* character */
+.dg-char-text{ font-size:16px; line-height:1.2; color:rgba(255,255,255,.72); margin-top:16px; }
+.dg-chars{ display:flex; flex-wrap:wrap; gap:28px 24px; margin-top:48px; }
+.dg-chars figure{ margin:0; width:190px; text-align:center; }
+.dg-chars img{ width:190px; }
+.dg-chars figcaption{ font-size:14px; line-height:1.2; color:rgba(255,255,255,.72); }
+
+.dg-ds img{ width:100%; border-radius:12px; }
+
+/* retrospective */
+.dg-retro-title{ color:#f2faff; margin-bottom:48px; }
+.dg-retro-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.dg-retro-card{ background:#04152a; border-radius:12px; padding:28px; }
+.dg-retro-card + .dg-retro-card, .dg-retro-row + .dg-retro-card{ margin-top:0; }
+.dg-retro-stack > .dg-retro-card{ margin-top:16px; }
+.dg-tag{ background:rgba(242,109,14,.15); border-radius:4px; padding:4px 10px; text-align:center; color:#f26d0e; font-weight:500; font-size:13px; line-height:1.2; margin-bottom:12px; }
+.dg-retro-card h3{ font-weight:600; font-size:18px; line-height:1.2; color:#f2faff; margin-bottom:12px; }
+.dg-retro-card p{ font-size:15px; line-height:24px; color:#99cce5; }
+.dg-retro-card p + p{ margin-top:24px; }
+.dg-hyp{ display:grid; grid-template-columns:repeat(3,1fr); gap:32px; }
+.dg-hyp h3{ margin-bottom:8px; }
+
+/* ---------- responsive ---------- */
+@media (max-width:1240px){
+  .dg-duo{ gap:48px; }
+  .dg-anno li{ position:relative; top:auto !important; left:auto; right:auto; width:auto; transform:none; text-align:left; padding-left:14px; margin-top:6px; }
+  .dg-anno li::after{ left:0; right:auto; top:7px; width:6px; height:6px; border-radius:3px; background:#f26d0e; }
+  .dg-anno{ margin-top:14px; }
+  .dg-duo-col--child{ margin-top:0; }
 }
-.dg-research-flex img.reveal.in-view{
-  opacity:1;
-  transform: translateY(0) scale(1);
+@media (max-width:1180px){
+  .dg-hero-inner{ min-height:0; padding:72px 0 0; }
+  .dg-hero-text{ max-width:640px; }
+  .dg-hero-mockups{ position:static; width:100%; max-width:540px !important; margin:48px auto 0; }
 }
-@media (prefers-reduced-motion: reduce){
-  .dg-research-flex img.reveal{ opacity:1; transform:none; transition:none; }
+@media (max-width:1000px){
+  .dg-flow{ flex-wrap:wrap; gap:24px 16px; }
+  .dg-flow .arrow{ display:none; }
+  .dg-shots--3{ justify-content:center; }
+  .dg-shots--cap{ justify-content:center; }
+  .dg-chars{ justify-content:center; }
+}
+@media (max-width:760px){
+  .dg-card{ padding:24px; }
+  .dg-grid-2 .dg-card{ padding:24px; }
+  .dg-marker{ padding-top:56px; }
+  .dg-hero h1{ font-size:32px; }
+  .dg-hero-intro{ font-size:17px; line-height:1.3; }
+  .dg-hero-context{ font-size:14px; line-height:1.35; }
+  .dg-body, .dg-tldr p, .dg-lede, .dg-char-text, .dg-persona-row p, .dg-bullets li, .dg-flow-note{ line-height:1.4; }
+  .dg-grid-2, .dg-decisions, .dg-retro-row, .dg-hyp{ grid-template-columns:1fr; }
+  .dg-hyp{ gap:20px; }
+  .dg-research{ flex-direction:column; align-items:flex-start; }
+  .dg-research img{ width:160px; margin:0 auto; }
+  .dg-persona-row{ flex-direction:column-reverse; }
+  .dg-persona-row img{ margin:0; }
+  .dg-process .dg-sub{ font-size:24px; margin-bottom:24px; }
+  .dg-process .dg-body{ font-size:16px; line-height:1.4; }
+  .dg-duo{ flex-direction:column; align-items:center; gap:40px; }
+  .dg-flow-title{ margin-top:64px; }
+  .dg-flow{ justify-content:center; }
+  .dg-flow .step{ width:calc(50% - 8px); max-width:180px; }
+  .dg-flow .step img{ width:100%; }
+  .dg-shots--3 figure{ width:100%; max-width:285px; }
+  .dg-shots--3 img{ margin-top:8px; }
+  .dg-shots--cap figure{ width:calc(50% - 12px); max-width:200px; }
+  .dg-pair{ gap:16px; }
+  .dg-pair figure{ width:calc(50% - 26px); max-width:160px; }
+  .dg-pair img{ width:100%; }
+  .dg-pair .arrow{ margin-top:35%; }
+  .dg-chars figure{ width:calc(50% - 12px); max-width:190px; }
+  .dg-chars img{ width:100%; }
+  .dg-h3{ margin-top:36px; }
 }
 
-.dg-grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
-.dg-bullets{ list-style:none; padding:0; margin:0; }
-.dg-bullets li{ display:flex; align-items:center; gap:10px; color:#fff; font-size:15px; padding:8px 0; }
-.dg-bullets .dot{ width:6px; height:6px; border-radius:3px; background:#F26D0E; flex:none; }
-
-.dg-persona-row{ display:flex; gap:20px; align-items:flex-start; background:#003554; border-radius:10px; padding:24px; margin-bottom:16px; }
-.dg-persona-row:last-child{ margin-bottom:0; }
-.dg-avatar{ width:64px; height:64px; border-radius:50%; border:2px solid #F26D0E; background:#022B42; color:#F26D0E; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:20px; flex:none; }
-.dg-persona-row h4{ color:#fff; font-weight:500; font-size:16px; margin-bottom:8px; }
-.dg-persona-row p{ color:#fff; font-size:14px; line-height:1.6; margin-bottom:8px; }
-.dg-persona-row p:last-child{ margin-bottom:0; }
-
-.dg-brand-card{ background:#F26D0E; border-radius:12px; padding:40px; }
-.dg-brand-word{ color:#fff; font-weight:600; font-size:clamp(40px,7vw,72px); margin-bottom:14px; }
-.dg-weights{ color:#fff; font-size:16px; line-height:1.7; margin-bottom:24px; }
-.dg-swatches{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
-.dg-swatch{ flex:1 1 90px; }
-.dg-swatch .chip{ height:70px; border-radius:6px; margin-bottom:6px; }
-.dg-swatch .hex{ color:#fff; font-size:11px; }
-
-.dg-screens-row{ display:flex; gap:20px; justify-content:center; flex-wrap:wrap; }
-.dg-screen-slot{ width:180px; background:rgba(255,255,255,.06); border-radius:16px; overflow:hidden; }
-.dg-screen-slot img{ width:100%; display:block; }
-
-.dg-process-row{ display:flex; gap:28px; justify-content:center; flex-wrap:wrap; margin-top:24px; }
-.dg-process-col{ flex:1 1 220px; max-width:280px; text-align:center; }
-.dg-process-label{ color:#F26D0E; font-weight:600; font-size:16px; margin-bottom:8px; }
-.dg-process-desc{ color:rgba(255,255,255,.7); font-size:14px; line-height:1.5; margin-bottom:14px; }
-.dg-process-img-wrap{ background:rgba(255,255,255,.06); border-radius:16px; overflow:hidden; }
-.dg-process-img-wrap img{ width:100%; display:block; }
-@media (max-width:700px){
-  .dg-process-row{ flex-direction:column; align-items:center; }
-  .dg-process-col{ max-width:320px; width:100%; }
-}
-
-/* ===== IA diagram ===== */
-/* overflow is intentionally hidden, not auto: the JS below always scales the
-   diagram to fit the available width, so a scrollbar should never be needed -
-   relying on overflow:auto here used to leave a small, unwanted scrollbar
-   even when the diagram visually fit, because scrollWidth reflects the
-   diagram's natural (unscaled) layout size, not its scaled-down visual size. */
-.dg-ia-canvas{ background:#fff; border-radius:14px; padding:32px 20px; overflow:hidden; -webkit-overflow-scrolling:touch; }
-.dg-ia{ min-width:860px; font-family:'Rubik',sans-serif; transition: none; }
-@media (max-width: 900px){
-  .dg-ia-canvas{ overflow-x:hidden; padding:20px 10px; }
-}
-.dg-ia-box{ display:inline-flex; align-items:center; justify-content:center; color:#fff; font-size:12.5px; font-weight:600; border-radius:8px; padding:11px 14px; text-align:center; line-height:1.35; }
-.dg-ia-box.navy{ background:#004d74; }
-.dg-ia-box.teal{ background:#009688; }
-.dg-ia-box.tealdark{ background:#006d63; }
-.dg-ia-box.green{ background:#1e8e5c; }
-.dg-ia-box.orange{ background:#f26d0e; }
-
-.dg-ia-group{ border-radius:14px; padding:18px 18px 22px; display:flex; flex-direction:column; align-items:center; }
-.dg-ia-group.peach{ background:#fdede2; }
-.dg-ia-group.mint{ background:#e4f1eb; }
-.dg-ia-group-label{ align-self:stretch; text-align:left; font-size:11.5px; font-weight:700; margin-bottom:14px; }
-.dg-ia-group-label.orange{ color:#c9600f; }
-.dg-ia-group-label.green{ color:#1e8e5c; }
-
-.dg-ia-row{ display:flex; align-items:center; justify-content:center; }
-.dg-ia-hline{ width:18px; height:2px; background:#1f5f86; flex:0 0 auto; }
-
-.dg-ia-center{ display:flex; justify-content:center; }
-
-.dg-ia-vline{ width:2px; height:20px; background:#1f5f86; margin:0 auto; }
-.dg-ia-vline.small{ height:14px; }
-
-.dg-ia-elbow{ position:relative; height:40px; }
-.dg-ia-elbow-down1{ position:absolute; top:0; right:12%; width:2px; height:20px; background:#1f5f86; }
-.dg-ia-elbow-across{ position:absolute; top:20px; right:12%; left:50%; height:2px; background:#1f5f86; }
-.dg-ia-elbow-down2{ position:absolute; top:20px; left:50%; width:2px; height:20px; background:#1f5f86; transform:translateX(-1px); }
-
-.dg-ia-branch{ position:relative; padding-top:24px; }
-.dg-ia-branch::before{ content:''; position:absolute; top:0; left:50%; width:2px; height:24px; background:#1f5f86; transform:translateX(-1px); }
-.dg-ia-branch.small{ padding-top:20px; }
-.dg-ia-branch.small::before{ height:20px; }
-.dg-ia-branch-bar{ position:absolute; top:24px; height:2px; background:#1f5f86; }
-.dg-ia-branch.small .dg-ia-branch-bar{ top:20px; }
-.dg-ia-branch-bar.n2{ left:25%; right:25%; }
-.dg-ia-branch-bar.n3{ left:16.6667%; right:16.6667%; }
-
-.dg-ia-children{ display:flex; gap:16px; }
-.dg-ia-children > .dg-ia-child{ flex:1; min-width:0; }
-.dg-ia-child{ display:flex; flex-direction:column; align-items:center; padding-top:16px; position:relative; }
-.dg-ia-branch.small .dg-ia-child{ padding-top:12px; }
-.dg-ia-child::before{ content:''; position:absolute; top:0; left:50%; width:2px; height:16px; background:#1f5f86; transform:translateX(-1px); }
-.dg-ia-branch.small .dg-ia-child::before{ height:12px; }
-.dg-ia-child .dg-ia-group{ width:100%; }
-.dg-ia-child > .dg-ia-box{ margin-bottom:0; }
-
-@media (max-width:700px){
-  .dg-grid-2{ grid-template-columns:1fr; }
-}
+/* readability pass: web-friendly line heights and breathing room */
+.dg-body, .dg-tldr p, .dg-persona-row p, .dg-bullets li, .dg-flow-note, .dg-lede{ line-height:1.55; }
+.dg-hero-intro{ line-height:1.5; margin-bottom:20px; }
+.dg-hero-context{ line-height:1.55; margin-bottom:28px; }
+.dg-hero-label{ margin-bottom:16px; }
+.dg-h2{ line-height:1.25; }
+.dg-h3{ line-height:1.3; margin-top:44px; }
+.dg-h2 + .dg-h3{ margin-top:12px; }
+.dg-lede{ margin-top:12px; margin-bottom:36px; }
+.dg-tldr p + p{ margin-top:14px; }
+.dg-persona-row h3{ margin-bottom:8px; line-height:1.35; }
+.dg-bullets li{ align-items:flex-start; }
+.dg-bullets li::before{ margin-top:.6em; }
+.dg-process .dg-sub{ line-height:1.25; margin:16px 0 32px; }
+.dg-process .dg-body{ line-height:1.55; }
+.dg-duo-col .desc{ line-height:1.45; }
+.dg-duo-col--child{ margin-top:0; }
+.dg-flow-title{ margin:88px 0 24px; line-height:1.3; }
+.dg-flow .step{ line-height:1.4; }
+.dg-flow-note{ margin-top:28px; }
+.dg-decision p{ line-height:1.5; }
+.dg-decision h4{ line-height:1.3; }
+.dg-ds img{ width:100%; height:auto; }
+.dg-shots--3 figcaption, .dg-pair figcaption, .dg-chars figcaption{ line-height:1.4; margin-top:10px; }
+.dg-shots--cap figcaption{ line-height:1.45; }
+.dg-shots--cap figcaption b{ line-height:1.3; margin-bottom:6px; }
+.dg-lede + *{ margin-top:0; }
+.dg-card .dg-h3 + .dg-lede{ margin-top:10px; }
+.dg-card .dg-h2 + .dg-h3{ margin-top:10px; }
+.dg-card .dg-h3 ~ div, .dg-card .dg-h3 ~ figure{ }
+.dg-h3:not(:first-child){ margin-top:64px; }
+.dg-flow-title{ margin-top:130px !important; }
+.dg-pair, .dg-shots--cap{ margin-top:36px; }
+.dg-flow-note{ margin-top:36px !important; }
+.dg-flow .step b{ margin-bottom:6px; }
 </style>
 </head>
 <body data-page="workDogether">
@@ -182,260 +290,373 @@
   <section class="case-page-header">
     <div class="wrap">
       <a href="index.html#work" class="btn keycap keycap--cream keycap--mini case-back" data-i18n="case-back">Back to projects</a>
-      <a href="https://www.figma.com/design/JE3mKJIgMTCQ2wiWEeECUQ/%D7%90%D7%A4%D7%9C%D7%99%D7%A7%D7%A6%D7%99%D7%94-%D7%9C%D7%A0%D7%99%D7%94%D7%95%D7%9C-%D7%9E%D7%A9%D7%A7-%D7%91%D7%99%D7%AA-%D7%92%D7%A8%D7%A1%D7%94-%D7%A1%D7%95%D7%A4%D7%99%D7%AA?node-id=0-1&p=f&t=8bijHkdGFVTNMRxx-0" target="_blank" rel="noopener" class="btn keycap keycap--purple case-figma-btn" data-i18n="case-figma-btn">View in Figma</a>
       <p class="case-rtl-note" data-i18n="rtl-note">Designed in Hebrew (RTL). Screens are shown in the original language.</p>
     </div>
   </section>
 
-  <div class="dg-case">
+  <div class="dg-case" lang="en" dir="ltr">
 
     <div class="dg-hero">
-      <div class="dg-label" data-i18n="dg-hero-label">About the App</div>
-      <h1 data-i18n="dg-hero-h1">A Household Management App</h1>
+      <div class="dg-wrap">
+        <div class="dg-hero-inner">
+          <div class="dg-hero-text">
+            <p class="dg-hero-label">DOgether · Case Study</p>
+            <h1>Syncing the Whole Family</h1>
+            <p class="dg-hero-intro">Pickups overlap, kids aren't sure what's expected of them, and in families with two homes it gets twice as hard. DOgether turns household tasks into a shared system: parents assign and track, kids earn points for their part, and a divorced parent can switch between households in one tap.</p>
+            <p class="dg-hero-context">Solo project · Started at HackerU in 2024, refined on my own after the course · Figma, Figma Make, Illustrator, Claude, Gemini, OpenArt</p>
+            <a class="dg-figma-btn" href="https://www.figma.com/design/JE3mKJIgMTCQ2wiWEeECUQ/%D7%90%D7%A4%D7%9C%D7%99%D7%A7%D7%A6%D7%99%D7%94-%D7%9C%D7%A0%D7%99%D7%94%D7%95%D7%9C-%D7%9E%D7%A9%D7%A7-%D7%91%D7%99%D7%AA-%D7%92%D7%A8%D7%A1%D7%94-%D7%A1%D7%95%D7%A4%D7%99%D7%AA?node-id=0-1&p=f&t=8bijHkdGFVTNMRxx-0" target="_blank" rel="noopener">View in Figma <span aria-hidden="true">→</span></a>
+          </div>
+          <img class="dg-hero-mockups" src="assets/dg-hero-mockups.png" width="540" height="570" alt="Two DOgether screens: the parent home with today's tasks and the kid home with points, a streak and a family goal">
+        </div>
+      </div>
     </div>
 
-    <section class="dg-section">
-      <div class="dg-wrap">
-        <div class="dg-card">
-          <h3 data-i18n="dg-about-title">About</h3>
-          <div class="dg-bar"></div>
-          <p data-i18n="dg-about-body">An app that helps manage the household on an ongoing basis, keeping every family member in sync, including kids who already have an iPhone, and even bringing in the grandmother who helps the parents, so she becomes part of the routine for the tasks she's responsible for.</p>
-        </div>
+    <div class="dg-wrap dg-tldr">
+      <div class="dg-card">
+        <h2 class="dg-h2">TL;DR</h2>
+        <div class="dg-bar"></div>
+        <p><strong>The problem: </strong>Families run the household across a calendar, WhatsApp and reminders, and one parent ends up carrying most of it.</p>
+        <p><strong>The solution: </strong>One shared app. Parents assign and track, kids earn points for their part, and a divorced parent can switch between two households in one tap.</p>
+        <p><strong>What I did: </strong>Interviewed 5 families, designed two experiences (parent and kid), and built the flows, edge states, character and design system on my own.</p>
+        <p><strong>Three decisions that shaped it: </strong>Home opens straight on today's list, ownership became light filter chips, and kids add tasks with icons and voice, with no parent approval.</p>
+      </div>
+    </div>
 
-        <div class="dg-card">
-          <h3 data-i18n="dg-research-title">Research</h3>
-          <div class="dg-bar"></div>
-          <div class="dg-research-flex">
-            <div class="txt">
-              <p data-i18n="dg-research-p1">Difficulty staying in sync creates frustration and confusion.</p>
-              <p data-i18n="dg-research-p2">There's always one dominant figure who ends up carrying more responsibility than the rest for various household tasks.</p>
-              <p data-i18n="dg-research-p3">Interviews with families with at least 2 children showed they use several different tools for scheduling events, task lists, and staying updated on changes: things like a calendar, WhatsApp, and reminders.</p>
+    <div class="dg-wrap"><div class="dg-marker"><span class="num" aria-hidden="true">01</span><span class="name">About &amp; Research</span><span class="line" aria-hidden="true"></span></div></div>
+    <div class="dg-wrap">
+      <div class="dg-card">
+        <h2 class="dg-h2">About</h2>
+        <div class="dg-bar"></div>
+        <p class="dg-body">An app that helps run the household day to day and keeps every family member in sync, including kids who already have a smartphone.</p>
+      </div>
+      <div class="dg-card">
+        <h2 class="dg-h2">Research</h2>
+        <div class="dg-bar"></div>
+        <div class="dg-research">
+          <div class="txt">
+            <p class="dg-body">I interviewed 5 families with at least 2 children, some with separated parents. They used several different tools for scheduling, task lists and staying updated on changes: a calendar, WhatsApp and reminders.</p>
+            <p class="dg-body">Difficulty staying in sync creates frustration and confusion.</p>
+            <p class="dg-body">There's always one dominant figure who ends up carrying more responsibility than the rest for various household tasks.</p>
+          </div>
+          <img src="assets/dg-research-robot.webp" width="220" height="171" alt="The app's character looking through a magnifying glass" loading="lazy" decoding="async">
+        </div>
+      </div>
+    </div>
+
+    <div class="dg-wrap"><div class="dg-marker"><span class="num" aria-hidden="true">02</span><span class="name">Persona</span><span class="line" aria-hidden="true"></span></div></div>
+    <div class="dg-wrap">
+      <div class="dg-card">
+        <h2 class="dg-h2">Persona</h2>
+        <div class="dg-bar"></div>
+        <div class="dg-persona-row">
+          <div class="txt">
+            <h3>David, 45 · The two-household dad</h3>
+            <p>David, 45, is divorced and shares two kids, Noa (11) and Itai (8), with his ex-wife. The kids move between two homes. David is a career-driven professional with a packed schedule who struggles to keep both households in sync and remember everything in time, so he usually needs a reminder to take the kids to special events.</p>
+          </div>
+          <img src="assets/dg-persona-david.png" width="90" height="90" alt="Photo for the David persona: a father with his kids" loading="lazy" decoding="async">
+        </div>
+        <div class="dg-persona-row">
+          <div class="txt">
+            <h3>Devi and Ben · The overloaded parents</h3>
+            <p>Devi and Ben are a couple in their 40s, both career-driven, with two kids: Roni (9) and Maya (6). They feel they keep forgetting to do things on time, and Devi feels she constantly has to hold all the tasks in her head, especially since the kids are at different schools and activities, each with different needs depending on age.</p>
+            <p>The kids also don't give enough advance notice about a special school activity, a get-together with friends, and so on.</p>
+            <p>Ben and Devi want to be more in sync in running the household day-to-day, to share the load more equally, and they also want to instill in the kids the habit of being more active and involved in the routine.</p>
+          </div>
+          <img src="assets/dg-persona-devi-ben.png" width="90" height="90" alt="Photo for the Devi and Ben persona: a family of four" loading="lazy" decoding="async">
+        </div>
+      </div>
+    </div>
+
+    <div class="dg-wrap"><div class="dg-marker"><span class="num" aria-hidden="true">03</span><span class="name">Problems &amp; Solutions</span><span class="line" aria-hidden="true"></span></div></div>
+    <div class="dg-wrap dg-grid-2">
+      <div class="dg-card">
+        <h2 class="dg-h2">Problems</h2>
+        <div class="dg-bar"></div>
+        <ul class="dg-bullets">
+          <li>Tasks fall on one dominant figure in the family</li>
+          <li>Several tools used in parallel with no sync between them</li>
+          <li>Kids aren't included in the day-to-day running of the household</li>
+          <li>Difficulty coordinating between two households after a divorce</li>
+        </ul>
+      </div>
+      <div class="dg-card">
+        <h2 class="dg-h2">Solutions</h2>
+        <div class="dg-bar"></div>
+        <ul class="dg-bullets">
+          <li>A clear way to divide responsibility among household members</li>
+          <li>All tasks synced in one place</li>
+          <li>Kids join the app once they have a smartphone, usually around age 7–8</li>
+          <li>A divorced parent can manage tasks for both households in one place</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="dg-wrap"><div class="dg-marker"><span class="num" aria-hidden="true">04</span><span class="name">Information Architecture</span><span class="line" aria-hidden="true"></span></div></div>
+    <div class="dg-wrap">
+      <h2 class="dg-h2 dg-ia-title">Information Architecture</h2>
+      <div class="dg-ia-canvas">
+            <div class="dg-ia" role="img" aria-label="Information architecture. Onboarding: Splash, Phone login, OTP code, Start here. Parent app: Home, Calendar, Add task, Notifications, Family. Kid app for ages 7 and up: Home, Task by voice, Family.">
+              <span class="lbl">Onboarding</span>
+              <i class="c" style="left:899.333px;top:262px;width:2px;height:14px;background:#327f6c"></i>
+              <i class="c" style="left:899.333px;top:206px;width:2px;height:18px;background:#327f6c"></i>
+              <i class="c" style="left:800px;top:279px;width:2px;height:14px;background:#327f6c"></i>
+              <i class="c" style="left:800px;top:206px;width:2px;height:18px;background:#327f6c"></i>
+              <i class="c" style="left:700.667px;top:262px;width:2px;height:14px;background:#327f6c"></i>
+              <i class="c" style="left:700.667px;top:206px;width:2px;height:18px;background:#327f6c"></i>
+              <i class="c" style="left:700.667px;top:206px;width:198.667px;height:2px;background:#45a17d"></i>
+              <i class="c" style="left:576px;top:262px;width:2px;height:14px;background:#925322"></i>
+              <i class="c" style="left:576px;top:206px;width:2px;height:18px;background:#925322"></i>
+              <i class="c" style="left:454px;top:262px;width:2px;height:14px;background:#925322"></i>
+              <i class="c" style="left:454px;top:206px;width:2px;height:18px;background:#925322"></i>
+              <i class="c" style="left:332px;top:262px;width:2px;height:14px;background:#925322"></i>
+              <i class="c" style="left:332px;top:206px;width:2px;height:18px;background:#925322"></i>
+              <i class="c" style="left:210px;top:262px;width:2px;height:14px;background:#925322"></i>
+              <i class="c" style="left:210px;top:206px;width:2px;height:18px;background:#925322"></i>
+              <i class="c" style="left:88px;top:262px;width:2px;height:14px;background:#925322"></i>
+              <i class="c" style="left:88px;top:206px;width:2px;height:18px;background:#925322"></i>
+              <i class="c" style="left:88px;top:206px;width:488px;height:2px;background:#cb6316"></i>
+              <i class="c" style="left:800px;top:190px;width:2px;height:16px;background:#327f6c"></i>
+              <i class="c" style="left:332px;top:190px;width:2px;height:16px;background:#925322"></i>
+              <i class="c" style="left:800px;top:128px;width:2px;height:20px;background:#92a7b3"></i>
+              <i class="c" style="left:332px;top:128px;width:2px;height:20px;background:#92a7b3"></i>
+              <i class="c" style="left:332px;top:128px;width:511.5px;height:2px;background:#92a7b3"></i>
+              <i class="c" style="left:843.5px;top:94px;width:2px;height:34px;background:#92a7b3"></i>
+              <i class="c" style="left:707px;top:72px;width:36px;height:2px;background:#92a7b3"></i>
+              <i class="c" style="left:470px;top:72px;width:36px;height:2px;background:#92a7b3"></i>
+              <i class="c" style="left:233px;top:72px;width:36px;height:2px;background:#92a7b3"></i>
+              <span class="b top" style="left:32.0px;top:52px;width:201.0px;height:35px;background:#296680;">Splash ×3</span>
+              <span class="b top" style="left:269.0px;top:52px;width:201.0px;height:35px;background:#296680;">Phone login</span>
+              <span class="b top" style="left:506.0px;top:52px;width:201.0px;height:35px;background:#296680;">OTP code</span>
+              <span class="b top" style="left:743.0px;top:52px;width:201.0px;height:35px;background:#296680;">Start here</span>
+              <span class="b top" style="left:232.0px;top:148px;width:200.0px;height:36px;background:#f26d0e;">Parent app</span>
+              <span class="b top" style="left:690.0px;top:148px;width:220.0px;height:36px;background:#52b788;color:#032030;">Kid app (ages 7+)</span>
+              <span class="b nav" style="left:32.0px;top:224px;width:112.0px;height:38px;background:#003554;border-color:#f26d0e;">Home</span>
+              <span class="b sub" style="left:32.0px;top:276px;width:112.0px;height:50px;background:#022b42;">Today · Tomorrow · All</span>
+              <span class="b sub" style="left:32.0px;top:334px;width:112.0px;height:50px;background:#022b42;">All / Mine / Shared</span>
+              <span class="b sub" style="left:32.0px;top:392px;width:112.0px;height:35px;background:#022b42;">Filters sheet</span>
+              <span class="b sub" style="left:32.0px;top:435px;width:112.0px;height:50px;background:#022b42;">Progress / Workload</span>
+              <span class="b nav" style="left:154.0px;top:224px;width:112.0px;height:38px;background:#003554;border-color:#f26d0e;">Calendar</span>
+              <span class="b sub" style="left:154.0px;top:276px;width:112.0px;height:35px;background:#022b42;">Events by day</span>
+              <span class="b nav" style="left:276.0px;top:224px;width:112.0px;height:38px;background:#003554;border-color:#f26d0e;">+ Add task</span>
+              <span class="b sub" style="left:276.0px;top:276px;width:112.0px;height:50px;background:#022b42;">Date · Time · Urgency</span>
+              <span class="b sub" style="left:276.0px;top:334px;width:112.0px;height:35px;background:#022b42;">Task added</span>
+              <span class="b nav" style="left:398.0px;top:224px;width:112.0px;height:38px;background:#003554;border-color:#f26d0e;">Notifications</span>
+              <span class="b sub" style="left:398.0px;top:276px;width:112.0px;height:35px;background:#022b42;">Quick replies</span>
+              <span class="b sub" style="left:398.0px;top:319px;width:112.0px;height:35px;background:#022b42;">Read / Empty</span>
+              <span class="b nav dashed" style="left:520.0px;top:224px;width:112.0px;height:38px;background:#003554;border-color:#f26d0e;">Family</span>
+              <span class="b sub" style="left:520.0px;top:276px;width:112.0px;height:50px;background:#022b42;">Switch home (2)</span>
+              <span class="b sub" style="left:520.0px;top:334px;width:112.0px;height:35px;background:#022b42;">Profile</span>
+              <span class="b nav" style="left:656.0px;top:224px;width:89.3px;height:38px;background:#003554;border-color:#52b788;">Home</span>
+              <span class="b sub" style="left:656.0px;top:276px;width:89.3px;height:50px;background:#022b42;">Today · Tomorrow</span>
+              <span class="b sub" style="left:656.0px;top:334px;width:89.3px;height:50px;background:#022b42;">My tasks &amp; points</span>
+              <span class="b sub" style="left:656.0px;top:392px;width:89.3px;height:50px;background:#022b42;">Ask for help</span>
+              <span class="b nav" style="left:755.3px;top:224px;width:89.3px;height:55px;background:#003554;border-color:#52b788;">+ Task by voice</span>
+              <span class="b sub" style="left:755.3px;top:293px;width:89.3px;height:65px;background:#022b42;">Type · Record · When</span>
+              <span class="b nav dashed" style="left:854.7px;top:224px;width:89.3px;height:38px;background:#003554;border-color:#52b788;">Family</span>
+              <span class="b sub" style="left:854.7px;top:276px;width:89.3px;height:50px;background:#022b42;">Family goal</span>
+              <span class="legend">Bottom nav item · screens and states below it · Dashed: screen not designed yet</span>
             </div>
-            <img src="assets/dg-research-robot.webp" alt="Research mascot, a robot with a magnifying glass" data-i18n-alt="dg-research-img-alt" class="reveal">
-          </div>
-        </div>
       </div>
-    </section>
+    </div>
 
-    <section class="dg-section">
-      <div class="dg-wrap dg-grid-2">
-        <div class="dg-card" style="margin-bottom:0;">
-          <h3 data-i18n="dg-problems-title">Problems</h3>
-          <div class="dg-bar"></div>
-          <ul class="dg-bullets">
-            <li data-i18n="dg-problems-1"><span class="dot"></span>Tasks fall on one dominant figure in the family</li>
-            <li data-i18n="dg-problems-2"><span class="dot"></span>Several tools used in parallel with no sync between them</li>
-            <li data-i18n="dg-problems-3"><span class="dot"></span>Kids aren't included in the day-to-day running of the household</li>
-            <li data-i18n="dg-problems-4"><span class="dot"></span>Difficulty coordinating between two households after a divorce</li>
-          </ul>
-        </div>
-
-        <div class="dg-card" style="margin-bottom:0;">
-          <h3 data-i18n="dg-solutions-title">Solutions</h3>
-          <div class="dg-bar"></div>
-          <ul class="dg-bullets">
-            <li data-i18n="dg-solutions-1"><span class="dot"></span>All tasks synced in one place</li>
-            <li data-i18n="dg-solutions-2"><span class="dot"></span>Kids join the app from the age they have a smartphone</li>
-            <li data-i18n="dg-solutions-3"><span class="dot"></span>A divorced parent can manage tasks for both households in one place</li>
-            <li data-i18n="dg-solutions-4"><span class="dot"></span>Equal division of responsibility among household members</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="dg-section">
+    <div class="dg-wrap"><div class="dg-marker"><span class="num" aria-hidden="true">05</span><span class="name">Two Experiences, One Family</span><span class="line" aria-hidden="true"></span></div></div>
+    <div class="dg-process">
       <div class="dg-wrap">
-        <div class="dg-title" data-i18n="dg-persona-title">Persona</div>
-        <div class="dg-card">
-          <div class="dg-persona-row">
-            <div class="dg-avatar" aria-hidden="true"><svg viewBox="0 0 32 32" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="11.5" r="5"/><path d="M6.5 27c.8-5.2 4.6-8 9.5-8s8.7 2.8 9.5 8"/></svg></div>
-            <div>
-              <h4 data-i18n="dg-persona1-name">David, 45</h4>
-              <p data-i18n="dg-persona1-bio">David, 45, is divorced with two children from his first marriage, remarried, and has two more children. David is a career-driven professional with a packed schedule who struggles to sync between the two households and remember everything in time, so he usually needs a reminder to take the kids to special events.</p>
-            </div>
+        <h2 class="dg-h2">Two Experiences, One Family</h2>
+        <p class="dg-sub">Same information, two experiences</p>
+        <p class="dg-body">Both see the same tasks, but not the same thing. The parent, who runs the household, gets an overall picture of priorities and the event calendar. The child, who needs a reason to get moving, gets a level, a streak and a goal waiting for them.</p>
+      </div>
+      <div class="dg-duo">
+        <div class="dg-duo-col">
+          <h3>Parent screen</h3>
+          <p class="desc">Management and control: full visibility, clear priorities</p>
+          <div class="dg-phone">
+            <img src="assets/dg-process-parent.png" width="255" height="551" alt="Parent home screen: time tabs, ownership filters, task cards, family progress and upcoming events" loading="lazy" decoding="async">
+            <ul class="dg-anno dg-anno--left">
+              <li style="top:27%">Today / Tomorrow / All tasks</li>
+              <li style="top:41.9%">Task card: who's assigned, mention, edit</li>
+              <li style="top:77.5%">Family progress: done, in progress, open</li>
+              <li style="top:86.4%">Upcoming events</li>
+            </ul>
           </div>
-          <div class="dg-persona-row">
-            <div class="dg-avatar" aria-hidden="true"><svg viewBox="0 0 32 32" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11.5" cy="12" r="4"/><path d="M3.5 26.5c.6-4.4 3.6-6.8 8-6.8s7.4 2.4 8 6.8"/><circle cx="22" cy="10.5" r="3.4"/><path d="M20.8 18.4c.4-.1.9-.1 1.2-.1 3.9 0 6.5 2.1 7 6.2"/></svg></div>
-            <div>
-              <h4 data-i18n="dg-persona2-name">Devi and Ben</h4>
-              <p data-i18n="dg-persona2-bio1">Devi and Ben are a couple in their 40s, both career-driven, with 3 fairly grown children. They feel they keep forgetting to do things on time, and Devi feels she constantly has to hold all the tasks in her head, especially since the kids are in different frameworks, each with different needs depending on age.</p>
-              <p data-i18n="dg-persona2-bio2">The kids also don't give enough advance notice about a special school activity, a get-together with friends, and so on.</p>
-              <p data-i18n="dg-persona2-bio3">Ben and Devi want to be more in sync in running the household day-to-day, to share the load more equally, and they also want to instill in the kids the habit of being more active and involved in the routine.</p>
-            </div>
+        </div>
+        <div class="dg-duo-col dg-duo-col--child">
+          <h3>Child screen</h3>
+          <p class="desc">Motivation and achievement: level, streak and a specific goal</p>
+          <div class="dg-phone">
+            <img src="assets/dg-process-child.png" width="255" height="551" alt="Kid home screen: level and streak, tasks with points, and a shared family goal" loading="lazy" decoding="async">
+            <ul class="dg-anno dg-anno--right">
+              <li style="top:24.5%">Streak and level</li>
+              <li style="top:42.8%">Points per task</li>
+              <li style="top:76.6%">Shared family goal: a family movie night</li>
+            </ul>
           </div>
         </div>
       </div>
-    </section>
-
-    <section class="dg-section">
       <div class="dg-wrap">
-        <div class="dg-title" data-i18n="dg-process-title">Process</div>
-        <div class="dg-card">
-          <h3 data-i18n="dg-process-subtitle">Same information, two experiences</h3>
-          <div class="dg-bar"></div>
-          <p data-i18n="dg-process-body">Both see the same tasks, but not the same thing. The parent, who runs the household, gets an overall picture of priorities and the event calendar. The child, who needs a reason to get moving, gets a level, a streak, and a goal waiting for them.</p>
-          <div class="dg-process-row">
-            <div class="dg-process-col">
-              <div class="dg-process-label" data-i18n="dg-process-child-label">Child screen</div>
-              <p class="dg-process-desc" data-i18n="dg-process-child-desc">Motivation and achievement: level, streak, and a specific goal</p>
-              <div class="dg-process-img-wrap"><img class="reveal" src="assets/dg-process-child-screen.webp" alt="Child's screen: profile, streak and level, today's task list" data-i18n-alt="dg-process-child-alt"></div>
-            </div>
-            <div class="dg-process-col">
-              <div class="dg-process-label" data-i18n="dg-process-parent-label">Parent screen</div>
-              <p class="dg-process-desc" data-i18n="dg-process-parent-desc">Management and control: full visibility, clear priorities</p>
-              <div class="dg-process-img-wrap"><img class="reveal" src="assets/dg-process-parent-screen.webp" alt="Parent's screen: shared breakfast tasks, progress and upcoming events" data-i18n-alt="dg-process-parent-alt"></div>
-            </div>
+        <h3 class="dg-flow-title">Building the add-task flow</h3>
+        <div class="dg-flow">
+          <div class="step"><img src="assets/dg-flow-1.png" width="180" height="390" alt="Add-task screen, empty" loading="lazy" decoding="async"><b>Empty</b>An empty form. Urgency starts at medium by default</div>
+          <span class="arrow" aria-hidden="true">→</span>
+          <div class="step"><img src="assets/dg-flow-2.png" width="180" height="390" alt="Add-task screen with title, date, time and urgency filled in" loading="lazy" decoding="async"><b>Task details</b>Title, date, time and urgency filled in</div>
+          <span class="arrow" aria-hidden="true">→</span>
+          <div class="step"><img src="assets/dg-flow-3.png" width="180" height="390" alt="Add-task screen with one family member chosen as responsible" loading="lazy" decoding="async"><b>Who's responsible</b>One family member is set as the owner</div>
+          <span class="arrow" aria-hidden="true">→</span>
+          <div class="step"><img src="assets/dg-flow-4.png" width="180" height="390" alt="Add-task screen with more participants added" loading="lazy" decoding="async"><b>More participants</b>Others join to help, with an optional file</div>
+        </div>
+        <p class="dg-flow-note">The screen builds up step by step: from empty, through task details and choosing who's responsible, to a full task with more participants. The orange frame marks what changed at each step.</p>
+      </div>
+    </div>
+
+    <div class="dg-wrap"><div class="dg-marker"><span class="num" aria-hidden="true">06</span><span class="name">Decisions &amp; Trade-offs</span><span class="line" aria-hidden="true"></span></div></div>
+    <div class="dg-wrap">
+      <div class="dg-card dg-card--blue">
+        <h2 class="dg-h2">Decisions &amp; Trade-offs</h2>
+        <h3 class="dg-h3">What I chose, and what it cost</h3>
+        <p class="dg-lede">Each decision below had a real alternative. I built the main ones side by side before choosing, and I kept the ones I rejected because they shaped the final design.</p>
+        <div class="dg-decisions">
+          <div class="dg-decision">
+            <h4>One home, not a dashboard</h4>
+            <p><strong>Problem:</strong> Home and Tasks in the nav showed the same content, and each tab had a different header.</p>
+            <p><strong>Decision:</strong> Home opens straight to today's list. Tasks left the nav, and Notifications took its place.</p>
+            <p><strong>Trade-off:</strong> I built and rejected a separate summary screen. In a simple home app it added a step on the way to the most-used information.</p>
+          </div>
+          <div class="dg-decision">
+            <h4>Two layers of filtering</h4>
+            <p><strong>Problem:</strong> Time tabs and Mine/Shared looked identical, so nothing read as primary.</p>
+            <p><strong>Decision:</strong> Time stays a segmented control. Ownership became light chips with All as the default, and extra filters open from one chip.</p>
+            <p><strong>Trade-off:</strong> One more tap to reach urgency or family-member filters.</p>
+          </div>
+          <div class="dg-decision">
+            <h4>Progress today, workload tomorrow</h4>
+            <p><strong>Problem:</strong> The same data appeared as a ring and as a bar, and 'progress' on Tomorrow made no sense.</p>
+            <p><strong>Decision:</strong> A compact segmented bar on Today. A one-line workload summary on Tomorrow and All.</p>
+            <p><strong>Trade-off:</strong> Less celebratory, so the reward moved to the moment a task is done.</p>
+          </div>
+          <div class="dg-decision">
+            <h4>Kids own their list</h4>
+            <p><strong>Problem:</strong> Kids add tasks too, but a 7-year-old may not write, and approvals add work for parents.</p>
+            <p><strong>Decision:</strong> Icons, a voice recording and today/tomorrow. No approval: points only come from tasks parents assign.</p>
+            <p><strong>Trade-off:</strong> Parents aren't notified about kid-added tasks, but they see them in the shared list.</p>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <section class="dg-section">
-      <div class="dg-wrap">
-        <div class="dg-brand-card">
-          <h3 style="color:#fff;font-weight:600;font-size:22px;margin-bottom:24px;" data-i18n="dg-brand-title">Branding</h3>
-          <div class="dg-brand-word">Rubik</div>
-          <div class="dg-weights">Regular<br>Medium<br>SemiBold</div>
-          <div class="dg-swatches">
-            <div class="dg-swatch"><div class="chip" style="background:#032030"></div><div class="hex">#032030</div></div>
-            <div class="dg-swatch"><div class="chip" style="background:#022B42"></div><div class="hex">#022B42</div></div>
-            <div class="dg-swatch"><div class="chip" style="background:#003554"></div><div class="hex">#003554</div></div>
-            <div class="dg-swatch"><div class="chip" style="background:#F26D0E;border:1px solid #032030"></div><div class="hex">#F26D0E</div></div>
-            <div class="dg-swatch"><div class="chip" style="background:#F2FAFF"></div><div class="hex">#F2FAFF</div></div>
+    <div class="dg-wrap"><div class="dg-marker"><span class="num" aria-hidden="true">07</span><span class="name">Screens</span><span class="line" aria-hidden="true"></span></div></div>
+    <div class="dg-wrap">
+      <div class="dg-card dg-card--blue">
+        <h2 class="dg-h2">Screens</h2>
+        <div class="dg-shots dg-shots--3">
+          <figure><img src="assets/dg-screen-done.png" width="160" height="346" alt="Task done screen with the character celebrating and points earned" loading="lazy" decoding="async"><figcaption>Task done: the reward arrives the moment a task is finished</figcaption></figure>
+          <figure><img src="assets/dg-screen-kid-home.png" width="160" height="346" alt="Kid home screen" loading="lazy" decoding="async"><figcaption>Kid home: level, streak, points per task and a shared family goal</figcaption></figure>
+          <figure><img src="assets/dg-screen-parent-home.png" width="160" height="346" alt="Parent home screen" loading="lazy" decoding="async"><figcaption>Parent home: today's list, family progress and upcoming events</figcaption></figure>
+        </div>
+        <h3 class="dg-h3">David manages both families in one place</h3>
+        <p class="dg-lede">Built for David's persona: he picks the family he's with today and sees only its tasks. Today is his day with the kids, so picking them up from school comes first, at high urgency.</p>
+        <div class="dg-pair">
+          <figure><img src="assets/dg-two-homes-1.png" width="160" height="346" alt="Bottom sheet for choosing between two households" loading="lazy" decoding="async"><figcaption>Choosing a family</figcaption></figure>
+          <span class="arrow" aria-hidden="true">→</span>
+          <figure><img src="assets/dg-two-homes-2.png" width="160" height="346" alt="Today&#x27;s task list for the household David chose" loading="lazy" decoding="async"><figcaption>David's day with the kids</figcaption></figure>
+        </div>
+      </div>
+    </div>
+
+    <div class="dg-wrap"><div class="dg-marker"><span class="num" aria-hidden="true">08</span><span class="name">Beyond the Happy Path</span><span class="line" aria-hidden="true"></span></div></div>
+    <div class="dg-wrap">
+      <div class="dg-card dg-card--blue">
+        <h2 class="dg-h2">Beyond the Happy Path</h2>
+        <h3 class="dg-h3">Edge states, with the character</h3>
+        <p class="dg-lede">A family app gets used in a hurry, on the go and on weak connections. I designed the moments when things don't go as planned, and used the character's expressions to keep them human: pointing to the next step, losing the connection, or simply sad when something fails.</p>
+          <div class="dg-shots dg-shots--cap dg-shots--w200">
+            <figure><img src="assets/dg-edge-empty.png" width="200" height="433" alt="Empty state with the character pointing to the first step" loading="lazy" decoding="async"><figcaption><b>Empty</b>A new family gets a clear first step instead of a blank screen</figcaption></figure>
+            <figure><img src="assets/dg-edge-offline.png" width="200" height="433" alt="Offline banner above the task list" loading="lazy" decoding="async"><figcaption><b>Offline</b>Tasks stay visible, and changes sync once the connection is back</figcaption></figure>
+            <figure><img src="assets/dg-edge-error.png" width="200" height="433" alt="Save error dialog with retry and save as draft" loading="lazy" decoding="async"><figcaption><b>Save error</b>Nothing the user typed is lost: retry, or save as a draft</figcaption></figure>
+            <figure><img src="assets/dg-edge-loading.png" width="200" height="433" alt="Loading state with skeleton cards" loading="lazy" decoding="async"><figcaption><b>Loading</b>Skeleton cards keep the layout stable while data loads</figcaption></figure>
           </div>
-        </div>
       </div>
-    </section>
+    </div>
 
-    <section class="dg-section">
-      <div class="dg-wrap">
-        <div class="dg-title" data-i18n="dg-ia-title">Information Architecture</div>
-        <div class="dg-card">
-          <div class="dg-ia-canvas">
-            <div class="dg-ia">
-
-              <div class="dg-ia-group peach">
-                <div class="dg-ia-group-label orange" data-i18n="dg-ia-group-onboarding">Onboarding</div>
-                <div class="dg-ia-row">
-                  <div class="dg-ia-box green" data-i18n="dg-ia-start">Start here ✓</div>
-                  <div class="dg-ia-hline"></div>
-                  <div class="dg-ia-box navy" data-i18n="dg-ia-auth-otp">Authentication OTP</div>
-                  <div class="dg-ia-hline"></div>
-                  <div class="dg-ia-box navy" data-i18n="dg-ia-mobile-login">Mobile login</div>
-                  <div class="dg-ia-hline"></div>
-                  <div class="dg-ia-box orange" data-i18n="dg-ia-splash">Splash screens<br>Splash × 3</div>
-                </div>
-              </div>
-
-              <div class="dg-ia-elbow">
-                <div class="dg-ia-elbow-down1"></div>
-                <div class="dg-ia-elbow-across"></div>
-                <div class="dg-ia-elbow-down2"></div>
-              </div>
-
-              <div class="dg-ia-center">
-                <div class="dg-ia-box navy" data-i18n="dg-ia-main">Main</div>
-              </div>
-
-              <div class="dg-ia-branch">
-                <div class="dg-ia-branch-bar n2"></div>
-                <div class="dg-ia-children">
-
-                  <div class="dg-ia-child">
-                    <div class="dg-ia-group peach">
-                      <div class="dg-ia-group-label orange" data-i18n="dg-ia-group-parent">Authenticated parent interface</div>
-                      <div class="dg-ia-box navy" data-i18n="dg-ia-parent-interface">Parent interface</div>
-
-                      <div class="dg-ia-branch small">
-                        <div class="dg-ia-branch-bar n2"></div>
-                        <div class="dg-ia-children">
-                          <div class="dg-ia-child">
-                            <div class="dg-ia-box orange" data-i18n="dg-ia-fab">FAB: floating button</div>
-                            <div class="dg-ia-branch small">
-                              <div class="dg-ia-branch-bar n2"></div>
-                              <div class="dg-ia-children">
-                                <div class="dg-ia-child"><div class="dg-ia-box teal" data-i18n="dg-ia-add-task">Add task</div></div>
-                                <div class="dg-ia-child"><div class="dg-ia-box teal" data-i18n="dg-ia-add-event">Add event</div></div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="dg-ia-child">
-                            <div class="dg-ia-box navy">Top Bar</div>
-                            <div class="dg-ia-branch small">
-                              <div class="dg-ia-branch-bar n3"></div>
-                              <div class="dg-ia-children">
-                                <div class="dg-ia-child">
-                                  <div class="dg-ia-box teal" data-i18n="dg-ia-today">Today</div>
-                                  <div class="dg-ia-vline small"></div>
-                                  <div class="dg-ia-box tealdark" data-i18n="dg-ia-today-screen">Today screen</div>
-                                </div>
-                                <div class="dg-ia-child">
-                                  <div class="dg-ia-box teal" data-i18n="dg-ia-tomorrow">Tomorrow</div>
-                                  <div class="dg-ia-vline small"></div>
-                                  <div class="dg-ia-box tealdark" data-i18n="dg-ia-tomorrow-screen">Tomorrow screen</div>
-                                </div>
-                                <div class="dg-ia-child">
-                                  <div class="dg-ia-box teal" data-i18n="dg-ia-all-tasks">All tasks</div>
-                                  <div class="dg-ia-vline small"></div>
-                                  <div class="dg-ia-box tealdark" data-i18n="dg-ia-all-tasks-screen">All tasks screen</div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="dg-ia-child">
-                    <div class="dg-ia-group mint">
-                      <div class="dg-ia-group-label green" data-i18n="dg-ia-group-child">Child interface, ages 7-8</div>
-                      <div class="dg-ia-box green" data-i18n="dg-ia-child-interface">Child interface</div>
-                      <div class="dg-ia-vline"></div>
-                      <div class="dg-ia-box navy" data-i18n="dg-ia-topbar-child">Top Bar: Child</div>
-                      <div class="dg-ia-branch small">
-                        <div class="dg-ia-branch-bar n2"></div>
-                        <div class="dg-ia-children">
-                          <div class="dg-ia-child"><div class="dg-ia-box teal" data-i18n="dg-ia-home-screen">Home screen</div></div>
-                          <div class="dg-ia-child"><div class="dg-ia-box teal" data-i18n="dg-ia-tasks-screen">Tasks screen</div></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-            </div>
+    <div class="dg-wrap"><div class="dg-marker"><span class="num" aria-hidden="true">09</span><span class="name">Closing the Loop</span><span class="line" aria-hidden="true"></span></div></div>
+    <div class="dg-wrap">
+      <div class="dg-card dg-card--blue">
+        <h2 class="dg-h2">Closing the Loop</h2>
+        <h3 class="dg-h3">A kid asks for help, a parent answers</h3>
+        <p class="dg-lede">A kid waiting for homework help shouldn't be left wondering. The request shows its status right on the task card, the parent answers from the notification in one tap, and if the app is closed the answer arrives as a push on the lock screen. 'Seen' matters most: it tells the kid someone noticed, even before an answer.</p>
+          <div class="dg-shots dg-shots--cap dg-shots--w160">
+            <figure><img src="assets/dg-help-ask.png" width="160" height="346" alt="Kid chooses which parent to ask for help" loading="lazy" decoding="async"><figcaption><b>Ask</b>Pick mom or dad: two big targets, no typing</figcaption></figure>
+            <figure><img src="assets/dg-help-seen.png" width="160" height="346" alt="Task card showing that mom has seen the request" loading="lazy" decoding="async"><figcaption><b>Seen</b>Like WhatsApp ticks: someone noticed</figcaption></figure>
+            <figure><img src="assets/dg-help-reply.png" width="160" height="346" alt="Parent notifications with quick reply buttons" loading="lazy" decoding="async"><figcaption><b>Parent replies</b>Quick replies right in the notification</figcaption></figure>
+            <figure><img src="assets/dg-help-push.png" width="160" height="346" alt="Lock screen with a push notification from mom" loading="lazy" decoding="async"><figcaption><b>Push</b>On the lock screen, only for answers to the kid’s own requests</figcaption></figure>
+            <figure><img src="assets/dg-help-answered.png" width="160" height="346" alt="Task card showing the parent answer" loading="lazy" decoding="async"><figcaption><b>Answered</b>The answer lands where the kid asked</figcaption></figure>
           </div>
-          <p style="text-align:center;color:rgba(255,255,255,.5);margin-top:18px;font-size:13px;" data-i18n="dg-ia-caption">The full information architecture diagram is also available in the Figma project file.</p>
-        </div>
       </div>
-    </section>
+    </div>
 
-    <section class="dg-section">
-      <div class="dg-wrap">
-        <div class="dg-card">
-          <h3 data-i18n="dg-screens-title">Screens</h3>
-          <div class="dg-screens-row" style="margin-top:20px;">
-            <div class="dg-screen-slot reveal"><img src="assets/dg-process-parent-screen.webp" alt="Parent's screen: shared breakfast tasks, progress and upcoming events" data-i18n-alt="dg-process-parent-alt"></div>
-            <div class="dg-screen-slot reveal"><img src="assets/dg-process-child-screen.webp" alt="Child's screen: profile, streak and level, today's task list" data-i18n-alt="dg-process-child-alt"></div>
-            <div class="dg-screen-slot reveal"><img src="assets/dg-screen-celebrate.png" alt="Celebration screen for completing all tasks and earning points" data-i18n-alt="dg-screen3-alt"></div>
+    <div class="dg-wrap"><div class="dg-marker"><span class="num" aria-hidden="true">10</span><span class="name">Kids Add Tasks by Voice</span><span class="line" aria-hidden="true"></span></div></div>
+    <div class="dg-wrap">
+      <div class="dg-card dg-card--blue">
+        <h2 class="dg-h2">Kids Add Tasks by Voice</h2>
+        <h3 class="dg-h3">Icons first, then hold to record</h3>
+        <p class="dg-lede">Kids add tasks too, like a test the teacher announced, but a 7-year-old may not write yet. They tap the + in their nav, the same one parents have, pick a type by icon, hold to record like a voice message, and choose today or tomorrow. The recording itself is the task. No parent approval: points only come from tasks parents assign.</p>
+          <div class="dg-shots dg-shots--cap dg-shots--w200">
+            <figure><img src="assets/dg-voice-type.png" width="200" height="433" alt="Sheet with six large task type icons" loading="lazy" decoding="async"><figcaption><b>Pick a type</b>Big icons a young kid recognizes faster than words</figcaption></figure>
+            <figure><img src="assets/dg-voice-record.png" width="200" height="433" alt="Recording sheet with a large microphone button" loading="lazy" decoding="async"><figcaption><b>Hold to record</b>The voice-message pattern kids already know</figcaption></figure>
+            <figure><img src="assets/dg-voice-when.png" width="200" height="433" alt="Sheet with two buttons: today and tomorrow" loading="lazy" decoding="async"><figcaption><b>Today or tomorrow</b>Two big choices instead of a calendar</figcaption></figure>
+            <figure><img src="assets/dg-voice-list.png" width="200" height="433" alt="Kid home with the new voice task at the top of the list" loading="lazy" decoding="async"><figcaption><b>On the list</b>Added right away, marked as the kid’s own task</figcaption></figure>
           </div>
-          <p style="text-align:center;color:rgba(255,255,255,.6);margin-top:16px;" data-i18n="dg-screens-caption">Full app screenshots are available in the Figma project file.</p>
-        </div>
       </div>
-    </section>
+    </div>
 
-    <section class="dg-section">
-      <div class="dg-wrap">
-        <div class="dg-title" data-i18n="dg-design-system-title">Design System</div>
-        <div class="dg-card">
-          <img class="reveal" src="assets/dg-design-system.jpg" alt="The design system: task cards, buttons, input fields, assignee/participant pickers, and task cards across all urgency levels" data-i18n-alt="dg-design-system-alt" style="width:100%;border-radius:8px;display:block;">
-          <p style="text-align:center;color:rgba(255,255,255,.5);margin-top:18px;font-size:13px;" data-i18n="dg-design-system-caption">The full design system is also available in the Figma project file.</p>
+    <div class="dg-wrap"><div class="dg-marker"><span class="num" aria-hidden="true">11</span><span class="name">Character</span><span class="line" aria-hidden="true"></span></div></div>
+    <div class="dg-wrap">
+      <div class="dg-card dg-card--blue">
+        <h2 class="dg-h2">A companion for the whole family</h2>
+        <p class="dg-char-text">The character accompanies every family member throughout the app, from onboarding to completed tasks: encouraging, reminding and celebrating wins. Each expression was designed for the screen it appears on.</p>
+        <p class="dg-char-text">I created the character myself, from the first prompt to the final result.<br>Tools: Claude · Gemini · OpenArt</p>
+        <div class="dg-chars">
+          <figure><img src="assets/dg-char-wave.png" width="190" height="197" alt="The character waving hello" loading="lazy" decoding="async"><figcaption>Waving hello</figcaption></figure>
+          <figure><img src="assets/dg-char-guide.png" width="190" height="197" alt="The character pointing the way" loading="lazy" decoding="async"><figcaption>Guiding</figcaption></figure>
+          <figure><img src="assets/dg-char-think.png" width="190" height="197" alt="The character thinking" loading="lazy" decoding="async"><figcaption>Thinking</figcaption></figure>
+          <figure><img src="assets/dg-char-search.png" width="190" height="197" alt="The character searching with a magnifying glass" loading="lazy" decoding="async"><figcaption>Searching</figcaption></figure>
+          <figure><img src="assets/dg-char-celebrate.png" width="190" height="197" alt="The character celebrating" loading="lazy" decoding="async"><figcaption>Celebrating</figcaption></figure>
+          <figure><img src="assets/dg-char-sad.png" width="190" height="197" alt="The character looking sad" loading="lazy" decoding="async"><figcaption>Sad</figcaption></figure>
         </div>
       </div>
-    </section>
+    </div>
+
+    <div class="dg-wrap"><div class="dg-marker"><span class="num" aria-hidden="true">12</span><span class="name">Design System</span><span class="line" aria-hidden="true"></span></div></div>
+    <div class="dg-wrap dg-ds">
+      <img src="assets/dg-design-system.jpg" width="1440" height="3513" alt="The design system: colors, typography, navigation bars, input fields, tabs, filters, buttons, add-task card, participants pickers, task cards by urgency, edge-state components and progress components" loading="lazy" decoding="async">
+    </div>
+
+    <div class="dg-wrap"><div class="dg-marker"><span class="num" aria-hidden="true">13</span><span class="name">Retrospective</span><span class="line" aria-hidden="true"></span></div></div>
+    <div class="dg-wrap dg-retro-stack">
+      <h2 class="dg-h2 dg-retro-title">Looking back</h2>
+      <div class="dg-retro-row">
+        <div class="dg-retro-card">
+          <div class="dg-tag">Retrospective</div>
+          <h3>What I learned</h3>
+          <p>Managing multiple contexts, two families and two roles, is more complex than it first looks, and it calls for early architecture decisions.</p>
+          <p>I'd develop the child's perspective earlier: it came in late and stayed less detailed than the parents' personas.</p>
+        </div>
+        <div class="dg-retro-card">
+          <div class="dg-tag">Next Steps</div>
+          <h3>Next step</h3>
+          <p>The next step is a first round with 3–5 users, parents and children, to test the core flow: adding a task for a child and completing it. Usability testing wasn't part of this scope.</p>
+          <p>I focused on parents and kids. Grandparents who help with the routine are a secondary user I'd design for next.</p>
+          <p>Also on the list, by choice and not by accident: a task details screen, a Family screen, Mine/Shared views for Tomorrow, a full contrast audit, and optional parent approval for tasks kids add.</p>
+        </div>
+      </div>
+      <div class="dg-retro-card">
+        <div class="dg-tag">Hypotheses</div>
+        <div class="dg-hyp">
+          <div><h3>Load</h3><p>Both parents complete a similar share of the tasks over a week.</p></div>
+          <div><h3>Motivation</h3><p>Kids finish their tasks without a reminder.</p></div>
+          <div><h3>Known gap</h3><p>The app shows who is assigned, not how the load is split. A weekly balance view is the first thing I'd design next.</p></div>
+        </div>
+      </div>
+    </div>
 
   </div>
 
@@ -472,29 +693,17 @@
     var canvas = document.querySelector('.dg-ia-canvas');
     var diagram = document.querySelector('.dg-ia');
     if(!canvas || !diagram) return;
-    // the diagram's natural overflow direction (and so which corner stays
-    // put while scaling down) depends on the page direction: in RTL it
-    // hangs off to the left of its own top-right corner, in LTR it hangs
-    // off to the right of its own top-left corner - anchor the scale there.
-    var isRtl = document.documentElement.dir === 'rtl';
-    diagram.style.transformOrigin = isRtl ? 'top right' : 'top left';
     diagram.style.transform = 'none';
     canvas.style.height = '';
-    var canvasStyle = getComputedStyle(canvas);
-    var padL = parseFloat(canvasStyle.paddingLeft) || 0;
-    var padR = parseFloat(canvasStyle.paddingRight) || 0;
-    var available = canvas.clientWidth - padL - padR;
-    var natural = diagram.scrollWidth;
-    var scale = Math.min(1, available / natural);
+    var scale = Math.min(1, canvas.clientWidth / 976);
     if(scale < 1){
       diagram.style.transform = 'scale(' + scale + ')';
-      var naturalHeight = diagram.scrollHeight;
-      canvas.style.height = (naturalHeight * scale) + 'px';
+      canvas.style.height = (560 * scale) + 'px';
     }
   }
   window.addEventListener('load', fitIaDiagram);
   window.addEventListener('resize', fitIaDiagram);
-  document.addEventListener('sitelangchange', fitIaDiagram);
+  fitIaDiagram();
 })();
 </script>
 </body>
