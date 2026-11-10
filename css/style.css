@@ -3259,3 +3259,5 @@ html{ -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 .work-row .work-content--plain > .work-meta--results{ display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 16px !important; row-gap: 2px !important; }
 .work-row .work-content--plain > .work-meta--results .rb-label{ margin-inline-end: -8px; }
 .work-row .work-content--plain > .work-meta--results .rb-chip{ display: inline; margin: 0; }
+.work-row .work-content--plain .work-tools{ column-gap: 12px !important; }
+.work-row .work-content--plain .work-tools-label, .work-row .work-content--plain .work-meta--results .rb-label{ display: inline-block; min-width: 3.6em; margin-inline-end: 0; }

@@ -261,6 +261,25 @@
 .dg-flow .step b{ margin-bottom:6px; }
 .dg-flow-title{ margin-bottom:32px !important; }
 .dg-decisions{ margin-top:36px; }
+
+/* hero: two columns that hold from 861px up */
+.dg-hero-inner{ display:flex; align-items:center; gap:48px; min-height:0; padding:96px 0 64px; }
+.dg-hero-text{ flex:1 1 0; min-width:0; max-width:560px; }
+.dg-hero-mockups{ position:static !important; flex:0 0 auto; width:clamp(300px,44%,540px) !important; max-width:100% !important; margin:0 !important; height:auto; }
+.dg-hero-context{ margin-bottom:28px; }
+.dg-rtl-note{ font-size:13px; line-height:1.5; color:rgba(242,250,255,.55); margin-top:20px; }
+.dg-quiet-link{ color:#6b6458; margin-inline-end:24px; font-size:14px; text-decoration:underline; text-underline-offset:4px; }
+.dg-quiet-link:hover{ color:#1e1b16; }
+.dg-case .dg-hero-label{ margin-bottom:16px; }
+.dg-case .dg-hero h1{ margin-bottom:24px; }
+.dg-case .dg-hero-intro{ margin-bottom:20px; }
+.dg-case .dg-hero-context{ margin-bottom:28px; }
+.dg-case .dg-rtl-note{ margin-top:20px; }
+@media (max-width:860px){
+  .dg-hero-inner{ flex-direction:column; align-items:stretch; gap:40px; padding:64px 0 0; }
+  .dg-hero-text{ max-width:none; }
+  .dg-hero-mockups{ width:100% !important; max-width:420px !important; margin:0 auto !important; }
+}
 </style>
 </head>
 <body data-page="workDogether">
@@ -289,13 +308,6 @@
 </header>
 
 <main>
-  <section class="case-page-header">
-    <div class="wrap">
-      <a href="index.html#work" class="btn keycap keycap--cream keycap--mini case-back" data-i18n="case-back">Back to projects</a>
-      <p class="case-rtl-note" data-i18n="rtl-note">Designed in Hebrew (RTL). Screens are shown in the original language.</p>
-    </div>
-  </section>
-
   <div class="dg-case" lang="en" dir="ltr">
 
     <div class="dg-hero">
@@ -307,6 +319,7 @@
             <p class="dg-hero-intro">Pickups overlap, kids aren't sure what's expected of them, and in families with two homes it gets twice as hard. DOgether turns household tasks into a shared system: parents assign and track, kids earn points for their part, and a divorced parent can switch between households in one tap.</p>
             <p class="dg-hero-context">Solo project · Started at HackerU in 2024, refined on my own after the course · Figma, Figma Make, Illustrator, Claude, Gemini, OpenArt</p>
             <a class="dg-figma-btn" href="https://www.figma.com/design/JE3mKJIgMTCQ2wiWEeECUQ/%D7%90%D7%A4%D7%9C%D7%99%D7%A7%D7%A6%D7%99%D7%94-%D7%9C%D7%A0%D7%99%D7%94%D7%95%D7%9C-%D7%9E%D7%A9%D7%A7-%D7%91%D7%99%D7%AA-%D7%92%D7%A8%D7%A1%D7%94-%D7%A1%D7%95%D7%A4%D7%99%D7%AA?node-id=0-1&p=f&t=8bijHkdGFVTNMRxx-0" target="_blank" rel="noopener">View in Figma <span aria-hidden="true">→</span></a>
+            <p class="dg-rtl-note" data-i18n="rtl-note">Designed in Hebrew (RTL). Screens are shown in the original language.</p>
           </div>
           <img class="dg-hero-mockups" src="assets/dg-hero-mockups.png" width="540" height="570" alt="Two DOgether screens: the parent home with today's tasks and the kid home with points, a streak and a family goal">
         </div>
@@ -664,7 +677,7 @@
 
   <section class="case-bottom-cta">
     <div class="wrap case-bottom-buttons">
-      <a href="index.html#work" class="btn keycap keycap--cream" data-i18n="case-back-all">Back to projects</a>
+      <a href="index.html#work" class="dg-quiet-link" data-i18n="case-back-all">Back to projects</a>
       <a href="https://www.figma.com/design/JE3mKJIgMTCQ2wiWEeECUQ/%D7%90%D7%A4%D7%9C%D7%99%D7%A7%D7%A6%D7%99%D7%94-%D7%9C%D7%A0%D7%99%D7%94%D7%95%D7%9C-%D7%9E%D7%A9%D7%A7-%D7%91%D7%99%D7%AA-%D7%92%D7%A8%D7%A1%D7%94-%D7%A1%D7%95%D7%A4%D7%99%D7%AA?node-id=0-1&p=f&t=8bijHkdGFVTNMRxx-0" target="_blank" rel="noopener" class="btn keycap keycap--purple" data-i18n="case-full-project">View in Figma</a>
     </div>
   </section>
