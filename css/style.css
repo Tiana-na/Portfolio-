@@ -1202,7 +1202,7 @@ section{ padding: 90px 0; }
 
 .work-desc{
   color: var(--text-muted);
-  font-size: .92rem;
+  font-size: 1rem;
   line-height:1.8;
   margin-bottom: 14px;
 }
@@ -1222,7 +1222,7 @@ section{ padding: 90px 0; }
 }
 
 .work-tools-label{
-  color: var(--text-faint);
+  color: var(--text-muted);
   font-size: .82rem;
   margin-inline-end: 2px;
 }
@@ -1921,7 +1921,7 @@ footer{
   box-shadow: 0 1px 0 rgba(255,255,255,.35) inset, 0 -2px 5px rgba(30,20,60,.25) inset, 0 1px 0 var(--key-side), 0 2px 0 var(--key-deep), 0 6px 10px -6px rgba(37,31,28,.4);
 }
 
-/* =====================================================================
+/* ==============================================================
    About flow: the logo's dot sets off a chain reaction (hero), then rolls
    down the page opening each stack. Shapes come from the site's own language:
    keycaps, pills, paper cards, the three pastel rails.
@@ -2334,7 +2334,7 @@ html.lh-peek .lh-T .lh-head em{ transform: none !important; }
 .work-row--dogether .work-image img{ object-position: 50% 42%; }
 .work-row .work-tag{ font-size: .75rem; }
 .work-row .work-tools-label, .work-row .tool-pill, .work-row .rb-label, .work-row .rb-chip{ font-size: .84rem; }
-.work-content > .work-desc{ font-size: .94rem; line-height: 1.75; }
+.work-content > .work-desc{ font-size: 1rem; line-height: 1.75; }
 .work-row .work-btn{ font-size: .875rem; }
 .work-content > .work-tags{ margin-bottom: 18px; }
 .work-content h3{ margin-bottom: 22px; }
@@ -2406,7 +2406,7 @@ html.lh-peek .lh-T .lh-head em{ transform: none !important; }
 .lh-bh{ position: absolute; left: -1px; right: -1px; bottom: 0; height: 3px; border-radius: 2px; z-index: 5; pointer-events: none; opacity: 0;
   background: linear-gradient(90deg, rgba(183,166,226,0), #B7A6E2 10%, #7A6A9E 50%, #B7A6E2 90%, rgba(183,166,226,0)); box-shadow: 0 0 12px 3px rgba(183,166,226,.8); }
 
-/* =====================================================================
+/* ==============================================================
    One key language across the site: cream keys (secondary / icons), purple keys (primary)
    ===================================================================== */
 .btn.keycap.keycap--cream{
@@ -2781,7 +2781,7 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
 .lh-note{ font-size: 14.5px; line-height: 1.3; padding: 7px 11px; min-width: 112px; border-radius: 0 9px 0 0; border-inline-start-width: 3px; }
 .lh-note-pin{ width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; border-radius: 0 34% 0 0; }
 
-/* =====================================================================
+/* ==============================================================
    Cards wait, out of sight, until the line brings them in (after the hero); the line goes round each card of a stack in turn and lights it.
    Titles live in ONE place: along the card's side, large - never again as a second title on top.
    ===================================================================== */
@@ -2823,7 +2823,7 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
   .stk--skills .stk-card{ min-height: 218px; }
 }
 
-/* =====================================================================
+/* ==============================================================
    Contact: the line is the telephone cord. It runs in to the payphone, follows the photo's own cord to the receiver, and the phone rings.
    ===================================================================== */
 .cl-rail{ z-index: 3; }
@@ -2930,7 +2930,7 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
 .lh-rv.is-match .lh-note:not(.lh-match-note){ opacity: 0; }
 .lh-rv-ring{ box-sizing: border-box; }
 
-/* =====================================================================
+/* ==============================================================
    About stacks: the cards fan out to the side in depth (tilt, gaps, frosted glass), each with its title written normally at the top of its edge.
    Bigger cards, bigger type. On a phone there is no room beside the card, so the cards behind peek out above it, like folder tabs.
    ===================================================================== */
@@ -3109,7 +3109,7 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
   .stk .stk-card:not(.is-front) .mag-fact-label, .stk .stk-card:not(.is-front) > :is(h2, h3, h4){ opacity: 0 !important; }
 }
 
-/* ======== Projects (home), desktop: the About card look + the dot ride ========
+/* ======== Projects (home), desktop: the About card look + the dot ride =
    Each case is one card (same paper, radius and shadow as the About cards). The cover is a "window" with the site's one big corner,
    tilted a little to the side in perspective, with one plane behind it. The dot comes down the margin and lights each card when it arrives. */
 .work-row .work-tag, .work-row .work-tags--b2b .work-tag, .work-row .work-tags--dogether .work-tag, .work-row .work-tags--mixmatch .work-tag{
@@ -3157,7 +3157,7 @@ a.logo-lockup:focus-visible{ outline: 2px solid #7A6A9E; outline-offset: 6px; bo
 
   .work-content{ padding: 4px 0 0 !important; display: flex !important; flex-direction: column; align-items: flex-start; }
   .work-content h3{ font-size: 1.85rem; line-height: 1.18; margin: 0 0 16px; }
-  .work-content > .work-desc{ margin: 0 0 18px; font-size: .92rem; line-height: 1.7; max-width: none; }
+  .work-content > .work-desc{ margin: 0 0 18px; font-size: 1rem; line-height: 1.7; max-width: none; }
   .work-content > .work-tools{ margin-bottom: 10px !important; }
   .work-row .work-meta--results{ margin: 0 0 18px !important; }
   .work-content > .work-btn{ margin-top: 4px; }
@@ -3267,3 +3267,15 @@ html{ -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 .works-section .work-group::after{ content: ""; flex: 1; height: 1px; background: currentColor; opacity: .25; }
 .works-section .work-group--second{ margin-top: 24px; }
 @media (max-width: 760px){ .works-section .work-group{ margin-bottom: -28px; } }
+
+/* ---- Project cards: result/scope row now sits above the tools row ---- */
+.work-row .work-content > .work-meta--results{ margin-bottom: 10px !important; }
+.work-row .work-content > .work-tools{ margin-bottom: 18px !important; }
+
+/* ---- Header: logo sits at the start of the reading direction (left in English, right in Hebrew) ---- */
+.nav .brand{ order: -1; }
+
+/* ---- Mobile menu button: 44x44 touch target, icon stays aligned to the page edge ---- */
+@media (max-width: 860px){
+  .menu-toggle{ display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0; margin-inline-end: -10px; order: 0; }
+}

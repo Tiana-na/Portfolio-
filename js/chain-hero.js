@@ -38,7 +38,7 @@
   function back(t) { var c = 1.7; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); }
 
   /* ---------- timeline (tpl units; real seconds = units / SPEED) ---------- */
-  var SPEED = 2.9;
+  var SPEED = 4.0;
   var T_HAND = 1.9;          /* the dot lands on the first key */
   var T_PRESS = 1.9;
   var T_END = 20.6, T_ASSEMBLED = 18.8;

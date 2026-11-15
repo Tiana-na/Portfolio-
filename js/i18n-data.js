@@ -29,7 +29,7 @@ window.I18N = {
   },
 
   index: {
-    "hero-role": "מעצבת UX/UI",
+    "hero-role": "UX/UI Designer &amp; Digital Creative Designer",
     "hero-h1": "היי,<br>אני טיאנה",
     "hero-subline": "חובבת קפה, ספרים, אופנה ומארוול. <br class=\"subline-break\">סקרנית. <br class=\"subline-break\">הנדי וומן.",
     "hero-lede": "בנוסף, אני מעצבת UX/UI. במשך שנים עיצבתי <span class=\"hl\">חוויות לקוח במרחבים פיזיים</span> עבור מותגים בינלאומיים, ומאז 2024 אני עושה את אותו הדבר במוצרים דיגיטליים. אני מביאה איתי עין חדה להתנהגות משתמשים ולהיררכיה ויזואלית בכל ממשק שאני מעצבת. הפרק הבא שלי הוא דיגיטלי. אני רוצה להתפתח בו ולוודא שהוא נשאר אנושי, גם כשה-AI מאיץ הכול.",
@@ -43,7 +43,7 @@ window.I18N = {
     "b2b-desc": "במערכת היה כל מה שהמשתמשים צריכים, אבל היא לא תמיד הובילה אותם אליו בצורה טבעית. הקייס סטאדי בוחן את הרגעים שבהם הממשק לא היה מספיק אינטואיטיבי כדי להוביל את המשתמש קדימה, ואת השינויים שעזרו למערכת באמת לעבוד כפי שנועדה.",
     "work-tools-label": "כלים:",
     "b2b-meta": "<span class=\"rb-label\">תוצאה:</span><span class=\"rb-chip\">פחות פניות חוזרות</span><span class=\"rb-chip\">אפיון מדויק יותר</span><span class=\"rb-chip\">הפחתת העומס על צוות Customer Success</span>",
-    "work-view-project": "לצפייה בפרויקט המלא",
+    "work-view-project": "לקייס המלא",
     "cover-dogether-alt": "DOgether: מסך הבית של ההורה ומסך הבית של הילד, לצד הדמות של האפליקציה",
     "dogether-tag-personal": "פרויקט אישי",
     "dogether-scope": "<span class=\"rb-label\">היקף:</span><span class=\"rb-chip\">מחקר UX</span><span class=\"rb-chip\">UX/UI</span><span class=\"rb-chip\">דמות</span><span class=\"rb-chip\">Design system</span>",
@@ -55,7 +55,7 @@ window.I18N = {
     "mixmatch-h3": "ארון מלא. אין מה ללבוש.",
     "mixmatch-desc": "ארון מלא, ועדיין התחושה שאין מה ללבוש. לא מחוסר, אלא מעודף אפשרויות שקשה להבין. בפרויקט הזה יצרתי מיתוג וספר מותג לקונספט אפליקציה שהופכת ארון קיים לבחירות יומיומיות ברורות ובטוחות.",
     "cta-contact": "בואו נדבר",
-    "meta-title": "טיאנה פולקנפולק | UX/UI & Digital Creative Designer",
+    "meta-title": "טיאנה פולקנפולק | UX/UI Designer & Digital Creative Designer",
     "meta-description": "טיאנה פולקנפולק, מעצבת UX/UI ו-Digital Creative Designer. פורטפוליו עבודות עיצוב חוויית משתמש."
   },
 
