@@ -3240,3 +3240,23 @@ html{ -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 /* the closing line: the thought runs on one line, "Bye, heels." stands alone on the next */
 .hero .hero-closing{ max-width: none; }
 .hero-closing .bye{ display: block; }
+
+/* Unified case-study opening (B2B, DOgether, Mix.Match) */
+.case-open{ padding:64px 0 56px; font-family:inherit; text-align:left; }
+.case-open-in{ max-width:1100px; margin:0 auto; padding:0 24px; }
+.case-eyebrow{ display:flex; align-items:center; gap:12px; font-size:12px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; margin-bottom:24px; }
+.case-eyebrow::before{ content:""; width:22px; height:2px; border-radius:1px; background:#C97B6F; }
+.case-open h1{ font-size:clamp(30px,4vw,46px); line-height:1.25; margin:0 0 16px; max-width:780px; text-wrap:balance; text-align:left; }
+.case-sub{ font-size:18px; line-height:1.55; max-width:640px; margin:0 0 24px; }
+.case-chips{ display:flex; flex-wrap:wrap; gap:10px; margin:0 0 18px; }
+.case-chip{ display:inline-block; padding:8px 14px; border-radius:999px; font-size:13px; font-weight:500; line-height:1.2; }
+.case-note{ font-size:13px; line-height:1.5; margin:6px 0 0; max-width:640px; opacity:.85; }
+.case-open--gray{ background:#B0B7BD; color:#1E293B; }
+.case-open--gray .case-chip{ background:#fff; color:#1E293B; }
+.case-open--navy{ background:#003554; color:#fff; }
+.case-open--navy .case-chip{ background:rgba(255,255,255,.14); color:#fff; }
+@media (max-width:760px){
+  .case-open{ padding:40px 0 36px; }
+  .case-open-in{ padding:0 20px; }
+  .case-sub{ font-size:16px; }
+}
