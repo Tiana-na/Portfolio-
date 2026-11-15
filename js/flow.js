@@ -8,6 +8,7 @@
   var doc = document, root = doc.documentElement;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var dot = doc.getElementById('flowDot');
+  var flipAt = null, flipN = 0, flipT = null;
   var logoDot = doc.getElementById('logoDot');
   var railSvg = doc.getElementById('flowRail');
   var main = doc.getElementById('flowMain');
@@ -442,6 +443,14 @@
       sCur += stp; if (Math.abs(sT - sCur) < .4) sCur = sT;
     }
     var more = Math.abs(sT - sCur) > .4;
+    /* every so often the dot turns over, so it never reads as one flat shape on rails */
+    if (flipAt == null) flipAt = sCur + 520;
+    if (sCur > flipAt && !dot.classList.contains('is-key') && !dot.classList.contains('is-pop') && !dot.classList.contains('is-land') && dot.style.opacity !== '0') {
+      var fl = ['is-flip-y', 'is-flip-x', 'is-flip-t'][flipN++ % 3];
+      dot.classList.remove('is-flip-y', 'is-flip-x', 'is-flip-t'); void dot.offsetWidth; dot.classList.add(fl);
+      clearTimeout(flipT); flipT = setTimeout(function () { dot.classList.remove('is-flip-y', 'is-flip-x', 'is-flip-t'); }, 1000);
+      flipAt = sCur + 640 + (flipN % 2) * 260;
+    } else if (sCur < flipAt - 1400) flipAt = sCur + 520;
     if (more && !chaseRaf) { chaseRaf = true; requestAnimationFrame(function () { chaseRaf = false; update(); }); }
     if (more && railSvg) { railSvg.classList.add('is-moving'); clearTimeout(movT); movT = setTimeout(function () { railSvg.classList.remove('is-moving'); }, 380); }
 
@@ -477,13 +486,13 @@
     if (pathLen) { glow.forEach(function (g, gi) { var tl = TAILS[gi]; g.style.strokeDasharray = tl + ' ' + (pathLen + 400); g.style.strokeDashoffset = (-(sCur - tl)).toFixed(1); }); }
     if (m > 0) {
       var sh1 = shade;
-      dot.style.setProperty('--o1', lerp(0, 5, m).toFixed(2) + 'px');
-      dot.style.setProperty('--o2', lerp(0, 3, m).toFixed(2) + 'px');
-      dot.style.setProperty('--o3', lerp(size * .22 * sh1, 16, m).toFixed(2) + 'px');
-      dot.style.setProperty('--b3', lerp(size * .3 * sh1, 11, m).toFixed(2) + 'px');
-      dot.style.setProperty('--a3', lerp(.16 * sh1, .3, m).toFixed(3));
-      dot.style.setProperty('--c1', mix('#cdbfb1', '#5A4D7E', m));
-      dot.style.setProperty('--c2', mix('#b9aa9a', '#483D66', m));
+      dot.style.setProperty('--o1', lerp(size * .13 * sh1, 5, m).toFixed(2) + 'px');
+      dot.style.setProperty('--o2', lerp(size * .1 * sh1, 3, m).toFixed(2) + 'px');
+      dot.style.setProperty('--o3', lerp(size * .3 * sh1, 16, m).toFixed(2) + 'px');
+      dot.style.setProperty('--b3', lerp(size * .42 * sh1, 11, m).toFixed(2) + 'px');
+      dot.style.setProperty('--a3', lerp(.22 * sh1, .3, m).toFixed(3));
+      dot.style.setProperty('--c1', mix('#cbbcac', '#5A4D7E', m));
+      dot.style.setProperty('--c2', mix('#b3a291', '#483D66', m));
     } else {
       ['--o1', '--o2', '--o3', '--b3', '--a3', '--c1', '--c2'].forEach(function (n) { dot.style.removeProperty(n); });
     }

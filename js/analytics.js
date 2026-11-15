@@ -14,7 +14,7 @@
   var MEASUREMENT_ID = 'G-1SDQXED43L';
   var PRODUCTION_HOSTS = ['tianaf-portfolio.vercel.app'];   /* add a custom domain here if one is connected later */
   var INTERNAL_KEY = 'ga-internal';
-  var CLARITY_ID = '';   /* heat maps + recordings: paste the Project ID from clarity.microsoft.com between the quotes; empty = off */
+  var CLARITY_ID = 'ze3dm5xszi';   /* heat maps + recordings: paste the Project ID from clarity.microsoft.com between the quotes; empty = off */
 
   /* Always define the helper so other scripts can call it safely. */
   window.trackEvent = function () {};
