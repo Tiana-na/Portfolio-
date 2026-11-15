@@ -1983,7 +1983,7 @@ html.dot-away .logo-dot{ opacity: 0; }
   --ds: 22px; --sh: 1;
 }
 @property --halo{ syntax: '<number>'; inherits: true; initial-value: 0; }
-.flow-dot{ --o1: 0px; --o2: 0px; --o3: calc(var(--ds) * .22 * var(--sh)); --b3: calc(var(--ds) * .3 * var(--sh)); --a3: calc(.16 * var(--sh)); --c1: #cdbfb1; --c2: #b9aa9a; --km: 0; --halo: 0; transition: --halo .6s ease; }
+.flow-dot{ --o1: calc(var(--ds) * .13 * var(--sh)); --o2: calc(var(--ds) * .1 * var(--sh)); --o3: calc(var(--ds) * .3 * var(--sh)); --b3: calc(var(--ds) * .42 * var(--sh)); --a3: calc(.22 * var(--sh)); --c1: #cbbcac; --c2: #b3a291; --km: 0; --halo: 0; transition: --halo .6s ease; }
 .flow-dot.is-key{ transition: opacity .22s ease; }
 .flow-dot-core{
   position: absolute; left: 0; top: 0; display: block;
@@ -1992,14 +1992,21 @@ html.dot-away .logo-dot{ opacity: 0; }
 }
 .flow-dot-core b{
   position: absolute; inset: 0; border-radius: var(--r-tl, 0) var(--r-tr, 33%) var(--r-br, 0) var(--r-bl, 0); transform: rotate(var(--rot, 0rad));
-  background: radial-gradient(circle at 30% 24%, #fbf5ee 0, #eadfd4 38%, #d6c8ba 100%);
-  box-shadow: inset 1.5px 2px 1px rgba(255,255,255,.85), inset -2px -3px 4px rgba(120,98,78,.32);
+  background: radial-gradient(circle at 30% 22%, #fffaf3 0, #efe5da 34%, #d9ccbe 72%, #c9baaa 100%);
+  box-shadow: inset 1.5px 2px 1px rgba(255,255,255,.95), inset -2px -3.5px 5px rgba(110,88,68,.38), inset 0 -1px 0 rgba(255,255,255,.35);
 }
 /* at the very end the dot turns into the closing key: purple face + inner bevel fade in as it grows */
 .flow-dot-core b::before{ content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(180deg, #8678AA, #6D5F8E); opacity: var(--km); }
 .flow-dot-core b::after{ content: ""; position: absolute; inset: calc(5px * var(--km)); border-radius: calc(14px * var(--km)); background: linear-gradient(180deg, #7F70A3, #725F95); box-shadow: 0 1px 0 rgba(255,255,255,.3) inset; opacity: var(--km); }
 .btn.keycap.is-pending{ visibility: hidden; }
 .flow-dot.is-pop .flow-dot-core{ animation: dotPop .6s cubic-bezier(.3,1.4,.4,1); }
+.flow-dot.is-flip-y .flow-dot-core{ animation: dotFlipY .95s cubic-bezier(.45,.05,.3,1); }
+.flow-dot.is-flip-x .flow-dot-core{ animation: dotFlipX .95s cubic-bezier(.45,.05,.3,1); }
+.flow-dot.is-flip-t .flow-dot-core{ animation: dotFlipT 1s cubic-bezier(.45,.05,.3,1); }
+@keyframes dotFlipY{ 0%{ transform: perspective(110px) rotateY(0); } 100%{ transform: perspective(110px) rotateY(360deg); } }
+@keyframes dotFlipX{ 0%{ transform: perspective(110px) rotateX(0) scale(1); } 50%{ transform: perspective(110px) rotateX(180deg) scale(1.1); } 100%{ transform: perspective(110px) rotateX(360deg) scale(1); } }
+@keyframes dotFlipT{ 0%{ transform: perspective(110px) rotateX(0) rotateY(0); } 100%{ transform: perspective(110px) rotateX(-360deg) rotateY(180deg); } }
+@media (prefers-reduced-motion: reduce){ .flow-dot[class*="is-flip"] .flow-dot-core{ animation: none; } }
 @keyframes dotPop{ 0%{ transform: scale(0); } 100%{ transform: scale(1); } }
 .flow-dot.is-land .flow-dot-core{ animation: dotLand .5s cubic-bezier(.3,.7,.3,1); }
 @keyframes dotLand{ 0%{ transform: scale(1,1); } 30%{ transform: scale(1.3,.72); } 62%{ transform: scale(.9,1.12); } 100%{ transform: scale(1,1); } }
@@ -3240,3 +3247,17 @@ html{ -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 /* the closing line: the thought runs on one line, "Bye, heels." stands alone on the next */
 .hero .hero-closing{ max-width: none; }
 .hero-closing .bye{ display: block; }
+
+/* small role line above the home hero title */
+.hero p.hero-role{
+  font-size: .95rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--text-muted);
+  margin-block: 0 10px;
+}
+
+/* scope row: chips on one line, same label colour as the other cards' result row */
+.work-row .work-meta--inline{ display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 16px !important; row-gap: 2px !important; }
+.work-row .work-meta--inline .rb-chip{ display: inline; margin: 0; }
+.work-row .work-meta--inline .rb-label{ margin-inline-end: -8px; }
