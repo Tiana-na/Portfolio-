@@ -39,9 +39,8 @@
 .mm-wrap{ max-width:1100px; margin:0 auto; padding:0 24px; }
 
 /* hero */
-.mm-hero{ }
-.case-open--sky .case-chip{ background:#fff; color:#134E6E; box-shadow:0 6px 14px rgba(45,111,153,.1); }
-.mm-hero-grid{ display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); gap:48px; align-items:start; max-width:1100px; margin:0 auto; padding:0 24px; }
+.mm-hero{ padding:72px 0 56px; }
+.mm-hero-grid{ display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); gap:48px; align-items:center; max-width:1100px; margin:0 auto; padding:0 24px; }
 .mm-eyebrow{ display:flex; align-items:center; gap:12px; font-weight:500; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:#134E6E; margin-bottom:26px; }
 .mm-eyebrow::before{ content:""; width:22px; height:2px; background:#C97B6F; border-radius:1px; }
 .mm-tile{ display:inline-block; padding:24px; border-radius:36px; background:linear-gradient(150deg,#F6FBFE 0%,#CFE5F4 100%); border:1px solid rgba(255,255,255,.9); box-shadow:0 24px 46px rgba(45,111,153,.22); line-height:0; }
@@ -163,7 +162,8 @@
   .mm-phones{ grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
 @media (max-width:760px){
-  .mm-hero-grid{ grid-template-columns:1fr; gap:28px; }
+  .mm-hero{ padding:40px 0 28px; }
+  .mm-hero-grid{ grid-template-columns:1fr; gap:28px; padding:0 14px; }
   .mm-hero-art img{ max-width:300px; }
   .mm-tile{ padding:18px; border-radius:28px; }
   .mm-hero-logo img{ width:104px; }
@@ -211,20 +211,23 @@
 </header>
 
 <main>
+  <section class="case-page-header">
+    <div class="wrap">
+      <a href="index.html#work" class="btn keycap keycap--cream keycap--mini case-back" data-i18n="case-back">Back to projects</a>
+      <a href="https://www.figma.com/design/1CIw1WwBrp2iyOqu9TDNGZ/Mix---Match-%E2%80%94-Brand-Book--Digital-Rebuild-?node-id=38-2&p=f&t=dHbAM503AZaUQivE-0" target="_blank" rel="noopener" class="btn keycap keycap--purple case-figma-btn" data-i18n="case-figma-btn">View in Figma</a>
+      <h1 class="sr-only" data-i18n="case-header-h1">A Full Closet. Nothing to Wear.</h1>
+    </div>
+  </section>
+
   <div class="mm-case">
 
     <!-- Hero -->
-    <div class="mm-hero case-open case-open--sky">
-      <h1 class="sr-only" data-i18n="case-header-h1">A Full Closet. Nothing to Wear.</h1>
+    <div class="mm-hero">
       <div class="mm-hero-grid">
         <div>
-          <div class="case-eyebrow" data-i18n="case-eyebrow">Case study</div>
+          <div class="mm-eyebrow">Case study</div>
           <div class="mm-tile mm-hero-logo"><img src="assets/mixmatch-logo.webp" alt="Mix.Match logo" width="132" height="132"></div>
-          <p class="case-sub">Brand identity, built from scratch, for an app that turns wardrobe overwhelm into everyday, confident outfits.</p>
-          <div class="case-chips">
-            <span class="case-chip">Brand &amp; Graphic Design</span>
-            <span class="case-chip">Brand Identity · Brand Book</span>
-          </div>
+          <p class="mm-hero-lead">Brand identity, built from scratch, for an app that turns wardrobe overwhelm into everyday, confident outfits.</p>
           <div class="mm-meta">
             <div><div class="k">Role</div><div class="v">Brand designer. Created the brand from scratch and built the full brand book.</div></div>
             <div><div class="k">Project</div><div class="v">Academic project, revisited and refined after graduation.</div></div>
