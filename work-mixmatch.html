@@ -2,8 +2,15 @@
 <html lang="en" dir="ltr" class="lang-en">
 <head>
 <script>(function(){try{if(localStorage.getItem('site-lang-v2')==='he'){var d=document.documentElement;d.lang='he';d.dir='rtl';d.classList.remove('lang-en');}}catch(e){}})();</script>
-<!-- Analytics (GA4): production only, see js/analytics.js -->
-<script src="js/analytics.js"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1SDQXED43L"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1SDQXED43L');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mix.Match Brand Book | Tiana Folkenfolk</title>
@@ -27,112 +34,155 @@
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Poppins:wght@400;700&family=Heebo:wght@300;400;500;600&family=Inter:wght@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <style>
-.mm-case{ direction:ltr; font-family:'Heebo',sans-serif; }
-.mm-case .mm-wrap{ max-width:955px; margin:0 auto; padding:0 24px; }
-.mm-hero{ background:#134E6E; padding:64px 24px; text-align:center; }
-.mm-hero .mm-tag{ font-family:'Heebo',sans-serif; font-weight:500; font-size:12px; letter-spacing:.05em; color:#C97B6F; text-transform:uppercase; margin-bottom:20px; }
-.mm-hero .mm-logo{ font-family:'Poppins',sans-serif; font-weight:700; font-size:22px; color:#fff; letter-spacing:.08em; margin-bottom:18px; }
-.mm-hero .mm-logo span{ color:#C97B6F; }
-.mm-hero p{ color:#fff; font-size:17px; max-width:420px; margin:0 auto; line-height:1.5; text-wrap:balance; }
-.mm-section{ padding:70px 0; overflow:hidden; }
-.mm-section.bg-navy{ background:#134E6E; }
-.mm-section.bg-white{ background:#FFFFFF; }
-.mm-section.bg-lightblue{ background:#C7E3F5; }
-.mm-slidetag{ display:flex; align-items:center; gap:12px; margin-bottom:24px; }
-.mm-slidetag .num{ font-family:'Poppins',sans-serif; font-size:12px; color:#C97B6F; }
-.mm-slidetag .bar{ width:32px; height:3px; border-radius:1.5px; background:linear-gradient(90deg,#C97B6F 0%,#73BAE5 100%); }
-.mm-slidetag .label{ font-family:'Heebo',sans-serif; font-weight:500; font-size:12px; color:#73BAE5; }
-.bg-navy .mm-slidetag .label{ color:#8FC7EB; }
-.mm-grid-2{ display:flex; gap:40px; flex-wrap:wrap; }
-.mm-grid-2 > *{ flex:1 1 300px; min-width:0; }
-.mm-h1{ font-family:'Poppins',sans-serif; font-weight:400; font-size:clamp(28px,4vw,44px); line-height:1.4; color:#134E6E; margin-bottom:20px; }
-.bg-navy .mm-h1{ color:#fff; }
-.mm-h2{ font-family:'Poppins',sans-serif; font-weight:400; font-size:clamp(24px,3vw,32px); line-height:1.4; color:#134E6E; margin-bottom:16px; }
-.bg-navy .mm-h2{ color:#fff; }
-.mm-body{ font-size:16px; line-height:1.6; color:#134E6E; }
-.bg-navy .mm-body{ color:#fff; }
-.mm-body-sm{ font-size:14px; line-height:1.5; color:#134E6E; }
-.bg-navy .mm-body-sm{ color:#fff; }
+.mm-case{ direction:ltr; font-family:'Heebo',sans-serif; color:#134E6E; background:linear-gradient(180deg,#F4F9FD 0%,#E3EFF8 45%,#D3E6F4 100%); }
+.mm-case img{ max-width:100%; height:auto; }
+.mm-wrap{ max-width:1100px; margin:0 auto; padding:0 24px; }
 
-/* 01 problem */
-.mm-stat{ display:flex; align-items:center; gap:20px; flex-direction:column; }
-.mm-stat .num{ font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(70px,10vw,120px); color:#C97B6F; line-height:1; }
-.mm-stat .bar{ width:48px; height:6px; border-radius:3px; background:rgba(19,78,110,.25); }
-.mm-stat p{ color:rgba(19,78,110,.85); font-size:15px; text-align:center; max-width:260px; }
-.mm-source{ font-family:'Inter',sans-serif; font-weight:400; font-size:11px; color:rgba(19,78,110,.55); }
-.mm-stat .mm-source{ max-width:300px; text-align:center; margin-top:4px; }
+/* hero */
+.mm-hero{ padding:72px 0 56px; }
+.mm-hero-grid{ display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); gap:48px; align-items:center; max-width:1100px; margin:0 auto; padding:0 24px; }
+.mm-eyebrow{ display:flex; align-items:center; gap:12px; font-weight:500; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:#134E6E; margin-bottom:26px; }
+.mm-eyebrow::before{ content:""; width:22px; height:2px; background:#C97B6F; border-radius:1px; }
+.mm-tile{ display:inline-block; padding:24px; border-radius:36px; background:linear-gradient(150deg,#F6FBFE 0%,#CFE5F4 100%); border:1px solid rgba(255,255,255,.9); box-shadow:0 24px 46px rgba(45,111,153,.22); line-height:0; }
+.mm-tile img{ display:block; }
+.mm-hero-logo{ margin-bottom:28px; }
+.mm-hero-logo img{ width:132px; height:auto; }
+.mm-hero-lead{ font-size:clamp(17px,1.7vw,20px); line-height:1.6; color:#134E6E; max-width:540px; margin-bottom:30px; }
+.mm-meta{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; margin-bottom:34px; max-width:560px; }
+.mm-meta .k{ display:flex; align-items:center; gap:10px; font-size:11px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:#134E6E; margin-bottom:10px; }
+.mm-meta .k::before{ content:""; width:14px; height:2px; background:#C97B6F; border-radius:1px; }
+.mm-meta .v{ font-size:15px; line-height:1.55; color:#134E6E; }
+.mm-hero-art{ display:flex; justify-content:center; }
+.mm-hero-art img{ width:100%; max-width:430px; filter:drop-shadow(0 30px 40px rgba(19,78,110,.18)); }
 
-/* 02 insight */
-.mm-quote{ display:flex; gap:14px; align-items:flex-start; margin-top:20px; }
-.mm-quote .bar{ width:2px; flex:0 0 2px; height:42px; background:#73BAE5; }
-.mm-quote-source{ font-family:'Inter',sans-serif; font-weight:400; font-size:11px; color:rgba(19,78,110,.5); max-width:340px; margin-top:10px; }
+/* bands and glass cards */
+.mm-band{ padding:36px 0; }
+.mm-band.deep{ background:linear-gradient(135deg,#175B7E 0%,#0F425F 100%); padding:56px 0; }
+.mm-glass{ border-radius:30px; padding:56px 64px; background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(255,255,255,.62)); border:1px solid rgba(255,255,255,.95); box-shadow:0 26px 60px rgba(45,111,153,.14); }
+.mm-glass.deep{ background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.28); box-shadow:0 26px 60px rgba(0,0,0,.18); color:#fff; }
+.mm-glass.deep .mm-h1,.mm-glass.deep .mm-h2,.mm-glass.deep .mm-body,.mm-glass.deep .mm-body-sm{ color:#fff; }
 
-/* cards */
-.mm-card{ border-radius:6px; padding:40px; }
-.mm-card.white{ background:#fff; }
-.mm-card.lightblue{ background:#C7E3F5; }
-.mm-card.navy{ background:#134E6E; }
+.mm-slidetag{ display:flex; align-items:center; gap:12px; margin-bottom:28px; }
+.mm-slidetag .num{ font-size:12px; color:#134E6E; }
+.mm-slidetag .bar{ width:30px; height:3px; border-radius:2px; background:linear-gradient(90deg,#C97B6F 0%,#73BAE5 100%); }
+.mm-slidetag .label{ font-size:12px; font-weight:500; color:#134E6E; }
+.deep .mm-slidetag .num,.deep .mm-slidetag .label{ color:#CFE6F5; }
+
+.mm-grid-2{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:56px; align-items:start; }
+.mm-h1{ text-wrap:balance; font-family:'Poppins',sans-serif; font-weight:400; font-size:clamp(30px,3.6vw,44px); line-height:1.35; color:#134E6E; margin:0 0 22px; }
+.mm-h2{ text-wrap:balance; font-family:'Poppins',sans-serif; font-weight:400; font-size:clamp(25px,2.8vw,34px); line-height:1.35; color:#134E6E; margin:0 0 16px; }
+.mm-body{ font-size:16px; line-height:1.65; color:#134E6E; margin:0; }
+.mm-body b{ font-weight:600; }
+.mm-body-sm{ font-size:15px; line-height:1.6; color:#134E6E; margin:0; }
+.mm-source{ font-size:11px; color:rgba(19,78,110,.6); margin-top:12px; }
+.deep .mm-source{ color:rgba(255,255,255,.6); }
+.mm-quote{ display:flex; gap:14px; align-items:flex-start; margin-top:24px; }
+.mm-quote .bar{ width:2px; flex:0 0 2px; align-self:stretch; background:#73BAE5; border-radius:1px; }
+
+/* 01 stat */
+.mm-stat{ display:flex; flex-direction:column; align-items:flex-start; gap:14px; padding-top:8px; }
+.mm-stat .num{ font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(72px,9vw,128px); color:#C97B6F; line-height:1; white-space:nowrap; }
+.mm-stat .bar{ width:36px; height:5px; border-radius:3px; background:rgba(19,78,110,.22); }
+.mm-stat p{ font-size:16px; color:rgba(19,78,110,.85); margin:0; }
+.mm-stat p.mm-source{ font-size:11px; color:rgba(19,78,110,.6); margin-top:6px; }
+
+/* promise + vision */
+.mm-duo{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
+.mm-duo .mm-glass{ padding:44px 48px; }
+.mm-glass.sky{ background:linear-gradient(160deg,#C7E3F5 0%,#A9D3EE 100%); border-color:rgba(255,255,255,.7); }
 .mm-list-dot{ display:flex; align-items:center; gap:14px; margin-top:16px; }
 .mm-list-dot .dot{ width:6px; height:6px; border-radius:3px; background:#C97B6F; flex:none; }
 .mm-list-dot span{ font-family:'Poppins',sans-serif; font-size:22px; color:#134E6E; }
 
-.mm-pill-row{ display:flex; gap:8px; flex-wrap:wrap; margin-top:20px; }
-.mm-pill{ background:#C7E3F5; color:#134E6E; font-size:12px; font-weight:500; padding:8px 12px; border-radius:6px; }
-.mm-pill.on-navy{ background:rgba(255,255,255,.12); color:#fff; }
-.mm-pill.on-white{ background:#fff; color:#134E6E; }
+.mm-pill-row{ display:flex; gap:8px; flex-wrap:wrap; margin-top:22px; }
+.mm-pill{ background:#DCEBF6; color:#134E6E; font-size:12px; font-weight:500; padding:8px 14px; border-radius:999px; }
+.mm-logo-tile{ display:flex; align-items:center; justify-content:center; }
+.mm-logo-tile .mm-tile{ padding:36px; border-radius:48px; }
+.mm-logo-tile .mm-tile img{ width:220px; }
 
-/* color swatches */
-.mm-swatches{ display:flex; gap:14px; flex-wrap:wrap; margin-top:20px; }
-.mm-swatch{ width:110px; }
-.mm-swatch .chip{ width:100%; height:72px; border-radius:6px; margin-bottom:6px; }
-.mm-swatch .name{ font-size:12px; font-weight:500; color:#134E6E; }
-.mm-swatch .hex{ font-size:12px; color:#73BAE5; }
-.mm-swatch .desc{ font-size:12px; color:#134E6E; }
+/* swatches */
+.mm-caption{ font-size:13px; line-height:1.5; color:#134E6E; margin-bottom:18px; }
+.mm-grid-color{ grid-template-columns:minmax(0,.8fr) minmax(0,1.6fr); }
+.mm-swatches{ display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:14px; }
+.mm-swatch .chip{ height:76px; border-radius:10px; margin-bottom:12px; }
+.mm-swatch .name{ font-size:13px; font-weight:600; color:#134E6E; margin-bottom:4px; }
+.mm-swatch .hex{ font-size:12px; color:#134E6E; opacity:.8; margin-bottom:8px; }
+.mm-swatch .desc{ font-size:12px; line-height:1.6; color:#134E6E; }
 
-.mm-divider{ height:1px; background:#73BAE5; margin:24px 0; }
-.mm-rule{ font-size:15px; font-weight:500; color:#C97B6F; margin-bottom:8px; }
-.mm-caption{ font-size:12px; font-weight:500; letter-spacing:.05em; color:#73BAE5; margin-bottom:10px; }
-.mm-gradient-bar{ height:12px; border-radius:6px; background:linear-gradient(90deg,#C97B6F 0%,#73BAE5 100%); margin-bottom:20px; }
-.mm-legend{ display:flex; gap:20px; flex-wrap:wrap; }
-.mm-legend-item{ display:flex; align-items:center; gap:8px; font-size:12px; color:#134E6E; }
-.mm-legend-item .dot{ width:10px; height:10px; border-radius:5px; flex:none; }
+/* signals */
+.mm-signal{ display:flex; gap:18px; align-items:flex-start; padding:14px 0; }
+.mm-signal .dot{ width:34px; height:34px; border-radius:10px; flex:none; margin-top:2px; }
+.mm-signal h4{ font-size:15px; font-weight:600; color:#fff; margin:0 0 6px; }
+.mm-signal p{ font-size:14px; color:#fff; line-height:1.6; margin:0; opacity:.92; }
+.mm-result{ margin-top:34px; padding-top:24px; border-top:1px solid rgba(255,255,255,.22); font-size:16px; line-height:1.6; color:#fff; }
 
-/* signal list */
-.mm-signal{ display:flex; gap:18px; margin-top:24px; align-items:flex-start; }
-.mm-signal .dot{ width:36px; height:36px; border-radius:10px; flex:none; margin-top:6px; }
-.mm-signal h4{ font-size:14px; font-weight:600; color:#fff; margin-bottom:6px; }
-.mm-signal p{ font-size:14px; color:#fff; line-height:1.5; }
-
-/* typography cards */
-.mm-type-sample{ font-family:'Poppins',sans-serif; font-size:clamp(34px,5vw,56px); color:#134E6E; margin:14px 0; }
+/* typography */
+.mm-type-card{ border-radius:22px; padding:36px; background:rgba(255,255,255,.78); border:1px solid rgba(255,255,255,.95); box-shadow:0 18px 40px rgba(45,111,153,.1); }
+.mm-type-card.sky{ background:linear-gradient(160deg,#D4E9F7,#BBDCF1); }
+.mm-type-sample{ font-family:'Poppins',sans-serif; font-size:clamp(38px,5vw,60px); color:#134E6E; margin:12px 0 14px; line-height:1.1; }
 .mm-type-sample.heebo{ font-family:'Heebo',sans-serif; font-weight:300; }
+.mm-cap{ font-size:12px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; color:#2D6F99; }
+.mm-pill.on-white{ background:#fff; }
 
-/* principles / applications grid */
-.mm-mini-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:20px; }
-.mm-mini-card{ background:#fff; border-radius:6px; padding:24px; }
-.bg-lightblue .mm-mini-card{ background:#fff; }
-.mm-mini-card .t{ font-family:'Poppins',sans-serif; font-size:22px; color:#134E6E; margin-bottom:6px; }
-.mm-mini-card .s{ font-size:13px; color:#73BAE5; }
+/* principles + applications cards */
+.mm-mini-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+.mm-mini-card{ background:rgba(255,255,255,.85); border:1px solid #fff; border-radius:18px; padding:24px; box-shadow:0 12px 28px rgba(45,111,153,.1); }
+.mm-mini-card .t{ font-family:'Poppins',sans-serif; font-size:21px; color:#134E6E; margin-bottom:6px; }
+.mm-mini-card .s{ font-size:14px; line-height:1.5; color:#2D6F99; }
+.mm-app-card{ background:linear-gradient(160deg,#E3F1FA,#C7E3F5); border:1px solid rgba(255,255,255,.9); border-radius:18px; padding:22px; box-shadow:0 12px 28px rgba(45,111,153,.12); }
+.mm-app-card .n{ font-size:12px; color:#2D6F99; margin-bottom:8px; }
+.mm-app-card .t{ font-size:14px; font-weight:600; color:#134E6E; margin-bottom:6px; }
+.mm-app-card .s{ font-size:13px; color:#134E6E; line-height:1.55; }
 
-.mm-app-card{ background:#C7E3F5; border-radius:6px; padding:20px; }
-.mm-app-card .n{ font-size:12px; color:#73BAE5; margin-bottom:6px; }
-.mm-app-card .t{ font-size:13px; font-weight:600; color:#134E6E; margin-bottom:6px; }
-.mm-app-card .s{ font-size:12px; color:#134E6E; line-height:1.5; }
+/* showcase blocks */
+.mm-show{ margin-top:56px; }
+.mm-show-cap{ font-size:12px; color:#2D6F99; margin-bottom:6px; }
+.mm-show-note{ font-size:14px; line-height:1.55; color:#134E6E; margin-bottom:26px; max-width:640px; }
+.mm-phones{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:22px; }
+.mm-phone img{ display:block; width:100%; filter:drop-shadow(0 18px 26px rgba(19,78,110,.2)); }
+.mm-phone figcaption,.mm-poster figcaption{ font-size:12px; color:#134E6E; margin-top:14px; }
+.mm-posters{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; }
+.mm-poster{ margin:0; }
+.mm-poster img{ display:block; width:100%; border-radius:18px; filter:drop-shadow(0 18px 28px rgba(19,78,110,.18)); }
+.mm-phone{ margin:0; }
+
+.mm-carousel{ display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); border-radius:18px; overflow:hidden; box-shadow:0 22px 40px rgba(19,78,110,.2); }
+.mm-carousel img{ display:block; width:100%; height:auto; }
 
 /* tokens */
-.mm-token-row{ display:flex; align-items:flex-start; gap:14px; padding:14px 0; border-bottom:1px solid rgba(255,255,255,.12); }
-.mm-token-row .swab{ width:32px; height:10px; border-radius:5px; flex:none; margin-top:5px; }
-.mm-token-row .t{ font-size:12px; font-weight:500; color:#fff; margin-bottom:4px; }
-.mm-token-row .s{ font-size:12px; color:#fff; }
-.mm-token-row .hex{ font-size:12px; color:#C97B6F; white-space:nowrap; }
+.mm-token{ display:flex; gap:18px; align-items:flex-start; padding:18px 0; }
+.mm-token .swab{ width:46px; height:12px; border-radius:6px; flex:none; margin-top:5px; }
+.mm-token .t{ font-size:14px; font-weight:500; color:#fff; margin-bottom:4px; }
+.mm-token .s{ font-size:13px; color:rgba(255,255,255,.88); margin-bottom:4px; }
+.mm-token .hex{ font-size:13px; color:rgba(255,255,255,.7); }
+.mm-foot{ margin-top:24px; font-size:13px; color:rgba(255,255,255,.75); }
 
-.mm-tag-item{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 0; }
-.mm-tag-item .name{ font-size:14px; color:#fff; }
-.mm-tag-item .pill{ background:rgba(255,255,255,.12); color:#fff; font-size:12px; padding:5px 10px; border-radius:6px; white-space:nowrap; }
-
-@media (max-width:700px){
+@media (max-width:900px){
+  .mm-swatches{ grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .mm-phones{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:760px){
+  .mm-hero{ padding:40px 0 28px; }
+  .mm-hero-grid{ grid-template-columns:1fr; gap:28px; }
+  .mm-hero-art img{ max-width:300px; }
+  .mm-tile{ padding:18px; border-radius:28px; }
+  .mm-hero-logo img{ width:104px; }
+  .mm-logo-tile .mm-tile{ padding:26px; }
+  .mm-logo-tile .mm-tile img{ width:170px; }
+  .mm-meta{ grid-template-columns:1fr; gap:18px; }
+  .mm-wrap{ padding:0 14px; }
+  .mm-band{ padding:18px 0; }
+  .mm-band.deep{ padding:28px 0; }
+  .mm-glass{ padding:30px 22px; border-radius:24px; }
+  .mm-duo .mm-glass{ padding:30px 22px; }
+  .mm-grid-2,.mm-grid-color,.mm-duo{ grid-template-columns:1fr; gap:26px; }
+  .mm-duo{ gap:16px; }
   .mm-mini-grid{ grid-template-columns:1fr; }
-  .mm-grid-2{ gap:24px; }
+  .mm-posters{ grid-template-columns:1fr; max-width:360px; margin:0 auto; }
+  .mm-carousel{ display:flex; overflow-x:auto; scroll-snap-type:x mandatory; border-radius:16px; -webkit-overflow-scrolling:touch; }
+  .mm-carousel img{ flex:0 0 78%; width:78%; scroll-snap-align:start; }
+  .mm-swatches{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .mm-hero-grid{ padding:0 14px; }
 }
 </style>
 </head>
@@ -172,68 +222,100 @@
 
   <div class="mm-case">
 
+    <!-- Hero -->
     <div class="mm-hero">
-      <img src="assets/mixmatch-logo.webp" alt="Mix.Match logo" style="width:150px;margin:0 auto;display:block;">
+      <div class="mm-hero-grid">
+        <div>
+          <div class="mm-eyebrow">Case study</div>
+          <div class="mm-tile mm-hero-logo"><img src="assets/mixmatch-logo.webp" alt="Mix.Match logo" width="132" height="132"></div>
+          <p class="mm-hero-lead">Brand identity, built from scratch, for an app that turns wardrobe overwhelm into everyday, confident outfits.</p>
+          <div class="mm-meta">
+            <div><div class="k">Role</div><div class="v">Brand designer. Created the brand from scratch and built the full brand book.</div></div>
+            <div><div class="k">Project</div><div class="v">Academic project, revisited and refined after graduation.</div></div>
+            <div><div class="k">Tools</div><div class="v">Figma, InDesign, Gemini, Claude</div></div>
+          </div>
+          <a href="https://www.figma.com/design/1CIw1WwBrp2iyOqu9TDNGZ/Mix---Match-%E2%80%94-Brand-Book--Digital-Rebuild-?node-id=742-2" target="_blank" rel="noopener" class="btn keycap keycap--purple" data-i18n="case-full-project">View in Figma</a>
+        </div>
+        <div class="mm-hero-art">
+          <img src="assets/mm-hero.webp" alt="A pale blue dress and the Mix.Match app on a phone, both hanging on wooden hangers" width="1263" height="1896">
+        </div>
+      </div>
     </div>
 
-    <section class="mm-section bg-white">
-      <div class="mm-wrap mm-grid-2">
-        <div>
-          <div class="mm-slidetag"><span class="num">01</span><span class="bar"></span><span class="label">The Problem</span></div>
-          <h2 class="mm-h1">A full closet.<br>Nothing to wear.</h2>
-          <p class="mm-body">Many women stand in front of a full closet and still feel they have nothing to wear, not because they lack clothes, but because it's hard to see all the possibilities they already have.</p>
-        </div>
-        <div class="mm-stat">
-          <div class="num">26%</div>
-          <div class="bar"></div>
-          <p>of what's already in her closet goes unworn.</p>
-          <p class="mm-source">Source: WRAP (2022)</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="mm-section bg-navy">
-      <div class="mm-wrap mm-grid-2">
-        <div>
-          <div class="mm-slidetag"><span class="num">02</span><span class="bar"></span><span class="label">The Insight</span></div>
-          <h2 class="mm-h1">More options.<br>Harder decisions.</h2>
-        </div>
-        <div>
-          <p class="mm-body">The more options you have, the harder it becomes to decide. This is a well-known phenomenon in UX and the psychology of decision-making: choice overload creates difficulty, even when there's abundance.</p>
-          <div class="mm-quote">
-            <div class="bar"></div>
-            <p class="mm-body">Choice overload creates difficulty, even when there's abundance.</p>
-          </div>
-          <p class="mm-quote-source">Sources: Iyengar &amp; Lepper (2000) · Danziger et al. (2011)</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="mm-section bg-white">
-      <div class="mm-wrap mm-grid-2">
-        <div>
-          <div class="mm-slidetag"><span class="num">03</span><span class="bar"></span><span class="label">The Cycle</span></div>
-          <h2 class="mm-h1">New clothes.<br>Same disconnect.</h2>
-        </div>
-        <div>
-          <p class="mm-body">Social pressure keeps the pace of buying constant. Repeating an outfit rarely feels acceptable, so new pieces get bought without a clear view of what's already there, and the same gap repeats.</p>
-          <p class="mm-source" style="max-width:337px;margin-top:8px;">Source: Harris, Roby &amp; Dibb (2016)</p>
-          <div class="mm-quote">
-            <div class="bar"></div>
-            <p class="mm-body">Mix &amp; Match isn't about buying less. It's about making sure every piece, new or old, actually works with what you already own.</p>
+    <!-- 01 Problem -->
+    <section class="mm-band">
+      <div class="mm-wrap">
+        <div class="mm-glass">
+          <div class="mm-grid-2">
+            <div>
+              <div class="mm-slidetag"><span class="num">01</span><span class="bar"></span><span class="label">The Problem</span></div>
+              <h2 class="mm-h1">A full closet.<br>Nothing to wear.</h2>
+              <p class="mm-body">Many women stand in front of a full closet and still feel they have nothing to wear, not because they lack clothes, but because <b>it's hard to see all the possibilities they already have</b>.</p>
+            </div>
+            <div class="mm-stat">
+              <div class="num">1 in 4</div>
+              <div class="bar"></div>
+              <p>of the clothes in the average wardrobe go unworn.</p>
+              <p class="mm-source">Source: WRAP (2022), rounded from 26%</p>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="mm-section bg-white" style="padding-top:0;padding-bottom:0;">
-      <div class="mm-wrap" style="padding:0;">
-        <div class="mm-grid-2" style="gap:0;">
-          <div class="mm-card lightblue">
+    <!-- 02 Insight -->
+    <section class="mm-band deep">
+      <div class="mm-wrap">
+        <div class="mm-glass deep">
+          <div class="mm-grid-2">
+            <div>
+              <div class="mm-slidetag"><span class="num">02</span><span class="bar"></span><span class="label">The Insight</span></div>
+              <h2 class="mm-h1">More options.<br>Harder decisions.</h2>
+            </div>
+            <div>
+              <p class="mm-body">The more options you have, the harder it becomes to decide. This is a well-known phenomenon in UX and the psychology of decision-making: choice overload creates difficulty, even when there’s abundance.</p>
+              <div class="mm-quote">
+                <div class="bar"></div>
+                <p class="mm-body">Choice overload creates difficulty, even when there’s abundance.</p>
+              </div>
+              <p class="mm-source">Sources: Iyengar &amp; Lepper (2000) · Danziger et al. (2011)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 Cycle -->
+    <section class="mm-band">
+      <div class="mm-wrap">
+        <div class="mm-glass">
+          <div class="mm-grid-2">
+            <div>
+              <div class="mm-slidetag"><span class="num">03</span><span class="bar"></span><span class="label">The Cycle</span></div>
+              <h2 class="mm-h1">New clothes.<br>Same disconnect.</h2>
+            </div>
+            <div>
+              <p class="mm-body">Social pressure keeps the pace of buying constant. Repeating an outfit rarely feels acceptable, so new pieces get bought without a clear view of what's already there, and the same gap repeats.</p>
+              <p class="mm-source">Source: Harris, Roby &amp; Dibb (2016)</p>
+              <div class="mm-quote">
+                <div class="bar"></div>
+                <p class="mm-body">Mix &amp; Match isn't about buying less. It's about buying smarter: making sure every piece, new or old, actually works with what you already own.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 Promise, 05 Vision -->
+    <section class="mm-band">
+      <div class="mm-wrap">
+        <div class="mm-duo">
+          <div class="mm-glass sky">
             <div class="mm-slidetag"><span class="num">04</span><span class="bar"></span><span class="label">Brand Promise</span></div>
             <h3 class="mm-h2">Helping you rediscover the value of the clothes you already own.</h3>
           </div>
-          <div class="mm-card white">
+          <div class="mm-glass">
             <div class="mm-slidetag"><span class="num">05</span><span class="bar"></span><span class="label">Vision</span></div>
             <p class="mm-body">A world where every wardrobe reaches its full potential.</p>
             <div class="mm-list-dot"><div class="dot"></div><span>Rediscover.</span></div>
@@ -244,166 +326,194 @@
       </div>
     </section>
 
-    <section class="mm-section bg-white">
-      <div class="mm-wrap mm-grid-2">
-        <div>
-          <div class="mm-slidetag"><span class="num">06</span><span class="bar"></span><span class="label">Brand Concept: Logo</span></div>
-          <h2 class="mm-h1">Wardrobe architecture, not clothing.</h2>
-          <p class="mm-body">Instead of representing clothing itself, it represents the invisible structure behind every organized wardrobe. Just as a wardrobe is carefully planned into functional compartments, Mix &amp; Match helps users organize their clothing into meaningful combinations.</p>
-          <div class="mm-pill-row">
-            <span class="mm-pill">Shelves.</span>
-            <span class="mm-pill">Sections.</span>
-            <span class="mm-pill">Balance.</span>
-            <span class="mm-pill">Modularity.</span>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;justify-content:center;">
-          <img src="assets/mixmatch-logo.webp" alt="Mix.Match logo" style="width:240px;">
-        </div>
-      </div>
-    </section>
-
-    <section class="mm-section bg-white">
+    <!-- 06 Logo concept -->
+    <section class="mm-band">
       <div class="mm-wrap">
-        <div class="mm-slidetag"><span class="num">07</span><span class="bar"></span><span class="label">Color, with Intention</span></div>
-        <div class="mm-grid-2">
-          <div>
-            <h2 class="mm-h2">We don't just show colors.</h2>
-            <p class="mm-body-sm">We explain the decisions behind them.</p>
-          </div>
-          <div>
-            <div class="mm-caption">Main Colors · Blue for all main backgrounds and headlines. Rose is reserved for CTAs only.</div>
-            <div class="mm-swatches">
-              <div class="mm-swatch"><div class="chip" style="background:#73BAE5"></div><div class="name">Sky Blue</div><div class="hex">#73bae5</div><div class="desc">Trust. Digital confidence. Organization.</div></div>
-              <div class="mm-swatch"><div class="chip" style="background:#8FC7EB"></div><div class="name">Sky 2</div><div class="hex">#8fc7eb</div><div class="desc">Light surface. Hover state.</div></div>
-              <div class="mm-swatch"><div class="chip" style="background:#ABD6F0"></div><div class="name">Sky 3</div><div class="hex">#abd6f0</div><div class="desc">Backgrounds.</div></div>
-              <div class="mm-swatch"><div class="chip" style="background:#C7E3F5"></div><div class="name">Sky 4</div><div class="hex">#c7e3f5</div><div class="desc">Page ground.</div></div>
-              <div class="mm-swatch"><div class="chip" style="background:#C97B6F"></div><div class="name">Rose</div><div class="hex">#c97b6f</div><div class="desc">Creativity. Fashion. Expression.</div></div>
+        <div class="mm-glass">
+          <div class="mm-grid-2" style="align-items:center;">
+            <div>
+              <div class="mm-slidetag"><span class="num">06</span><span class="bar"></span><span class="label">Brand Concept: Logo</span></div>
+              <h2 class="mm-h1">Wardrobe architecture, not clothing.</h2>
+              <p class="mm-body">Instead of representing clothing itself, it represents the invisible structure behind every organized wardrobe. Just as a wardrobe is carefully planned into functional compartments, Mix &amp; Match helps users organize their clothing into meaningful combinations.</p>
+              <div class="mm-pill-row">
+                <span class="mm-pill">Shelves.</span>
+                <span class="mm-pill">Sections.</span>
+                <span class="mm-pill">Balance.</span>
+                <span class="mm-pill">Modularity.</span>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="mm-divider"></div>
-        <div class="mm-rule">Rule: blue and rose are the two intentional colors. Keep rose to accents, not backgrounds.</div>
-        <div class="mm-caption" style="margin-top:16px;">THE CATEGORY ACCENTS, ALONG THE ROSE → BLUE GRADIENT</div>
-        <div class="mm-gradient-bar"></div>
-        <div class="mm-legend">
-          <div class="mm-legend-item"><div class="dot" style="background:#C97B6F"></div>Rose #c97b6f</div>
-          <div class="mm-legend-item"><div class="dot" style="background:#E7A29A"></div>Accessories #e7a29a</div>
-          <div class="mm-legend-item"><div class="dot" style="background:#E6AD85"></div>Shoes #e6ad85</div>
-          <div class="mm-legend-item"><div class="dot" style="background:#98D8E2"></div>Outerwear #98d8e2</div>
-          <div class="mm-legend-item"><div class="dot" style="background:#73BAE5"></div>Blue #73bae5</div>
-          <div class="mm-legend-item"><div class="dot" style="background:#7B95CC"></div>Tops #7b95cc</div>
-          <div class="mm-legend-item"><div class="dot" style="background:#CCD6ED"></div>Bottoms #ccd6ed</div>
-        </div>
-        <p class="mm-body-sm" style="margin-top:20px;">The color system follows the same idea as the wardrobe itself: everything has a place. Each accent's position here reflects its real relationship to the two anchors, blue and rose, not a guess.</p>
-      </div>
-    </section>
-
-    <section class="mm-section bg-navy">
-      <div class="mm-wrap mm-grid-2">
-        <div>
-          <div class="mm-slidetag"><span class="num">08</span><span class="bar"></span><span class="label">What Colors Signal</span></div>
-          <h2 class="mm-h2">A palette that's calm and current everywhere.</h2>
-          <p class="mm-body-sm">The palette needed to feel like a contemporary, light digital product, never heavy, while still giving the user a sense of confidence and control.</p>
-        </div>
-        <div>
-          <div class="mm-signal"><div class="dot" style="background:#73BAE5"></div><div><h4>Calm, by Design</h4><p>Sky Blue dominates almost every page. Light blue reads as trust and mental clarity, the opposite of closet-induced anxiety. It quietly tells the user: this is handled, you can relax.</p></div></div>
-          <div class="mm-signal"><div class="dot" style="background:#C97B6F"></div><div><h4>One Warm Voice</h4><p>Rose is the only warm color in the core palette (blue, navy, emerald), so it stands out wherever it's used. It carries the human, expressive side that blue alone can't say.</p></div></div>
-          <div class="mm-signal"><div class="dot" style="background:#4F9E78"></div><div><h4>A Quiet Bonus</h4><p>Emerald reinforces the promise of rediscovering value in what you already own: a hint of renewal and sustainability, without turning the brand into an eco-lecture.</p></div></div>
-          <div class="mm-signal"><div class="dot" style="background:#3A6E91;border:1px solid rgba(255,255,255,.4)"></div><div><h4>Grounding Weight</h4><p>Navy anchors every screen: headlines, primary text, and structure all live here so the lighter accents can do their job.</p></div></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="mm-section bg-white">
-      <div class="mm-wrap">
-        <div class="mm-slidetag"><span class="num">09</span><span class="bar"></span><span class="label">Typography Strategy</span></div>
-        <div class="mm-grid-2" style="gap:16px;">
-          <div class="mm-card white" style="border:1px solid #eee;">
-            <div class="mm-caption">Display</div>
-            <div class="mm-type-sample">Poppins</div>
-            <p class="mm-body-sm">Adds personality. Chosen to bring an editorial, fashion-forward voice to headlines and brand moments.</p>
-            <div class="mm-pill-row">
-              <span class="mm-pill">Editorial influence.</span>
-              <span class="mm-pill">Fashion-inspired.</span>
-              <span class="mm-pill">Human.</span>
-            </div>
-          </div>
-          <div class="mm-card lightblue">
-            <div class="mm-caption">Body</div>
-            <div class="mm-type-sample heebo">Heebo</div>
-            <p class="mm-body-sm">Built for clarity. Chosen because it was designed for digital interfaces: clean, legible, and calm at every size.</p>
-            <div class="mm-pill-row">
-              <span class="mm-pill on-white">Optimized for digital.</span>
-              <span class="mm-pill on-white">Clean.</span>
-              <span class="mm-pill on-white">Functional.</span>
+            <!-- Logo animation slot (Figma 742:95): replace this static logo when the file arrives -->
+            <div class="mm-logo-tile">
+              <div class="mm-tile"><img src="assets/mixmatch-logo.webp" alt="Mix.Match logo" width="220" height="220"></div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="mm-section bg-lightblue">
+    <!-- 07 Color -->
+    <section class="mm-band">
       <div class="mm-wrap">
-        <div class="mm-slidetag"><span class="num">10</span><span class="bar"></span><span class="label">Brand Principles</span></div>
-        <div class="mm-grid-2">
-          <div>
-            <h2 class="mm-h2">Not values. Principles.</h2>
-            <p class="mm-body-sm">The rules that connect this brand to the product itself.</p>
-          </div>
-          <div class="mm-mini-grid">
-            <div class="mm-mini-card"><div class="t">Organized</div><div class="s">Everything has a place.</div></div>
-            <div class="mm-mini-card"><div class="t">Personal</div><div class="s">No trends. Only you.</div></div>
-            <div class="mm-mini-card"><div class="t">Effortless</div><div class="s">Reduce decision fatigue.</div></div>
-            <div class="mm-mini-card"><div class="t">Sustainable</div><div class="s">Use more. Buy smarter.</div></div>
+        <div class="mm-glass">
+          <div class="mm-slidetag"><span class="num">07</span><span class="bar"></span><span class="label">Color, with Intention</span></div>
+          <div class="mm-grid-2 mm-grid-color">
+            <div>
+              <h2 class="mm-h1">Two colors lead.</h2>
+              <p class="mm-body">Blue sets the calm, rose marks the action. Navy and emerald each have one supporting job.</p>
+            </div>
+            <div>
+              <div class="mm-caption">Main Colors · Four sky tones, taken from the logo. Sky and Sky 4 also tint the app backgrounds. Rose is for key actions and emphasis.</div>
+              <div class="mm-swatches">
+                <div class="mm-swatch"><div class="chip" style="background:#73BAE5"></div><div class="name">Sky Blue</div><div class="hex">#73bae5</div><div class="desc">Logo tone 1.<br>App gradients.</div></div>
+                <div class="mm-swatch"><div class="chip" style="background:#8FC7EB"></div><div class="name">Sky 2</div><div class="hex">#8fc7eb</div><div class="desc">Logo tone 2.<br>Logo only.</div></div>
+                <div class="mm-swatch"><div class="chip" style="background:#ABD6F0"></div><div class="name">Sky 3</div><div class="hex">#abd6f0</div><div class="desc">Logo tone 3.<br>Logo only.</div></div>
+                <div class="mm-swatch"><div class="chip" style="background:#C7E3F5"></div><div class="name">Sky 4</div><div class="hex">#c7e3f5</div><div class="desc">Logo tone 4.<br>Page ground.</div></div>
+                <div class="mm-swatch"><div class="chip" style="background:#2D6F99"></div><div class="name">Sky Deep</div><div class="hex">#2d6f99</div><div class="desc">Deep gradient</div></div>
+                <div class="mm-swatch"><div class="chip" style="background:#C97B6F"></div><div class="name">Rose</div><div class="hex">#c97b6f</div><div class="desc">Key actions.<br>Emphasis.</div></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="mm-section bg-white">
+    <!-- 08 What colors signal -->
+    <section class="mm-band deep">
       <div class="mm-wrap">
-        <div class="mm-slidetag"><span class="num">11</span><span class="bar"></span><span class="label">Applications</span></div>
-        <div class="mm-grid-2">
-          <div>
-            <h2 class="mm-h2">One system, not a collection of designs.</h2>
-            <p class="mm-body-sm">Not mockups. This is how the brand lives, across every touchpoint.</p>
+        <div class="mm-glass deep">
+          <div class="mm-grid-2">
+            <div>
+              <div class="mm-slidetag"><span class="num">08</span><span class="bar"></span><span class="label">What Colors Signal</span></div>
+              <h2 class="mm-h1">A palette that's calm and current everywhere.</h2>
+              <p class="mm-body-sm">The palette needed to feel like a contemporary, light digital product, never heavy, while still giving the user a sense of confidence and control.</p>
+            </div>
+            <div>
+              <div class="mm-signal"><div class="dot" style="background:#73BAE5"></div><div><h4>Calm, by Design</h4><p>Sky Blue dominates almost every page. Light blue reads as trust and mental clarity, the opposite of closet-induced anxiety. It quietly tells the user: this is handled, you can relax.</p></div></div>
+              <div class="mm-signal"><div class="dot" style="background:#C97B6F"></div><div><h4>One Warm Voice</h4><p>Rose is the only warm color in the palette, so it always stands out. It carries the human, expressive side that blue alone can't say.</p></div></div>
+              <div class="mm-signal"><div class="dot" style="background:#4F9E78"></div><div><h4>A Quiet Bonus</h4><p>Emerald reinforces the promise of rediscovering value in what you already own: a hint of renewal and sustainability, without turning the brand into an eco-lecture.</p></div></div>
+              <div class="mm-signal"><div class="dot" style="background:#3A6E91;border:1px solid rgba(255,255,255,.4)"></div><div><h4>Grounding Weight</h4><p>Navy, used mostly for text, keeps the pastel palette from feeling childish. It's the anchor of seriousness behind all the softness.</p></div></div>
+              <div class="mm-signal"><div class="dot" style="background:linear-gradient(135deg,#73BAE5 0%,#73BAE5 45%,#C97B6F 55%,#C97B6F 100%)"></div><div><h4>Not a Gender Code</h4><p>Bright blue and bright pink together risk reading as boys' blue, girls' pink. Instead of swapping the hue, we muted it: a dusty, terracotta-leaning rose pairs with blue as a considered, adult palette.</p></div></div>
+            </div>
           </div>
-          <div class="mm-mini-grid">
-            <div class="mm-app-card"><div class="n">01</div><div class="t">Tone of Voice</div><div class="s">Warm, clear, and human. Never trend-chasing.</div></div>
-            <div class="mm-app-card"><div class="n">02</div><div class="t">UI</div><div class="s">Glass, glow and soft gradient bring the palette to life.</div></div>
-            <div class="mm-app-card"><div class="n">03</div><div class="t">Social</div><div class="s">Consistent color blocking makes every post recognizable.</div></div>
-            <div class="mm-app-card"><div class="n">04</div><div class="t">Campaign</div><div class="s">Real wardrobes, real people. No idealized studio shots.</div></div>
+          <p class="mm-result">The result: a palette that's calm and current everywhere, human in exactly one place, and never coded by gender.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 09 Typography -->
+    <section class="mm-band">
+      <div class="mm-wrap">
+        <div class="mm-glass">
+          <div class="mm-slidetag"><span class="num">09</span><span class="bar"></span><span class="label">Typography Strategy</span></div>
+          <div class="mm-grid-2" style="gap:20px;">
+            <div class="mm-type-card">
+              <div class="mm-cap">Display</div>
+              <div class="mm-type-sample">Poppins</div>
+              <p class="mm-body-sm">Adds personality. Chosen to bring an editorial, fashion-forward voice to headlines and brand moments.</p>
+              <div class="mm-pill-row">
+                <span class="mm-pill">Editorial influence.</span>
+                <span class="mm-pill">Fashion-inspired.</span>
+                <span class="mm-pill">Human.</span>
+              </div>
+            </div>
+            <div class="mm-type-card sky">
+              <div class="mm-cap">Body</div>
+              <div class="mm-type-sample heebo">Heebo</div>
+              <p class="mm-body-sm">Built for clarity. Chosen because it was designed for digital interfaces: clean, legible, and calm at every size.</p>
+              <div class="mm-pill-row">
+                <span class="mm-pill on-white">Optimized for digital.</span>
+                <span class="mm-pill on-white">Clean.</span>
+                <span class="mm-pill on-white">Functional.</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="mm-section bg-navy">
+    <!-- 10 Principles -->
+    <section class="mm-band">
       <div class="mm-wrap">
-        <div class="mm-slidetag"><span class="num">12</span><span class="bar"></span><span class="label">Design Tokens</span></div>
-        <h2 class="mm-h2">How color is actually used across the app.</h2>
-        <p class="mm-body-sm" style="margin-bottom:30px;">Not just the palette.</p>
-        <div class="mm-grid-2">
-          <div class="mm-card navy" style="padding:24px;">
-            <div class="mm-caption">Category Tags in Practice</div>
-            <div class="mm-tag-item"><span class="name">Denim jacket</span><span class="pill">Outerwear</span></div>
-            <div class="mm-tag-item"><span class="name">White tee</span><span class="pill">Tops</span></div>
-            <div class="mm-tag-item"><span class="name">High-waist jeans</span><span class="pill">Bottoms</span></div>
-            <div class="mm-tag-item"><span class="name">White sneakers</span><span class="pill">Shoes</span></div>
-            <div class="mm-tag-item"><span class="name">Sunglasses</span><span class="pill">Accessories</span></div>
+        <div class="mm-glass">
+          <div class="mm-slidetag"><span class="num">10</span><span class="bar"></span><span class="label">Brand Principles</span></div>
+          <div class="mm-grid-2">
+            <div>
+              <h2 class="mm-h2">Values, turned into principles.</h2>
+              <p class="mm-body-sm">Each value becomes a rule that connects this brand to the product itself.</p>
+            </div>
+            <div class="mm-mini-grid">
+              <div class="mm-mini-card"><div class="t">Organized</div><div class="s">Everything has a place.</div></div>
+              <div class="mm-mini-card"><div class="t">Personal</div><div class="s">No trends. Only you.</div></div>
+              <div class="mm-mini-card"><div class="t">Experience</div><div class="s">A fun digital experience, not a chore.</div></div>
+              <div class="mm-mini-card"><div class="t">Sustainable</div><div class="s">Use more. Buy smarter.</div></div>
+            </div>
           </div>
-          <div>
-            <div class="mm-caption">App Screen Tokens</div>
-            <div class="mm-token-row"><div class="swab" style="background:linear-gradient(90deg,#C7E3F5,#73BAE5)"></div><div style="flex:1"><div class="t">Surface Light</div><div class="s">Onboarding</div></div><div class="hex">#c7e3f5 → #73bae5</div></div>
-            <div class="mm-token-row"><div class="swab" style="background:linear-gradient(90deg,#FFFFFF,#C7E3F5)"></div><div style="flex:1"><div class="t">Surface Glass</div><div class="s">Home, Outfit suggestion, Your closet</div></div><div class="hex">#ffffff → #c7e3f5</div></div>
-            <div class="mm-token-row"><div class="swab" style="background:linear-gradient(90deg,#73BAE5,#134E6E)"></div><div style="flex:1"><div class="t">Surface Focus</div><div class="s">Scan screen only</div></div><div class="hex">#73bae5 → #134e6e</div></div>
-            <div class="mm-token-row"><div class="swab" style="background:#fff;border:1px solid #73BAE5"></div><div style="flex:1"><div class="t">Surface Elevated</div><div class="s">Cards, tab bar, list rows</div></div><div class="hex">White 90%</div></div>
-            <div class="mm-token-row"><div class="swab" style="background:#C97B6F"></div><div style="flex:1"><div class="t">Accent Strong (CTA)</div><div class="s">Buttons and CTAs ONLY. Never backgrounds or headlines.</div></div><div class="hex">#c97b6f</div></div>
-            <div class="mm-token-row"><div class="swab" style="background:linear-gradient(90deg,#134E6E,rgba(19,78,110,.7))"></div><div style="flex:1"><div class="t">Text Primary / Secondary</div><div class="s">Primary: headlines &amp; body. Secondary: supporting/meta.</div></div><div class="hex">Navy 100%/70%</div></div>
-            <div class="mm-token-row"><div class="swab" style="background:#134E6E;border:1px solid rgba(255,255,255,.6)"></div><div style="flex:1"><div class="t">Bezel / Scrim</div><div class="s">Phone frame strokes, bottom overlays.</div></div><div class="hex">#134e6e</div></div>
-            <div class="mm-token-row" style="border-bottom:none;"><div class="swab" style="background:#4F9E77"></div><div style="flex:1"><div class="t">Rediscovered Badge (Emerald)</div><div class="s">One color, one meaning: resurfaced closet items only.</div></div><div class="hex">#4f9e77</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 Applications -->
+    <section class="mm-band">
+      <div class="mm-wrap">
+        <div class="mm-glass">
+          <div class="mm-slidetag"><span class="num">11</span><span class="bar"></span><span class="label">Applications</span></div>
+          <div class="mm-grid-2">
+            <div>
+              <h2 class="mm-h2">One system, not a collection of designs.</h2>
+              <p class="mm-body-sm">Not mockups. This is how the brand lives, across every touchpoint.</p>
+            </div>
+            <div class="mm-mini-grid">
+              <div class="mm-app-card"><div class="n">01</div><div class="t">Tone of Voice</div><div class="s">Warm, clear, and human. Never trend-chasing.</div></div>
+              <div class="mm-app-card"><div class="n">02</div><div class="t">UI</div><div class="s">Glass, depth and soft gradient bring the palette to life.</div></div>
+              <div class="mm-app-card"><div class="n">03</div><div class="t">Social</div><div class="s">Consistent color blocking makes every post recognizable.</div></div>
+              <div class="mm-app-card"><div class="n">04</div><div class="t">Campaign</div><div class="s">Lived-in wardrobes, not fashion editorials. Relatable, everyday scenes.</div></div>
+            </div>
           </div>
+
+          <div class="mm-show">
+            <div class="mm-show-cap">UI · App screens</div>
+            <p class="mm-show-note">The tokens in action: each surface has one job, and rose appears only where the user acts.</p>
+            <div class="mm-phones">
+              <figure class="mm-phone"><img src="assets/mm-app-home.webp" alt="App home screen with today's outfit picks" width="440" height="953" loading="lazy"><figcaption>Home · Surface Glass</figcaption></figure>
+              <figure class="mm-phone"><img src="assets/mm-app-looks.webp" alt="App looks screen, pick a look" width="440" height="953" loading="lazy"><figcaption>Looks · Surface Glass</figcaption></figure>
+              <figure class="mm-phone"><img src="assets/mm-app-look.webp" alt="App look details with a rose action button" width="436" height="953" loading="lazy"><figcaption>Details · Rose for action</figcaption></figure>
+              <figure class="mm-phone"><img src="assets/mm-app-scan.webp" alt="App scan screen on a deep blue surface" width="440" height="953" loading="lazy"><figcaption>Scan · Surface Deep</figcaption></figure>
+            </div>
+          </div>
+
+          <div class="mm-show">
+            <div class="mm-show-cap">Campaign · Poster series</div>
+            <p class="mm-show-note">Problem, solution, result. Campaign visuals were generated with Gemini as concept imagery, art-directed to the brand palette.</p>
+            <div class="mm-posters">
+              <figure class="mm-poster"><img src="assets/mm-poster-problem.webp" alt="Campaign poster: How much of your closet do you actually wear?" width="906" height="1330" loading="lazy"><figcaption>01 · The Problem</figcaption></figure>
+              <figure class="mm-poster"><img src="assets/mm-poster-solution.webp" alt="Campaign poster: Scan one piece. Your closet starts here." width="906" height="1330" loading="lazy"><figcaption>02 · The Solution</figcaption></figure>
+              <figure class="mm-poster"><img src="assets/mm-poster-result.webp" alt="Campaign poster: Your wardrobe has more to offer." width="906" height="1330" loading="lazy"><figcaption>03 · The Result</figcaption></figure>
+            </div>
+          </div>
+
+<div class="mm-show">
+            <div class="mm-show-cap">Social · Instagram carousel</div>
+            <p class="mm-show-note">One continuous story across five slides, from the question to the first scan.</p>
+            <div class="mm-carousel" role="group" aria-label="Instagram carousel, five slides">
+              <img src="assets/mm-ig-01.webp" alt="Slide 1: How much of your closet do you actually wear?" width="1080" height="1350" loading="lazy"><img src="assets/mm-ig-02.webp" alt="Slide 2: Scan one piece." width="1080" height="1350" loading="lazy"><img src="assets/mm-ig-03.webp" alt="Slide 3: Discover" width="1080" height="1350" loading="lazy"><img src="assets/mm-ig-04.webp" alt="Slide 4: what one piece hides." width="1080" height="1350" loading="lazy"><img src="assets/mm-ig-05.webp" alt="Slide 5: Your turn. Digitize your closet." width="1080" height="1350" loading="lazy">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12 Design tokens -->
+    <section class="mm-band deep">
+      <div class="mm-wrap">
+        <div class="mm-glass deep">
+          <div class="mm-slidetag"><span class="num">12</span><span class="bar"></span><span class="label">Design Tokens</span></div>
+          <h2 class="mm-h1" style="margin-bottom:10px;">How color is actually used across the app.</h2>
+          <p class="mm-body-sm" style="margin-bottom:34px;">Not just the palette.</p>
+          <div class="mm-caption" style="color:#9FD0EE;margin-bottom:6px;">App Screen Tokens</div>
+          <div class="mm-token"><div class="swab" style="background:linear-gradient(90deg,#134E6E,#73BAE5)"></div><div><div class="t">Surface Deep</div><div class="s">Onboarding, Scan, campaign</div><div class="hex">#134e6e to #73bae5 · either direction</div></div></div>
+          <div class="mm-token"><div class="swab" style="background:#C97B6F"></div><div><div class="t">Accent Strong (Rose)</div><div class="s">Key actions and emphasis. Never a background, never small text.</div><div class="hex">#c97b6f</div></div></div>
+          <div class="mm-token"><div class="swab" style="background:#4F9E77"></div><div><div class="t">Emerald (Rediscovery)</div><div class="s">Rediscovery signal only. Never decoration.</div><div class="hex">#4f9e77</div></div></div>
+          <p class="mm-foot">Full token spec, all 7 tokens, lives in the brand guidelines.</p>
         </div>
       </div>
     </section>

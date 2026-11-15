@@ -314,11 +314,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var QUIZ_EXIT_MS = 460;
 
-    /* analytics: safe even if analytics.js is missing or switched off */
-    function trackQuiz(name, params) {
-      if (typeof window.trackEvent === 'function') window.trackEvent(name, params);
-    }
-
     function advanceQuiz() {
       quizQuestionBlock.classList.add('leaving');
       setTimeout(function () {
@@ -331,7 +326,6 @@ document.addEventListener('DOMContentLoaded', function () {
             quizQuestionBlock.classList.remove('settling');
           }, 420);
         } else {
-          trackQuiz('quiz_finish');
           showQuizResults();
         }
       }, QUIZ_EXIT_MS);
@@ -352,7 +346,6 @@ document.addEventListener('DOMContentLoaded', function () {
     quizStartBtn.addEventListener('click', function () {
       quizStartBtn.hidden = true;
       quizCard.hidden = false;
-      trackQuiz('quiz_start');
       renderQuizQuestion();
       quizQuestionBlock.classList.add('settling');
       setTimeout(function () {
@@ -362,7 +355,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (quizSkipBtn) {
       quizSkipBtn.addEventListener('click', function () {
-        trackQuiz('quiz_skip', { question_number: currentIndex + 1 });
         showQuizResults();
       });
     }
