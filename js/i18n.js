@@ -1,6 +1,9 @@
 /* ===== i18n engine: English (default, lives in the HTML) <-> Hebrew (js/i18n-data.js) ===== */
 (function () {
   var LANG_KEY = 'site-lang-v2';
+  /* Hebrew is switched off until the translation is updated: set to true to bring back the toggle and the Hebrew version */
+  var HEBREW_ENABLED = false;
+  if (!HEBREW_ENABLED) document.documentElement.classList.add('he-off');
 
   function getStoredLang() {
     try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; }
@@ -132,7 +135,7 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     /* English unless the visitor explicitly chose Hebrew */
-    var lang = getStoredLang() === 'he' ? 'he' : 'en';
+    var lang = (HEBREW_ENABLED && getStoredLang() === 'he') ? 'he' : 'en';
     window.setSiteLang(lang);
 
     var toggles = document.querySelectorAll('.lang-toggle');
