@@ -4,8 +4,13 @@ document.addEventListener('DOMContentLoaded', function () {
   var toggle = document.querySelector('.menu-toggle');
   var mobileMenu = document.querySelector('.mobile-menu');
   if (toggle && mobileMenu) {
+    toggle.setAttribute('aria-expanded', 'false');
     toggle.addEventListener('click', function () {
-      mobileMenu.classList.toggle('open');
+      var open = mobileMenu.classList.toggle('open');
+      /* the hamburger turns into a close mark while the menu is open */
+      toggle.innerHTML = open ? '&times;' : '&#9776;';
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.classList.toggle('is-close', open);
     });
   }
 

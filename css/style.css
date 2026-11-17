@@ -3288,3 +3288,6 @@ html{ -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 
 /* Hebrew version is paused: hide the language toggle (see HEBREW_ENABLED in js/i18n.js) */
 html.he-off .lang-toggle, html.he-off li:has(> .lang-toggle){ display: none !important; }
+
+/* open mobile menu: the hamburger becomes a clear close mark */
+.menu-toggle.is-close{ font-size: 2.3rem; line-height: 1; font-weight: 300; }
