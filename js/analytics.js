@@ -7,8 +7,8 @@
       browser, open the live site once with  ?internal=1  at the end of
       the address. To switch it off, open it with  ?internal=0.
       (A data filter for traffic_type = internal must be active in GA4.)
-   3. Sends a few clear events: WhatsApp, email, phone and LinkedIn
-      clicks (with the button location) and the quiz start / finish.
+   3. Sends a few clear events: WhatsApp, email, phone, LinkedIn and
+      Figma clicks (with the button location) and the quiz start / finish.
 ------------------------------------------------------------------- */
 (function () {
   var MEASUREMENT_ID = 'G-1SDQXED43L';
@@ -79,9 +79,12 @@
     else if (href.indexOf('mailto:') === 0) name = 'email_click';
     else if (href.indexOf('tel:') === 0) name = 'phone_click';
     else if (href.indexOf('linkedin.com/') !== -1) name = 'linkedin_click';
+    else if (href.indexOf('figma.com/') !== -1) name = 'figma_click';
     if (!name) return;
     var place = a.closest('.whatsapp-fab') ? 'floating' :
                 a.closest('nav, header') ? 'menu' : 'content';
-    window.trackEvent(name, { button_location: place });
+    var extra = { button_location: place };
+    if (name === 'figma_click') extra.link_url = a.href;
+    window.trackEvent(name, extra);
   }, true);
 })();
